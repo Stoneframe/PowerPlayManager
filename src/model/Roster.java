@@ -7,15 +7,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class Rooster implements Iterable<Player>
+public class Roster implements Iterable<Player>
 {
 	private List<Player> players = new LinkedList<Player>();
 
-	public Rooster()
+	public Roster()
 	{
 	}
 
-	private Rooster(List<Player> players)
+	private Roster(List<Player> players)
 	{
 		this.players.addAll(players);
 	}
@@ -30,9 +30,9 @@ public class Rooster implements Iterable<Player>
 		players.remove(player);
 	}
 
-	public Rooster copy()
+	public Roster copy()
 	{
-		return new Rooster(players);
+		return new Roster(players);
 	}
 
 	public Stream<Player> stream()

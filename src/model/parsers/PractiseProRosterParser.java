@@ -4,22 +4,22 @@ import java.util.Arrays;
 
 import model.Attributes;
 import model.Player;
-import model.RoosterParser;
-import model.Rooster;
+import model.RosterParser;
+import model.Roster;
 import model.Side;
 
-public class PractiseProRoosterParser implements RoosterParser
+public class PractiseProRosterParser implements RosterParser
 {
 	private static final int FIELDS_PER_PLAYER = 23;
 	private static final int ATTRIBUTE_FIELDS_PER_PLAYER = 15;
 	private static final int ATTRIBUTES_START_FIELD = 5;
 
 	@Override
-	public Rooster parseRooster(String textToParse)
+	public Roster parseRoster(String textToParse)
 	{
 		String[] lines = textToParse.replace("\n", "\t").split("\t");
 
-		Rooster rooster = new Rooster();
+		Roster roster = new Roster();
 
 		for (int i = 0; i < lines.length; i += FIELDS_PER_PLAYER)
 		{
@@ -32,10 +32,10 @@ public class PractiseProRoosterParser implements RoosterParser
 								i + ATTRIBUTES_START_FIELD,
 								i + ATTRIBUTES_START_FIELD + ATTRIBUTE_FIELDS_PER_PLAYER)));
 
-			rooster.add(player);
+			roster.add(player);
 		}
 
-		return rooster;
+		return roster;
 	}
 
 	private static String parseName(String text)

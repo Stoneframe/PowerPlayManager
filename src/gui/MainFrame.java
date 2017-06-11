@@ -14,7 +14,7 @@ import model.Formation;
 import model.FormationBuilder;
 import model.Player;
 import model.PlayerEvaluator;
-import model.Rooster;
+import model.Roster;
 import model.builders.DumbFormationBuilder;
 import model.builders.PaulsFormationBuilder;
 import model.evaluators.BackPlayerEvaluator;
@@ -24,9 +24,9 @@ import model.evaluators.DefensiveWingPlayerEvaluator;
 import model.evaluators.GoalkeepingPlayerEvaluator;
 import model.evaluators.PivotPlayerEvaluator;
 import model.evaluators.WingPlayerEvaluator;
-import model.parsers.OverviewRoosterParser;
-import model.parsers.PractiseProRoosterParser;
-import model.parsers.PractiseRoosterParser;
+import model.parsers.OverviewRosterParser;
+import model.parsers.PractiseProRosterParser;
+import model.parsers.PractiseRosterParser;
 
 public class MainFrame extends JFrame
 {
@@ -57,8 +57,8 @@ public class MainFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				Rooster rooster = new PractiseRoosterParser()
-						.parseRooster(textArea.getText());
+				Roster rooster = new PractiseRosterParser()
+						.parseRoster(textArea.getText());
 
 				print(rooster, evaluators);
 			}
@@ -69,8 +69,8 @@ public class MainFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				Rooster rooster = new PractiseProRoosterParser()
-						.parseRooster(textArea.getText());
+				Roster rooster = new PractiseProRosterParser()
+						.parseRoster(textArea.getText());
 
 				print(rooster, evaluators);
 			}
@@ -81,13 +81,13 @@ public class MainFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				Rooster rooster = new OverviewRoosterParser()
-						.parseRooster(textArea.getText());
+				Roster roster = new OverviewRosterParser()
+						.parseRoster(textArea.getText());
 
 				FormationBuilder formationBuilder = new DumbFormationBuilder();
 
 				Formation formation1 = formationBuilder.create(
-					rooster.copy(),
+					roster.copy(),
 					new PivotPlayerEvaluator(),
 					new WingPlayerEvaluator(),
 					new WingPlayerEvaluator(),
@@ -98,7 +98,7 @@ public class MainFrame extends JFrame
 				System.out.println(formation1);
 
 				Formation formation2 = formationBuilder.create(
-					rooster.copy(),
+					roster.copy(),
 					new DefensivePivotPlayerEvaluator(),
 					new DefensiveWingPlayerEvaluator(),
 					new DefensiveWingPlayerEvaluator(),
@@ -109,7 +109,7 @@ public class MainFrame extends JFrame
 				System.out.println(formation2);
 
 				Formation formation3 = new PaulsFormationBuilder().create(
-					rooster.copy(),
+					roster.copy(),
 					new PivotPlayerEvaluator(),
 					new WingPlayerEvaluator(),
 					new WingPlayerEvaluator(),

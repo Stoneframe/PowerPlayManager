@@ -8,7 +8,7 @@ import model.Formation;
 import model.FormationBuilder;
 import model.Player;
 import model.PlayerEvaluator;
-import model.Rooster;
+import model.Roster;
 import model.Side;
 import model.comparators.RatingComparator;
 
@@ -16,7 +16,7 @@ public class PaulsFormationBuilder implements FormationBuilder
 {
 	@Override
 	public Formation create(
-			Rooster rooster,
+			Roster roster,
 			PlayerEvaluator pivotEvaluator,
 			PlayerEvaluator leftWingEvaluator,
 			PlayerEvaluator rightWingEvaluator,
@@ -31,7 +31,7 @@ public class PaulsFormationBuilder implements FormationBuilder
 			new Position(
 					pivotEvaluator,
 					Side.UNIVERSAL,
-					rooster,
+					roster,
 					new PositionAssigner()
 					{
 						public void assign(Player player)
@@ -43,7 +43,7 @@ public class PaulsFormationBuilder implements FormationBuilder
 			new Position(
 					leftWingEvaluator,
 					Side.LEFT,
-					rooster,
+					roster,
 					new PositionAssigner()
 					{
 						public void assign(Player player)
@@ -55,7 +55,7 @@ public class PaulsFormationBuilder implements FormationBuilder
 			new Position(
 					rightWingEvaluator,
 					Side.RIGHT,
-					rooster,
+					roster,
 					new PositionAssigner()
 					{
 						public void assign(Player player)
@@ -67,7 +67,7 @@ public class PaulsFormationBuilder implements FormationBuilder
 			new Position(
 					centerBackEvaluator,
 					Side.UNIVERSAL,
-					rooster,
+					roster,
 					new PositionAssigner()
 					{
 						public void assign(Player player)
@@ -79,7 +79,7 @@ public class PaulsFormationBuilder implements FormationBuilder
 			new Position(
 					leftBackEvaluator,
 					Side.LEFT,
-					rooster,
+					roster,
 					new PositionAssigner()
 					{
 						public void assign(Player player)
@@ -91,7 +91,7 @@ public class PaulsFormationBuilder implements FormationBuilder
 			new Position(
 					rightBackEvaluator,
 					Side.RIGHT,
-					rooster,
+					roster,
 					new PositionAssigner()
 					{
 						public void assign(Player player)
@@ -114,18 +114,18 @@ public class PaulsFormationBuilder implements FormationBuilder
 	{
 		private PlayerEvaluator evaluator;
 		private Side side;
-		private Rooster rooster;
+		private Roster roster;
 		private PositionAssigner positionAssigner;
 
 		public Position(
 				PlayerEvaluator evaluator,
 				Side side,
-				Rooster rooster,
+				Roster roster,
 				PositionAssigner positionAssigner)
 		{
 			this.evaluator = evaluator;
 			this.side = side;
-			this.rooster = rooster;
+			this.roster = roster;
 			this.positionAssigner = positionAssigner;
 		}
 
@@ -140,12 +140,12 @@ public class PaulsFormationBuilder implements FormationBuilder
 		public void assingPlayer()
 		{
 			positionAssigner.assign(bestPlayer());
-			rooster.remove(bestPlayer());
+			roster.remove(bestPlayer());
 		}
 
 		private Player bestPlayer()
 		{
-			Player player = rooster
+			Player player = roster
 					.stream()
 					.filter(p -> p.getSide().equals(side))
 					.max(new RatingComparator(evaluator))

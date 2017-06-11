@@ -3,7 +3,7 @@ package model;
 public interface FormationBuilder
 {
 	public Formation create(
-			Rooster rooster,
+			Roster roster,
 			PlayerEvaluator pivotEvaluator,
 			PlayerEvaluator leftWingEvaluator,
 			PlayerEvaluator rightWingEvaluator,

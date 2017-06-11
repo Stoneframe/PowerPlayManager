@@ -4,18 +4,18 @@ import java.util.Arrays;
 
 import model.Attributes;
 import model.Player;
-import model.RoosterParser;
-import model.Rooster;
+import model.RosterParser;
+import model.Roster;
 import model.Side;
 
-public class OverviewRoosterParser implements RoosterParser
+public class OverviewRosterParser implements RosterParser
 {
 	@Override
-	public Rooster parseRooster(String textToParse)
+	public Roster parseRoster(String textToParse)
 	{
 		String[] lines = textToParse.split("\n");
 
-		Rooster rooster = new Rooster();
+		Roster roster = new Roster();
 
 		for (int i = 0; i < lines.length; i++)
 		{
@@ -26,10 +26,10 @@ public class OverviewRoosterParser implements RoosterParser
 					parseSide(columns[16]),
 					parseAttributes(Arrays.copyOfRange(columns, 6, 14)));
 
-			rooster.add(player);
+			roster.add(player);
 		}
 
-		return rooster;
+		return roster;
 	}
 
 	private static String parseName(String text)

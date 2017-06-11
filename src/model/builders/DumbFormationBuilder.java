@@ -4,7 +4,7 @@ import model.Formation;
 import model.FormationBuilder;
 import model.Player;
 import model.PlayerEvaluator;
-import model.Rooster;
+import model.Roster;
 import model.Side;
 import model.comparators.RatingComparator;
 
@@ -12,7 +12,7 @@ public class DumbFormationBuilder implements FormationBuilder
 {
 	@Override
 	public Formation create(
-			Rooster rooster,
+			Roster roster,
 			PlayerEvaluator pivotEvaluator,
 			PlayerEvaluator leftWingEvaluator,
 			PlayerEvaluator rightWingEvaluator,
@@ -21,26 +21,26 @@ public class DumbFormationBuilder implements FormationBuilder
 			PlayerEvaluator rightBackEvaluator)
 	{
 		return new Formation(
-				select(rooster, pivotEvaluator, Side.UNIVERSAL),
-				select(rooster, leftWingEvaluator, Side.LEFT),
-				select(rooster, rightWingEvaluator, Side.RIGHT),
-				select(rooster, centerBackEvaluator, Side.UNIVERSAL),
-				select(rooster, leftBackEvaluator, Side.LEFT),
-				select(rooster, rightBackEvaluator, Side.RIGHT));
+				select(roster, pivotEvaluator, Side.UNIVERSAL),
+				select(roster, leftWingEvaluator, Side.LEFT),
+				select(roster, rightWingEvaluator, Side.RIGHT),
+				select(roster, centerBackEvaluator, Side.UNIVERSAL),
+				select(roster, leftBackEvaluator, Side.LEFT),
+				select(roster, rightBackEvaluator, Side.RIGHT));
 	}
 
 	private static Player select(
-			Rooster rooster,
+			Roster roster,
 			PlayerEvaluator evaluator,
 			Side side)
 	{
-		Player player = rooster
+		Player player = roster
 				.stream()
 				.filter(p -> p.getSide().equals(side))
 				.max(new RatingComparator(evaluator))
 				.get();
 
-		rooster.remove(player);
+		roster.remove(player);
 
 		return player;
 	}
