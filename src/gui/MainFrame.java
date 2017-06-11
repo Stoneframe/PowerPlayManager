@@ -3,7 +3,6 @@ package gui;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -18,7 +17,6 @@ import model.PlayerEvaluator;
 import model.Rooster;
 import model.Side;
 import model.comparators.QualityComparator;
-import model.comparators.RatingComparator;
 import model.evaluators.BackPlayerEvaluator;
 import model.evaluators.DefensiveBackPlayerEvaluator;
 import model.evaluators.DefensivePivotPlayerEvaluator;
@@ -60,12 +58,11 @@ public class MainFrame extends JFrame
 				Rooster rooster = new PractiseRoosterParser()
 						.parseRooster(textArea.getText());
 
-				Collections.sort(
-					rooster,
-					new QualityComparator(new GoalkeepingPlayerEvaluator()));
-				Collections.reverse(rooster);
-
-				printPlayers(rooster, evaluators);
+				printPlayers(
+					rooster.sort(
+							new QualityComparator(
+									new GoalkeepingPlayerEvaluator())),
+					evaluators);
 			}
 		});
 
@@ -134,7 +131,7 @@ public class MainFrame extends JFrame
 	}
 
 	private static Formation createFormation(
-			List<Player> players,
+			Rooster rooster,
 			PlayerEvaluator pivotEvaluator,
 			PlayerEvaluator leftWingEvaluator,
 			PlayerEvaluator rightWingEvaluator,
@@ -143,28 +140,12 @@ public class MainFrame extends JFrame
 			PlayerEvaluator rightBackEvaluator)
 	{
 		return new Formation(
-				select(players, pivotEvaluator, Side.UNIVERSAL),
-				select(players, leftWingEvaluator, Side.LEFT),
-				select(players, rightWingEvaluator, Side.RIGHT),
-				select(players, centerBackEvaluator, Side.UNIVERSAL),
-				select(players, leftBackEvaluator, Side.LEFT),
-				select(players, rightBackEvaluator, Side.RIGHT));
-	}
-
-	private static Player select(
-			List<Player> players,
-			PlayerEvaluator evaluator,
-			Side side)
-	{
-		Player player = players
-				.stream()
-				.filter(p -> p.getSide().equals(side))
-				.max(new RatingComparator(evaluator))
-				.get();
-
-		players.remove(player);
-
-		return player;
+				rooster.select(pivotEvaluator, Side.UNIVERSAL),
+				rooster.select(leftWingEvaluator, Side.LEFT),
+				rooster.select(rightWingEvaluator, Side.RIGHT),
+				rooster.select(centerBackEvaluator, Side.UNIVERSAL),
+				rooster.select(leftBackEvaluator, Side.LEFT),
+				rooster.select(rightBackEvaluator, Side.RIGHT));
 	}
 
 	public static void main(String[] args)
