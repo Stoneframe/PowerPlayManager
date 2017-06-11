@@ -8,10 +8,10 @@ import model.RoosterParser;
 import model.Rooster;
 import model.Side;
 
-public class PractiseRoosterParser implements RoosterParser
+public class PractiseProRoosterParser implements RoosterParser
 {
-	private static final int FIELDS_PER_PLAYER = 15;
-	private static final int ATTRIBUTE_FIELDS_PER_PLAYER = 8;
+	private static final int FIELDS_PER_PLAYER = 23;
+	private static final int ATTRIBUTE_FIELDS_PER_PLAYER = 15;
 	private static final int ATTRIBUTES_START_FIELD = 5;
 
 	@Override
@@ -52,26 +52,26 @@ public class PractiseRoosterParser implements RoosterParser
 		attributes.setGoa(Integer.parseInt(texts[0].substring(0, 2)));
 		attributes.setQGoa(Integer.parseInt(texts[0].substring(2, 4)));
 
-		attributes.setFip(Integer.parseInt(texts[1].substring(0, 2)));
-		attributes.setQFip(Integer.parseInt(texts[1].substring(2, 4)));
+		attributes.setFip(Integer.parseInt(texts[2].substring(0, 2)));
+		attributes.setQFip(Integer.parseInt(texts[2].substring(2, 4)));
 
-		attributes.setSho(Integer.parseInt(texts[2].substring(0, 2)));
-		attributes.setQSho(Integer.parseInt(texts[2].substring(2, 4)));
+		attributes.setSho(Integer.parseInt(texts[4].substring(0, 2)));
+		attributes.setQSho(Integer.parseInt(texts[4].substring(2, 4)));
 
-		attributes.setBlk(Integer.parseInt(texts[3].substring(0, 2)));
-		attributes.setQBlk(Integer.parseInt(texts[3].substring(2, 4)));
+		attributes.setBlk(Integer.parseInt(texts[6].substring(0, 2)));
+		attributes.setQBlk(Integer.parseInt(texts[6].substring(2, 4)));
 
-		attributes.setPas(Integer.parseInt(texts[4].substring(0, 2)));
-		attributes.setQPas(Integer.parseInt(texts[4].substring(2, 4)));
+		attributes.setPas(Integer.parseInt(texts[8].substring(0, 2)));
+		attributes.setQPas(Integer.parseInt(texts[8].substring(2, 4)));
 
-		attributes.setTec(Integer.parseInt(texts[5].substring(0, 2)));
-		attributes.setQTec(Integer.parseInt(texts[5].substring(2, 4)));
+		attributes.setTec(Integer.parseInt(texts[10].substring(0, 2)));
+		attributes.setQTec(Integer.parseInt(texts[10].substring(2, 4)));
 
-		attributes.setSpe(Integer.parseInt(texts[6].substring(0, 2)));
-		attributes.setQSpe(Integer.parseInt(texts[6].substring(2, 4)));
+		attributes.setSpe(Integer.parseInt(texts[12].substring(0, 2)));
+		attributes.setQSpe(Integer.parseInt(texts[12].substring(2, 4)));
 
-		attributes.setAgr(Integer.parseInt(texts[7].substring(0, 2)));
-		attributes.setQAgr(Integer.parseInt(texts[7].substring(2, 4)));
+		attributes.setAgr(Integer.parseInt(texts[14].substring(0, 2)));
+		attributes.setQAgr(Integer.parseInt(texts[14].substring(2, 4)));
 
 		return attributes;
 	}
