@@ -4,8 +4,19 @@ import model.PlayerEvaluator;
 
 public class BackPlayerEvaluator extends PlayerEvaluator {
 
+	private static final String NAME = "Back";
+
+	private static final int GOA = 0;
+	private static final int FIP = 100;
+	private static final int SHO = 75;
+	private static final int BLK = 25;
+	private static final int PAS = 75;
+	private static final int TEC = 50;
+	private static final int SEP = 25;
+	private static final int AGR = 25;
+
 	public BackPlayerEvaluator() {
-		super("Back", 0, 100, 75, 25, 75, 50, 25, 25);
+		super(NAME, GOA, FIP, SHO, BLK, PAS, TEC, SEP, AGR);
 	}
 
 }
