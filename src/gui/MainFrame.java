@@ -108,14 +108,16 @@ public class MainFrame extends JFrame
 
 				System.out.println(formation2);
 
-				new PaulsFormationBuilder().create(
-					rooster,
+				Formation formation3 = new PaulsFormationBuilder().create(
+					rooster.copy(),
 					new PivotPlayerEvaluator(),
 					new WingPlayerEvaluator(),
 					new WingPlayerEvaluator(),
 					new BackPlayerEvaluator(),
 					new BackPlayerEvaluator(),
 					new BackPlayerEvaluator());
+
+				System.out.println(formation3);
 			}
 		});
 

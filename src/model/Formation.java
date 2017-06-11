@@ -9,6 +9,10 @@ public class Formation
 	private Player leftBack;
 	private Player rightBack;
 
+	public Formation()
+	{
+	}
+
 	public Formation(
 			Player pivot,
 			Player leftWing,
@@ -30,9 +34,19 @@ public class Formation
 		return pivot;
 	}
 
+	public void setPivot(Player pivot)
+	{
+		this.pivot = pivot;
+	}
+
 	public Player getLeftWing()
 	{
 		return leftWing;
+	}
+
+	public void setLeftWing(Player leftWing)
+	{
+		this.leftWing = leftWing;
 	}
 
 	public Player getRightWing()
@@ -40,9 +54,19 @@ public class Formation
 		return rightWing;
 	}
 
+	public void setRightWing(Player rightWing)
+	{
+		this.rightWing = rightWing;
+	}
+
 	public Player getCenterBack()
 	{
 		return centerBack;
+	}
+
+	public void setCenterBack(Player centerBack)
+	{
+		this.centerBack = centerBack;
 	}
 
 	public Player getLeftBack()
@@ -50,9 +74,19 @@ public class Formation
 		return leftBack;
 	}
 
+	public void setLeftBack(Player leftBack)
+	{
+		this.leftBack = leftBack;
+	}
+
 	public Player getRightBack()
 	{
 		return rightBack;
+	}
+
+	public void setRightBack(Player rightBack)
+	{
+		this.rightBack = rightBack;
 	}
 
 	@Override

@@ -1,7 +1,8 @@
 package model.builders;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import model.Formation;
 import model.FormationBuilder;
@@ -13,8 +14,6 @@ import model.comparators.RatingComparator;
 
 public class PaulsFormationBuilder implements FormationBuilder
 {
-	private static final int NUMBER_OF_PLAYERS = 5;
-
 	@Override
 	public Formation create(
 			Rooster rooster,
@@ -25,88 +24,139 @@ public class PaulsFormationBuilder implements FormationBuilder
 			PlayerEvaluator leftBackEvaluator,
 			PlayerEvaluator rightBackEvaluator)
 	{
-		List<Player> pivots = select(
-			rooster,
-			pivotEvaluator,
-			Side.UNIVERSAL,
-			NUMBER_OF_PLAYERS);
-		List<Player> leftWings = select(
-			rooster,
-			leftWingEvaluator,
-			Side.LEFT,
-			NUMBER_OF_PLAYERS);
-		List<Player> rightWings = select(
-			rooster,
-			rightWingEvaluator,
-			Side.RIGHT,
-			NUMBER_OF_PLAYERS);
-		List<Player> centerBacks = select(
-			rooster,
-			centerBackEvaluator,
-			Side.UNIVERSAL,
-			NUMBER_OF_PLAYERS);
-		List<Player> leftBacks = select(
-			rooster,
-			leftBackEvaluator,
-			Side.LEFT,
-			NUMBER_OF_PLAYERS);
-		List<Player> rightBacks = select(
-			rooster,
-			rightBackEvaluator,
-			Side.RIGHT,
-			NUMBER_OF_PLAYERS);
+		Formation formation = new Formation();
 
-		System.out.println("===Pivots=========");
-		print(pivots, pivotEvaluator);
-		System.out.println("===Left Wings=====");
-		print(leftWings, leftWingEvaluator);
-		System.out.println("===Right Wings====");
-		print(rightWings, rightWingEvaluator);
-		System.out.println("===Center Backs===");
-		print(centerBacks, centerBackEvaluator);
-		System.out.println("===Left Backs=====");
-		print(leftBacks, leftBackEvaluator);
-		System.out.println("===Right Backs====");
-		print(rightBacks, rightBackEvaluator);
+		List<Position> positions = new LinkedList<Position>();
+		positions.add(
+			new Position(
+					pivotEvaluator,
+					Side.UNIVERSAL,
+					rooster,
+					new PositionAssigner()
+					{
+						public void assign(Player player)
+						{
+							formation.setPivot(player);
+						}
+					}));
+		positions.add(
+			new Position(
+					leftWingEvaluator,
+					Side.LEFT,
+					rooster,
+					new PositionAssigner()
+					{
+						public void assign(Player player)
+						{
+							formation.setLeftWing(player);
+						}
+					}));
+		positions.add(
+			new Position(
+					rightWingEvaluator,
+					Side.RIGHT,
+					rooster,
+					new PositionAssigner()
+					{
+						public void assign(Player player)
+						{
+							formation.setRightWing(player);
+						}
+					}));
+		positions.add(
+			new Position(
+					centerBackEvaluator,
+					Side.UNIVERSAL,
+					rooster,
+					new PositionAssigner()
+					{
+						public void assign(Player player)
+						{
+							formation.setCenterBack(player);
+						}
+					}));
+		positions.add(
+			new Position(
+					leftBackEvaluator,
+					Side.LEFT,
+					rooster,
+					new PositionAssigner()
+					{
+						public void assign(Player player)
+						{
+							formation.setLeftBack(player);
+						}
+					}));
+		positions.add(
+			new Position(
+					rightBackEvaluator,
+					Side.RIGHT,
+					rooster,
+					new PositionAssigner()
+					{
+						public void assign(Player player)
+						{
+							formation.setRightBack(player);
+						}
+					}));
 
-		return null;
-	}
-
-	private static List<Player> select(
-			Rooster rooster,
-			PlayerEvaluator evaluator,
-			Side side,
-			int numberOfPlayers)
-	{
-		List<Player> players = rooster
-				.stream()
-				.filter(p -> p.getSide().equals(side))
-				.sorted(
-					(p1, p2) -> new RatingComparator(evaluator).compare(p2, p1))
-				.limit(numberOfPlayers)
-				.collect(Collectors.toList());
-
-		return players;
-	}
-
-	private static void print(
-			Iterable<Player> players,
-			PlayerEvaluator... evaluators)
-	{
-		for (Player player : players)
+		while (!positions.isEmpty())
 		{
-			System.out.println(player);
-
-			for (PlayerEvaluator evaluator : evaluators)
-			{
-				System.out.println(String.format(
-					"%s: %.1f(%.1f)",
-					evaluator.getName(),
-					evaluator.getRating(player.getAttributes()),
-					evaluator.getQuality(player.getAttributes())));
-			}
-
-			System.out.println();
+			Collections.sort(positions);
+			Position position = positions.remove(0);
+			position.assingPlayer();
 		}
+
+		return formation;
+	}
+
+	private class Position implements Comparable<Position>
+	{
+		private PlayerEvaluator evaluator;
+		private Side side;
+		private Rooster rooster;
+		private PositionAssigner positionAssigner;
+
+		public Position(
+				PlayerEvaluator evaluator,
+				Side side,
+				Rooster rooster,
+				PositionAssigner positionAssigner)
+		{
+			this.evaluator = evaluator;
+			this.side = side;
+			this.rooster = rooster;
+			this.positionAssigner = positionAssigner;
+		}
+
+		@Override
+		public int compareTo(Position other)
+		{
+			return Double.compare(
+				other.evaluator.getRating(other.bestPlayer().getAttributes()),
+				this.evaluator.getRating(this.bestPlayer().getAttributes()));
+		}
+
+		public void assingPlayer()
+		{
+			positionAssigner.assign(bestPlayer());
+			rooster.remove(bestPlayer());
+		}
+
+		private Player bestPlayer()
+		{
+			Player player = rooster
+					.stream()
+					.filter(p -> p.getSide().equals(side))
+					.max(new RatingComparator(evaluator))
+					.get();
+
+			return player;
+		}
+	}
+
+	private interface PositionAssigner
+	{
+		public void assign(Player player);
 	}
 }
