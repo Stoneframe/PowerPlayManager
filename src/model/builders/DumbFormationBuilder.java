@@ -2,9 +2,11 @@ package model.builders;
 
 import model.Formation;
 import model.FormationBuilder;
+import model.Player;
 import model.PlayerEvaluator;
 import model.Rooster;
 import model.Side;
+import model.comparators.RatingComparator;
 
 public class DumbFormationBuilder implements FormationBuilder
 {
@@ -19,11 +21,27 @@ public class DumbFormationBuilder implements FormationBuilder
 			PlayerEvaluator rightBackEvaluator)
 	{
 		return new Formation(
-				rooster.select(pivotEvaluator, Side.UNIVERSAL),
-				rooster.select(leftWingEvaluator, Side.LEFT),
-				rooster.select(rightWingEvaluator, Side.RIGHT),
-				rooster.select(centerBackEvaluator, Side.UNIVERSAL),
-				rooster.select(leftBackEvaluator, Side.LEFT),
-				rooster.select(rightBackEvaluator, Side.RIGHT));
+				select(rooster, pivotEvaluator, Side.UNIVERSAL),
+				select(rooster, leftWingEvaluator, Side.LEFT),
+				select(rooster, rightWingEvaluator, Side.RIGHT),
+				select(rooster, centerBackEvaluator, Side.UNIVERSAL),
+				select(rooster, leftBackEvaluator, Side.LEFT),
+				select(rooster, rightBackEvaluator, Side.RIGHT));
+	}
+
+	private static Player select(
+			Rooster rooster,
+			PlayerEvaluator evaluator,
+			Side side)
+	{
+		Player player = rooster
+				.stream()
+				.filter(p -> p.getSide().equals(side))
+				.max(new RatingComparator(evaluator))
+				.get();
+
+		rooster.remove(player);
+
+		return player;
 	}
 }

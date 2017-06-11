@@ -45,9 +45,9 @@ public class MainFrame extends JFrame
 				new BackPlayerEvaluator(),
 				new PivotPlayerEvaluator(),
 				new WingPlayerEvaluator(),
-				new DefensiveBackPlayerEvaluator(),
-				new DefensivePivotPlayerEvaluator(),
-				new DefensiveWingPlayerEvaluator(),
+				// new DefensiveBackPlayerEvaluator(),
+				// new DefensivePivotPlayerEvaluator(),
+				// new DefensiveWingPlayerEvaluator(),
 		};
 
 		textArea = new JTextArea(2, 25);
