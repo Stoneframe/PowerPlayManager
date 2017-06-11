@@ -3,7 +3,6 @@ package gui;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,7 +15,6 @@ import model.Player;
 import model.PlayerEvaluator;
 import model.Rooster;
 import model.Side;
-import model.comparators.QualityComparator;
 import model.evaluators.BackPlayerEvaluator;
 import model.evaluators.DefensiveBackPlayerEvaluator;
 import model.evaluators.DefensivePivotPlayerEvaluator;
@@ -58,11 +56,7 @@ public class MainFrame extends JFrame
 				Rooster rooster = new PractiseRoosterParser()
 						.parseRooster(textArea.getText());
 
-				printPlayers(
-					rooster.sort(
-							new QualityComparator(
-									new GoalkeepingPlayerEvaluator())),
-					evaluators);
+				printRooster(rooster, evaluators);
 			}
 		});
 
@@ -109,21 +103,21 @@ public class MainFrame extends JFrame
 		setVisible(true);
 	}
 
-	private static void printPlayers(
-			List<Player> players,
+	private static void printRooster(
+			Rooster rooster,
 			PlayerEvaluator[] evaluators)
 	{
-		for (Player player : players)
+		for (Player player : rooster)
 		{
 			System.out.println(player);
 
-			for (PlayerEvaluator position : evaluators)
+			for (PlayerEvaluator evaluator : evaluators)
 			{
 				System.out.println(String.format(
 					"%s: %.1f(%.1f)",
-					position.getName(),
-					position.getRating(player.getAttributes()),
-					position.getQuality(player.getAttributes())));
+					evaluator.getName(),
+					evaluator.getRating(player.getAttributes()),
+					evaluator.getQuality(player.getAttributes())));
 			}
 
 			System.out.println();

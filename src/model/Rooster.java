@@ -2,13 +2,14 @@ package model;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
 import model.comparators.RatingComparator;
 
-public class Rooster
+public class Rooster implements Iterable<Player>
 {
 	private List<Player> players = new LinkedList<Player>();
 
@@ -64,5 +65,11 @@ public class Rooster
 		players.remove(player);
 
 		return player;
+	}
+
+	@Override
+	public Iterator<Player> iterator()
+	{
+		return players.iterator();
 	}
 }
