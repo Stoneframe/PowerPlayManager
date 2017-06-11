@@ -25,6 +25,7 @@ import model.evaluators.GoalkeepingPlayerEvaluator;
 import model.evaluators.PivotPlayerEvaluator;
 import model.evaluators.WingPlayerEvaluator;
 import model.parsers.OverviewRoosterParser;
+import model.parsers.PractiseProRoosterParser;
 import model.parsers.PractiseRoosterParser;
 
 public class MainFrame extends JFrame
@@ -33,6 +34,7 @@ public class MainFrame extends JFrame
 
 	private JTextArea textArea;
 	private JButton practiseParseButton;
+	private JButton practiseProParseButton;
 	private JButton overviewParseButton;
 
 	public MainFrame()
@@ -61,7 +63,19 @@ public class MainFrame extends JFrame
 				print(rooster, evaluators);
 			}
 		});
+		
+		practiseProParseButton = new JButton("Practise (Pro) Parse");
+		practiseProParseButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				Rooster rooster = new PractiseProRoosterParser()
+						.parseRooster(textArea.getText());
 
+				printRooster(rooster, evaluators);
+			}
+		});
+		
 		overviewParseButton = new JButton("Overview Parse");
 		overviewParseButton.addActionListener(new ActionListener()
 		{
@@ -109,6 +123,7 @@ public class MainFrame extends JFrame
 
 		add(new JScrollPane(textArea));
 		add(practiseParseButton);
+		add(practiseProParseButton);
 		add(overviewParseButton);
 
 		pack();
