@@ -15,13 +15,15 @@ import model.FormationBuilder;
 import model.Player;
 import model.PlayerEvaluator;
 import model.Roster;
-import model.builders.DumbFormationBuilder;
 import model.builders.PaulsFormationBuilder;
 import model.evaluators.BackPlayerEvaluator;
 import model.evaluators.DefensiveBackPlayerEvaluator;
 import model.evaluators.DefensivePivotPlayerEvaluator;
 import model.evaluators.DefensiveWingPlayerEvaluator;
 import model.evaluators.GoalkeepingPlayerEvaluator;
+import model.evaluators.OffensiveBackPlayerEvaluator;
+import model.evaluators.OffensivePivotPlayerEvaluator;
+import model.evaluators.OffensiveWingPlayerEvaluator;
 import model.evaluators.PivotPlayerEvaluator;
 import model.evaluators.WingPlayerEvaluator;
 import model.parsers.OverviewRosterParser;
@@ -45,9 +47,12 @@ public class MainFrame extends JFrame
 				new BackPlayerEvaluator(),
 				new PivotPlayerEvaluator(),
 				new WingPlayerEvaluator(),
-				// new DefensiveBackPlayerEvaluator(),
-				// new DefensivePivotPlayerEvaluator(),
-				// new DefensiveWingPlayerEvaluator(),
+				new DefensiveBackPlayerEvaluator(),
+				new DefensivePivotPlayerEvaluator(),
+				new DefensiveWingPlayerEvaluator(),
+				new OffensiveBackPlayerEvaluator(),
+				new OffensivePivotPlayerEvaluator(),
+				new OffensiveWingPlayerEvaluator(),
 		};
 
 		textArea = new JTextArea(2, 25);
@@ -84,40 +89,56 @@ public class MainFrame extends JFrame
 				Roster roster = new OverviewRosterParser()
 						.parseRoster(textArea.getText());
 
-				FormationBuilder formationBuilder = new DumbFormationBuilder();
+				FormationBuilder formationBuilder = new PaulsFormationBuilder();
 
-				Formation formation1 = formationBuilder.create(
-					roster.copy(),
-					new PivotPlayerEvaluator(),
-					new WingPlayerEvaluator(),
-					new WingPlayerEvaluator(),
-					new BackPlayerEvaluator(),
-					new BackPlayerEvaluator(),
-					new BackPlayerEvaluator());
+				Roster offRoster = roster.copy();
 
-				System.out.println(formation1);
+				Formation offFormation1 = formationBuilder.create(
+					offRoster,
+					new OffensivePivotPlayerEvaluator(),
+					new OffensiveWingPlayerEvaluator(),
+					new OffensiveWingPlayerEvaluator(),
+					new OffensiveBackPlayerEvaluator(),
+					new OffensiveBackPlayerEvaluator(),
+					new OffensiveBackPlayerEvaluator());
 
-				Formation formation2 = formationBuilder.create(
-					roster.copy(),
-					new DefensivePivotPlayerEvaluator(),
-					new DefensiveWingPlayerEvaluator(),
-					new DefensiveWingPlayerEvaluator(),
-					new BackPlayerEvaluator(),
-					new DefensiveBackPlayerEvaluator(),
-					new DefensiveBackPlayerEvaluator());
+				Formation offFormation2 = formationBuilder.create(
+					offRoster,
+					new OffensivePivotPlayerEvaluator(),
+					new OffensiveWingPlayerEvaluator(),
+					new OffensiveWingPlayerEvaluator(),
+					new OffensiveBackPlayerEvaluator(),
+					new OffensiveBackPlayerEvaluator(),
+					new OffensiveBackPlayerEvaluator());
 
-				System.out.println(formation2);
+				Roster defRoster = roster.copy();
 
-				Formation formation3 = new PaulsFormationBuilder().create(
-					roster.copy(),
-					new PivotPlayerEvaluator(),
-					new WingPlayerEvaluator(),
-					new WingPlayerEvaluator(),
-					new BackPlayerEvaluator(),
-					new BackPlayerEvaluator(),
-					new BackPlayerEvaluator());
+				Formation defFormation1 = formationBuilder.create(
+					defRoster,
+					new OffensivePivotPlayerEvaluator(),
+					new OffensiveWingPlayerEvaluator(),
+					new OffensiveWingPlayerEvaluator(),
+					new OffensiveBackPlayerEvaluator(),
+					new OffensiveBackPlayerEvaluator(),
+					new OffensiveBackPlayerEvaluator());
 
-				System.out.println(formation3);
+				Formation defFormation2 = formationBuilder.create(
+					defRoster,
+					new OffensivePivotPlayerEvaluator(),
+					new OffensiveWingPlayerEvaluator(),
+					new OffensiveWingPlayerEvaluator(),
+					new OffensiveBackPlayerEvaluator(),
+					new OffensiveBackPlayerEvaluator(),
+					new OffensiveBackPlayerEvaluator());
+
+				System.out.println(
+					"Offensive formation 1:\n" + offFormation1);
+				System.out.println(
+					"Offensive formation 2:\n" + offFormation2);
+				System.out.println(
+					"Defensive formation 1:\n" + defFormation1);
+				System.out.println(
+					"Defensive formation 2:\n" + defFormation2);
 			}
 		});
 
@@ -144,7 +165,7 @@ public class MainFrame extends JFrame
 			for (PlayerEvaluator evaluator : evaluators)
 			{
 				System.out.println(String.format(
-					"%s: %.1f(%.1f)",
+					"\t%s: %.1f(%.1f)",
 					evaluator.getName(),
 					evaluator.getRating(player.getAttributes()),
 					evaluator.getQuality(player.getAttributes())));
