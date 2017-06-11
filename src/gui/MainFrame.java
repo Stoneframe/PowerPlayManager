@@ -111,13 +111,13 @@ public class MainFrame extends JFrame
 		{
 			System.out.println(player);
 
-			for (PlayerEvaluator position : evaluators)
+			for (PlayerEvaluator evaluator : evaluators)
 			{
 				System.out.println(String.format(
 					"%s: %.1f(%.1f)",
-					position.getName(),
-					position.getRating(player.getAttributes()),
-					position.getQuality(player.getAttributes())));
+					evaluator.getName(),
+					evaluator.getRating(player.getAttributes()),
+					evaluator.getQuality(player.getAttributes())));
 			}
 
 			System.out.println();
