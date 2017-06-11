@@ -11,10 +11,12 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 import model.Formation;
+import model.FormationBuilder;
 import model.Player;
 import model.PlayerEvaluator;
 import model.Rooster;
-import model.Side;
+import model.builders.DumbFormationBuilder;
+import model.builders.PaulsFormationBuilder;
 import model.evaluators.BackPlayerEvaluator;
 import model.evaluators.DefensiveBackPlayerEvaluator;
 import model.evaluators.DefensivePivotPlayerEvaluator;
@@ -56,7 +58,7 @@ public class MainFrame extends JFrame
 				Rooster rooster = new PractiseRoosterParser()
 						.parseRooster(textArea.getText());
 
-				printRooster(rooster, evaluators);
+				print(rooster, evaluators);
 			}
 		});
 
@@ -68,18 +70,20 @@ public class MainFrame extends JFrame
 				Rooster rooster = new OverviewRoosterParser()
 						.parseRooster(textArea.getText());
 
-				Formation formation1 = createFormation(
+				FormationBuilder formationBuilder = new DumbFormationBuilder();
+
+				Formation formation1 = formationBuilder.create(
 					rooster.copy(),
-					new DefensivePivotPlayerEvaluator(),
-					new DefensiveWingPlayerEvaluator(),
-					new DefensiveWingPlayerEvaluator(),
+					new PivotPlayerEvaluator(),
+					new WingPlayerEvaluator(),
+					new WingPlayerEvaluator(),
 					new BackPlayerEvaluator(),
-					new DefensiveBackPlayerEvaluator(),
-					new DefensiveBackPlayerEvaluator());
+					new BackPlayerEvaluator(),
+					new BackPlayerEvaluator());
 
 				System.out.println(formation1);
 
-				Formation formation2 = createFormation(
+				Formation formation2 = formationBuilder.create(
 					rooster.copy(),
 					new DefensivePivotPlayerEvaluator(),
 					new DefensiveWingPlayerEvaluator(),
@@ -89,6 +93,15 @@ public class MainFrame extends JFrame
 					new DefensiveBackPlayerEvaluator());
 
 				System.out.println(formation2);
+
+				new PaulsFormationBuilder().create(
+					rooster,
+					new PivotPlayerEvaluator(),
+					new WingPlayerEvaluator(),
+					new WingPlayerEvaluator(),
+					new BackPlayerEvaluator(),
+					new BackPlayerEvaluator(),
+					new BackPlayerEvaluator());
 			}
 		});
 
@@ -103,11 +116,11 @@ public class MainFrame extends JFrame
 		setVisible(true);
 	}
 
-	private static void printRooster(
-			Rooster rooster,
-			PlayerEvaluator[] evaluators)
+	private static void print(
+			Iterable<Player> players,
+			PlayerEvaluator... evaluators)
 	{
-		for (Player player : rooster)
+		for (Player player : players)
 		{
 			System.out.println(player);
 
@@ -122,24 +135,6 @@ public class MainFrame extends JFrame
 
 			System.out.println();
 		}
-	}
-
-	private static Formation createFormation(
-			Rooster rooster,
-			PlayerEvaluator pivotEvaluator,
-			PlayerEvaluator leftWingEvaluator,
-			PlayerEvaluator rightWingEvaluator,
-			PlayerEvaluator centerBackEvaluator,
-			PlayerEvaluator leftBackEvaluator,
-			PlayerEvaluator rightBackEvaluator)
-	{
-		return new Formation(
-				rooster.select(pivotEvaluator, Side.UNIVERSAL),
-				rooster.select(leftWingEvaluator, Side.LEFT),
-				rooster.select(rightWingEvaluator, Side.RIGHT),
-				rooster.select(centerBackEvaluator, Side.UNIVERSAL),
-				rooster.select(leftBackEvaluator, Side.LEFT),
-				rooster.select(rightBackEvaluator, Side.RIGHT));
 	}
 
 	public static void main(String[] args)
