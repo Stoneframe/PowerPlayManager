@@ -60,8 +60,9 @@ public class MainFrame extends JFrame
 				Rooster rooster = new PractiseRoosterParser()
 						.parseRooster(textArea.getText());
 
-				Collections.sort(rooster, new QualityComparator(
-						new GoalkeepingPlayerEvaluator()));
+				Collections.sort(
+					rooster,
+					new QualityComparator(new GoalkeepingPlayerEvaluator()));
 				Collections.reverse(rooster);
 
 				printPlayers(rooster, evaluators);
@@ -155,8 +156,11 @@ public class MainFrame extends JFrame
 			PlayerEvaluator evaluator,
 			Side side)
 	{
-		Player player = players.stream().filter(p -> p.getSide().equals(side))
-				.max(new RatingComparator(evaluator)).get();
+		Player player = players
+				.stream()
+				.filter(p -> p.getSide().equals(side))
+				.max(new RatingComparator(evaluator))
+				.get();
 
 		players.remove(player);
 
