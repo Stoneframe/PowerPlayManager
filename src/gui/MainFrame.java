@@ -60,8 +60,8 @@ public class MainFrame extends JFrame
 
 				printPlayers(
 					rooster.sort(
-							new QualityComparator(
-									new GoalkeepingPlayerEvaluator())),
+						new QualityComparator(
+								new GoalkeepingPlayerEvaluator())),
 					evaluators);
 			}
 		});
