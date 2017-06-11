@@ -4,7 +4,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -16,7 +15,7 @@ import javax.swing.SwingUtilities;
 import model.Formation;
 import model.Player;
 import model.PlayerEvaluator;
-import model.PlayerParser;
+import model.Rooster;
 import model.Side;
 import model.comparators.QualityComparator;
 import model.comparators.RatingComparator;
@@ -27,8 +26,8 @@ import model.evaluators.DefensiveWingPlayerEvaluator;
 import model.evaluators.GoalkeepingPlayerEvaluator;
 import model.evaluators.PivotPlayerEvaluator;
 import model.evaluators.WingPlayerEvaluator;
-import model.parsers.OverviewPlayerParser;
-import model.parsers.PractisePlayerParser;
+import model.parsers.OverviewRoosterParser;
+import model.parsers.PractiseRoosterParser;
 
 public class MainFrame extends JFrame
 {
@@ -58,16 +57,14 @@ public class MainFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				List<Player> players = parsePlayers(
-					textArea.getText(),
-					new PractisePlayerParser(),
-					evaluators);
+				Rooster rooster = new PractiseRoosterParser()
+						.parseRooster(textArea.getText());
 
-				Collections.sort(players, new QualityComparator(
+				Collections.sort(rooster, new QualityComparator(
 						new GoalkeepingPlayerEvaluator()));
-				Collections.reverse(players);
+				Collections.reverse(rooster);
 
-				printPlayers(players, evaluators);
+				printPlayers(rooster, evaluators);
 			}
 		});
 
@@ -76,13 +73,11 @@ public class MainFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				List<Player> players = parsePlayers(
-					textArea.getText(),
-					new OverviewPlayerParser(),
-					evaluators);
+				Rooster rooster = new OverviewRoosterParser()
+						.parseRooster(textArea.getText());
 
 				Formation formation1 = createFormation(
-					new LinkedList<Player>(players),
+					rooster.copy(),
 					new DefensivePivotPlayerEvaluator(),
 					new DefensiveWingPlayerEvaluator(),
 					new DefensiveWingPlayerEvaluator(),
@@ -93,7 +88,7 @@ public class MainFrame extends JFrame
 				System.out.println(formation1);
 
 				Formation formation2 = createFormation(
-					new LinkedList<Player>(players),
+					rooster.copy(),
 					new DefensivePivotPlayerEvaluator(),
 					new DefensiveWingPlayerEvaluator(),
 					new DefensiveWingPlayerEvaluator(),
@@ -114,14 +109,6 @@ public class MainFrame extends JFrame
 		pack();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
-	}
-
-	private static List<Player> parsePlayers(
-			String text,
-			PlayerParser parser,
-			PlayerEvaluator[] evaluators)
-	{
-		return parser.parsePlayers(text);
 	}
 
 	private static void printPlayers(

@@ -1,37 +1,15 @@
 package model.parsers;
 
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 import model.Attributes;
 import model.Player;
-import model.PlayerParser;
+import model.RoosterParser;
 import model.Rooster;
 import model.Side;
 
-public class PractisePlayerParser implements PlayerParser
+public class PractiseRoosterParser implements RoosterParser
 {
-	@Override
-	public List<Player> parsePlayers(String textToParse)
-	{
-		String[] lines = textToParse.replace("\n", "\t").split("\t");
-
-		List<Player> players = new LinkedList<Player>();
-
-		for (int i = 0; i < lines.length; i += 23)
-		{
-			Player player = new Player(
-					parseName(lines[i]),
-					Side.UNKNOWN,
-					parseAttributes(Arrays.copyOfRange(lines, i + 5, i + 20)));
-
-			players.add(player);
-		}
-
-		return players;
-	}
-
 	@Override
 	public Rooster parseRooster(String textToParse)
 	{
