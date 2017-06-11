@@ -43,10 +43,10 @@ public class MainFrame extends JFrame
 		{
 				new GoalkeepingPlayerEvaluator(),
 				new BackPlayerEvaluator(),
-				new DefensiveBackPlayerEvaluator(),
 				new PivotPlayerEvaluator(),
-				new DefensivePivotPlayerEvaluator(),
 				new WingPlayerEvaluator(),
+				new DefensiveBackPlayerEvaluator(),
+				new DefensivePivotPlayerEvaluator(),
 				new DefensiveWingPlayerEvaluator(),
 		};
 
