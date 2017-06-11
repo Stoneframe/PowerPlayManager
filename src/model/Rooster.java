@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import model.comparators.RatingComparator;
@@ -65,6 +66,22 @@ public class Rooster implements Iterable<Player>
 		players.remove(player);
 
 		return player;
+	}
+
+	public List<Player> selectSeveral(
+			PlayerEvaluator evaluator,
+			Side side,
+			int numberOfPlayers)
+	{
+		List<Player> selectedPlayers = players
+				.stream()
+				.filter(p -> p.getSide().equals(side))
+				.sorted(
+					(p1, p2) -> new RatingComparator(evaluator).compare(p2, p1))
+				.limit(numberOfPlayers)
+				.collect(Collectors.toList());
+
+		return Collections.unmodifiableList(selectedPlayers);
 	}
 
 	@Override
