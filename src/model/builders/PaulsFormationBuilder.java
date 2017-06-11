@@ -3,6 +3,7 @@ package model.builders;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import model.Formation;
 import model.FormationBuilder;
@@ -26,121 +27,110 @@ public class PaulsFormationBuilder implements FormationBuilder
 	{
 		Formation formation = new Formation();
 
-		List<Position> positions = new LinkedList<Position>();
-		positions.add(
-			new Position(
-					pivotEvaluator,
-					Side.UNIVERSAL,
-					roster,
-					new PositionAssigner()
-					{
-						public void assign(Player player)
-						{
-							formation.setPivot(player);
-						}
-					}));
-		positions.add(
-			new Position(
-					leftWingEvaluator,
-					Side.LEFT,
-					roster,
-					new PositionAssigner()
-					{
-						public void assign(Player player)
-						{
-							formation.setLeftWing(player);
-						}
-					}));
-		positions.add(
-			new Position(
-					rightWingEvaluator,
-					Side.RIGHT,
-					roster,
-					new PositionAssigner()
-					{
-						public void assign(Player player)
-						{
-							formation.setRightWing(player);
-						}
-					}));
-		positions.add(
-			new Position(
-					centerBackEvaluator,
-					Side.UNIVERSAL,
-					roster,
-					new PositionAssigner()
-					{
-						public void assign(Player player)
-						{
-							formation.setCenterBack(player);
-						}
-					}));
-		positions.add(
-			new Position(
-					leftBackEvaluator,
-					Side.LEFT,
-					roster,
-					new PositionAssigner()
-					{
-						public void assign(Player player)
-						{
-							formation.setLeftBack(player);
-						}
-					}));
-		positions.add(
-			new Position(
-					rightBackEvaluator,
-					Side.RIGHT,
-					roster,
-					new PositionAssigner()
-					{
-						public void assign(Player player)
-						{
-							formation.setRightBack(player);
-						}
-					}));
+		List<PositionAssigner> positions = createPositionAssigners(
+			roster,
+			pivotEvaluator,
+			leftWingEvaluator,
+			rightWingEvaluator,
+			centerBackEvaluator,
+			leftBackEvaluator,
+			rightBackEvaluator,
+			formation);
 
 		while (!positions.isEmpty())
 		{
 			Collections.sort(positions);
-			Position position = positions.remove(0);
-			position.assingPlayer();
+			PositionAssigner position = positions.remove(0);
+			position.assignPlayer();
 		}
 
 		return formation;
 	}
 
-	private class Position implements Comparable<Position>
+	private List<PositionAssigner> createPositionAssigners(
+			Roster roster,
+			PlayerEvaluator pivotEvaluator,
+			PlayerEvaluator leftWingEvaluator,
+			PlayerEvaluator rightWingEvaluator,
+			PlayerEvaluator centerBackEvaluator,
+			PlayerEvaluator leftBackEvaluator,
+			PlayerEvaluator rightBackEvaluator,
+			Formation formation)
+	{
+		List<PositionAssigner> positions = new LinkedList<PositionAssigner>();
+
+		positions.add(
+			new PositionAssigner(
+					roster,
+					pivotEvaluator,
+					Side.UNIVERSAL,
+					(player) -> formation.setPivot(player)));
+		positions.add(
+			new PositionAssigner(
+					roster,
+					leftWingEvaluator,
+					Side.LEFT,
+					(player) -> formation.setLeftWing(player)));
+		positions.add(
+			new PositionAssigner(
+					roster,
+					rightWingEvaluator,
+					Side.RIGHT,
+					(player) -> formation.setRightWing(player)));
+		positions.add(
+			new PositionAssigner(
+					roster,
+					centerBackEvaluator,
+					Side.UNIVERSAL,
+					(player) -> formation.setCenterBack(player)));
+		positions.add(
+			new PositionAssigner(
+					roster,
+					leftBackEvaluator,
+					Side.LEFT,
+					(player) -> formation.setLeftBack(player)));
+		positions.add(
+			new PositionAssigner(
+					roster,
+					rightBackEvaluator,
+					Side.RIGHT,
+					(player) -> formation.setRightBack(player)));
+
+		return positions;
+	}
+
+	private class PositionAssigner implements Comparable<PositionAssigner>
 	{
 		private PlayerEvaluator evaluator;
 		private Side side;
 		private Roster roster;
-		private PositionAssigner positionAssigner;
+		private Consumer<Player> assigner;
 
-		public Position(
+		public PositionAssigner(
+				Roster roster,
 				PlayerEvaluator evaluator,
 				Side side,
-				Roster roster,
-				PositionAssigner positionAssigner)
+				Consumer<Player> assigner)
 		{
 			this.evaluator = evaluator;
 			this.side = side;
 			this.roster = roster;
-			this.positionAssigner = positionAssigner;
+			this.assigner = assigner;
 		}
 
 		@Override
-		public int compareTo(Position other)
+		public int compareTo(PositionAssigner other)
 		{
 			return Double.compare(
 				other.evaluator.getRating(other.bestPlayer().getAttributes()),
 				this.evaluator.getRating(this.bestPlayer().getAttributes()));
 		}
 
-		public void assingPlayer()
+		public void assignPlayer()
 		{
-			positionAssigner.assign(bestPlayer());
-			roster.remove(bestPlayer());
+			Player player = bestPlayer();
+			assigner.accept(player);
+			roster.remove(player);
 		}
 
 		private Player bestPlayer()
@@ -153,10 +143,5 @@ public class PaulsFormationBuilder implements FormationBuilder
 
 			return player;
 		}
-	}
-
-	private interface PositionAssigner
-	{
-		public void assign(Player player);
 	}
 }

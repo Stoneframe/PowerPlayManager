@@ -12,11 +12,11 @@ public class GoalkeepingPlayerEvaluator extends PlayerEvaluator
 	private static final int BLK = 75;
 	private static final int PAS = 50;
 	private static final int TEC = 25;
-	private static final int SEP = 25;
+	private static final int SPE = 25;
 	private static final int AGR = 0;
 
 	public GoalkeepingPlayerEvaluator()
 	{
-		super(NAME, GOA, FIP, SHO, BLK, PAS, TEC, SEP, AGR);
+		super(NAME, GOA, FIP, SHO, BLK, PAS, TEC, SPE, AGR);
 	}
 }
