@@ -72,7 +72,7 @@ public class MainFrame extends JFrame
 				Rooster rooster = new PractiseProRoosterParser()
 						.parseRooster(textArea.getText());
 
-				printRooster(rooster, evaluators);
+				print(rooster, evaluators);
 			}
 		});
 		
