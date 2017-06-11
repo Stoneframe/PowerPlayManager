@@ -20,7 +20,7 @@ public class Rooster implements Iterable<Player>
 
 	private Rooster(List<Player> players)
 	{
-		players.addAll(players);
+		this.players.addAll(players);
 	}
 
 	public void add(Player player)

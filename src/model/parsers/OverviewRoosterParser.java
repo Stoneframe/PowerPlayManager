@@ -65,14 +65,14 @@ public class OverviewRoosterParser implements RoosterParser
 	{
 		Attributes attributes = new Attributes();
 
-		attributes.setGoa(Integer.parseInt(texts[0]));
-		attributes.setFip(Integer.parseInt(texts[1]));
-		attributes.setSho(Integer.parseInt(texts[2]));
-		attributes.setBlk(Integer.parseInt(texts[3]));
-		attributes.setPas(Integer.parseInt(texts[4]));
-		attributes.setTec(Integer.parseInt(texts[5]));
-		attributes.setSpe(Integer.parseInt(texts[6]));
-		attributes.setAgr(Integer.parseInt(texts[7]));
+		attributes.setGoa(Integer.parseInt(texts[0].trim()));
+		attributes.setFip(Integer.parseInt(texts[1].trim()));
+		attributes.setSho(Integer.parseInt(texts[2].trim()));
+		attributes.setBlk(Integer.parseInt(texts[3].trim()));
+		attributes.setPas(Integer.parseInt(texts[4].trim()));
+		attributes.setTec(Integer.parseInt(texts[5].trim()));
+		attributes.setSpe(Integer.parseInt(texts[6].trim()));
+		attributes.setAgr(Integer.parseInt(texts[7].trim()));
 
 		return attributes;
 	}
