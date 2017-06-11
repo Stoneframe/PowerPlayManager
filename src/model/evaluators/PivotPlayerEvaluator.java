@@ -2,8 +2,8 @@ package model.evaluators;
 
 import model.PlayerEvaluator;
 
-public class PivotPlayerEvaluator extends PlayerEvaluator {
-
+public class PivotPlayerEvaluator extends PlayerEvaluator
+{
 	private static final String NAME = "Pivot";
 
 	private static final int GOA = 0;
@@ -15,8 +15,8 @@ public class PivotPlayerEvaluator extends PlayerEvaluator {
 	private static final int SEP = 25;
 	private static final int AGR = 75;
 
-	public PivotPlayerEvaluator() {
+	public PivotPlayerEvaluator()
+	{
 		super(NAME, GOA, FIP, SHO, BLK, PAS, TEC, SEP, AGR);
 	}
-
 }

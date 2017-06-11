@@ -1,7 +1,7 @@
 package model;
 
-public class Formation {
-
+public class Formation
+{
 	private Player pivot;
 	private Player leftWing;
 	private Player rightWing;
@@ -15,8 +15,8 @@ public class Formation {
 			Player rightWing,
 			Player centerBack,
 			Player leftBack,
-			Player rightBack) {
-
+			Player rightBack)
+	{
 		this.pivot = pivot;
 		this.leftWing = leftWing;
 		this.rightWing = rightWing;
@@ -25,40 +25,47 @@ public class Formation {
 		this.rightBack = rightBack;
 	}
 
-	public Player getPivot() {
+	public Player getPivot()
+	{
 		return pivot;
 	}
 
-	public Player getLeftWing() {
+	public Player getLeftWing()
+	{
 		return leftWing;
 	}
 
-	public Player getRightWing() {
+	public Player getRightWing()
+	{
 		return rightWing;
 	}
-	
-	public Player getCenterBack() {
+
+	public Player getCenterBack()
+	{
 		return centerBack;
 	}
 
-	public Player getLeftBack() {
+	public Player getLeftBack()
+	{
 		return leftBack;
 	}
 
-	public Player getRightBack() {
+	public Player getRightBack()
+	{
 		return rightBack;
 	}
-	
-	@Override
-	public String toString() {
-		return String.format(
-			"Pivot: %s\nLeft Wing: %s\nRight Wing: %s\nCenter Back: %s\nLeft Back: %s\nRight Back: %s\n",
-			pivot.getName(),
-			leftWing.getName(),
-			rightWing.getName(),
-			centerBack.getName(),
-			leftBack.getName(),
-			rightBack.getName());
-	}
 
+	@Override
+	public String toString()
+	{
+		return String
+				.format(
+					"Pivot: %s\nLeft Wing: %s\nRight Wing: %s\nCenter Back: %s\nLeft Back: %s\nRight Back: %s\n",
+					pivot.getName(),
+					leftWing.getName(),
+					rightWing.getName(),
+					centerBack.getName(),
+					leftBack.getName(),
+					rightBack.getName());
+	}
 }

@@ -7,41 +7,62 @@ import java.util.List;
 import model.Attributes;
 import model.Player;
 import model.PlayerParser;
+import model.Rooster;
 import model.Side;
 
-public class PractisePlayerParser implements PlayerParser {
-
+public class PractisePlayerParser implements PlayerParser
+{
 	@Override
-	public List<Player> parsePlayers(String textToParse) {
-		String[] lines = textToParse
-				.replace("\n", "\t")
-				.split("\t");
-		
+	public List<Player> parsePlayers(String textToParse)
+	{
+		String[] lines = textToParse.replace("\n", "\t").split("\t");
+
 		List<Player> players = new LinkedList<Player>();
 
-		for (int i = 0; i < lines.length; i += 23) {
+		for (int i = 0; i < lines.length; i += 23)
+		{
 			Player player = new Player(
-				parseName(lines[i]),
-				Side.UNKNOWN,
-				parseAttributes(Arrays.copyOfRange(lines, i+5, i+20)));
+					parseName(lines[i]),
+					Side.UNKNOWN,
+					parseAttributes(Arrays.copyOfRange(lines, i + 5, i + 20)));
 
 			players.add(player);
 		}
-		
+
 		return players;
 	}
 
-	private static String parseName(String text) {		
-		String[] split = text.split(" ");
+	@Override
+	public Rooster parseRooster(String textToParse)
+	{
+		String[] lines = textToParse.replace("\n", "\t").split("\t");
 
-		return String.format("%s %s",
-			split[1],
-			split[2]);
+		Rooster rooster = new Rooster();
+
+		for (int i = 0; i < lines.length; i += 23)
+		{
+			Player player = new Player(
+					parseName(lines[i]),
+					Side.UNKNOWN,
+					parseAttributes(Arrays.copyOfRange(lines, i + 5, i + 20)));
+
+			rooster.add(player);
+		}
+
+		return rooster;
 	}
 
-	private static Attributes parseAttributes(String[] texts) {
+	private static String parseName(String text)
+	{
+		String[] split = text.split(" ");
+
+		return String.format("%s %s", split[1], split[2]);
+	}
+
+	private static Attributes parseAttributes(String[] texts)
+	{
 		Attributes attributes = new Attributes();
-		
+
 		attributes.setGoa(Integer.parseInt(texts[0].substring(0, 2)));
 		attributes.setQGoa(Integer.parseInt(texts[0].substring(2, 4)));
 
@@ -68,5 +89,4 @@ public class PractisePlayerParser implements PlayerParser {
 
 		return attributes;
 	}
-	
 }

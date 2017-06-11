@@ -1,7 +1,7 @@
 package model;
 
-public class Attributes {
-
+public class Attributes
+{
 	private int goa;
 	private int fip;
 	private int sho;
@@ -10,7 +10,7 @@ public class Attributes {
 	private int tec;
 	private int spe;
 	private int agr;
-	
+
 	private int qGoa;
 	private int qFip;
 	private int qSho;
@@ -20,153 +20,187 @@ public class Attributes {
 	private int qSpe;
 	private int qAgr;
 
-	public int getGoa() {
+	public int getGoa()
+	{
 		return goa;
 	}
 
-	public void setGoa(int goa) {
+	public void setGoa(int goa)
+	{
 		this.goa = goa;
 	}
 
-	public int getFip() {
+	public int getFip()
+	{
 		return fip;
 	}
 
-	public void setFip(int fip) {
+	public void setFip(int fip)
+	{
 		this.fip = fip;
 	}
 
-	public int getSho() {
+	public int getSho()
+	{
 		return sho;
 	}
 
-	public void setSho(int sho) {
+	public void setSho(int sho)
+	{
 		this.sho = sho;
 	}
 
-	public int getBlk() {
+	public int getBlk()
+	{
 		return blk;
 	}
 
-	public void setBlk(int blk) {
+	public void setBlk(int blk)
+	{
 		this.blk = blk;
 	}
 
-	public int getPas() {
+	public int getPas()
+	{
 		return pas;
 	}
 
-	public void setPas(int pas) {
+	public void setPas(int pas)
+	{
 		this.pas = pas;
 	}
 
-	public int getTec() {
+	public int getTec()
+	{
 		return tec;
 	}
 
-	public void setTec(int tec) {
+	public void setTec(int tec)
+	{
 		this.tec = tec;
 	}
 
-	public int getSpe() {
+	public int getSpe()
+	{
 		return spe;
 	}
 
-	public void setSpe(int spe) {
+	public void setSpe(int spe)
+	{
 		this.spe = spe;
 	}
 
-	public int getAgr() {
+	public int getAgr()
+	{
 		return agr;
 	}
 
-	public void setAgr(int agr) {
+	public void setAgr(int agr)
+	{
 		this.agr = agr;
 	}
 
-	public int getQGoa() {
+	public int getQGoa()
+	{
 		return qGoa;
 	}
 
-	public void setQGoa(int qGoa) {
+	public void setQGoa(int qGoa)
+	{
 		this.qGoa = qGoa;
 	}
 
-	public int getQFip() {
+	public int getQFip()
+	{
 		return qFip;
 	}
 
-	public void setQFip(int qFip) {
+	public void setQFip(int qFip)
+	{
 		this.qFip = qFip;
 	}
 
-	public int getQSho() {
+	public int getQSho()
+	{
 		return qSho;
 	}
 
-	public void setQSho(int qSho) {
+	public void setQSho(int qSho)
+	{
 		this.qSho = qSho;
 	}
 
-	public int getQBlk() {
+	public int getQBlk()
+	{
 		return qBlk;
 	}
 
-	public void setQBlk(int qBlk) {
+	public void setQBlk(int qBlk)
+	{
 		this.qBlk = qBlk;
 	}
 
-	public int getQPas() {
+	public int getQPas()
+	{
 		return qPas;
 	}
 
-	public void setQPas(int qPas) {
+	public void setQPas(int qPas)
+	{
 		this.qPas = qPas;
 	}
 
-	public int getQTec() {
+	public int getQTec()
+	{
 		return qTec;
 	}
 
-	public void setQTec(int qTec) {
+	public void setQTec(int qTec)
+	{
 		this.qTec = qTec;
 	}
 
-	public int getQSpe() {
+	public int getQSpe()
+	{
 		return qSpe;
 	}
 
-	public void setQSpe(int qSpe) {
+	public void setQSpe(int qSpe)
+	{
 		this.qSpe = qSpe;
 	}
 
-	public int getQAgr() {
+	public int getQAgr()
+	{
 		return qAgr;
 	}
 
-	public void setQAgr(int qAgr) {
+	public void setQAgr(int qAgr)
+	{
 		this.qAgr = qAgr;
 	}
-	
+
 	@Override
-	public String toString() {
-		return String.format(
-			"\tGoa: %d(%d)\n" +
-			"\tFip: %d(%d)\n" +
-			"\tSho: %d(%d)\n" +
-			"\tBlk: %d(%d)\n" +
-			"\tPas: %d(%d)\n" +
-			"\tTec: %d(%d)\n" +
-			"\tSpe: %d(%d)\n" +
-			"\tAgr: %d(%d)\n",
-			goa, qGoa,
-			fip, qFip,
-			sho, qSho,
-			blk, qBlk,
-			pas, qPas,
-			tec, qTec,
-			spe, qSpe,
-			agr, qAgr);
+	public String toString()
+	{
+		return String
+				.format(
+					"\tGoa: %d(%d)\n\tFip: %d(%d)\n\tSho: %d(%d)\n\tBlk: %d(%d)\n\tPas: %d(%d)\n\tTec: %d(%d)\n\tSpe: %d(%d)\n\tAgr: %d(%d)\n",
+					goa,
+					qGoa,
+					fip,
+					qFip,
+					sho,
+					qSho,
+					blk,
+					qBlk,
+					pas,
+					qPas,
+					tec,
+					qTec,
+					spe,
+					qSpe,
+					agr,
+					qAgr);
 	}
-	
 }

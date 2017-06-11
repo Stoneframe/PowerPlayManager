@@ -2,8 +2,9 @@ package model;
 
 import java.util.List;
 
-public interface PlayerParser {
-
+public interface PlayerParser
+{
 	public List<Player> parsePlayers(String textToParse);
-	
+
+	public Rooster parseRooster(String textToParse);
 }

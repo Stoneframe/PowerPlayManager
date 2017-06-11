@@ -1,10 +1,9 @@
 package model;
 
-
-public abstract class PlayerEvaluator {
-	
+public abstract class PlayerEvaluator
+{
 	private String name;
-	
+
 	private double goa;
 	private double fip;
 	private double sho;
@@ -13,7 +12,7 @@ public abstract class PlayerEvaluator {
 	private double tec;
 	private double spe;
 	private double agr;
-	
+
 	public PlayerEvaluator(
 			String name,
 			double goa,
@@ -23,7 +22,8 @@ public abstract class PlayerEvaluator {
 			double pas,
 			double tec,
 			double spe,
-			double agr) {
+			double agr)
+	{
 		this.name = name;
 		this.goa = goa;
 		this.fip = fip;
@@ -34,12 +34,15 @@ public abstract class PlayerEvaluator {
 		this.spe = spe;
 		this.agr = agr;
 	}
-	
-	public String getName() {
+
+	public String getName()
+	{
 		return name;
 	}
 
-	public double getRating(Attributes attributes) {
+	public double getRating(Attributes attributes)
+	{
+		// @formatter:off
 		return (goa * attributes.getGoa() +
 			    fip * attributes.getFip() +
 			    sho * attributes.getSho() +
@@ -49,9 +52,12 @@ public abstract class PlayerEvaluator {
 			    spe * attributes.getSpe() +
 			    agr * attributes.getAgr())
 			    / (goa + fip + sho + blk + pas + tec + spe + agr);
+		// @formatter:on
 	}
-	
-	public double getQuality(Attributes attributes) {
+
+	public double getQuality(Attributes attributes)
+	{
+		// @formatter:off
 		return (goa + fip + sho + blk + pas + tec + spe + agr) /
 				(goa / attributes.getQGoa() +
 				 fip / attributes.getQFip() +
@@ -61,6 +67,6 @@ public abstract class PlayerEvaluator {
 				 tec / attributes.getQTec() +
 				 spe / attributes.getQSpe() +
 				 agr / attributes.getQAgr());
+		// @formatter:on
 	}
-
 }

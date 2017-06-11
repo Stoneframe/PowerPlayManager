@@ -30,16 +30,18 @@ import model.evaluators.WingPlayerEvaluator;
 import model.parsers.OverviewPlayerParser;
 import model.parsers.PractisePlayerParser;
 
-public class MainFrame extends JFrame {
-
+public class MainFrame extends JFrame
+{
 	private static final long serialVersionUID = -8026416994513756565L;
 
 	private JTextArea textArea;
 	private JButton practiseParseButton;
 	private JButton overviewParseButton;
 
-	public MainFrame() {
-		PlayerEvaluator[] evaluators = new PlayerEvaluator[] {
+	public MainFrame()
+	{
+		PlayerEvaluator[] evaluators = new PlayerEvaluator[]
+		{
 				new GoalkeepingPlayerEvaluator(),
 				new BackPlayerEvaluator(),
 				new DefensiveBackPlayerEvaluator(),
@@ -52,16 +54,17 @@ public class MainFrame extends JFrame {
 		textArea = new JTextArea(2, 25);
 
 		practiseParseButton = new JButton("Practise Parse");
-		practiseParseButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		practiseParseButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 				List<Player> players = parsePlayers(
 					textArea.getText(),
 					new PractisePlayerParser(),
 					evaluators);
-				
-				Collections.sort(
-					players,
-					new QualityComparator(new GoalkeepingPlayerEvaluator()));
+
+				Collections.sort(players, new QualityComparator(
+						new GoalkeepingPlayerEvaluator()));
 				Collections.reverse(players);
 
 				printPlayers(players, evaluators);
@@ -69,8 +72,10 @@ public class MainFrame extends JFrame {
 		});
 
 		overviewParseButton = new JButton("Overview Parse");
-		overviewParseButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		overviewParseButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 				List<Player> players = parsePlayers(
 					textArea.getText(),
 					new OverviewPlayerParser(),
@@ -84,9 +89,9 @@ public class MainFrame extends JFrame {
 					new BackPlayerEvaluator(),
 					new DefensiveBackPlayerEvaluator(),
 					new DefensiveBackPlayerEvaluator());
-				
+
 				System.out.println(formation1);
-				
+
 				Formation formation2 = createFormation(
 					new LinkedList<Player>(players),
 					new DefensivePivotPlayerEvaluator(),
@@ -95,7 +100,7 @@ public class MainFrame extends JFrame {
 					new BackPlayerEvaluator(),
 					new DefensiveBackPlayerEvaluator(),
 					new DefensiveBackPlayerEvaluator());
-				
+
 				System.out.println(formation2);
 			}
 		});
@@ -110,29 +115,32 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
-	
+
 	private static List<Player> parsePlayers(
 			String text,
 			PlayerParser parser,
-			PlayerEvaluator[] evaluators) {
-
+			PlayerEvaluator[] evaluators)
+	{
 		return parser.parsePlayers(text);
 	}
 
 	private static void printPlayers(
 			List<Player> players,
-			PlayerEvaluator[] evaluators) {
-
-		for (Player player : players) {
+			PlayerEvaluator[] evaluators)
+	{
+		for (Player player : players)
+		{
 			System.out.println(player);
-			
-			for (PlayerEvaluator position : evaluators) {
-				System.out.println(String.format("%s: %.1f(%.1f)",
+
+			for (PlayerEvaluator position : evaluators)
+			{
+				System.out.println(String.format(
+					"%s: %.1f(%.1f)",
 					position.getName(),
 					position.getRating(player.getAttributes()),
 					position.getQuality(player.getAttributes())));
 			}
-			
+
 			System.out.println();
 		}
 	}
@@ -144,38 +152,38 @@ public class MainFrame extends JFrame {
 			PlayerEvaluator rightWingEvaluator,
 			PlayerEvaluator centerBackEvaluator,
 			PlayerEvaluator leftBackEvaluator,
-			PlayerEvaluator rightBackEvaluator) {
-
+			PlayerEvaluator rightBackEvaluator)
+	{
 		return new Formation(
-			select(players, pivotEvaluator, Side.UNIVERSAL),
-			select(players, leftWingEvaluator, Side.LEFT),
-			select(players, rightWingEvaluator, Side.RIGHT),
-			select(players, centerBackEvaluator, Side.UNIVERSAL),
-			select(players, leftBackEvaluator, Side.LEFT),
-			select(players, rightBackEvaluator, Side.RIGHT));
+				select(players, pivotEvaluator, Side.UNIVERSAL),
+				select(players, leftWingEvaluator, Side.LEFT),
+				select(players, rightWingEvaluator, Side.RIGHT),
+				select(players, centerBackEvaluator, Side.UNIVERSAL),
+				select(players, leftBackEvaluator, Side.LEFT),
+				select(players, rightBackEvaluator, Side.RIGHT));
 	}
-	
+
 	private static Player select(
 			List<Player> players,
 			PlayerEvaluator evaluator,
-			Side side) {
-		
-		Player player = players.stream()
-				.filter(p -> p.getSide().equals(side))
-				.max(new RatingComparator(evaluator))
-				.get();
-		
+			Side side)
+	{
+		Player player = players.stream().filter(p -> p.getSide().equals(side))
+				.max(new RatingComparator(evaluator)).get();
+
 		players.remove(player);
-		
+
 		return player;
 	}
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
+	public static void main(String[] args)
+	{
+		SwingUtilities.invokeLater(new Runnable()
+		{
+			public void run()
+			{
 				new MainFrame();
 			}
 		});
 	}
-
 }

@@ -2,8 +2,8 @@ package model.evaluators;
 
 import model.PlayerEvaluator;
 
-public class WingPlayerEvaluator extends PlayerEvaluator {
-
+public class WingPlayerEvaluator extends PlayerEvaluator
+{
 	private static final String NAME = "Wing";
 
 	private static final int GOA = 0;
@@ -15,8 +15,8 @@ public class WingPlayerEvaluator extends PlayerEvaluator {
 	private static final int SEP = 75;
 	private static final int AGR = 25;
 
-	public WingPlayerEvaluator() {
+	public WingPlayerEvaluator()
+	{
 		super(NAME, GOA, FIP, SHO, BLK, PAS, TEC, SEP, AGR);
 	}
-
 }

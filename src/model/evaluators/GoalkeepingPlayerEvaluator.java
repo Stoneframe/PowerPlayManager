@@ -2,8 +2,8 @@ package model.evaluators;
 
 import model.PlayerEvaluator;
 
-public class GoalkeepingPlayerEvaluator extends PlayerEvaluator {
-
+public class GoalkeepingPlayerEvaluator extends PlayerEvaluator
+{
 	private static final String NAME = "Goalkeeping";
 
 	private static final int GOA = 100;
@@ -15,8 +15,8 @@ public class GoalkeepingPlayerEvaluator extends PlayerEvaluator {
 	private static final int SEP = 25;
 	private static final int AGR = 0;
 
-	public GoalkeepingPlayerEvaluator() {
+	public GoalkeepingPlayerEvaluator()
+	{
 		super(NAME, GOA, FIP, SHO, BLK, PAS, TEC, SEP, AGR);
 	}
-
 }

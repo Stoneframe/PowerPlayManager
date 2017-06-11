@@ -2,8 +2,8 @@ package model.evaluators;
 
 import model.PlayerEvaluator;
 
-public class BackPlayerEvaluator extends PlayerEvaluator {
-
+public class BackPlayerEvaluator extends PlayerEvaluator
+{
 	private static final String NAME = "Back";
 
 	private static final int GOA = 0;
@@ -15,8 +15,8 @@ public class BackPlayerEvaluator extends PlayerEvaluator {
 	private static final int SEP = 25;
 	private static final int AGR = 25;
 
-	public BackPlayerEvaluator() {
+	public BackPlayerEvaluator()
+	{
 		super(NAME, GOA, FIP, SHO, BLK, PAS, TEC, SEP, AGR);
 	}
-
 }
