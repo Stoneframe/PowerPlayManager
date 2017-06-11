@@ -63,7 +63,7 @@ public class MainFrame extends JFrame
 				print(rooster, evaluators);
 			}
 		});
-		
+
 		practiseProParseButton = new JButton("Practise (Pro) Parse");
 		practiseProParseButton.addActionListener(new ActionListener()
 		{
@@ -75,7 +75,7 @@ public class MainFrame extends JFrame
 				print(rooster, evaluators);
 			}
 		});
-		
+
 		overviewParseButton = new JButton("Overview Parse");
 		overviewParseButton.addActionListener(new ActionListener()
 		{

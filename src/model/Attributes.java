@@ -185,7 +185,6 @@ public class Attributes
 	{
 		return String
 				.format(
-					//"\tGoa: %d(%d)\n\tFip: %d(%d)\n\tSho: %d(%d)\n\tBlk: %d(%d)\n\tPas: %d(%d)\n\tTec: %d(%d)\n\tSpe: %d(%d)\n\tAgr: %d(%d)\n",
 					"\tGoa: %d(%d)\tFip: %d(%d)\tSho: %d(%d)\tBlk: %d(%d)\tPas: %d(%d)\tTec: %d(%d)\tSpe: %d(%d)\tAgr: %d(%d)\n",
 					goa,
 					qGoa,
