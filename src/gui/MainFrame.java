@@ -115,21 +115,21 @@ public class MainFrame extends JFrame
 
 				Formation defFormation1 = formationBuilder.createFormation(
 					defRoster,
-					new OffensivePivotPlayerEvaluator(),
-					new OffensiveWingPlayerEvaluator(),
-					new OffensiveWingPlayerEvaluator(),
-					new OffensiveBackPlayerEvaluator(),
-					new OffensiveBackPlayerEvaluator(),
-					new OffensiveBackPlayerEvaluator());
+					new DefensivePivotPlayerEvaluator(),
+					new DefensiveWingPlayerEvaluator(),
+					new DefensiveWingPlayerEvaluator(),
+					new DefensiveBackPlayerEvaluator(),
+					new DefensiveBackPlayerEvaluator(),
+					new DefensiveBackPlayerEvaluator());
 
 				Formation defFormation2 = formationBuilder.createFormation(
 					defRoster,
-					new OffensivePivotPlayerEvaluator(),
-					new OffensiveWingPlayerEvaluator(),
-					new OffensiveWingPlayerEvaluator(),
-					new OffensiveBackPlayerEvaluator(),
-					new OffensiveBackPlayerEvaluator(),
-					new OffensiveBackPlayerEvaluator());
+					new DefensivePivotPlayerEvaluator(),
+					new DefensiveWingPlayerEvaluator(),
+					new DefensiveWingPlayerEvaluator(),
+					new DefensiveBackPlayerEvaluator(),
+					new DefensiveBackPlayerEvaluator(),
+					new DefensiveBackPlayerEvaluator());
 
 				System.out.println(
 					"Offensive formation 1:\n" + offFormation1);
