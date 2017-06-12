@@ -3,7 +3,6 @@ package model.builders;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
 
 import model.Formation;
 import model.FormationBuilder;
@@ -16,7 +15,7 @@ import model.comparators.RatingComparator;
 public class PaulsFormationBuilder implements FormationBuilder
 {
 	@Override
-	public Formation create(
+	public Formation createFormation(
 			Roster roster,
 			PlayerEvaluator pivotEvaluator,
 			PlayerEvaluator leftWingEvaluator,
@@ -40,8 +39,8 @@ public class PaulsFormationBuilder implements FormationBuilder
 		while (!positions.isEmpty())
 		{
 			Collections.sort(positions);
-			PositionAssigner position = positions.remove(0);
-			position.assignPlayer();
+			PositionAssigner assigner = positions.remove(0);
+			assigner.assignPosition();
 		}
 
 		return formation;
@@ -104,36 +103,36 @@ public class PaulsFormationBuilder implements FormationBuilder
 		private PlayerEvaluator evaluator;
 		private Side side;
 		private Roster roster;
-		private Consumer<Player> assigner;
+		private AssignAction assignAction;
 
 		public PositionAssigner(
 				Roster roster,
 				PlayerEvaluator evaluator,
 				Side side,
-				Consumer<Player> assigner)
+				AssignAction assignAction)
 		{
 			this.evaluator = evaluator;
 			this.side = side;
 			this.roster = roster;
-			this.assigner = assigner;
+			this.assignAction = assignAction;
 		}
 
 		@Override
 		public int compareTo(PositionAssigner other)
 		{
 			return Double.compare(
-				other.evaluator.getRating(other.bestPlayer().getAttributes()),
-				this.evaluator.getRating(this.bestPlayer().getAttributes()));
+				other.evaluator.getRating(other.preferedPlayer().getAttributes()),
+				this.evaluator.getRating(this.preferedPlayer().getAttributes()));
 		}
 
-		public void assignPlayer()
+		public void assignPosition()
 		{
-			Player player = bestPlayer();
-			assigner.accept(player);
+			Player player = preferedPlayer();
+			assignAction.assignPosition(player);
 			roster.remove(player);
 		}
 
-		private Player bestPlayer()
+		private Player preferedPlayer()
 		{
 			Player player = roster
 					.stream()
@@ -143,5 +142,10 @@ public class PaulsFormationBuilder implements FormationBuilder
 
 			return player;
 		}
+	}
+
+	private interface AssignAction
+	{
+		public void assignPosition(Player player);
 	}
 }

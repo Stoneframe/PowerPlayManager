@@ -93,7 +93,7 @@ public class MainFrame extends JFrame
 
 				Roster offRoster = roster.copy();
 
-				Formation offFormation1 = formationBuilder.create(
+				Formation offFormation1 = formationBuilder.createFormation(
 					offRoster,
 					new OffensivePivotPlayerEvaluator(),
 					new OffensiveWingPlayerEvaluator(),
@@ -102,7 +102,7 @@ public class MainFrame extends JFrame
 					new OffensiveBackPlayerEvaluator(),
 					new OffensiveBackPlayerEvaluator());
 
-				Formation offFormation2 = formationBuilder.create(
+				Formation offFormation2 = formationBuilder.createFormation(
 					offRoster,
 					new OffensivePivotPlayerEvaluator(),
 					new OffensiveWingPlayerEvaluator(),
@@ -113,7 +113,7 @@ public class MainFrame extends JFrame
 
 				Roster defRoster = roster.copy();
 
-				Formation defFormation1 = formationBuilder.create(
+				Formation defFormation1 = formationBuilder.createFormation(
 					defRoster,
 					new OffensivePivotPlayerEvaluator(),
 					new OffensiveWingPlayerEvaluator(),
@@ -122,7 +122,7 @@ public class MainFrame extends JFrame
 					new OffensiveBackPlayerEvaluator(),
 					new OffensiveBackPlayerEvaluator());
 
-				Formation defFormation2 = formationBuilder.create(
+				Formation defFormation2 = formationBuilder.createFormation(
 					defRoster,
 					new OffensivePivotPlayerEvaluator(),
 					new OffensiveWingPlayerEvaluator(),

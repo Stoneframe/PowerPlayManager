@@ -11,7 +11,7 @@ import model.comparators.RatingComparator;
 public class DumbFormationBuilder implements FormationBuilder
 {
 	@Override
-	public Formation create(
+	public Formation createFormation(
 			Roster roster,
 			PlayerEvaluator pivotEvaluator,
 			PlayerEvaluator leftWingEvaluator,
