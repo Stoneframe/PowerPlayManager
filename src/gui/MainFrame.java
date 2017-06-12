@@ -93,16 +93,7 @@ public class MainFrame extends JFrame
 
 				Roster offRoster = roster.copy();
 
-				Formation offFormation1 = formationBuilder.createFormation(
-					offRoster,
-					new OffensivePivotPlayerEvaluator(),
-					new OffensiveWingPlayerEvaluator(),
-					new OffensiveWingPlayerEvaluator(),
-					new OffensiveBackPlayerEvaluator(),
-					new OffensiveBackPlayerEvaluator(),
-					new OffensiveBackPlayerEvaluator());
-
-				Formation offFormation2 = formationBuilder.createFormation(
+				Formation offFormation = formationBuilder.createFormation(
 					offRoster,
 					new OffensivePivotPlayerEvaluator(),
 					new OffensiveWingPlayerEvaluator(),
@@ -113,7 +104,7 @@ public class MainFrame extends JFrame
 
 				Roster defRoster = roster.copy();
 
-				Formation defFormation1 = formationBuilder.createFormation(
+				Formation defFormation = formationBuilder.createFormation(
 					defRoster,
 					new DefensivePivotPlayerEvaluator(),
 					new DefensiveWingPlayerEvaluator(),
@@ -122,23 +113,23 @@ public class MainFrame extends JFrame
 					new DefensiveBackPlayerEvaluator(),
 					new DefensiveBackPlayerEvaluator());
 
-				Formation defFormation2 = formationBuilder.createFormation(
-					defRoster,
-					new DefensivePivotPlayerEvaluator(),
-					new DefensiveWingPlayerEvaluator(),
-					new DefensiveWingPlayerEvaluator(),
-					new DefensiveBackPlayerEvaluator(),
-					new DefensiveBackPlayerEvaluator(),
-					new DefensiveBackPlayerEvaluator());
+				Roster subRoster = Roster.intersection(offRoster, defRoster);
+
+				Formation subFormation = formationBuilder.createFormation(
+					subRoster,
+					new PivotPlayerEvaluator(),
+					new WingPlayerEvaluator(),
+					new WingPlayerEvaluator(),
+					new BackPlayerEvaluator(),
+					new BackPlayerEvaluator(),
+					new BackPlayerEvaluator());
 
 				System.out.println(
-					"Offensive formation 1:\n" + offFormation1);
+					"Offensive formation:\n" + offFormation);
 				System.out.println(
-					"Offensive formation 2:\n" + offFormation2);
+					"Defensive formation:\n" + defFormation);
 				System.out.println(
-					"Defensive formation 1:\n" + defFormation1);
-				System.out.println(
-					"Defensive formation 2:\n" + defFormation2);
+					"Substituion formation:\n" + subFormation);
 			}
 		});
 
