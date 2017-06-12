@@ -9,6 +9,13 @@ import java.util.stream.Stream;
 
 public class Roster implements Iterable<Player>
 {
+	public static Roster intersection(Roster r1, Roster r2)
+	{
+		Roster intr = r1.copy();
+		intr.players.retainAll(r2.players);
+		return intr;
+	}
+
 	private List<Player> players = new LinkedList<Player>();
 
 	public Roster()
