@@ -37,6 +37,11 @@ public class Roster implements Iterable<Player>
 		players.remove(player);
 	}
 
+	public int size()
+	{
+		return players.size();
+	}
+
 	public Roster copy()
 	{
 		return new Roster(players);
@@ -55,6 +60,11 @@ public class Roster implements Iterable<Player>
 		Collections.reverse(copy);
 
 		return Collections.unmodifiableList(copy);
+	}
+
+	public Player[] toArray()
+	{
+		return players.toArray(new Player[0]);
 	}
 
 	@Override

@@ -1,13 +1,8 @@
 package gui;
 
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 import model.Formation;
@@ -26,18 +21,13 @@ import model.evaluators.OffensivePivotPlayerEvaluator;
 import model.evaluators.OffensiveWingPlayerEvaluator;
 import model.evaluators.PivotPlayerEvaluator;
 import model.evaluators.WingPlayerEvaluator;
-import model.parsers.OverviewRosterParser;
-import model.parsers.PractiseProRosterParser;
-import model.parsers.PractiseRosterParser;
 
 public class MainFrame extends JFrame
 {
 	private static final long serialVersionUID = -8026416994513756565L;
 
-	private JTextArea textArea;
-	private JButton practiseParseButton;
-	private JButton practiseProParseButton;
-	private JButton overviewParseButton;
+	private ParsePanel parsePanel;
+	private RosterTablePanel rosterTablePanel;
 
 	public MainFrame()
 	{
@@ -55,39 +45,30 @@ public class MainFrame extends JFrame
 				new OffensiveWingPlayerEvaluator(),
 		};
 
-		textArea = new JTextArea(2, 25);
-
-		practiseParseButton = new JButton("Practise Parse");
-		practiseParseButton.addActionListener(new ActionListener()
+		parsePanel = new ParsePanel();
+		parsePanel.setParsePractiseListener(new RosterParsedListener()
 		{
-			public void actionPerformed(ActionEvent e)
+			public void rosterParsed(Object source, RosterParsedEvent event)
 			{
-				Roster rooster = new PractiseRosterParser()
-						.parseRoster(textArea.getText());
-
-				print(rooster, evaluators);
+				rosterTablePanel.showRoster(event.getRoster());
+				print(event.getRoster(), evaluators);
 			}
 		});
-
-		practiseProParseButton = new JButton("Practise (Pro) Parse");
-		practiseProParseButton.addActionListener(new ActionListener()
+		parsePanel.setParseProPractiseListener(new RosterParsedListener()
 		{
-			public void actionPerformed(ActionEvent e)
+			public void rosterParsed(Object source, RosterParsedEvent event)
 			{
-				Roster rooster = new PractiseProRosterParser()
-						.parseRoster(textArea.getText());
-
-				print(rooster, evaluators);
+				rosterTablePanel.showRoster(event.getRoster());
+				print(event.getRoster(), evaluators);
 			}
 		});
-
-		overviewParseButton = new JButton("Overview Parse");
-		overviewParseButton.addActionListener(new ActionListener()
+		parsePanel.setParseOverviewListener(new RosterParsedListener()
 		{
-			public void actionPerformed(ActionEvent e)
+			public void rosterParsed(Object source, RosterParsedEvent event)
 			{
-				Roster roster = new OverviewRosterParser()
-						.parseRoster(textArea.getText());
+				rosterTablePanel.showRoster(event.getRoster());
+
+				Roster roster = event.getRoster();
 
 				FormationBuilder formationBuilder = new PaulsFormationBuilder();
 
@@ -125,20 +106,20 @@ public class MainFrame extends JFrame
 					new BackPlayerEvaluator());
 
 				System.out.println(
-					"Offensive formation:\n" + offFormation);
+						"Offensive formation:\n" + offFormation);
 				System.out.println(
-					"Defensive formation:\n" + defFormation);
+						"Defensive formation:\n" + defFormation);
 				System.out.println(
-					"Substituion formation:\n" + subFormation);
+						"Substituion formation:\n" + subFormation);
 			}
 		});
 
-		setLayout(new FlowLayout());
+		rosterTablePanel = new RosterTablePanel();
 
-		add(new JScrollPane(textArea));
-		add(practiseParseButton);
-		add(practiseProParseButton);
-		add(overviewParseButton);
+		setLayout(new BorderLayout());
+
+		add(parsePanel, BorderLayout.NORTH);
+		add(rosterTablePanel, BorderLayout.CENTER);
 
 		pack();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

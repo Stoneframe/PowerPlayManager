@@ -59,41 +59,41 @@ public class PaulsFormationBuilder implements FormationBuilder
 		List<PositionAssigner> positions = new LinkedList<PositionAssigner>();
 
 		positions.add(
-			new PositionAssigner(
-					roster,
-					pivotEvaluator,
-					Side.UNIVERSAL,
-					(player) -> formation.setPivot(player)));
+				new PositionAssigner(
+						roster,
+						pivotEvaluator,
+						Side.UNIVERSAL,
+						(player) -> formation.setPivot(player)));
 		positions.add(
-			new PositionAssigner(
-					roster,
-					leftWingEvaluator,
-					Side.LEFT,
-					(player) -> formation.setLeftWing(player)));
+				new PositionAssigner(
+						roster,
+						leftWingEvaluator,
+						Side.LEFT,
+						(player) -> formation.setLeftWing(player)));
 		positions.add(
-			new PositionAssigner(
-					roster,
-					rightWingEvaluator,
-					Side.RIGHT,
-					(player) -> formation.setRightWing(player)));
+				new PositionAssigner(
+						roster,
+						rightWingEvaluator,
+						Side.RIGHT,
+						(player) -> formation.setRightWing(player)));
 		positions.add(
-			new PositionAssigner(
-					roster,
-					centerBackEvaluator,
-					Side.UNIVERSAL,
-					(player) -> formation.setCenterBack(player)));
+				new PositionAssigner(
+						roster,
+						centerBackEvaluator,
+						Side.UNIVERSAL,
+						(player) -> formation.setCenterBack(player)));
 		positions.add(
-			new PositionAssigner(
-					roster,
-					leftBackEvaluator,
-					Side.LEFT,
-					(player) -> formation.setLeftBack(player)));
+				new PositionAssigner(
+						roster,
+						leftBackEvaluator,
+						Side.LEFT,
+						(player) -> formation.setLeftBack(player)));
 		positions.add(
-			new PositionAssigner(
-					roster,
-					rightBackEvaluator,
-					Side.RIGHT,
-					(player) -> formation.setRightBack(player)));
+				new PositionAssigner(
+						roster,
+						rightBackEvaluator,
+						Side.RIGHT,
+						(player) -> formation.setRightBack(player)));
 
 		return positions;
 	}
@@ -120,9 +120,14 @@ public class PaulsFormationBuilder implements FormationBuilder
 		@Override
 		public int compareTo(PositionAssigner other)
 		{
-			return Double.compare(
-				other.evaluator.getRating(other.preferedPlayer().getAttributes()),
-				this.evaluator.getRating(this.preferedPlayer().getAttributes()));
+			return Double
+					.compare(
+						other.evaluator.getRating(other
+								.preferedPlayer()
+								.getAttributes()),
+						this.evaluator.getRating(this
+								.preferedPlayer()
+								.getAttributes()));
 		}
 
 		public void assignPosition()
