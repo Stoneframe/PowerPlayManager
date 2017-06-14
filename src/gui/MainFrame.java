@@ -15,7 +15,7 @@ import model.evaluators.BackPlayerEvaluator;
 import model.evaluators.DefensiveBackPlayerEvaluator;
 import model.evaluators.DefensivePivotPlayerEvaluator;
 import model.evaluators.DefensiveWingPlayerEvaluator;
-import model.evaluators.GoalkeepingPlayerEvaluator;
+import model.evaluators.GoaliePlayerEvaluator;
 import model.evaluators.OffensiveBackPlayerEvaluator;
 import model.evaluators.OffensivePivotPlayerEvaluator;
 import model.evaluators.OffensiveWingPlayerEvaluator;
@@ -33,7 +33,7 @@ public class MainFrame extends JFrame
 	{
 		PlayerEvaluator[] evaluators = new PlayerEvaluator[]
 		{
-				new GoalkeepingPlayerEvaluator(),
+				new GoaliePlayerEvaluator(),
 				new BackPlayerEvaluator(),
 				new PivotPlayerEvaluator(),
 				new WingPlayerEvaluator(),
@@ -50,7 +50,7 @@ public class MainFrame extends JFrame
 		{
 			public void rosterParsed(Object source, RosterParsedEvent event)
 			{
-				rosterTablePanel.showRoster(event.getRoster());
+				rosterTablePanel.showRoster(event.getRoster(), evaluators);
 				print(event.getRoster(), evaluators);
 			}
 		});
@@ -58,7 +58,7 @@ public class MainFrame extends JFrame
 		{
 			public void rosterParsed(Object source, RosterParsedEvent event)
 			{
-				rosterTablePanel.showRoster(event.getRoster());
+				rosterTablePanel.showRoster(event.getRoster(), evaluators);
 				print(event.getRoster(), evaluators);
 			}
 		});
@@ -66,7 +66,7 @@ public class MainFrame extends JFrame
 		{
 			public void rosterParsed(Object source, RosterParsedEvent event)
 			{
-				rosterTablePanel.showRoster(event.getRoster());
+				rosterTablePanel.showRoster(event.getRoster(), evaluators);
 
 				Roster roster = event.getRoster();
 

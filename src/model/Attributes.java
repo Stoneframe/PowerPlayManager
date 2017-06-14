@@ -100,6 +100,11 @@ public class Attributes
 		this.agr = agr;
 	}
 
+	public int getTotal()
+	{
+		return goa + fip + sho + blk + pas + tec + spe + agr;
+	}
+
 	public int getQGoa()
 	{
 		return qGoa;

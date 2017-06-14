@@ -2,7 +2,9 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.Arrays;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -11,10 +13,6 @@ import javax.swing.table.AbstractTableModel;
 import model.Player;
 import model.PlayerEvaluator;
 import model.Roster;
-import model.evaluators.BackPlayerEvaluator;
-import model.evaluators.GoalkeepingPlayerEvaluator;
-import model.evaluators.PivotPlayerEvaluator;
-import model.evaluators.WingPlayerEvaluator;
 
 public class RosterTablePanel extends JPanel
 {
@@ -33,28 +31,16 @@ public class RosterTablePanel extends JPanel
 		add(rosterTable);
 	}
 
-	public void showRoster(Roster roster)
+	public void showRoster(Roster roster, PlayerEvaluator... evaluators)
 	{
-		rosterTable.setModel(new RosterTableModel(roster));
+		rosterTable.setModel(new RosterTableModel(roster, evaluators));
 	}
 
 	private class RosterTableModel extends AbstractTableModel
 	{
 		private static final long serialVersionUID = -7192938036036855215L;
 
-		private Column createEvaluatorColumn(
-				String name,
-				PlayerEvaluator evaluator)
-		{
-			return new Column(
-					name,
-					p -> String.format(
-						"%.1f(%.1f)",
-						evaluator.getRating(p.getAttributes()),
-						evaluator.getQuality(p.getAttributes())));
-		}
-
-		private Column[] columns =
+		private Column[] playerColumns =
 		{
 				new Column("Name", p -> p.getName()),
 				new Column("Side", p -> p.getSide()),
@@ -66,36 +52,33 @@ public class RosterTablePanel extends JPanel
 				new Column("Tec", p -> p.getAttributes().getTec()),
 				new Column("Spe", p -> p.getAttributes().getSpe()),
 				new Column("Agr", p -> p.getAttributes().getAgr()),
-				createEvaluatorColumn(
-					"Goalie",
-					new GoalkeepingPlayerEvaluator()),
-				createEvaluatorColumn("Back", new BackPlayerEvaluator()),
-				createEvaluatorColumn("Pivot", new PivotPlayerEvaluator()),
-				createEvaluatorColumn("Wing", new WingPlayerEvaluator()),
+				new Column("Total", p -> p.getAttributes().getTotal()),
 		};
 
-		private Player[] players;
+		private Column[] evaluatorColumns = new Column[0];
 
-		public RosterTableModel(Roster roster)
+		private Player[] players = new Player[0];
+
+		public RosterTableModel(Roster roster, PlayerEvaluator... evaluators)
 		{
 			players = roster.toArray();
+			evaluatorColumns = convertToColumns(evaluators);
 		}
 
 		public RosterTableModel()
 		{
-			players = new Player[0];
 		}
 
 		@Override
 		public String getColumnName(int column)
 		{
-			return columns[column].getName();
+			return columns()[column].getName();
 		}
 
 		@Override
 		public int getColumnCount()
 		{
-			return columns.length;
+			return columns().length;
 		}
 
 		@Override
@@ -107,7 +90,33 @@ public class RosterTablePanel extends JPanel
 		@Override
 		public Object getValueAt(int row, int col)
 		{
-			return columns[col].getValue(players[row]);
+			return columns()[col].getValue(players[row]);
+		}
+
+		private Column[] columns()
+		{
+			return Stream
+					.concat(
+						Arrays.stream(playerColumns),
+						Arrays.stream(evaluatorColumns))
+					.toArray(Column[]::new);
+		}
+
+		private Column[] convertToColumns(PlayerEvaluator... evaluators)
+		{
+			return Arrays.stream(evaluators)
+					.map(e -> createEvaluatorColumn(e))
+					.toArray(Column[]::new);
+		}
+
+		private Column createEvaluatorColumn(PlayerEvaluator evaluator)
+		{
+			return new Column(
+					evaluator.getName(),
+					p -> String.format(
+						"%.1f(%.1f)",
+						evaluator.getRating(p.getAttributes()),
+						evaluator.getQuality(p.getAttributes())));
 		}
 
 		private class Column
