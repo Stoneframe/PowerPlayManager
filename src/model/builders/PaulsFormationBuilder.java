@@ -128,7 +128,7 @@ public class PaulsFormationBuilder implements FormationBuilder
 		public void assignPosition()
 		{
 			Player player = preferedPlayer();
-			assignAction.assignPosition(player);
+			assignAction.assignToPosition(player);
 			roster.remove(player);
 		}
 
@@ -146,6 +146,6 @@ public class PaulsFormationBuilder implements FormationBuilder
 
 	private interface AssignAction
 	{
-		public void assignPosition(Player player);
+		public void assignToPosition(Player player);
 	}
 }
