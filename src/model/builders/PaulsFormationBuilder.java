@@ -26,7 +26,7 @@ public class PaulsFormationBuilder implements FormationBuilder
 	{
 		Formation formation = new Formation();
 
-		List<PositionAssigner> positions = createPositionAssigners(
+		List<PositionAssigner> positionAssigners = createPositionAssigners(
 			roster,
 			pivotEvaluator,
 			leftWingEvaluator,
@@ -36,10 +36,10 @@ public class PaulsFormationBuilder implements FormationBuilder
 			rightBackEvaluator,
 			formation);
 
-		while (!positions.isEmpty())
+		while (!positionAssigners.isEmpty())
 		{
-			Collections.sort(positions);
-			PositionAssigner assigner = positions.remove(0);
+			Collections.sort(positionAssigners);
+			PositionAssigner assigner = positionAssigners.remove(0);
 			assigner.assignPosition();
 		}
 
