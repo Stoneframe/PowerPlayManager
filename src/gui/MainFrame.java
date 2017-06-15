@@ -55,23 +55,7 @@ public class MainFrame extends JFrame
 		};
 
 		parsePanel = new ParsePanel();
-		parsePanel.setParsePractiseListener(new PlayersParsedListener()
-		{
-			public void playersParsed(Object source, PlayersParsedEvent event)
-			{
-				roster = new Roster(event.getPlayers());
-				rosterTablePanel.showRoster(roster, evaluators);
-			}
-		});
-		parsePanel.setParseProPractiseListener(new PlayersParsedListener()
-		{
-			public void playersParsed(Object source, PlayersParsedEvent event)
-			{
-				roster = new Roster(event.getPlayers());
-				rosterTablePanel.showRoster(roster, evaluators);
-			}
-		});
-		parsePanel.setParseOverviewListener(new PlayersParsedListener()
+		parsePanel.setPlayersParseListener(new PlayersParsedListener()
 		{
 			public void playersParsed(Object source, PlayersParsedEvent event)
 			{

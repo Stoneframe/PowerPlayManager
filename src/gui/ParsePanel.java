@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import model.Player;
+import model.PlayersParser;
 import model.parsers.OverviewPlayersParser;
 import model.parsers.ParseException;
 import model.parsers.PractiseProPlayersParser;
@@ -20,9 +21,7 @@ public class ParsePanel extends JPanel
 {
 	private static final long serialVersionUID = -4697990138081430891L;
 
-	private PlayersParsedListener parsePractiseListener;
-	private PlayersParsedListener parseProPractiseListener;
-	private PlayersParsedListener parseOverviewListerner;
+	private PlayersParsedListener playersParsedListener;
 
 	private JTextArea textArea;
 	private JButton parsePractiseButton;
@@ -38,22 +37,7 @@ public class ParsePanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				try
-				{
-					List<Player> players = new PractisePlayersParser()
-							.parseRoster(textArea.getText());
-
-					if (parsePractiseListener != null)
-					{
-						parsePractiseListener.playersParsed(
-							this,
-							new PlayersParsedEvent(this, players));
-					}
-				}
-				catch (ParseException ex)
-				{
-					System.out.println("Unable to parse input");
-				}
+				parsePlayers(new PractisePlayersParser());
 			}
 		});
 
@@ -62,22 +46,7 @@ public class ParsePanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				try
-				{
-					List<Player> players = new PractiseProPlayersParser()
-							.parseRoster(textArea.getText());
-
-					if (parseProPractiseListener != null)
-					{
-						parseProPractiseListener.playersParsed(
-							this,
-							new PlayersParsedEvent(this, players));
-					}
-				}
-				catch (ParseException ex)
-				{
-					System.out.println("Unable to parse input");
-				}
+				parsePlayers(new PractiseProPlayersParser());
 			}
 		});
 
@@ -86,22 +55,7 @@ public class ParsePanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				try
-				{
-					List<Player> players = new OverviewPlayersParser()
-							.parseRoster(textArea.getText());
-
-					if (parseOverviewListerner != null)
-					{
-						parseOverviewListerner.playersParsed(
-							this,
-							new PlayersParsedEvent(this, players));
-					}
-				}
-				catch (ParseException ex)
-				{
-					System.out.println("Unable to parse input");
-				}
+				parsePlayers(new OverviewPlayersParser());
 			}
 		});
 
@@ -113,18 +67,28 @@ public class ParsePanel extends JPanel
 		add(parseOverviewButton);
 	}
 
-	public void setParsePractiseListener(PlayersParsedListener listener)
+	public void setPlayersParseListener(PlayersParsedListener listener)
 	{
-		parsePractiseListener = listener;
+		playersParsedListener = listener;
 	}
 
-	public void setParseProPractiseListener(PlayersParsedListener listener)
+	private void parsePlayers(PlayersParser playersParser)
 	{
-		parseProPractiseListener = listener;
-	}
+		try
+		{
+			List<Player> players = playersParser
+					.parseRoster(textArea.getText());
 
-	public void setParseOverviewListener(PlayersParsedListener listener)
-	{
-		parseOverviewListerner = listener;
+			if (playersParsedListener != null)
+			{
+				playersParsedListener.playersParsed(
+					this,
+					new PlayersParsedEvent(this, players));
+			}
+		}
+		catch (ParseException ex)
+		{
+			System.out.println("Unable to parse input");
+		}
 	}
 }
