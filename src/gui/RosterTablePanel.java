@@ -49,6 +49,7 @@ public class RosterTablePanel extends JPanel
 		rosterTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		setLayout(new BorderLayout());
+
 		add(rosterTable.getTableHeader(), BorderLayout.PAGE_START);
 		add(rosterTable);
 

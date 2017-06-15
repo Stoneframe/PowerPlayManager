@@ -32,6 +32,7 @@ public class MainFrame extends JFrame
 
 	private ParsePanel parsePanel;
 	private RosterTablePanel rosterTablePanel;
+	private PlayerPanel playerPanel;
 
 	private JPanel buttonPanel;
 	private JButton createFormationsButton;
@@ -67,6 +68,8 @@ public class MainFrame extends JFrame
 		});
 
 		rosterTablePanel = new RosterTablePanel();
+
+		playerPanel = new PlayerPanel();
 
 		createFormationsButton = new JButton("Create Formations");
 		createFormationsButton.addActionListener(new ActionListener()
@@ -124,6 +127,7 @@ public class MainFrame extends JFrame
 
 		add(parsePanel, BorderLayout.NORTH);
 		add(rosterTablePanel, BorderLayout.CENTER);
+		add(playerPanel, BorderLayout.EAST);
 		add(buttonPanel, BorderLayout.SOUTH);
 
 		pack();
