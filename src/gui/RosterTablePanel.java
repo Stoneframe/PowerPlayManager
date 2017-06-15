@@ -11,6 +11,8 @@ import java.util.stream.Stream;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -47,6 +49,13 @@ public class RosterTablePanel extends JPanel
 		rosterTable.setPreferredSize(new Dimension(1, 500));
 		rosterTable.setAutoCreateRowSorter(true);
 		rosterTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		rosterTable.getSelectionModel().addListSelectionListener(
+			new ListSelectionListener()
+			{
+				public void valueChanged(ListSelectionEvent e)
+				{
+				}
+			});
 
 		setLayout(new BorderLayout());
 
