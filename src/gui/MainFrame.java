@@ -1,13 +1,17 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import model.Formation;
 import model.FormationBuilder;
-import model.Player;
 import model.PlayerEvaluator;
 import model.Roster;
 import model.builders.PaulsFormationBuilder;
@@ -28,6 +32,11 @@ public class MainFrame extends JFrame
 
 	private ParsePanel parsePanel;
 	private RosterTablePanel rosterTablePanel;
+
+	private JPanel buttonPanel;
+	private JButton createFormationsButton;
+
+	private Roster roster;
 
 	public MainFrame()
 	{
@@ -50,28 +59,34 @@ public class MainFrame extends JFrame
 		{
 			public void playersParsed(Object source, PlayersParsedEvent event)
 			{
-				Roster roster = new Roster(event.getPlayers());
+				roster = new Roster(event.getPlayers());
 				rosterTablePanel.showRoster(roster, evaluators);
-				print(event.getPlayers(), evaluators);
 			}
 		});
 		parsePanel.setParseProPractiseListener(new PlayersParsedListener()
 		{
 			public void playersParsed(Object source, PlayersParsedEvent event)
 			{
-				Roster roster = new Roster(event.getPlayers());
+				roster = new Roster(event.getPlayers());
 				rosterTablePanel.showRoster(roster, evaluators);
-				print(event.getPlayers(), evaluators);
 			}
 		});
 		parsePanel.setParseOverviewListener(new PlayersParsedListener()
 		{
 			public void playersParsed(Object source, PlayersParsedEvent event)
 			{
-				Roster roster = new Roster(event.getPlayers());
-
+				roster = new Roster(event.getPlayers());
 				rosterTablePanel.showRoster(roster, evaluators);
+			}
+		});
 
+		rosterTablePanel = new RosterTablePanel();
+
+		createFormationsButton = new JButton("Create Formations");
+		createFormationsButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 				FormationBuilder formationBuilder = new PaulsFormationBuilder();
 
 				Roster offRoster = roster.copy();
@@ -116,37 +131,18 @@ public class MainFrame extends JFrame
 			}
 		});
 
-		rosterTablePanel = new RosterTablePanel();
+		buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+		buttonPanel.add(createFormationsButton);
 
 		setLayout(new BorderLayout());
 
 		add(parsePanel, BorderLayout.NORTH);
 		add(rosterTablePanel, BorderLayout.CENTER);
+		add(buttonPanel, BorderLayout.SOUTH);
 
 		pack();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
-	}
-
-	private static void print(
-			Iterable<Player> players,
-			PlayerEvaluator... evaluators)
-	{
-		for (Player player : players)
-		{
-			System.out.println(player);
-
-			for (PlayerEvaluator evaluator : evaluators)
-			{
-				System.out.println(String.format(
-					"\t%s: %.1f(%.1f)",
-					evaluator.getName(),
-					evaluator.getRating(player.getAttributes()),
-					evaluator.getQuality(player.getAttributes())));
-			}
-
-			System.out.println();
-		}
 	}
 
 	public static void main(String[] args)
