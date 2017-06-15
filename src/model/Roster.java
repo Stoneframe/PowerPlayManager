@@ -22,7 +22,7 @@ public class Roster implements Iterable<Player>
 	{
 	}
 
-	private Roster(List<Player> players)
+	public Roster(List<Player> players)
 	{
 		this.players.addAll(players);
 	}

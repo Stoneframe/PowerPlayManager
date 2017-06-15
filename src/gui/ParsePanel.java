@@ -3,25 +3,26 @@ package gui;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import model.Roster;
-import model.parsers.OverviewRosterParser;
+import model.Player;
+import model.parsers.OverviewPlayersParser;
 import model.parsers.ParseException;
-import model.parsers.PractiseProRosterParser;
-import model.parsers.PractiseRosterParser;
+import model.parsers.PractiseProPlayersParser;
+import model.parsers.PractisePlayersParser;
 
 public class ParsePanel extends JPanel
 {
 	private static final long serialVersionUID = -4697990138081430891L;
 
-	private RosterParsedListener parsePractiseListener;
-	private RosterParsedListener parseProPractiseListener;
-	private RosterParsedListener parseOverviewListerner;
+	private PlayersParsedListener parsePractiseListener;
+	private PlayersParsedListener parseProPractiseListener;
+	private PlayersParsedListener parseOverviewListerner;
 
 	private JTextArea textArea;
 	private JButton parsePractiseButton;
@@ -39,14 +40,14 @@ public class ParsePanel extends JPanel
 			{
 				try
 				{
-					Roster roster = new PractiseRosterParser()
+					List<Player> players = new PractisePlayersParser()
 							.parseRoster(textArea.getText());
 
 					if (parsePractiseListener != null)
 					{
-						parsePractiseListener.rosterParsed(
+						parsePractiseListener.playersParsed(
 							this,
-							new RosterParsedEvent(this, roster));
+							new PlayersParsedEvent(this, players));
 					}
 				}
 				catch (ParseException ex)
@@ -63,14 +64,14 @@ public class ParsePanel extends JPanel
 			{
 				try
 				{
-					Roster roster = new PractiseProRosterParser()
+					List<Player> players = new PractiseProPlayersParser()
 							.parseRoster(textArea.getText());
 
 					if (parseProPractiseListener != null)
 					{
-						parseProPractiseListener.rosterParsed(
+						parseProPractiseListener.playersParsed(
 							this,
-							new RosterParsedEvent(this, roster));
+							new PlayersParsedEvent(this, players));
 					}
 				}
 				catch (ParseException ex)
@@ -87,14 +88,14 @@ public class ParsePanel extends JPanel
 			{
 				try
 				{
-					Roster roster = new OverviewRosterParser()
+					List<Player> players = new OverviewPlayersParser()
 							.parseRoster(textArea.getText());
 
 					if (parseOverviewListerner != null)
 					{
-						parseOverviewListerner.rosterParsed(
+						parseOverviewListerner.playersParsed(
 							this,
-							new RosterParsedEvent(this, roster));
+							new PlayersParsedEvent(this, players));
 					}
 				}
 				catch (ParseException ex)
@@ -112,17 +113,17 @@ public class ParsePanel extends JPanel
 		add(parseOverviewButton);
 	}
 
-	public void setParsePractiseListener(RosterParsedListener listener)
+	public void setParsePractiseListener(PlayersParsedListener listener)
 	{
 		parsePractiseListener = listener;
 	}
 
-	public void setParseProPractiseListener(RosterParsedListener listener)
+	public void setParseProPractiseListener(PlayersParsedListener listener)
 	{
 		parseProPractiseListener = listener;
 	}
 
-	public void setParseOverviewListener(RosterParsedListener listener)
+	public void setParseOverviewListener(PlayersParsedListener listener)
 	{
 		parseOverviewListerner = listener;
 	}

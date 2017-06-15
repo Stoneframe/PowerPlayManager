@@ -46,29 +46,31 @@ public class MainFrame extends JFrame
 		};
 
 		parsePanel = new ParsePanel();
-		parsePanel.setParsePractiseListener(new RosterParsedListener()
+		parsePanel.setParsePractiseListener(new PlayersParsedListener()
 		{
-			public void rosterParsed(Object source, RosterParsedEvent event)
+			public void playersParsed(Object source, PlayersParsedEvent event)
 			{
-				rosterTablePanel.showRoster(event.getRoster(), evaluators);
-				print(event.getRoster(), evaluators);
+				Roster roster = new Roster(event.getPlayers());
+				rosterTablePanel.showRoster(roster, evaluators);
+				print(event.getPlayers(), evaluators);
 			}
 		});
-		parsePanel.setParseProPractiseListener(new RosterParsedListener()
+		parsePanel.setParseProPractiseListener(new PlayersParsedListener()
 		{
-			public void rosterParsed(Object source, RosterParsedEvent event)
+			public void playersParsed(Object source, PlayersParsedEvent event)
 			{
-				rosterTablePanel.showRoster(event.getRoster(), evaluators);
-				print(event.getRoster(), evaluators);
+				Roster roster = new Roster(event.getPlayers());
+				rosterTablePanel.showRoster(roster, evaluators);
+				print(event.getPlayers(), evaluators);
 			}
 		});
-		parsePanel.setParseOverviewListener(new RosterParsedListener()
+		parsePanel.setParseOverviewListener(new PlayersParsedListener()
 		{
-			public void rosterParsed(Object source, RosterParsedEvent event)
+			public void playersParsed(Object source, PlayersParsedEvent event)
 			{
-				rosterTablePanel.showRoster(event.getRoster(), evaluators);
+				Roster roster = new Roster(event.getPlayers());
 
-				Roster roster = event.getRoster();
+				rosterTablePanel.showRoster(roster, evaluators);
 
 				FormationBuilder formationBuilder = new PaulsFormationBuilder();
 

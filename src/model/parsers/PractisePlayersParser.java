@@ -1,27 +1,28 @@
 package model.parsers;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import model.Attributes;
 import model.Player;
-import model.RosterParser;
-import model.Roster;
+import model.PlayersParser;
 import model.Side;
 
-public class PractiseRosterParser implements RosterParser
+public class PractisePlayersParser implements PlayersParser
 {
 	private static final int FIELDS_PER_PLAYER = 15;
 	private static final int ATTRIBUTE_FIELDS_PER_PLAYER = 8;
 	private static final int ATTRIBUTES_START_FIELD = 5;
 
 	@Override
-	public Roster parseRoster(String textToParse) throws ParseException
+	public List<Player> parseRoster(String textToParse) throws ParseException
 	{
 		try
 		{
 			String[] lines = textToParse.replace("\n", "\t").split("\t");
 
-			Roster roster = new Roster();
+			List<Player> players = new LinkedList<Player>();
 
 			for (int i = 0; i < lines.length; i += FIELDS_PER_PLAYER)
 			{
@@ -34,10 +35,10 @@ public class PractiseRosterParser implements RosterParser
 									i + ATTRIBUTES_START_FIELD,
 									i + ATTRIBUTES_START_FIELD + ATTRIBUTE_FIELDS_PER_PLAYER)));
 
-				roster.add(player);
+				players.add(player);
 			}
 
-			return roster;
+			return players;
 		}
 		catch (Exception e)
 		{

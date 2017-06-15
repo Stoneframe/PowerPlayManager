@@ -1,23 +1,24 @@
 package model.parsers;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import model.Attributes;
 import model.Player;
-import model.Roster;
-import model.RosterParser;
+import model.PlayersParser;
 import model.Side;
 
-public class OverviewRosterParser implements RosterParser
+public class OverviewPlayersParser implements PlayersParser
 {
 	@Override
-	public Roster parseRoster(String textToParse) throws ParseException
+	public List<Player> parseRoster(String textToParse) throws ParseException
 	{
 		try
 		{
 			String[] lines = textToParse.split("\n");
 
-			Roster roster = new Roster();
+			List<Player> players = new LinkedList<Player>();
 
 			for (int i = 0; i < lines.length; i++)
 			{
@@ -28,10 +29,10 @@ public class OverviewRosterParser implements RosterParser
 						parseSide(columns[16]),
 						parseAttributes(Arrays.copyOfRange(columns, 6, 14)));
 
-				roster.add(player);
+				players.add(player);
 			}
 
-			return roster;
+			return players;
 		}
 		catch (Exception e)
 		{
