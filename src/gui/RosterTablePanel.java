@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
@@ -23,6 +24,8 @@ import model.Roster;
 public class RosterTablePanel extends JPanel
 {
 	private static final long serialVersionUID = 6702252304393306453L;
+
+	private PlayerSelectedListener playerSelectedListener;
 
 	private ColumnData[] baseColumnDatas =
 	{
@@ -43,17 +46,35 @@ public class RosterTablePanel extends JPanel
 
 	private JTable rosterTable;
 
+	private Roster roster;
+
 	public RosterTablePanel()
 	{
 		rosterTable = new JTable();
 		rosterTable.setPreferredSize(new Dimension(1, 500));
 		rosterTable.setAutoCreateRowSorter(true);
 		rosterTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		rosterTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		rosterTable.getSelectionModel().addListSelectionListener(
 			new ListSelectionListener()
 			{
 				public void valueChanged(ListSelectionEvent e)
 				{
+					if (playerSelectedListener != null)
+					{
+						playerSelectedListener.playerSelected(
+							this,
+							new PlayerSelectedEvent(this, getSelectedPlayer()));
+					}
+				}
+
+				private Player getSelectedPlayer()
+				{
+					int selectedRow = rosterTable.getSelectedRow();
+
+					return selectedRow >= 0
+							? roster.get(selectedRow)
+							: null;
 				}
 			});
 
@@ -65,10 +86,17 @@ public class RosterTablePanel extends JPanel
 		showRoster(new Roster());
 	}
 
+	public void setPlayerSelectedListener(PlayerSelectedListener listener)
+	{
+		this.playerSelectedListener = listener;
+	}
+
 	public void showRoster(Roster roster, PlayerEvaluator... evaluators)
 	{
+		this.roster = roster;
+
 		setColumnDatas(evaluators);
-		setTableModel(roster);
+		setTableModel();
 		setCellRenderers();
 	}
 
@@ -81,7 +109,7 @@ public class RosterTablePanel extends JPanel
 				.toArray(ColumnData[]::new);
 	}
 
-	private void setTableModel(Roster roster)
+	private void setTableModel()
 	{
 		rosterTable.setModel(new AbstractTableModel()
 		{

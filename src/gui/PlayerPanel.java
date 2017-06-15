@@ -64,7 +64,15 @@ public class PlayerPanel extends JPanel
 
 	public void showPlayer(Player player)
 	{
-		nameTextField.setText(player.getName());
-		sideTextField.setText(player.getSide().toString());
+		if (player != null)
+		{
+			nameTextField.setText(player.getName());
+			sideTextField.setText(player.getSide().toString());
+		}
+		else
+		{
+			nameTextField.setText("");
+			sideTextField.setText("");
+		}
 	}
 }

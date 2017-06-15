@@ -68,6 +68,13 @@ public class MainFrame extends JFrame
 		});
 
 		rosterTablePanel = new RosterTablePanel();
+		rosterTablePanel.setPlayerSelectedListener(new PlayerSelectedListener()
+		{
+			public void playerSelected(Object source, PlayerSelectedEvent event)
+			{
+				playerPanel.showPlayer(event.getPlayer());
+			}
+		});
 
 		playerPanel = new PlayerPanel();
 

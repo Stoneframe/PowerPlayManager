@@ -13,6 +13,8 @@ public class PlayerSelectedEvent extends EventObject
 	public PlayerSelectedEvent(Object source, Player player)
 	{
 		super(source);
+
+		this.player = player;
 	}
 
 	public Player getPlayer()
