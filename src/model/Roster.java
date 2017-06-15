@@ -29,7 +29,25 @@ public class Roster implements Iterable<Player>
 
 	public void add(Player player)
 	{
+		for (Player addedPlayer : players)
+		{
+			if (addedPlayer.equals(player))
+			{
+				addedPlayer.merge(player);
+
+				return;
+			}
+		}
+
 		players.add(player);
+	}
+
+	public void addAll(List<Player> players)
+	{
+		for (Player player : players)
+		{
+			add(player);
+		}
 	}
 
 	public void remove(Player player)

@@ -79,6 +79,8 @@ public class ParsePanel extends JPanel
 			List<Player> players = playersParser
 					.parseRoster(textArea.getText());
 
+			textArea.setText("");
+
 			if (playersParsedListener != null)
 			{
 				playersParsedListener.playersParsed(

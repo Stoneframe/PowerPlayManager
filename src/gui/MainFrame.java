@@ -40,6 +40,8 @@ public class MainFrame extends JFrame
 
 	public MainFrame()
 	{
+		roster = new Roster();
+
 		PlayerEvaluator[] evaluators = new PlayerEvaluator[]
 		{
 				new GoaliePlayerEvaluator(),
@@ -59,7 +61,7 @@ public class MainFrame extends JFrame
 		{
 			public void playersParsed(Object source, PlayersParsedEvent event)
 			{
-				roster = new Roster(event.getPlayers());
+				roster.addAll(event.getPlayers());
 				rosterTablePanel.showRoster(roster, evaluators);
 			}
 		});
