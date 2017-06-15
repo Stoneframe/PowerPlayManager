@@ -3,6 +3,8 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -44,14 +46,14 @@ public class RosterTablePanel extends JPanel
 		{
 				new Column("Name", p -> p.getName()),
 				new Column("Side", p -> p.getSide()),
-				new Column("Goa", p -> p.getAttributes().getGoa()),
-				new Column("FiP", p -> p.getAttributes().getFip()),
-				new Column("Sho", p -> p.getAttributes().getSho()),
-				new Column("Blk", p -> p.getAttributes().getBlk()),
-				new Column("Pas", p -> p.getAttributes().getPas()),
-				new Column("Tec", p -> p.getAttributes().getTec()),
-				new Column("Spe", p -> p.getAttributes().getSpe()),
-				new Column("Agr", p -> p.getAttributes().getAgr()),
+				// new Column("Goa", p -> p.getAttributes().getGoa()),
+				// new Column("FiP", p -> p.getAttributes().getFip()),
+				// new Column("Sho", p -> p.getAttributes().getSho()),
+				// new Column("Blk", p -> p.getAttributes().getBlk()),
+				// new Column("Pas", p -> p.getAttributes().getPas()),
+				// new Column("Tec", p -> p.getAttributes().getTec()),
+				// new Column("Spe", p -> p.getAttributes().getSpe()),
+				// new Column("Agr", p -> p.getAttributes().getAgr()),
 				new Column("Total", p -> p.getAttributes().getTotal()),
 		};
 
@@ -104,19 +106,26 @@ public class RosterTablePanel extends JPanel
 
 		private Column[] convertToColumns(PlayerEvaluator... evaluators)
 		{
-			return Arrays.stream(evaluators)
-					.map(e -> createEvaluatorColumn(e))
-					.toArray(Column[]::new);
-		}
+			List<Column> columns = new LinkedList<Column>();
 
-		private Column createEvaluatorColumn(PlayerEvaluator evaluator)
-		{
-			return new Column(
-					evaluator.getName(),
-					p -> String.format(
-						"%.1f(%.1f)",
-						evaluator.getRating(p.getAttributes()),
-						evaluator.getQuality(p.getAttributes())));
+			for (PlayerEvaluator evaluator : evaluators)
+			{
+				columns.add(
+						new Column(
+								evaluator.getName(),
+								(p) -> String.format(
+									"%.1f",
+									evaluator.getRating(p.getAttributes()))));
+
+				columns.add(
+						new Column(
+								"Q." + evaluator.getName(),
+								(p) -> String.format(
+									"%.1f",
+									evaluator.getQuality(p.getAttributes()))));
+			}
+
+			return columns.toArray(new Column[0]);
 		}
 
 		private class Column
