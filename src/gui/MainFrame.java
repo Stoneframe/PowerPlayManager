@@ -45,9 +45,9 @@ public class MainFrame extends JFrame
 		PlayerEvaluator[] evaluators = new PlayerEvaluator[]
 		{
 				new GoaliePlayerEvaluator(),
-				new BackPlayerEvaluator(),
-				new PivotPlayerEvaluator(),
-				new WingPlayerEvaluator(),
+				// new BackPlayerEvaluator(),
+				// new PivotPlayerEvaluator(),
+				// new WingPlayerEvaluator(),
 				new DefensiveBackPlayerEvaluator(),
 				new DefensivePivotPlayerEvaluator(),
 				new DefensiveWingPlayerEvaluator(),

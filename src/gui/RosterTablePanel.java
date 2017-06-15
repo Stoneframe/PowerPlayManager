@@ -46,6 +46,7 @@ public class RosterTablePanel extends JPanel
 		rosterTable = new JTable();
 		rosterTable.setPreferredSize(new Dimension(1, 500));
 		rosterTable.setAutoCreateRowSorter(true);
+		rosterTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		setLayout(new BorderLayout());
 		add(rosterTable.getTableHeader(), BorderLayout.PAGE_START);
@@ -165,6 +166,35 @@ public class RosterTablePanel extends JPanel
 							"Q." + evaluator.getName(),
 							(p) -> evaluator.getQuality(p.getAttributes()),
 							(v) -> String.format("%.1f", v)
+					));
+		}
+
+		if (evaluators.length > 0)
+		{
+			columnDatas.add(
+					new ColumnData(
+							"Position",
+							(p) -> Arrays
+									.stream(evaluators)
+									.max(
+										(a, b) -> Double.compare(
+											a.getRating(p.getAttributes()),
+											b.getRating(p.getAttributes())))
+									.get()
+									.getName()
+					));
+
+			columnDatas.add(
+					new ColumnData(
+							"Training",
+							(p) -> Arrays
+									.stream(evaluators)
+									.max(
+										(a, b) -> Double.compare(
+											a.getQuality(p.getAttributes()),
+											b.getQuality(p.getAttributes())))
+									.get()
+									.getName()
 					));
 		}
 
