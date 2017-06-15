@@ -3,6 +3,7 @@ package model.builders;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import model.Formation;
 import model.FormationBuilder;
@@ -103,13 +104,13 @@ public class PaulsFormationBuilder implements FormationBuilder
 		private PlayerEvaluator evaluator;
 		private Side side;
 		private Roster roster;
-		private AssignAction assignAction;
+		private Consumer<Player> assignAction;
 
 		public PositionAssigner(
 				Roster roster,
 				PlayerEvaluator evaluator,
 				Side side,
-				AssignAction assignAction)
+				Consumer<Player> assignAction)
 		{
 			this.evaluator = evaluator;
 			this.side = side;
@@ -133,7 +134,7 @@ public class PaulsFormationBuilder implements FormationBuilder
 		public void assignPosition()
 		{
 			Player player = preferedPlayer();
-			assignAction.assignToPosition(player);
+			assignAction.accept(player);
 			roster.remove(player);
 		}
 
@@ -147,10 +148,5 @@ public class PaulsFormationBuilder implements FormationBuilder
 
 			return player;
 		}
-	}
-
-	private interface AssignAction
-	{
-		public void assignToPosition(Player player);
 	}
 }
