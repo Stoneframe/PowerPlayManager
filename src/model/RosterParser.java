@@ -1,6 +1,8 @@
 package model;
 
+import model.parsers.ParseException;
+
 public interface RosterParser
 {
-	public Roster parseRoster(String textToParse);
+	public Roster parseRoster(String textToParse) throws ParseException;
 }

@@ -11,6 +11,7 @@ import javax.swing.JTextArea;
 
 import model.Roster;
 import model.parsers.OverviewRosterParser;
+import model.parsers.ParseException;
 import model.parsers.PractiseProRosterParser;
 import model.parsers.PractiseRosterParser;
 
@@ -36,14 +37,21 @@ public class ParsePanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				Roster roster = new PractiseRosterParser()
-						.parseRoster(textArea.getText());
-
-				if (parsePractiseListener != null)
+				try
 				{
-					parsePractiseListener.rosterParsed(
-						this,
-						new RosterParsedEvent(this, roster));
+					Roster roster = new PractiseRosterParser()
+							.parseRoster(textArea.getText());
+
+					if (parsePractiseListener != null)
+					{
+						parsePractiseListener.rosterParsed(
+							this,
+							new RosterParsedEvent(this, roster));
+					}
+				}
+				catch (ParseException ex)
+				{
+					System.out.println("Unable to parse input");
 				}
 			}
 		});
@@ -53,14 +61,21 @@ public class ParsePanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				Roster roster = new PractiseProRosterParser()
-						.parseRoster(textArea.getText());
-
-				if (parseProPractiseListener != null)
+				try
 				{
-					parseProPractiseListener.rosterParsed(
-						this,
-						new RosterParsedEvent(this, roster));
+					Roster roster = new PractiseProRosterParser()
+							.parseRoster(textArea.getText());
+
+					if (parseProPractiseListener != null)
+					{
+						parseProPractiseListener.rosterParsed(
+							this,
+							new RosterParsedEvent(this, roster));
+					}
+				}
+				catch (ParseException ex)
+				{
+					System.out.println("Unable to parse input");
 				}
 			}
 		});
@@ -70,14 +85,21 @@ public class ParsePanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				Roster roster = new OverviewRosterParser()
-						.parseRoster(textArea.getText());
-
-				if (parseOverviewListerner != null)
+				try
 				{
-					parseOverviewListerner.rosterParsed(
-						this,
-						new RosterParsedEvent(this, roster));
+					Roster roster = new OverviewRosterParser()
+							.parseRoster(textArea.getText());
+
+					if (parseOverviewListerner != null)
+					{
+						parseOverviewListerner.rosterParsed(
+							this,
+							new RosterParsedEvent(this, roster));
+					}
+				}
+				catch (ParseException ex)
+				{
+					System.out.println("Unable to parse input");
 				}
 			}
 		});

@@ -15,27 +15,34 @@ public class PractiseRosterParser implements RosterParser
 	private static final int ATTRIBUTES_START_FIELD = 5;
 
 	@Override
-	public Roster parseRoster(String textToParse)
+	public Roster parseRoster(String textToParse) throws ParseException
 	{
-		String[] lines = textToParse.replace("\n", "\t").split("\t");
-
-		Roster roster = new Roster();
-
-		for (int i = 0; i < lines.length; i += FIELDS_PER_PLAYER)
+		try
 		{
-			Player player = new Player(
-					parseName(lines[i]),
-					Side.UNKNOWN,
-					parseAttributes(Arrays
-							.copyOfRange(
-								lines,
-								i + ATTRIBUTES_START_FIELD,
-								i + ATTRIBUTES_START_FIELD + ATTRIBUTE_FIELDS_PER_PLAYER)));
+			String[] lines = textToParse.replace("\n", "\t").split("\t");
 
-			roster.add(player);
+			Roster roster = new Roster();
+
+			for (int i = 0; i < lines.length; i += FIELDS_PER_PLAYER)
+			{
+				Player player = new Player(
+						parseName(lines[i]),
+						Side.UNKNOWN,
+						parseAttributes(Arrays
+								.copyOfRange(
+									lines,
+									i + ATTRIBUTES_START_FIELD,
+									i + ATTRIBUTES_START_FIELD + ATTRIBUTE_FIELDS_PER_PLAYER)));
+
+				roster.add(player);
+			}
+
+			return roster;
 		}
-
-		return roster;
+		catch (Exception e)
+		{
+			throw new ParseException(e);
+		}
 	}
 
 	private static String parseName(String text)

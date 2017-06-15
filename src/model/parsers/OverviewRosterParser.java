@@ -4,32 +4,39 @@ import java.util.Arrays;
 
 import model.Attributes;
 import model.Player;
-import model.RosterParser;
 import model.Roster;
+import model.RosterParser;
 import model.Side;
 
 public class OverviewRosterParser implements RosterParser
 {
 	@Override
-	public Roster parseRoster(String textToParse)
+	public Roster parseRoster(String textToParse) throws ParseException
 	{
-		String[] lines = textToParse.split("\n");
-
-		Roster roster = new Roster();
-
-		for (int i = 0; i < lines.length; i++)
+		try
 		{
-			String[] columns = lines[i].split("\t");
+			String[] lines = textToParse.split("\n");
 
-			Player player = new Player(
-					parseName(columns[0]),
-					parseSide(columns[16]),
-					parseAttributes(Arrays.copyOfRange(columns, 6, 14)));
+			Roster roster = new Roster();
 
-			roster.add(player);
+			for (int i = 0; i < lines.length; i++)
+			{
+				String[] columns = lines[i].split("\t");
+
+				Player player = new Player(
+						parseName(columns[0]),
+						parseSide(columns[16]),
+						parseAttributes(Arrays.copyOfRange(columns, 6, 14)));
+
+				roster.add(player);
+			}
+
+			return roster;
 		}
-
-		return roster;
+		catch (Exception e)
+		{
+			throw new ParseException(e);
+		}
 	}
 
 	private static String parseName(String text)
