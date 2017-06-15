@@ -55,6 +55,11 @@ public class Roster implements Iterable<Player>
 		players.remove(player);
 	}
 
+	public Player get(int index)
+	{
+		return players.get(index);
+	}
+
 	public int size()
 	{
 		return players.size();
