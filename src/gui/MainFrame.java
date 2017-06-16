@@ -44,10 +44,8 @@ public class MainFrame extends JFrame
 
 	public MainFrame()
 	{
-		//Menu bar
-		menuBar = new MenuBar(this);
-		
-		//Parse panel
+		super("PPM Assistant");
+
 		roster = new Roster();
 
 		PlayerEvaluator[] evaluators = new PlayerEvaluator[]
@@ -64,6 +62,10 @@ public class MainFrame extends JFrame
 				new OffensiveWingPlayerEvaluator(),
 		};
 
+		// Menu bar
+		menuBar = new MenuBar(this);
+
+		// Parse panel
 		parsePanel = new ParsePanel();
 		parsePanel.setPlayersParseListener(new PlayersParsedListener()
 		{
@@ -74,7 +76,7 @@ public class MainFrame extends JFrame
 			}
 		});
 
-		//Roster table panel
+		// Roster table panel
 		rosterTablePanel = new RosterTablePanel();
 		rosterTablePanel.setPlayerSelectedListener(new PlayerSelectedListener()
 		{
@@ -84,10 +86,10 @@ public class MainFrame extends JFrame
 			}
 		});
 
-		//Player panel
+		// Player panel
 		playerPanel = new PlayerPanel();
 
-		//Button panel
+		// Button panel
 		createFormationsButton = new JButton("Create Formations");
 		createFormationsButton.addActionListener(new ActionListener()
 		{
