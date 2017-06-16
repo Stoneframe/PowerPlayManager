@@ -13,6 +13,7 @@ public class DumbFormationBuilder implements FormationBuilder
 	@Override
 	public Formation createFormation(
 			Roster roster,
+			String name,
 			PlayerEvaluator pivotEvaluator,
 			PlayerEvaluator leftWingEvaluator,
 			PlayerEvaluator rightWingEvaluator,
@@ -21,6 +22,7 @@ public class DumbFormationBuilder implements FormationBuilder
 			PlayerEvaluator rightBackEvaluator)
 	{
 		return new Formation(
+				name,
 				select(roster, pivotEvaluator, Side.UNIVERSAL),
 				select(roster, leftWingEvaluator, Side.LEFT),
 				select(roster, rightWingEvaluator, Side.RIGHT),

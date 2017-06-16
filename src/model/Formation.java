@@ -2,6 +2,8 @@ package model;
 
 public class Formation
 {
+	private String name;
+
 	private Player pivot;
 	private Player leftWing;
 	private Player rightWing;
@@ -13,7 +15,13 @@ public class Formation
 	{
 	}
 
+	public Formation(String name)
+	{
+		this.name = name;
+	}
+
 	public Formation(
+			String name,
 			Player pivot,
 			Player leftWing,
 			Player rightWing,
@@ -21,12 +29,23 @@ public class Formation
 			Player leftBack,
 			Player rightBack)
 	{
+		this.name = name;
 		this.pivot = pivot;
 		this.leftWing = leftWing;
 		this.rightWing = rightWing;
 		this.centerBack = centerBack;
 		this.leftBack = leftBack;
 		this.rightBack = rightBack;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 
 	public Player getPivot()

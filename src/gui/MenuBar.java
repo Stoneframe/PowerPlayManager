@@ -13,7 +13,7 @@ import javax.swing.JMenuItem;
 public class MenuBar extends JMenuBar
 {
 	private static final long serialVersionUID = -5511353684955783810L;
-	//Create a file chooser
+	// Create a file chooser
 	final JFileChooser fc = new JFileChooser();
 
 	public MenuBar(Component parentComponent)
@@ -32,7 +32,8 @@ public class MenuBar extends JMenuBar
 		add(menu);
 
 		// a group of JMenuItems
-		menuItemOpen = new JMenuItem("Open roster",
+		menuItemOpen = new JMenuItem(
+				"Open roster",
 				KeyEvent.VK_O);
 		// menuItem.setAccelerator(KeyStroke.getKeyStroke(
 		// KeyEvent.VK_1, ActionEvent.ALT_MASK));
@@ -42,14 +43,15 @@ public class MenuBar extends JMenuBar
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				//In response to a button click:
+				// In response to a button click:
 				int returnVal = fc.showOpenDialog(parentComponent);
 				// parsePlayers(new PractiseProPlayersParser());
 			}
 		});
 		menu.add(menuItemOpen);
 
-		menuItemSave = new JMenuItem("Save roster",
+		menuItemSave = new JMenuItem(
+				"Save roster",
 				KeyEvent.VK_S);
 		// menuItem.setAccelerator(KeyStroke.getKeyStroke(
 		// KeyEvent.VK_1, ActionEvent.ALT_MASK));

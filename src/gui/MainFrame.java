@@ -101,6 +101,7 @@ public class MainFrame extends JFrame
 
 				Formation offFormation = formationBuilder.createFormation(
 					offRoster,
+					"Offensive",
 					new OffensivePivotPlayerEvaluator(),
 					new OffensiveWingPlayerEvaluator(),
 					new OffensiveWingPlayerEvaluator(),
@@ -112,6 +113,7 @@ public class MainFrame extends JFrame
 
 				Formation defFormation = formationBuilder.createFormation(
 					defRoster,
+					"Defensive",
 					new DefensivePivotPlayerEvaluator(),
 					new DefensiveWingPlayerEvaluator(),
 					new DefensiveWingPlayerEvaluator(),
@@ -123,6 +125,7 @@ public class MainFrame extends JFrame
 
 				Formation subFormation = formationBuilder.createFormation(
 					subRoster,
+					"Substitute",
 					new PivotPlayerEvaluator(),
 					new WingPlayerEvaluator(),
 					new WingPlayerEvaluator(),
@@ -130,12 +133,16 @@ public class MainFrame extends JFrame
 					new BackPlayerEvaluator(),
 					new BackPlayerEvaluator());
 
-				System.out.println(
-					"Offensive formation:\n" + offFormation);
-				System.out.println(
-					"Defensive formation:\n" + defFormation);
-				System.out.println(
-					"Substituion formation:\n" + subFormation);
+				SwingUtilities.invokeLater(new Runnable()
+				{
+					public void run()
+					{
+						new FormationFrame(
+								offFormation,
+								defFormation,
+								subFormation);
+					}
+				});
 			}
 		});
 

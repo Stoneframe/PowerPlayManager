@@ -4,6 +4,7 @@ public interface FormationBuilder
 {
 	public Formation createFormation(
 			Roster roster,
+			String name,
 			PlayerEvaluator pivotEvaluator,
 			PlayerEvaluator leftWingEvaluator,
 			PlayerEvaluator rightWingEvaluator,

@@ -18,6 +18,7 @@ public class PaulsFormationBuilder implements FormationBuilder
 	@Override
 	public Formation createFormation(
 			Roster roster,
+			String name,
 			PlayerEvaluator pivotEvaluator,
 			PlayerEvaluator leftWingEvaluator,
 			PlayerEvaluator rightWingEvaluator,
@@ -25,7 +26,7 @@ public class PaulsFormationBuilder implements FormationBuilder
 			PlayerEvaluator leftBackEvaluator,
 			PlayerEvaluator rightBackEvaluator)
 	{
-		Formation formation = new Formation();
+		Formation formation = new Formation(name);
 
 		List<PositionAssigner> positionAssigners = createPositionAssigners(
 			roster,
