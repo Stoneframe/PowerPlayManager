@@ -119,11 +119,11 @@ public class MainFrame extends JFrame
 					new BackPlayerEvaluator());
 
 				System.out.println(
-						"Offensive formation:\n" + offFormation);
+					"Offensive formation:\n" + offFormation);
 				System.out.println(
-						"Defensive formation:\n" + defFormation);
+					"Defensive formation:\n" + defFormation);
 				System.out.println(
-						"Substituion formation:\n" + subFormation);
+					"Substituion formation:\n" + subFormation);
 			}
 		});
 

@@ -69,10 +69,11 @@ public class RosterTablePanel extends JPanel
 
 				private Player getSelectedPlayer()
 				{
-					int selectedRow = rosterTable.getSelectedRow();
+					int playerIndex = rosterTable.convertRowIndexToModel(
+						rosterTable.getSelectedRow());
 
-					return selectedRow >= 0
-							? roster.get(selectedRow)
+					return playerIndex >= 0
+							? roster.get(playerIndex)
 							: null;
 				}
 			});
@@ -159,8 +160,7 @@ public class RosterTablePanel extends JPanel
 					.getColumn(i)
 					.setCellRenderer(new DefaultTableCellRenderer()
 					{
-						private static final long serialVersionUID =
-								-3849162741094455295L;
+						private static final long serialVersionUID = -3849162741094455295L;
 
 						@Override
 						public Component getTableCellRendererComponent(
@@ -192,43 +192,41 @@ public class RosterTablePanel extends JPanel
 		for (PlayerEvaluator evaluator : evaluators)
 		{
 			columnDatas.add(
-					new ColumnData(
-							evaluator.getName(),
-							(p) -> evaluator.getRating(p.getAttributes()),
-							(v) -> String.format("%.1f", v)
-					));
+				new ColumnData(
+						evaluator.getName(),
+						(p) -> evaluator.getRating(p.getAttributes()),
+						(v) -> String.format("%.1f", v)));
 
 			columnDatas.add(
-					new ColumnData(
-							"Q." + evaluator.getName(),
-							(p) -> evaluator.getQuality(p.getAttributes()),
-							(v) -> String.format("%.1f", v)
-					));
+				new ColumnData(
+						"Q." + evaluator.getName(),
+						(p) -> evaluator.getQuality(p.getAttributes()),
+						(v) -> String.format("%.1f", v)));
 		}
 
 		if (evaluators.length > 0)
 		{
 			columnDatas.add(
-					new ColumnData(
-							"Position",
-							(p) -> Arrays.stream(evaluators)
-									.max((a, b) -> Double.compare(
-										a.getRating(p.getAttributes()),
-										b.getRating(p.getAttributes())))
-									.get()
-									.getName()
-					));
+				new ColumnData(
+						"Position",
+						(p) -> Arrays
+								.stream(evaluators)
+								.max((a, b) -> Double.compare(
+									a.getRating(p.getAttributes()),
+									b.getRating(p.getAttributes())))
+								.get()
+								.getName()));
 
 			columnDatas.add(
-					new ColumnData(
-							"Training",
-							(p) -> Arrays.stream(evaluators)
-									.max((a, b) -> Double.compare(
-										a.getQuality(p.getAttributes()),
-										b.getQuality(p.getAttributes())))
-									.get()
-									.getName()
-					));
+				new ColumnData(
+						"Training",
+						(p) -> Arrays
+								.stream(evaluators)
+								.max((a, b) -> Double.compare(
+									a.getQuality(p.getAttributes()),
+									b.getQuality(p.getAttributes())))
+								.get()
+								.getName()));
 		}
 
 		return columnDatas.toArray(new ColumnData[0]);
