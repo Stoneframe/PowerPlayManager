@@ -212,12 +212,10 @@ public class RosterTablePanel extends JPanel
 			columnDatas.add(
 					new ColumnData(
 							"Position",
-							(p) -> Arrays
-									.stream(evaluators)
-									.max(
-										(a, b) -> Double.compare(
-											a.getRating(p.getAttributes()),
-											b.getRating(p.getAttributes())))
+							(p) -> Arrays.stream(evaluators)
+									.max((a, b) -> Double.compare(
+										a.getRating(p.getAttributes()),
+										b.getRating(p.getAttributes())))
 									.get()
 									.getName()
 					));
@@ -225,12 +223,10 @@ public class RosterTablePanel extends JPanel
 			columnDatas.add(
 					new ColumnData(
 							"Training",
-							(p) -> Arrays
-									.stream(evaluators)
-									.max(
-										(a, b) -> Double.compare(
-											a.getQuality(p.getAttributes()),
-											b.getQuality(p.getAttributes())))
+							(p) -> Arrays.stream(evaluators)
+									.max((a, b) -> Double.compare(
+										a.getQuality(p.getAttributes()),
+										b.getQuality(p.getAttributes())))
 									.get()
 									.getName()
 					));
