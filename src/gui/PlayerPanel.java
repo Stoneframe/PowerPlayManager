@@ -16,10 +16,12 @@ public class PlayerPanel extends JPanel
 	private static final long serialVersionUID = 8319489027333955979L;
 
 	private JLabel nameLabel;
-	private JTextField nameTextField;
-
 	private JLabel sideLabel;
+
+	private JTextField nameTextField;
 	private JTextField sideTextField;
+
+	private AttributePanel attributePanel;
 
 	public PlayerPanel()
 	{
@@ -30,6 +32,8 @@ public class PlayerPanel extends JPanel
 		sideLabel = new JLabel("Side:", JLabel.TRAILING);
 		sideTextField = new JTextField(15);
 		sideTextField.setEditable(false);
+
+		attributePanel = new AttributePanel();
 
 		setBorder(BorderFactory.createTitledBorder("Player"));
 
@@ -56,10 +60,16 @@ public class PlayerPanel extends JPanel
 
 		add(sideLabel, c);
 
-		c.weighty = 100;
 		c.gridx = 1;
 
 		add(sideTextField, c);
+
+		c.gridx = 0;
+		c.gridy = 2;
+		c.gridwidth = 2;
+		c.weighty = 100;
+
+		add(attributePanel, c);
 	}
 
 	public void showPlayer(Player player)
@@ -68,11 +78,13 @@ public class PlayerPanel extends JPanel
 		{
 			nameTextField.setText(player.getName());
 			sideTextField.setText(player.getSide().toString());
+			attributePanel.showAttributes(player.getAttributes());
 		}
 		else
 		{
 			nameTextField.setText("");
 			sideTextField.setText("");
+			attributePanel.clear();
 		}
 	}
 }
