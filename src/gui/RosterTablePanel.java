@@ -53,7 +53,6 @@ public class RosterTablePanel extends JPanel
 		rosterTable = new JTable();
 		rosterTable.setPreferredSize(new Dimension(1, 500));
 		rosterTable.setAutoCreateRowSorter(true);
-		rosterTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		rosterTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		rosterTable.getSelectionModel().addListSelectionListener(
 			new ListSelectionListener()
