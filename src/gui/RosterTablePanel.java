@@ -69,11 +69,11 @@ public class RosterTablePanel extends JPanel
 
 				private Player getSelectedPlayer()
 				{
-					int playerIndex = rosterTable.convertRowIndexToModel(
-						rosterTable.getSelectedRow());
+					int selectedRow = rosterTable.getSelectedRow();
 
-					return playerIndex >= 0
-							? roster.get(playerIndex)
+					return selectedRow >= 0
+							? roster.get(
+								rosterTable.convertRowIndexToModel(selectedRow))
 							: null;
 				}
 			});
