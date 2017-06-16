@@ -32,6 +32,7 @@ public class MainFrame extends JFrame
 {
 	private static final long serialVersionUID = -8026416994513756565L;
 
+	private MenuBar menuBar;
 	private ParsePanel parsePanel;
 	private RosterTablePanel rosterTablePanel;
 	private PlayerPanel playerPanel;
@@ -43,6 +44,10 @@ public class MainFrame extends JFrame
 
 	public MainFrame()
 	{
+		//Menu bar
+		menuBar = new MenuBar(this);
+		
+		//Parse panel
 		roster = new Roster();
 
 		PlayerEvaluator[] evaluators = new PlayerEvaluator[]
@@ -69,6 +74,7 @@ public class MainFrame extends JFrame
 			}
 		});
 
+		//Roster table panel
 		rosterTablePanel = new RosterTablePanel();
 		rosterTablePanel.setPlayerSelectedListener(new PlayerSelectedListener()
 		{
@@ -78,8 +84,10 @@ public class MainFrame extends JFrame
 			}
 		});
 
+		//Player panel
 		playerPanel = new PlayerPanel();
 
+		//Button panel
 		createFormationsButton = new JButton("Create Formations");
 		createFormationsButton.addActionListener(new ActionListener()
 		{
@@ -134,6 +142,7 @@ public class MainFrame extends JFrame
 
 		setLayout(new BorderLayout());
 
+		setJMenuBar(menuBar);
 		add(parsePanel, BorderLayout.NORTH);
 		add(rosterTablePanel, BorderLayout.CENTER);
 		add(playerPanel, BorderLayout.EAST);
