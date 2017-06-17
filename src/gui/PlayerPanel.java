@@ -29,11 +29,11 @@ public class PlayerPanel extends JPanel
 
 	public PlayerPanel()
 	{
-		nameLabel = new JLabel("Name:", JLabel.TRAILING);
+		nameLabel = new JLabel("Name:");
 		nameTextField = new JTextField(15);
 		nameTextField.setEditable(false);
 
-		sideLabel = new JLabel("Side:", JLabel.TRAILING);
+		sideLabel = new JLabel("Side:");
 		sideTextField = new JTextField(15);
 		sideTextField.setEditable(false);
 
