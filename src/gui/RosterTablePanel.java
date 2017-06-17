@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,6 +9,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -51,7 +51,6 @@ public class RosterTablePanel extends JPanel
 	public RosterTablePanel()
 	{
 		rosterTable = new JTable();
-		rosterTable.setPreferredSize(new Dimension(1, 500));
 		rosterTable.setAutoCreateRowSorter(true);
 		rosterTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		rosterTable.getSelectionModel().addListSelectionListener(
@@ -81,7 +80,7 @@ public class RosterTablePanel extends JPanel
 		setLayout(new BorderLayout());
 
 		add(rosterTable.getTableHeader(), BorderLayout.PAGE_START);
-		add(rosterTable);
+		add(new JScrollPane(rosterTable));
 
 		showRoster(new Roster());
 	}
