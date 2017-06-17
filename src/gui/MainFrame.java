@@ -82,7 +82,7 @@ public class MainFrame extends JFrame
 		{
 			public void playerSelected(Object source, PlayerSelectedEvent event)
 			{
-				playerPanel.showPlayer(event.getPlayer());
+				playerPanel.showPlayer(event.getPlayer(), evaluators);
 			}
 		});
 

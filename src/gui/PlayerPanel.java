@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import model.Player;
+import model.PlayerEvaluator;
 
 public class PlayerPanel extends JPanel
 {
@@ -23,6 +24,9 @@ public class PlayerPanel extends JPanel
 
 	private AttributePanel attributePanel;
 
+	private PositionSuggestionPanel positionSuggestionPanel;
+	private TrainingSuggestionPanel trainingSuggestionPanel;
+
 	public PlayerPanel()
 	{
 		nameLabel = new JLabel("Name:", JLabel.TRAILING);
@@ -34,6 +38,10 @@ public class PlayerPanel extends JPanel
 		sideTextField.setEditable(false);
 
 		attributePanel = new AttributePanel();
+
+		positionSuggestionPanel = new PositionSuggestionPanel();
+
+		trainingSuggestionPanel = new TrainingSuggestionPanel();
 
 		setBorder(BorderFactory.createTitledBorder("Player"));
 
@@ -67,24 +75,40 @@ public class PlayerPanel extends JPanel
 		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 2;
-		c.weighty = 100;
 
 		add(attributePanel, c);
+
+		c.gridx = 0;
+		c.gridy = 3;
+		c.gridwidth = 2;
+
+		add(positionSuggestionPanel, c);
+
+		c.gridx = 0;
+		c.gridy = 4;
+		c.gridwidth = 2;
+		c.weighty = 100;
+
+		add(trainingSuggestionPanel, c);
 	}
 
-	public void showPlayer(Player player)
+	public void showPlayer(Player player, PlayerEvaluator... evaluators)
 	{
 		if (player != null)
 		{
 			nameTextField.setText(player.getName());
 			sideTextField.setText(player.getSide().toString());
 			attributePanel.showAttributes(player.getAttributes());
+			positionSuggestionPanel.showSuggestions(player, evaluators);
+			trainingSuggestionPanel.showSuggestions(player, evaluators);
 		}
 		else
 		{
 			nameTextField.setText("");
 			sideTextField.setText("");
 			attributePanel.clear();
+			positionSuggestionPanel.clear();
+			trainingSuggestionPanel.clear();
 		}
 	}
 }
