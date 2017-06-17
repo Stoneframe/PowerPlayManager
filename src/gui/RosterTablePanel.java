@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.CompoundBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
@@ -76,6 +78,10 @@ public class RosterTablePanel extends JPanel
 							: null;
 				}
 			});
+
+		setBorder(new CompoundBorder(
+				BorderFactory.createTitledBorder("Roster"),
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		setLayout(new BorderLayout());
 
