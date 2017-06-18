@@ -32,9 +32,7 @@ public abstract class SuggestionPanel extends JPanel
 
 		for (PlayerEvaluator evaluator : Arrays
 				.stream(evaluators)
-				.sorted((a, b) -> Double.compare(
-					getValue(player, b),
-					getValue(player, a)))
+				.sorted((a, b) -> compare(player, b, a))
 				.limit(DISPLAYED_POSITIONS_LIMIT)
 				.toArray(PlayerEvaluator[]::new))
 		{
@@ -47,6 +45,11 @@ public abstract class SuggestionPanel extends JPanel
 
 		updateUI();
 	}
+
+	protected abstract int compare(
+			Player player,
+			PlayerEvaluator evaluator1,
+			PlayerEvaluator evaluator2);
 
 	protected abstract double getValue(
 			Player player,

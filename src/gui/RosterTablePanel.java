@@ -22,6 +22,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import model.Player;
 import model.PlayerEvaluator;
 import model.Roster;
+import model.comparators.QualityEvaluatorComparator;
+import model.comparators.RatingEvaluatorComparator;
 
 public class RosterTablePanel extends JPanel
 {
@@ -216,9 +218,8 @@ public class RosterTablePanel extends JPanel
 						"Position",
 						(p) -> Arrays
 								.stream(evaluators)
-								.max((a, b) -> Double.compare(
-									a.getRating(p.getAttributes()),
-									b.getRating(p.getAttributes())))
+								.max((a, b) -> new RatingEvaluatorComparator(p)
+										.compare(a, b))
 								.get()
 								.getName()));
 
@@ -227,9 +228,8 @@ public class RosterTablePanel extends JPanel
 						"Training",
 						(p) -> Arrays
 								.stream(evaluators)
-								.max((a, b) -> Double.compare(
-									a.getQuality(p.getAttributes()),
-									b.getQuality(p.getAttributes())))
+								.max((a, b) -> new QualityEvaluatorComparator(p)
+										.compare(a, b))
 								.get()
 								.getName()));
 		}

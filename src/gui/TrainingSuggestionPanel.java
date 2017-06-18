@@ -2,6 +2,7 @@ package gui;
 
 import model.Player;
 import model.PlayerEvaluator;
+import model.comparators.QualityEvaluatorComparator;
 
 public class TrainingSuggestionPanel extends SuggestionPanel
 {
@@ -10,6 +11,17 @@ public class TrainingSuggestionPanel extends SuggestionPanel
 	public TrainingSuggestionPanel()
 	{
 		super("Traning");
+	}
+
+	@Override
+	protected int compare(
+			Player player,
+			PlayerEvaluator evaluator1,
+			PlayerEvaluator evaluator2)
+
+	{
+		return new QualityEvaluatorComparator(player)
+				.compare(evaluator1, evaluator2);
 	}
 
 	@Override
