@@ -39,6 +39,7 @@ public class MainFrame extends JFrame
 
 	private JPanel buttonPanel;
 	private JButton createFormationsButton;
+	private JButton clearRosterButton;
 
 	private Roster roster;
 
@@ -146,8 +147,19 @@ public class MainFrame extends JFrame
 			}
 		});
 
+		clearRosterButton = new JButton("Clear Roster");
+		clearRosterButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				roster = new Roster();
+				rosterTablePanel.showRoster(roster);
+			}
+		});
+
 		buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		buttonPanel.add(createFormationsButton);
+		buttonPanel.add(clearRosterButton);
 
 		setLayout(new BorderLayout());
 
