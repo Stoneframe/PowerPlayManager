@@ -100,7 +100,7 @@ public class Attributes
 		this.agr = agr;
 	}
 
-	public int getTotal()
+	public int getTotalRating()
 	{
 		return goa + fip + sho + blk + pas + tec + spe + agr;
 	}
@@ -183,6 +183,11 @@ public class Attributes
 	public void setQAgr(int qAgr)
 	{
 		this.qAgr = qAgr;
+	}
+
+	public double getAverageQuality()
+	{
+		return (qGoa + qFip + qSho + qBlk + qPas + qTec + qSpe + qAgr) / 8d;
 	}
 
 	@Override

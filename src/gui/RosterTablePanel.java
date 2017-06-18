@@ -43,7 +43,7 @@ public class RosterTablePanel extends JPanel
 			// new Column("Tec", p -> p.getAttributes().getTec()),
 			// new Column("Spe", p -> p.getAttributes().getSpe()),
 			// new Column("Agr", p -> p.getAttributes().getAgr()),
-			new ColumnData("Total", p -> p.getAttributes().getTotal()),
+			new ColumnData("Total", p -> p.getAttributes().getTotalRating()),
 	};
 
 	private ColumnData[] columnDatas;

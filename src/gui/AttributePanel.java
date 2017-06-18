@@ -24,6 +24,7 @@ public class AttributePanel extends JPanel
 	private JLabel tecLabel;
 	private JLabel speLabel;
 	private JLabel agrLabel;
+	private JLabel totLabel;
 
 	private JTextField goaTextField;
 	private JTextField goaQTextField;
@@ -41,6 +42,8 @@ public class AttributePanel extends JPanel
 	private JTextField speQTextField;
 	private JTextField agrTextField;
 	private JTextField agrQTextField;
+	private JTextField totTextField;
+	private JTextField avgQTextField;
 
 	public AttributePanel()
 	{
@@ -52,6 +55,7 @@ public class AttributePanel extends JPanel
 		tecLabel = new JLabel("Tec:");
 		speLabel = new JLabel("Spe:");
 		agrLabel = new JLabel("Agr:");
+		totLabel = new JLabel("Tot:");
 
 		goaTextField = new JTextField(TEXTFIELD_COLUMNS);
 		goaTextField.setEditable(false);
@@ -101,11 +105,17 @@ public class AttributePanel extends JPanel
 		agrQTextField = new JTextField(TEXTFIELD_COLUMNS);
 		agrQTextField.setEditable(false);
 
+		totTextField = new JTextField(TEXTFIELD_COLUMNS);
+		totTextField.setEditable(false);
+
+		avgQTextField = new JTextField(TEXTFIELD_COLUMNS);
+		avgQTextField.setEditable(false);
+
 		setBorder(new CompoundBorder(
 				BorderFactory.createTitledBorder("Attributes"),
 				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-		setLayout(new GridLayout(8, 3, 5, 5));
+		setLayout(new GridLayout(9, 3, 5, 5));
 
 		add(goaLabel);
 		add(goaTextField);
@@ -138,6 +148,10 @@ public class AttributePanel extends JPanel
 		add(agrLabel);
 		add(agrTextField);
 		add(agrQTextField);
+
+		add(totLabel);
+		add(totTextField);
+		add(avgQTextField);
 	}
 
 	public void showAttributes(Attributes attributes)
@@ -164,6 +178,11 @@ public class AttributePanel extends JPanel
 			speQTextField.setText(Integer.toString(attributes.getQSpe()));
 			agrTextField.setText(Integer.toString(attributes.getAgr()));
 			agrQTextField.setText(Integer.toString(attributes.getQAgr()));
+			totTextField.setText(Integer.toString(attributes.getTotalRating()));
+			avgQTextField.setText(
+				String.format(
+					"%.1f",
+					attributes.getAverageQuality()));
 		}
 	}
 
@@ -185,5 +204,7 @@ public class AttributePanel extends JPanel
 		speQTextField.setText("");
 		agrTextField.setText("");
 		agrQTextField.setText("");
+		totTextField.setText("");
+		avgQTextField.setText("");
 	}
 }
