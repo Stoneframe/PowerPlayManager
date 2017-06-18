@@ -12,6 +12,7 @@ import javax.swing.JTextArea;
 
 import model.Player;
 import model.PlayersParser;
+import model.parsers.MarketPlayersParser;
 import model.parsers.OverviewPlayersParser;
 import model.parsers.ParseException;
 import model.parsers.PractiseProPlayersParser;
@@ -27,6 +28,7 @@ public class ParsePanel extends JPanel
 	private JButton parsePractiseButton;
 	private JButton parseProPractiseButton;
 	private JButton parseOverviewButton;
+	private JButton parseMarketButton;
 
 	public ParsePanel()
 	{
@@ -59,12 +61,22 @@ public class ParsePanel extends JPanel
 			}
 		});
 
+		parseMarketButton = new JButton("Market Parse");
+		parseMarketButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				parsePlayers(new MarketPlayersParser());
+			}
+		});
+
 		setLayout(new FlowLayout());
 
 		add(new JScrollPane(textArea));
 		add(parsePractiseButton);
 		add(parseProPractiseButton);
 		add(parseOverviewButton);
+		add(parseMarketButton);
 	}
 
 	public void setPlayersParseListener(PlayersParsedListener listener)
