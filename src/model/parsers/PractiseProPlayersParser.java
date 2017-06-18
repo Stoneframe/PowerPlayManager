@@ -61,31 +61,31 @@ public class PractiseProPlayersParser implements PlayersParser
 		attributes.setGoa(goa[0]);
 		attributes.setQGoa(goa[1]);
 
-		int[] fip = parseAttribute(texts[1]);
+		int[] fip = parseAttribute(texts[2]);
 		attributes.setFip(fip[0]);
 		attributes.setQFip(fip[1]);
 
-		int[] sho = parseAttribute(texts[2]);
+		int[] sho = parseAttribute(texts[4]);
 		attributes.setSho(sho[0]);
 		attributes.setQSho(sho[1]);
 
-		int[] blk = parseAttribute(texts[3]);
+		int[] blk = parseAttribute(texts[6]);
 		attributes.setBlk(blk[0]);
 		attributes.setQBlk(blk[1]);
 
-		int[] pas = parseAttribute(texts[4]);
+		int[] pas = parseAttribute(texts[8]);
 		attributes.setPas(pas[0]);
 		attributes.setQPas(pas[1]);
 
-		int[] tec = parseAttribute(texts[5]);
+		int[] tec = parseAttribute(texts[10]);
 		attributes.setTec(tec[0]);
 		attributes.setQTec(tec[1]);
 
-		int[] spe = parseAttribute(texts[6]);
+		int[] spe = parseAttribute(texts[12]);
 		attributes.setSpe(spe[0]);
 		attributes.setQSpe(spe[1]);
 
-		int[] agr = parseAttribute(texts[7]);
+		int[] agr = parseAttribute(texts[14]);
 		attributes.setAgr(agr[0]);
 		attributes.setQAgr(agr[1]);
 

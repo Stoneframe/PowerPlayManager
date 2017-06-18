@@ -196,20 +196,20 @@ public class RosterTablePanel extends JPanel
 	{
 		List<ColumnData> columnDatas = new LinkedList<ColumnData>();
 
-		for (PlayerEvaluator evaluator : evaluators)
-		{
-			columnDatas.add(
-				new ColumnData(
-						evaluator.getName(),
-						(p) -> evaluator.getRating(p.getAttributes()),
-						(v) -> String.format("%.1f", v)));
-
-			columnDatas.add(
-				new ColumnData(
-						"Q." + evaluator.getName(),
-						(p) -> evaluator.getQuality(p.getAttributes()),
-						(v) -> String.format("%.1f", v)));
-		}
+		// for (PlayerEvaluator evaluator : evaluators)
+		// {
+		// columnDatas.add(
+		// new ColumnData(
+		// evaluator.getName(),
+		// (p) -> evaluator.getRating(p.getAttributes()),
+		// (v) -> String.format("%.1f", v)));
+		//
+		// columnDatas.add(
+		// new ColumnData(
+		// "Q." + evaluator.getName(),
+		// (p) -> evaluator.getQuality(p.getAttributes()),
+		// (v) -> String.format("%.1f", v)));
+		// }
 
 		if (evaluators.length > 0)
 		{
@@ -225,6 +225,17 @@ public class RosterTablePanel extends JPanel
 
 			columnDatas.add(
 				new ColumnData(
+						"Highest Rating",
+						(p) -> Arrays
+								.stream(evaluators)
+								.max((a, b) -> new RatingEvaluatorComparator(p)
+										.compare(a, b))
+								.map(e -> e.getRating(p.getAttributes()))
+								.get(),
+						(v) -> String.format("%.1f", v)));
+
+			columnDatas.add(
+				new ColumnData(
 						"Training",
 						(p) -> Arrays
 								.stream(evaluators)
@@ -232,6 +243,17 @@ public class RosterTablePanel extends JPanel
 										.compare(a, b))
 								.get()
 								.getName()));
+
+			columnDatas.add(
+				new ColumnData(
+						"Highest Quality",
+						(p) -> Arrays
+								.stream(evaluators)
+								.max((a, b) -> new QualityEvaluatorComparator(p)
+										.compare(a, b))
+								.map(e -> e.getQuality(p.getAttributes()))
+								.get(),
+						(v) -> String.format("%.1f", v)));
 		}
 
 		return columnDatas.toArray(new ColumnData[0]);
