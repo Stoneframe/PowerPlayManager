@@ -57,30 +57,57 @@ public class PractisePlayersParser implements PlayersParser
 	{
 		Attributes attributes = new Attributes();
 
-		attributes.setGoa(Integer.parseInt(texts[0].substring(0, 2)));
-		attributes.setQGoa(Integer.parseInt(texts[0].substring(2, 4)));
+		int[] goa = parseAttribute(texts[0]);
+		attributes.setGoa(goa[0]);
+		attributes.setQGoa(goa[1]);
 
-		attributes.setFip(Integer.parseInt(texts[1].substring(0, 2)));
-		attributes.setQFip(Integer.parseInt(texts[1].substring(2, 4)));
+		int[] fip = parseAttribute(texts[1]);
+		attributes.setFip(fip[0]);
+		attributes.setQFip(fip[1]);
 
-		attributes.setSho(Integer.parseInt(texts[2].substring(0, 2)));
-		attributes.setQSho(Integer.parseInt(texts[2].substring(2, 4)));
+		int[] sho = parseAttribute(texts[2]);
+		attributes.setSho(sho[0]);
+		attributes.setQSho(sho[1]);
 
-		attributes.setBlk(Integer.parseInt(texts[3].substring(0, 2)));
-		attributes.setQBlk(Integer.parseInt(texts[3].substring(2, 4)));
+		int[] blk = parseAttribute(texts[3]);
+		attributes.setBlk(blk[0]);
+		attributes.setQBlk(blk[1]);
 
-		attributes.setPas(Integer.parseInt(texts[4].substring(0, 2)));
-		attributes.setQPas(Integer.parseInt(texts[4].substring(2, 4)));
+		int[] pas = parseAttribute(texts[4]);
+		attributes.setPas(pas[0]);
+		attributes.setQPas(pas[1]);
 
-		attributes.setTec(Integer.parseInt(texts[5].substring(0, 2)));
-		attributes.setQTec(Integer.parseInt(texts[5].substring(2, 4)));
+		int[] tec = parseAttribute(texts[5]);
+		attributes.setTec(tec[0]);
+		attributes.setQTec(tec[1]);
 
-		attributes.setSpe(Integer.parseInt(texts[6].substring(0, 2)));
-		attributes.setQSpe(Integer.parseInt(texts[6].substring(2, 4)));
+		int[] spe = parseAttribute(texts[6]);
+		attributes.setSpe(spe[0]);
+		attributes.setQSpe(spe[1]);
 
-		attributes.setAgr(Integer.parseInt(texts[7].substring(0, 2)));
-		attributes.setQAgr(Integer.parseInt(texts[7].substring(2, 4)));
+		int[] agr = parseAttribute(texts[7]);
+		attributes.setAgr(agr[0]);
+		attributes.setQAgr(agr[1]);
 
 		return attributes;
+	}
+
+	private static int[] parseAttribute(String text)
+	{
+		int rating = Integer.parseInt(
+			text.substring(
+				0,
+				text.length() - 2));
+
+		int quality = Integer.parseInt(
+			text.substring(
+				text.length() - 2,
+				text.length()));
+
+		return new int[]
+		{
+				rating,
+				quality
+		};
 	}
 }
