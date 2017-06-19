@@ -8,12 +8,12 @@ public class DefensiveBackPlayerEvaluator extends PlayerEvaluator
 
 	private static final int GOA = 0;
 	private static final int FIP = 100;
-	private static final int SHO = 25;
-	private static final int BLK = 75;
-	private static final int PAS = 75;
-	private static final int TEC = 50;
-	private static final int SPE = 25;
-	private static final int AGR = 25;
+	private static final int SHO = 40;
+	private static final int BLK = 80;
+	private static final int PAS = 80;
+	private static final int TEC = 60;
+	private static final int SPE = 40;
+	private static final int AGR = 40;
 
 	public DefensiveBackPlayerEvaluator()
 	{
