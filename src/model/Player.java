@@ -3,7 +3,7 @@ package model;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class Player
+public class Player extends AbstractModelObject
 {
 	private String name;
 	private Side side;
@@ -14,6 +14,8 @@ public class Player
 		this.name = name;
 		this.side = side;
 		this.attributes = attributes;
+		this.attributes
+				.addPropertyChangedListener((s, e) -> firePropertyChanged(e));
 	}
 
 	public String getName()
@@ -24,6 +26,7 @@ public class Player
 	public void setName(String name)
 	{
 		this.name = name;
+		firePropertyChanged("Name", name);
 	}
 
 	public Side getSide()
@@ -34,6 +37,7 @@ public class Player
 	public void setSide(Side side)
 	{
 		this.side = side;
+		firePropertyChanged("Side", side);
 	}
 
 	public Attributes getAttributes()
@@ -43,9 +47,11 @@ public class Player
 
 	public void merge(Player other)
 	{
-		if (!this.equals(other)) return;
+		if (!this.equals(other))
+			return;
 
-		if (this.side == Side.UNKNOWN) this.side = other.side;
+		if (this.side == Side.UNKNOWN)
+			this.setSide(other.getSide());
 
 		mergeAttribute(
 			() -> this.attributes.getGoa(),
@@ -142,9 +148,11 @@ public class Player
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this) return true;
+		if (obj == this)
+			return true;
 
-		if (!(obj instanceof Player)) return false;
+		if (!(obj instanceof Player))
+			return false;
 
 		Player other = (Player) obj;
 

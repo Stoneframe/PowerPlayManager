@@ -111,14 +111,13 @@ public class Formation
 	@Override
 	public String toString()
 	{
-		return String
-				.format(
-					"Pivot: %s\nLeft Wing: %s\nRight Wing: %s\nCenter Back: %s\nLeft Back: %s\nRight Back: %s\n",
-					pivot.getName(),
-					leftWing.getName(),
-					rightWing.getName(),
-					centerBack.getName(),
-					leftBack.getName(),
-					rightBack.getName());
+		return String.format(
+			"Pivot: %s\nLeft Wing: %s\nRight Wing: %s\nCenter Back: %s\nLeft Back: %s\nRight Back: %s\n",
+			pivot.getName(),
+			leftWing.getName(),
+			rightWing.getName(),
+			centerBack.getName(),
+			leftBack.getName(),
+			rightBack.getName());
 	}
 }

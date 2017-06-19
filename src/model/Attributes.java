@@ -1,6 +1,6 @@
 package model;
 
-public class Attributes
+public class Attributes extends AbstractModelObject
 {
 	private int goa;
 	private int fip;
@@ -28,6 +28,7 @@ public class Attributes
 	public void setGoa(int goa)
 	{
 		this.goa = goa;
+		firePropertyChanged("Goa", goa);
 	}
 
 	public int getFip()
@@ -38,6 +39,7 @@ public class Attributes
 	public void setFip(int fip)
 	{
 		this.fip = fip;
+		firePropertyChanged("Fip", fip);
 	}
 
 	public int getSho()
@@ -48,6 +50,7 @@ public class Attributes
 	public void setSho(int sho)
 	{
 		this.sho = sho;
+		firePropertyChanged("Sho", sho);
 	}
 
 	public int getBlk()
@@ -58,6 +61,7 @@ public class Attributes
 	public void setBlk(int blk)
 	{
 		this.blk = blk;
+		firePropertyChanged("Blk", blk);
 	}
 
 	public int getPas()
@@ -68,6 +72,7 @@ public class Attributes
 	public void setPas(int pas)
 	{
 		this.pas = pas;
+		firePropertyChanged("Pas", pas);
 	}
 
 	public int getTec()
@@ -78,6 +83,7 @@ public class Attributes
 	public void setTec(int tec)
 	{
 		this.tec = tec;
+		firePropertyChanged("Tec", tec);
 	}
 
 	public int getSpe()
@@ -88,6 +94,7 @@ public class Attributes
 	public void setSpe(int spe)
 	{
 		this.spe = spe;
+		firePropertyChanged("Spe", spe);
 	}
 
 	public int getAgr()
@@ -98,6 +105,7 @@ public class Attributes
 	public void setAgr(int agr)
 	{
 		this.agr = agr;
+		firePropertyChanged("Agr", agr);
 	}
 
 	public int getTotalRating()
@@ -113,6 +121,8 @@ public class Attributes
 	public void setQGoa(int qGoa)
 	{
 		this.qGoa = qGoa;
+		firePropertyChanged("QGoa", qGoa);
+		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	public int getQFip()
@@ -123,6 +133,8 @@ public class Attributes
 	public void setQFip(int qFip)
 	{
 		this.qFip = qFip;
+		firePropertyChanged("QFip", qFip);
+		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	public int getQSho()
@@ -133,6 +145,8 @@ public class Attributes
 	public void setQSho(int qSho)
 	{
 		this.qSho = qSho;
+		firePropertyChanged("QSho", qSho);
+		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	public int getQBlk()
@@ -143,6 +157,8 @@ public class Attributes
 	public void setQBlk(int qBlk)
 	{
 		this.qBlk = qBlk;
+		firePropertyChanged("QBlk", qBlk);
+		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	public int getQPas()
@@ -153,6 +169,8 @@ public class Attributes
 	public void setQPas(int qPas)
 	{
 		this.qPas = qPas;
+		firePropertyChanged("QPas", qPas);
+		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	public int getQTec()
@@ -163,6 +181,8 @@ public class Attributes
 	public void setQTec(int qTec)
 	{
 		this.qTec = qTec;
+		firePropertyChanged("QTec", qTec);
+		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	public int getQSpe()
@@ -173,6 +193,8 @@ public class Attributes
 	public void setQSpe(int qSpe)
 	{
 		this.qSpe = qSpe;
+		firePropertyChanged("QSpe", qSpe);
+		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	public int getQAgr()
@@ -183,6 +205,8 @@ public class Attributes
 	public void setQAgr(int qAgr)
 	{
 		this.qAgr = qAgr;
+		firePropertyChanged("QAgr", qAgr);
+		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	public double getAverageQuality()
@@ -193,24 +217,23 @@ public class Attributes
 	@Override
 	public String toString()
 	{
-		return String
-				.format(
-					"\tGoa: %d(%d)\tFip: %d(%d)\tSho: %d(%d)\tBlk: %d(%d)\tPas: %d(%d)\tTec: %d(%d)\tSpe: %d(%d)\tAgr: %d(%d)\n",
-					goa,
-					qGoa,
-					fip,
-					qFip,
-					sho,
-					qSho,
-					blk,
-					qBlk,
-					pas,
-					qPas,
-					tec,
-					qTec,
-					spe,
-					qSpe,
-					agr,
-					qAgr);
+		return String.format(
+			"\tGoa: %d(%d)\tFip: %d(%d)\tSho: %d(%d)\tBlk: %d(%d)\tPas: %d(%d)\tTec: %d(%d)\tSpe: %d(%d)\tAgr: %d(%d)\n",
+			goa,
+			qGoa,
+			fip,
+			qFip,
+			sho,
+			qSho,
+			blk,
+			qBlk,
+			pas,
+			qPas,
+			tec,
+			qTec,
+			spe,
+			qSpe,
+			agr,
+			qAgr);
 	}
 }

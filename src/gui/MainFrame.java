@@ -73,7 +73,6 @@ public class MainFrame extends JFrame
 			public void playersParsed(Object source, PlayersParsedEvent event)
 			{
 				roster.addAll(event.getPlayers());
-				rosterTablePanel.showRoster(roster, evaluators);
 			}
 		});
 		parsePanel.setPlayerEvaluatorsParsedListener(
@@ -83,24 +82,28 @@ public class MainFrame extends JFrame
 						Object source,
 						PlayerEvaluatorsParsedEvent event)
 				{
-					evaluators.clear();
-					evaluators.addAll(event.getPlayerEvaluators());
-					rosterTablePanel.showRoster(roster, evaluators);
+					rosterTablePanel
+							.setPlayerEvaluators(event.getPlayerEvaluators());
+					playerPanel
+							.setPlayerEvaluators(event.getPlayerEvaluators());
 				}
 			});
 
 		// Roster table panel
 		rosterTablePanel = new RosterTablePanel();
+		rosterTablePanel.bind(roster);
+		rosterTablePanel.setPlayerEvaluators(evaluators);
 		rosterTablePanel.setPlayerSelectedListener(new PlayerSelectedListener()
 		{
 			public void playerSelected(Object source, PlayerSelectedEvent event)
 			{
-				playerPanel.showPlayer(event.getPlayer(), evaluators);
+				playerPanel.bind(event.getPlayer());
 			}
 		});
 
 		// Player panel
 		playerPanel = new PlayerPanel();
+		playerPanel.setPlayerEvaluators(evaluators);
 
 		// Button panel
 		createFormationsButton = new JButton("Create Formations");
@@ -164,8 +167,7 @@ public class MainFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				roster = new Roster();
-				rosterTablePanel.showRoster(roster);
+				roster.clear();
 			}
 		});
 

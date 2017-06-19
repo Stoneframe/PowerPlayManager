@@ -1,6 +1,6 @@
 package gui;
 
-import model.Player;
+import model.Attributes;
 import model.PlayerEvaluator;
 import model.comparators.QualityEvaluatorComparator;
 
@@ -15,18 +15,18 @@ public class TrainingSuggestionPanel extends SuggestionPanel
 
 	@Override
 	protected int compare(
-			Player player,
+			Attributes attributes,
 			PlayerEvaluator evaluator1,
 			PlayerEvaluator evaluator2)
 
 	{
-		return new QualityEvaluatorComparator(player)
+		return new QualityEvaluatorComparator(attributes)
 				.compare(evaluator1, evaluator2);
 	}
 
 	@Override
-	protected double getValue(Player player, PlayerEvaluator evaluator)
+	protected double getValue(Attributes attributes, PlayerEvaluator evaluator)
 	{
-		return evaluator.getQuality(player.getAttributes());
+		return evaluator.getQuality(attributes);
 	}
 }

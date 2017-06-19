@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class Roster implements Iterable<Player>
+public class Roster extends AbstractModelCollection implements Iterable<Player>
 {
 	public static Roster intersection(Roster r1, Roster r2)
 	{
@@ -22,7 +22,7 @@ public class Roster implements Iterable<Player>
 	{
 	}
 
-	public Roster(List<Player> players)
+	private Roster(List<Player> players)
 	{
 		this.players.addAll(players);
 	}
@@ -40,6 +40,11 @@ public class Roster implements Iterable<Player>
 		}
 
 		players.add(player);
+
+		fireCollectionChanged(
+			CollectionChangedEvent.ADDED,
+			players.indexOf(player),
+			player);
 	}
 
 	public void addAll(List<Player> players)
@@ -52,12 +57,21 @@ public class Roster implements Iterable<Player>
 
 	public void remove(Player player)
 	{
+		int index = players.indexOf(player);
+
 		players.remove(player);
+
+		fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
 	}
 
 	public Player get(int index)
 	{
 		return players.get(index);
+	}
+
+	public int indexOf(Player player)
+	{
+		return players.indexOf(player);
 	}
 
 	public int size()
@@ -68,6 +82,14 @@ public class Roster implements Iterable<Player>
 	public Roster copy()
 	{
 		return new Roster(players);
+	}
+
+	public void clear()
+	{
+		while (!players.isEmpty())
+		{
+			remove(players.get(0));
+		}
 	}
 
 	public Stream<Player> stream()

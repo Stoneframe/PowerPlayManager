@@ -61,9 +61,10 @@ public class FormationPanel extends JPanel
 		rightBackTextField.setEditable(false);
 		rightBackTextField.setText(formation.getRightBack().getName());
 
-		setBorder(new CompoundBorder(
-				BorderFactory.createTitledBorder(formation.getName()),
-				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		setBorder(
+			new CompoundBorder(
+					BorderFactory.createTitledBorder(formation.getName()),
+					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		setLayout(new GridLayout(6, 2));
 

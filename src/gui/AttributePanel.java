@@ -9,12 +9,16 @@ import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
 import model.Attributes;
+import model.PropertyChangedEvent;
+import model.PropertyChangedListener;
 
-public class AttributePanel extends JPanel
+public class AttributePanel extends JPanel implements PropertyChangedListener
 {
 	private static final long serialVersionUID = -550607296797083079L;
 
 	private static final int TEXTFIELD_COLUMNS = 4;
+
+	private Attributes attributes;
 
 	private JLabel goaLabel;
 	private JLabel fipLabel;
@@ -111,9 +115,10 @@ public class AttributePanel extends JPanel
 		avgQTextField = new JTextField(TEXTFIELD_COLUMNS);
 		avgQTextField.setEditable(false);
 
-		setBorder(new CompoundBorder(
-				BorderFactory.createTitledBorder("Attributes"),
-				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		setBorder(
+			new CompoundBorder(
+					BorderFactory.createTitledBorder("Attributes"),
+					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		setLayout(new GridLayout(9, 3, 5, 5));
 
@@ -154,36 +159,44 @@ public class AttributePanel extends JPanel
 		add(avgQTextField);
 	}
 
-	public void showAttributes(Attributes attributes)
+	public void bind(Attributes attributes)
 	{
-		if (attributes == null)
+		if (this.attributes != null)
 		{
 			clear();
+			this.attributes.removePropertyChangedListener(this);
 		}
-		else
+
+		this.attributes = attributes;
+
+		if (this.attributes != null)
 		{
-			goaTextField.setText(Integer.toString(attributes.getGoa()));
-			goaQTextField.setText(Integer.toString(attributes.getQGoa()));
-			fipTextField.setText(Integer.toString(attributes.getFip()));
-			fipQTextField.setText(Integer.toString(attributes.getQFip()));
-			shoTextField.setText(Integer.toString(attributes.getSho()));
-			shoQTextField.setText(Integer.toString(attributes.getQSho()));
-			blkTextField.setText(Integer.toString(attributes.getBlk()));
-			blkQTextField.setText(Integer.toString(attributes.getQBlk()));
-			pasTextField.setText(Integer.toString(attributes.getPas()));
-			pasQTextField.setText(Integer.toString(attributes.getQPas()));
-			tecTextField.setText(Integer.toString(attributes.getTec()));
-			tecQTextField.setText(Integer.toString(attributes.getQTec()));
-			speTextField.setText(Integer.toString(attributes.getSpe()));
-			speQTextField.setText(Integer.toString(attributes.getQSpe()));
-			agrTextField.setText(Integer.toString(attributes.getAgr()));
-			agrQTextField.setText(Integer.toString(attributes.getQAgr()));
-			totTextField.setText(Integer.toString(attributes.getTotalRating()));
-			avgQTextField.setText(
-				String.format(
-					"%.1f",
-					attributes.getAverageQuality()));
+			update();
+			this.attributes.addPropertyChangedListener(this);
 		}
+	}
+
+	private void update()
+	{
+		goaTextField.setText(Integer.toString(attributes.getGoa()));
+		goaQTextField.setText(Integer.toString(attributes.getQGoa()));
+		fipTextField.setText(Integer.toString(attributes.getFip()));
+		fipQTextField.setText(Integer.toString(attributes.getQFip()));
+		shoTextField.setText(Integer.toString(attributes.getSho()));
+		shoQTextField.setText(Integer.toString(attributes.getQSho()));
+		blkTextField.setText(Integer.toString(attributes.getBlk()));
+		blkQTextField.setText(Integer.toString(attributes.getQBlk()));
+		pasTextField.setText(Integer.toString(attributes.getPas()));
+		pasQTextField.setText(Integer.toString(attributes.getQPas()));
+		tecTextField.setText(Integer.toString(attributes.getTec()));
+		tecQTextField.setText(Integer.toString(attributes.getQTec()));
+		speTextField.setText(Integer.toString(attributes.getSpe()));
+		speQTextField.setText(Integer.toString(attributes.getQSpe()));
+		agrTextField.setText(Integer.toString(attributes.getAgr()));
+		agrQTextField.setText(Integer.toString(attributes.getQAgr()));
+		totTextField.setText(Integer.toString(attributes.getTotalRating()));
+		avgQTextField
+				.setText(String.format("%.1f", attributes.getAverageQuality()));
 	}
 
 	public void clear()
@@ -206,5 +219,11 @@ public class AttributePanel extends JPanel
 		agrQTextField.setText("");
 		totTextField.setText("");
 		avgQTextField.setText("");
+	}
+
+	@Override
+	public void propertyChanged(Object source, PropertyChangedEvent event)
+	{
+		update();
 	}
 }

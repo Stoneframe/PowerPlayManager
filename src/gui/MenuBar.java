@@ -32,9 +32,7 @@ public class MenuBar extends JMenuBar
 		add(menu);
 
 		// a group of JMenuItems
-		menuItemOpen = new JMenuItem(
-				"Open roster",
-				KeyEvent.VK_O);
+		menuItemOpen = new JMenuItem("Open roster", KeyEvent.VK_O);
 		// menuItem.setAccelerator(KeyStroke.getKeyStroke(
 		// KeyEvent.VK_1, ActionEvent.ALT_MASK));
 		// menuItem.getAccessibleContext().setAccessibleDescription(
@@ -44,15 +42,13 @@ public class MenuBar extends JMenuBar
 			public void actionPerformed(ActionEvent e)
 			{
 				// In response to a button click:
-				int returnVal = fc.showOpenDialog(parentComponent);
+				// int returnVal = fc.showOpenDialog(parentComponent);
 				// parsePlayers(new PractiseProPlayersParser());
 			}
 		});
 		menu.add(menuItemOpen);
 
-		menuItemSave = new JMenuItem(
-				"Save roster",
-				KeyEvent.VK_S);
+		menuItemSave = new JMenuItem("Save roster", KeyEvent.VK_S);
 		// menuItem.setAccelerator(KeyStroke.getKeyStroke(
 		// KeyEvent.VK_1, ActionEvent.ALT_MASK));
 		// menuItem.getAccessibleContext().setAccessibleDescription(

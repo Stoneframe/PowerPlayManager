@@ -29,11 +29,10 @@ public class PractisePlayersParser implements PlayersParser
 				Player player = new Player(
 						parseName(lines[i]),
 						Side.UNKNOWN,
-						parseAttributes(Arrays
-								.copyOfRange(
-									lines,
-									i + ATTRIBUTES_START_FIELD,
-									i + ATTRIBUTES_START_FIELD + ATTRIBUTE_FIELDS_PER_PLAYER)));
+						parseAttributes(Arrays.copyOfRange(
+							lines,
+							i + ATTRIBUTES_START_FIELD,
+							i + ATTRIBUTES_START_FIELD + ATTRIBUTE_FIELDS_PER_PLAYER)));
 
 				players.add(player);
 			}
@@ -94,15 +93,10 @@ public class PractisePlayersParser implements PlayersParser
 
 	private static int[] parseAttribute(String text)
 	{
-		int rating = Integer.parseInt(
-			text.substring(
-				0,
-				text.length() - 2));
+		int rating = Integer.parseInt(text.substring(0, text.length() - 2));
 
-		int quality = Integer.parseInt(
-			text.substring(
-				text.length() - 2,
-				text.length()));
+		int quality = Integer
+				.parseInt(text.substring(text.length() - 2, text.length()));
 
 		return new int[]
 		{

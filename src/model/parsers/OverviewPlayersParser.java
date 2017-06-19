@@ -36,6 +36,7 @@ public class OverviewPlayersParser implements PlayersParser
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			throw new ParseException(e);
 		}
 	}

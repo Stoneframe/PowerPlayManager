@@ -1,18 +1,18 @@
 package model.comparators;
 
-import model.Player;
+import model.Attributes;
 import model.PlayerEvaluator;
 
 public class QualityEvaluatorComparator extends EvaluatorComparator
 {
-	public QualityEvaluatorComparator(Player player)
+	public QualityEvaluatorComparator(Attributes attributes)
 	{
-		super(player);
+		super(attributes);
 	}
 
 	@Override
-	protected double getValue(PlayerEvaluator evaluator, Player player)
+	protected double getValue(PlayerEvaluator evaluator, Attributes attributes)
 	{
-		return evaluator.getQuality(player.getAttributes());
+		return evaluator.getQuality(attributes);
 	}
 }

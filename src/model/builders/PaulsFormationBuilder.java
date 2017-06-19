@@ -122,14 +122,11 @@ public class PaulsFormationBuilder implements FormationBuilder
 		@Override
 		public int compareTo(PositionAssigner other)
 		{
-			return Double
-					.compare(
-						other.evaluator.getRating(other
-								.preferedPlayer()
-								.getAttributes()),
-						this.evaluator.getRating(this
-								.preferedPlayer()
-								.getAttributes()));
+			return Double.compare(
+				other.evaluator
+						.getRating(other.preferedPlayer().getAttributes()),
+				this.evaluator
+						.getRating(this.preferedPlayer().getAttributes()));
 		}
 
 		public void assignPosition()

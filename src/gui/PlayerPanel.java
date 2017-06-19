@@ -12,10 +12,14 @@ import javax.swing.JTextField;
 
 import model.Player;
 import model.PlayerEvaluator;
+import model.PropertyChangedEvent;
+import model.PropertyChangedListener;
 
-public class PlayerPanel extends JPanel
+public class PlayerPanel extends JPanel implements PropertyChangedListener
 {
 	private static final long serialVersionUID = 8319489027333955979L;
+
+	private Player player;
 
 	private JLabel nameLabel;
 	private JLabel sideLabel;
@@ -93,23 +97,50 @@ public class PlayerPanel extends JPanel
 		add(trainingSuggestionPanel, c);
 	}
 
-	public void showPlayer(Player player, List<PlayerEvaluator> evaluators)
+	public void bind(Player player)
 	{
+		if (this.player != null)
+		{
+			clear();
+			attributePanel.bind(null);
+			positionSuggestionPanel.bind(null);
+			trainingSuggestionPanel.bind(null);
+			this.player.removePropertyChangedListener(this);
+		}
+
+		this.player = player;
+
 		if (player != null)
 		{
-			nameTextField.setText(player.getName());
-			sideTextField.setText(player.getSide().toString());
-			attributePanel.showAttributes(player.getAttributes());
-			positionSuggestionPanel.showSuggestions(player, evaluators);
-			trainingSuggestionPanel.showSuggestions(player, evaluators);
+			update();
+			attributePanel.bind(player.getAttributes());
+			positionSuggestionPanel.bind(player.getAttributes());
+			trainingSuggestionPanel.bind(player.getAttributes());
+			this.player.addPropertyChangedListener(this);
 		}
-		else
-		{
-			nameTextField.setText("");
-			sideTextField.setText("");
-			attributePanel.clear();
-			positionSuggestionPanel.clear();
-			trainingSuggestionPanel.clear();
-		}
+	}
+
+	public void setPlayerEvaluators(List<PlayerEvaluator> evaluators)
+	{
+		positionSuggestionPanel.setPlayerEvaluators(evaluators);
+		trainingSuggestionPanel.setPlayerEvaluators(evaluators);
+	}
+
+	private void clear()
+	{
+		nameTextField.setText("");
+		sideTextField.setText("");
+	}
+
+	private void update()
+	{
+		nameTextField.setText(player.getName());
+		sideTextField.setText(player.getSide().toString());
+	}
+
+	@Override
+	public void propertyChanged(Object source, PropertyChangedEvent event)
+	{
+		update();
 	}
 }

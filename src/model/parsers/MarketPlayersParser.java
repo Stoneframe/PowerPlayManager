@@ -14,25 +14,32 @@ public class MarketPlayersParser implements PlayersParser
 	@Override
 	public List<Player> parsePlayers(String textToParse) throws ParseException
 	{
-		List<Player> players = new LinkedList<Player>();
-
-		String[] lines = textToParse.split("\n");
-
-		for (int i = 0; i < lines.length; i += 4)
+		try
 		{
-			Player player = new Player(
-					parseName(lines[i]),
-					parseSide(lines[i + 3].split("\t")[14]),
-					parseAttributes(
-						Arrays.copyOfRange(
-							lines[i + 3].trim().split("\t"),
-							4,
-							12)));
+			List<Player> players = new LinkedList<Player>();
 
-			players.add(player);
+			String[] lines = textToParse.split("\n");
+
+			for (int i = 0; i < lines.length; i += 4)
+			{
+				Player player = new Player(
+						parseName(lines[i]),
+						parseSide(lines[i + 3].split("\t")[14]),
+						parseAttributes(
+							Arrays.copyOfRange(
+								lines[i + 3].trim().split("\t"),
+								4,
+								12)));
+
+				players.add(player);
+			}
+
+			return players;
 		}
-
-		return players;
+		catch (Exception e)
+		{
+			throw new ParseException(e);
+		}
 	}
 
 	private static String parseName(String text)
@@ -103,15 +110,10 @@ public class MarketPlayersParser implements PlayersParser
 
 	private static int[] parseAttribute(String text)
 	{
-		int rating = Integer.parseInt(
-			text.substring(
-				0,
-				text.length() - 2));
+		int rating = Integer.parseInt(text.substring(0, text.length() - 2));
 
-		int quality = Integer.parseInt(
-			text.substring(
-				text.length() - 2,
-				text.length()));
+		int quality = Integer
+				.parseInt(text.substring(text.length() - 2, text.length()));
 
 		return new int[]
 		{
