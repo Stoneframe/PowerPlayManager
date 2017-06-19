@@ -1,7 +1,7 @@
 package gui;
 
 import java.awt.GridLayout;
-import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -26,12 +26,12 @@ public abstract class SuggestionPanel extends JPanel
 		setLayout(new GridLayout(DISPLAYED_POSITIONS_LIMIT, 2));
 	}
 
-	public void showSuggestions(Player player, PlayerEvaluator... evaluators)
+	public void showSuggestions(Player player, List<PlayerEvaluator> evaluators)
 	{
 		clear();
 
-		for (PlayerEvaluator evaluator : Arrays
-				.stream(evaluators)
+		for (PlayerEvaluator evaluator : evaluators
+				.stream()
 				.sorted((a, b) -> compare(player, b, a))
 				.limit(DISPLAYED_POSITIONS_LIMIT)
 				.toArray(PlayerEvaluator[]::new))

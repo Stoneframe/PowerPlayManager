@@ -6,5 +6,5 @@ import model.parsers.ParseException;
 
 public interface PlayersParser
 {
-	public List<Player> parseRoster(String textToParse) throws ParseException;
+	public List<Player> parsePlayers(String textToParse) throws ParseException;
 }

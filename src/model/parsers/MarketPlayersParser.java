@@ -12,7 +12,7 @@ import model.Side;
 public class MarketPlayersParser implements PlayersParser
 {
 	@Override
-	public List<Player> parseRoster(String textToParse) throws ParseException
+	public List<Player> parsePlayers(String textToParse) throws ParseException
 	{
 		List<Player> players = new LinkedList<Player>();
 

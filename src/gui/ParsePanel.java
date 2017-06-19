@@ -11,24 +11,28 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import model.Player;
+import model.PlayerEvaluator;
+import model.PlayerEvaluatorsParser;
 import model.PlayersParser;
 import model.parsers.MarketPlayersParser;
 import model.parsers.OverviewPlayersParser;
 import model.parsers.ParseException;
-import model.parsers.PractiseProPlayersParser;
 import model.parsers.PractisePlayersParser;
+import model.parsers.PractiseProPlayersParser;
 
 public class ParsePanel extends JPanel
 {
 	private static final long serialVersionUID = -4697990138081430891L;
 
 	private PlayersParsedListener playersParsedListener;
+	private PlayerEvaluatorsParsedListener playerEvaluatorParsedListener;
 
 	private JTextArea textArea;
 	private JButton parsePractiseButton;
 	private JButton parseProPractiseButton;
 	private JButton parseOverviewButton;
 	private JButton parseMarketButton;
+	private JButton parseTrainingProgramsButton;
 
 	public ParsePanel()
 	{
@@ -70,6 +74,15 @@ public class ParsePanel extends JPanel
 			}
 		});
 
+		parseTrainingProgramsButton = new JButton("Training Programs Parse");
+		parseTrainingProgramsButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				parsePlayerEvaluators();
+			}
+		});
+
 		setLayout(new FlowLayout());
 
 		add(new JScrollPane(textArea));
@@ -77,6 +90,7 @@ public class ParsePanel extends JPanel
 		add(parseProPractiseButton);
 		add(parseOverviewButton);
 		add(parseMarketButton);
+		add(parseTrainingProgramsButton);
 	}
 
 	public void setPlayersParseListener(PlayersParsedListener listener)
@@ -84,12 +98,18 @@ public class ParsePanel extends JPanel
 		playersParsedListener = listener;
 	}
 
+	public void setPlayerEvaluatorsParsedListener(
+			PlayerEvaluatorsParsedListener listener)
+	{
+		playerEvaluatorParsedListener = listener;
+	}
+
 	private void parsePlayers(PlayersParser playersParser)
 	{
 		try
 		{
 			List<Player> players = playersParser
-					.parseRoster(textArea.getText());
+					.parsePlayers(textArea.getText());
 
 			textArea.setText("");
 
@@ -101,6 +121,28 @@ public class ParsePanel extends JPanel
 			}
 		}
 		catch (ParseException ex)
+		{
+			System.out.println("Unable to parse input");
+		}
+	}
+
+	private void parsePlayerEvaluators()
+	{
+		try
+		{
+			List<PlayerEvaluator> evaluators = new PlayerEvaluatorsParser()
+					.parsePlayerEvaluators(textArea.getText());
+
+			textArea.setText("");
+
+			if (playerEvaluatorParsedListener != null)
+			{
+				playerEvaluatorParsedListener.playerEvaluatorsParsed(
+					this,
+					new PlayerEvaluatorsParsedEvent(this, evaluators));
+			}
+		}
+		catch (ParseException e)
 		{
 			System.out.println("Unable to parse input");
 		}

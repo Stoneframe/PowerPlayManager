@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
@@ -98,7 +99,12 @@ public class RosterTablePanel extends JPanel
 		this.playerSelectedListener = listener;
 	}
 
-	public void showRoster(Roster roster, PlayerEvaluator... evaluators)
+	public void showRoster(Roster roster)
+	{
+		showRoster(roster, Collections.emptyList());
+	}
+
+	public void showRoster(Roster roster, List<PlayerEvaluator> evaluators)
 	{
 		this.roster = roster;
 
@@ -107,7 +113,7 @@ public class RosterTablePanel extends JPanel
 		setCellRenderers();
 	}
 
-	private void setColumnDatas(PlayerEvaluator... evaluators)
+	private void setColumnDatas(List<PlayerEvaluator> evaluators)
 	{
 		columnDatas = Stream
 				.concat(
@@ -192,7 +198,7 @@ public class RosterTablePanel extends JPanel
 		}
 	}
 
-	private ColumnData[] convertToColumnDatas(PlayerEvaluator... evaluators)
+	private ColumnData[] convertToColumnDatas(List<PlayerEvaluator> evaluators)
 	{
 		List<ColumnData> columnDatas = new LinkedList<ColumnData>();
 
@@ -211,13 +217,13 @@ public class RosterTablePanel extends JPanel
 		// (v) -> String.format("%.1f", v)));
 		// }
 
-		if (evaluators.length > 0)
+		if (evaluators.size() > 0)
 		{
 			columnDatas.add(
 				new ColumnData(
 						"Position",
-						(p) -> Arrays
-								.stream(evaluators)
+						(p) -> evaluators
+								.stream()
 								.max((a, b) -> new RatingEvaluatorComparator(p)
 										.compare(a, b))
 								.get()
@@ -226,8 +232,8 @@ public class RosterTablePanel extends JPanel
 			columnDatas.add(
 				new ColumnData(
 						"Highest Rating",
-						(p) -> Arrays
-								.stream(evaluators)
+						(p) -> evaluators
+								.stream()
 								.max((a, b) -> new RatingEvaluatorComparator(p)
 										.compare(a, b))
 								.map(e -> e.getRating(p.getAttributes()))
@@ -237,8 +243,8 @@ public class RosterTablePanel extends JPanel
 			columnDatas.add(
 				new ColumnData(
 						"Training",
-						(p) -> Arrays
-								.stream(evaluators)
+						(p) -> evaluators
+								.stream()
 								.max((a, b) -> new QualityEvaluatorComparator(p)
 										.compare(a, b))
 								.get()
@@ -247,8 +253,8 @@ public class RosterTablePanel extends JPanel
 			columnDatas.add(
 				new ColumnData(
 						"Highest Quality",
-						(p) -> Arrays
-								.stream(evaluators)
+						(p) -> evaluators
+								.stream()
 								.max((a, b) -> new QualityEvaluatorComparator(p)
 										.compare(a, b))
 								.map(e -> e.getQuality(p.getAttributes()))

@@ -16,7 +16,7 @@ public class PractiseProPlayersParser implements PlayersParser
 	private static final int ATTRIBUTES_START_FIELD = 5;
 
 	@Override
-	public List<Player> parseRoster(String textToParse) throws ParseException
+	public List<Player> parsePlayers(String textToParse) throws ParseException
 	{
 		try
 		{

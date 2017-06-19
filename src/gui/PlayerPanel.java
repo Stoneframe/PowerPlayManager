@@ -3,6 +3,7 @@ package gui;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -92,7 +93,7 @@ public class PlayerPanel extends JPanel
 		add(trainingSuggestionPanel, c);
 	}
 
-	public void showPlayer(Player player, PlayerEvaluator... evaluators)
+	public void showPlayer(Player player, List<PlayerEvaluator> evaluators)
 	{
 		if (player != null)
 		{

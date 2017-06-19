@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -41,16 +44,10 @@ public class MainFrame extends JFrame
 	private JButton createFormationsButton;
 	private JButton clearRosterButton;
 
-	private Roster roster;
+	private Roster roster = new Roster();
 
-	public MainFrame()
-	{
-		super("PPM Assistant");
-
-		roster = new Roster();
-
-		PlayerEvaluator[] evaluators = new PlayerEvaluator[]
-		{
+	private List<PlayerEvaluator> evaluators = new LinkedList<PlayerEvaluator>(
+			Arrays.asList(
 				new GoaliePlayerEvaluator(),
 				// new BackPlayerEvaluator(),
 				// new PivotPlayerEvaluator(),
@@ -60,8 +57,11 @@ public class MainFrame extends JFrame
 				new DefensiveWingPlayerEvaluator(),
 				new OffensiveBackPlayerEvaluator(),
 				new OffensivePivotPlayerEvaluator(),
-				new OffensiveWingPlayerEvaluator(),
-		};
+				new OffensiveWingPlayerEvaluator()));
+
+	public MainFrame()
+	{
+		super("PPM Assistant");
 
 		// Menu bar
 		menuBar = new MenuBar(this);
@@ -76,6 +76,18 @@ public class MainFrame extends JFrame
 				rosterTablePanel.showRoster(roster, evaluators);
 			}
 		});
+		parsePanel.setPlayerEvaluatorsParsedListener(
+			new PlayerEvaluatorsParsedListener()
+			{
+				public void playerEvaluatorsParsed(
+						Object source,
+						PlayerEvaluatorsParsedEvent event)
+				{
+					evaluators.clear();
+					evaluators.addAll(event.getPlayerEvaluators());
+					rosterTablePanel.showRoster(roster, evaluators);
+				}
+			});
 
 		// Roster table panel
 		rosterTablePanel = new RosterTablePanel();

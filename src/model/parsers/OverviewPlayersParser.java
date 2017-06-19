@@ -12,7 +12,7 @@ import model.Side;
 public class OverviewPlayersParser implements PlayersParser
 {
 	@Override
-	public List<Player> parseRoster(String textToParse) throws ParseException
+	public List<Player> parsePlayers(String textToParse) throws ParseException
 	{
 		try
 		{
