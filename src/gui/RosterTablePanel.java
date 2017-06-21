@@ -2,12 +2,9 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -27,6 +24,7 @@ import model.PlayerEvaluator;
 import model.PropertyChangedEvent;
 import model.PropertyChangedListener;
 import model.Roster;
+import model.comparators.EvaluatorComparator;
 import model.comparators.QualityEvaluatorComparator;
 import model.comparators.RatingEvaluatorComparator;
 
@@ -36,7 +34,9 @@ public class RosterTablePanel extends JPanel
 
 	private PlayerSelectedListener playerSelectedListener;
 
-	private ColumnData[] baseColumnDatas =
+	private List<PlayerEvaluator> evaluators = new LinkedList<PlayerEvaluator>();
+
+	private ColumnData[] columnDatas =
 	{
 			new ColumnData("Name", p -> p.getName()),
 			new ColumnData("Side", p -> p.getSide()),
@@ -49,18 +49,35 @@ public class RosterTablePanel extends JPanel
 			// new Column("Spe", p -> p.getAttributes().getSpe()),
 			// new Column("Agr", p -> p.getAttributes().getAgr()),
 			new ColumnData("Total", p -> p.getAttributes().getTotalRating()),
+			new ColumnData(
+					"Position",
+					(p) -> getHighestName(
+						new RatingEvaluatorComparator(p.getAttributes()),
+						evaluators)),
+			new ColumnData(
+					"Highest Rating",
+					(p) -> getHighestRatingValue(evaluators, p),
+					(v) -> String.format("%.1f", v)),
+			new ColumnData(
+					"Training",
+					(p) -> getHighestName(
+						new QualityEvaluatorComparator(p.getAttributes()),
+						evaluators)),
+			new ColumnData(
+					"Highest Quality",
+					(p) -> getHighestQualityValue(evaluators, p),
+					(v) -> String.format("%.1f", v)),
 	};
 
-	private Roster roster;
-	private List<PlayerEvaluator> evaluators = Collections.emptyList();
-
-	private ColumnData[] columnDatas;
+	private RosterTableModel rosterTableModel;
 
 	private JTable rosterTable;
 
-	public RosterTablePanel()
+	public RosterTablePanel(Roster roster)
 	{
-		rosterTable = new JTable();
+		rosterTableModel = new RosterTableModel(roster);
+
+		rosterTable = new JTable(rosterTableModel);
 		rosterTable.setAutoCreateRowSorter(true);
 		rosterTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		rosterTable.getSelectionModel().addListSelectionListener(
@@ -90,51 +107,6 @@ public class RosterTablePanel extends JPanel
 				}
 			});
 
-		setBorder(new CompoundBorder(
-				BorderFactory.createTitledBorder("Roster"),
-				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-
-		setLayout(new BorderLayout());
-
-		add(rosterTable.getTableHeader(), BorderLayout.PAGE_START);
-		add(new JScrollPane(rosterTable));
-	}
-
-	public void setPlayerSelectedListener(PlayerSelectedListener listener)
-	{
-		this.playerSelectedListener = listener;
-	}
-
-	public void bind(Roster roster)
-	{
-		this.roster = roster;
-
-		setColumnDatas();
-		setTableModel();
-		setCellRenderers();
-	}
-
-	public void setPlayerEvaluators(List<PlayerEvaluator> evaluators)
-	{
-		this.evaluators = evaluators;
-	}
-
-	private void setColumnDatas()
-	{
-		columnDatas = Stream
-				.concat(
-					Arrays.stream(baseColumnDatas),
-					Arrays.stream(convertToColumnDatas(evaluators)))
-				.toArray(ColumnData[]::new);
-	}
-
-	private void setTableModel()
-	{
-		rosterTable.setModel(new RosterTableModel(roster));
-	}
-
-	private void setCellRenderers()
-	{
 		for (int i = 0; i < rosterTable.getColumnCount(); ++i)
 		{
 			ColumnData columnData = columnDatas[i];
@@ -165,56 +137,73 @@ public class RosterTablePanel extends JPanel
 					}
 				});
 		}
+
+		setBorder(new CompoundBorder(
+				BorderFactory.createTitledBorder("Roster"),
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
+		setLayout(new BorderLayout());
+
+		add(rosterTable.getTableHeader(), BorderLayout.PAGE_START);
+		add(new JScrollPane(rosterTable));
 	}
 
-	private ColumnData[] convertToColumnDatas(List<PlayerEvaluator> evaluators)
+	public void setPlayerSelectedListener(PlayerSelectedListener listener)
 	{
-		List<ColumnData> columnDatas = new LinkedList<ColumnData>();
+		this.playerSelectedListener = listener;
+	}
 
-		if (evaluators.size() > 0)
+	public void setPlayerEvaluators(List<PlayerEvaluator> evaluators)
+	{
+		this.evaluators.clear();
+		this.evaluators.addAll(evaluators);
+
+		int selectedRow = rosterTable.getSelectedRow();
+
+		rosterTableModel.fireTableDataChanged();
+
+		if (selectedRow >= 0)
 		{
-			columnDatas
-					.add(new ColumnData("Position", (p) -> evaluators
-							.stream()
-							.max(
-								(a, b) -> new RatingEvaluatorComparator(
-										p.getAttributes()).compare(a, b))
-							.get()
-							.getName()));
-
-			columnDatas.add(new ColumnData(
-					"Highest Rating",
-					(p) -> evaluators
-							.stream()
-							.max(
-								(a, b) -> new RatingEvaluatorComparator(
-										p.getAttributes()).compare(a, b))
-							.map(e -> e.getRating(p.getAttributes()))
-							.get(),
-					(v) -> String.format("%.1f", v)));
-
-			columnDatas
-					.add(new ColumnData("Training", (p) -> evaluators
-							.stream()
-							.max(
-								(a, b) -> new QualityEvaluatorComparator(
-										p.getAttributes()).compare(a, b))
-							.get()
-							.getName()));
-
-			columnDatas.add(new ColumnData(
-					"Highest Quality",
-					(p) -> evaluators
-							.stream()
-							.max(
-								(a, b) -> new QualityEvaluatorComparator(
-										p.getAttributes()).compare(a, b))
-							.map(e -> e.getQuality(p.getAttributes()))
-							.get(),
-					(v) -> String.format("%.1f", v)));
+			rosterTable.setRowSelectionInterval(selectedRow, selectedRow);
 		}
+	}
 
-		return columnDatas.toArray(new ColumnData[0]);
+	private String getHighestName(
+			EvaluatorComparator evaluatorComparator,
+			List<PlayerEvaluator> evaluators)
+	{
+		PlayerEvaluator playerEvaluator = evaluators
+				.stream()
+				.max((a, b) -> evaluatorComparator.compare(a, b))
+				.get();
+
+		return playerEvaluator != null
+				? playerEvaluator.getName()
+				: "No suggestion";
+	}
+
+	private Double getHighestRatingValue(
+			List<PlayerEvaluator> evaluators,
+			Player player)
+	{
+		return evaluators
+				.stream()
+				.max((a, b) -> new RatingEvaluatorComparator(
+						player.getAttributes()).compare(a, b))
+				.map(e -> e.getRating(player.getAttributes()))
+				.get();
+	}
+
+	private Double getHighestQualityValue(
+			List<PlayerEvaluator> evaluators,
+			Player player)
+	{
+		return evaluators
+				.stream()
+				.max((a, b) -> new QualityEvaluatorComparator(
+						player.getAttributes()).compare(a, b))
+				.map(e -> e.getQuality(player.getAttributes()))
+				.get();
 	}
 
 	private class ColumnData
@@ -308,21 +297,25 @@ public class RosterTablePanel extends JPanel
 				Object source,
 				CollectionChangedEvent event)
 		{
+			Player player = (Player) event.getObjectChanged();
+
 			switch (event.getAction())
 			{
 				case CollectionChangedEvent.ADDED:
-					((Player) event.getObjectChanged())
-							.addPropertyChangedListener(this);
+					player.addPropertyChangedListener(this);
+
 					fireTableRowsInserted(
 						event.getIndexChanged(),
 						event.getIndexChanged());
+
 					break;
 				case CollectionChangedEvent.REMOVED:
-					((Player) event.getObjectChanged())
-							.removePropertyChangedListener(this);
+					player.removePropertyChangedListener(this);
+
 					fireTableRowsDeleted(
 						event.getIndexChanged(),
 						event.getIndexChanged());
+
 					break;
 			}
 		}

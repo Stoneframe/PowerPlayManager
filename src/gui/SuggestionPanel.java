@@ -38,7 +38,6 @@ public abstract class SuggestionPanel extends JPanel
 	{
 		if (this.attributes != null)
 		{
-			clear();
 			this.attributes.removePropertyChangedListener(this);
 		}
 
@@ -46,14 +45,17 @@ public abstract class SuggestionPanel extends JPanel
 
 		if (this.attributes != null)
 		{
-			update();
 			this.attributes.addPropertyChangedListener(this);
 		}
+
+		update();
 	}
 
 	public void setPlayerEvaluators(List<PlayerEvaluator> evaluators)
 	{
 		this.evaluators = evaluators;
+
+		update();
 	}
 
 	protected abstract int compare(
@@ -69,27 +71,27 @@ public abstract class SuggestionPanel extends JPanel
 	{
 		removeAll();
 
-		for (PlayerEvaluator evaluator : evaluators
-				.stream()
-				.sorted((a, b) -> compare(attributes, b, a))
-				.limit(DISPLAYED_POSITIONS_LIMIT)
-				.toArray(PlayerEvaluator[]::new))
+		for (PlayerEvaluator evaluator : getSortedEvaluators())
 		{
 			add(new JLabel(evaluator.getName()));
-			add(
-				new JLabel(
-						String.format(
-							"%.1f",
-							getValue(attributes, evaluator))));
+			add(new JLabel(
+					String.format(
+						"%.1f",
+						getValue(attributes, evaluator))));
 		}
 
 		updateUI();
 	}
 
-	private void clear()
+	private PlayerEvaluator[] getSortedEvaluators()
 	{
-		removeAll();
-		updateUI();
+		if (attributes == null) return new PlayerEvaluator[0];
+
+		return evaluators
+				.stream()
+				.sorted((a, b) -> compare(attributes, b, a))
+				.limit(DISPLAYED_POSITIONS_LIMIT)
+				.toArray(PlayerEvaluator[]::new);
 	}
 
 	@Override

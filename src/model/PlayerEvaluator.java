@@ -42,21 +42,31 @@ public class PlayerEvaluator
 
 	public double getRating(Attributes attributes)
 	{
-	// @formatter:off
-	return (goa * attributes.getGoa() + fip * attributes.getFip() + sho * attributes.getSho()
-		+ blk * attributes.getBlk() + pas * attributes.getPas() + tec * attributes.getTec()
-		+ spe * attributes.getSpe() + agr * attributes.getAgr())
-		/ (goa + fip + sho + blk + pas + tec + spe + agr);
-	// @formatter:on
+		// @formatter:off
+		return (goa * attributes.getGoa() +
+				fip * attributes.getFip() +
+				sho * attributes.getSho() +
+				blk * attributes.getBlk() +
+				pas * attributes.getPas() +
+				tec * attributes.getTec() +
+				spe * attributes.getSpe() +
+				agr * attributes.getAgr())
+				/ (goa + fip + sho + blk + pas + tec + spe + agr);
+		// @formatter:on
 	}
 
 	public double getQuality(Attributes attributes)
 	{
-	// @formatter:off
-	return (goa + fip + sho + blk + pas + tec + spe + agr)
-		/ (goa / attributes.getQGoa() + fip / attributes.getQFip() + sho / attributes.getQSho()
-			+ blk / attributes.getQBlk() + pas / attributes.getQPas() + tec / attributes.getQTec()
-			+ spe / attributes.getQSpe() + agr / attributes.getQAgr());
-	// @formatter:on
+		// @formatter:off
+		return (goa + fip + sho + blk + pas + tec + spe + agr) /
+				(goa / attributes.getQGoa() +
+				 fip / attributes.getQFip() +
+				 sho / attributes.getQSho()	+
+				 blk / attributes.getQBlk() +
+				 pas / attributes.getQPas() +
+				 tec / attributes.getQTec() +
+				 spe / attributes.getQSpe() +
+				 agr / attributes.getQAgr());
+		// @formatter:on
 	}
 }

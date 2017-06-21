@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.GridLayout;
+import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -163,7 +164,6 @@ public class AttributePanel extends JPanel implements PropertyChangedListener
 	{
 		if (this.attributes != null)
 		{
-			clear();
 			this.attributes.removePropertyChangedListener(this);
 		}
 
@@ -171,54 +171,46 @@ public class AttributePanel extends JPanel implements PropertyChangedListener
 
 		if (this.attributes != null)
 		{
-			update();
 			this.attributes.addPropertyChangedListener(this);
 		}
+
+		update();
 	}
 
 	private void update()
 	{
-		goaTextField.setText(Integer.toString(attributes.getGoa()));
-		goaQTextField.setText(Integer.toString(attributes.getQGoa()));
-		fipTextField.setText(Integer.toString(attributes.getFip()));
-		fipQTextField.setText(Integer.toString(attributes.getQFip()));
-		shoTextField.setText(Integer.toString(attributes.getSho()));
-		shoQTextField.setText(Integer.toString(attributes.getQSho()));
-		blkTextField.setText(Integer.toString(attributes.getBlk()));
-		blkQTextField.setText(Integer.toString(attributes.getQBlk()));
-		pasTextField.setText(Integer.toString(attributes.getPas()));
-		pasQTextField.setText(Integer.toString(attributes.getQPas()));
-		tecTextField.setText(Integer.toString(attributes.getTec()));
-		tecQTextField.setText(Integer.toString(attributes.getQTec()));
-		speTextField.setText(Integer.toString(attributes.getSpe()));
-		speQTextField.setText(Integer.toString(attributes.getQSpe()));
-		agrTextField.setText(Integer.toString(attributes.getAgr()));
-		agrQTextField.setText(Integer.toString(attributes.getQAgr()));
-		totTextField.setText(Integer.toString(attributes.getTotalRating()));
-		avgQTextField
-				.setText(String.format("%.1f", attributes.getAverageQuality()));
+		goaTextField.setText(intToString(attributes::getGoa));
+		goaQTextField.setText(intToString(attributes::getQGoa));
+		fipTextField.setText(intToString(attributes::getFip));
+		fipQTextField.setText(intToString(attributes::getQFip));
+		shoTextField.setText(intToString(attributes::getSho));
+		shoQTextField.setText(intToString(attributes::getQSho));
+		blkTextField.setText(intToString(attributes::getBlk));
+		blkQTextField.setText(intToString(attributes::getQBlk));
+		pasTextField.setText(intToString(attributes::getPas));
+		pasQTextField.setText(intToString(attributes::getQPas));
+		tecTextField.setText(intToString(attributes::getTec));
+		tecQTextField.setText(intToString(attributes::getQTec));
+		speTextField.setText(intToString(attributes::getSpe));
+		speQTextField.setText(intToString(attributes::getQSpe));
+		agrTextField.setText(intToString(attributes::getAgr));
+		agrQTextField.setText(intToString(attributes::getQAgr));
+		totTextField.setText(intToString(attributes::getTotalRating));
+		avgQTextField.setText(doubleToString(attributes::getAverageQuality));
 	}
 
-	public void clear()
+	private String intToString(Supplier<Integer> getValueSupplier)
 	{
-		goaTextField.setText("");
-		goaQTextField.setText("");
-		fipTextField.setText("");
-		fipQTextField.setText("");
-		shoTextField.setText("");
-		shoQTextField.setText("");
-		blkTextField.setText("");
-		blkQTextField.setText("");
-		pasTextField.setText("");
-		pasQTextField.setText("");
-		tecTextField.setText("");
-		tecQTextField.setText("");
-		speTextField.setText("");
-		speQTextField.setText("");
-		agrTextField.setText("");
-		agrQTextField.setText("");
-		totTextField.setText("");
-		avgQTextField.setText("");
+		return attributes != null
+				? Integer.toString(getValueSupplier.get())
+				: "";
+	}
+
+	private String doubleToString(Supplier<Double> getValueSupplier)
+	{
+		return attributes != null
+				? String.format("%.1f", getValueSupplier.get())
+				: "";
 	}
 
 	@Override

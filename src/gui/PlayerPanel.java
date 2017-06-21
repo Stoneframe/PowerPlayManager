@@ -101,7 +101,6 @@ public class PlayerPanel extends JPanel implements PropertyChangedListener
 	{
 		if (this.player != null)
 		{
-			clear();
 			attributePanel.bind(null);
 			positionSuggestionPanel.bind(null);
 			trainingSuggestionPanel.bind(null);
@@ -112,12 +111,13 @@ public class PlayerPanel extends JPanel implements PropertyChangedListener
 
 		if (player != null)
 		{
-			update();
 			attributePanel.bind(player.getAttributes());
 			positionSuggestionPanel.bind(player.getAttributes());
 			trainingSuggestionPanel.bind(player.getAttributes());
 			this.player.addPropertyChangedListener(this);
 		}
+
+		update();
 	}
 
 	public void setPlayerEvaluators(List<PlayerEvaluator> evaluators)
@@ -126,16 +126,16 @@ public class PlayerPanel extends JPanel implements PropertyChangedListener
 		trainingSuggestionPanel.setPlayerEvaluators(evaluators);
 	}
 
-	private void clear()
-	{
-		nameTextField.setText("");
-		sideTextField.setText("");
-	}
-
 	private void update()
 	{
-		nameTextField.setText(player.getName());
-		sideTextField.setText(player.getSide().toString());
+		nameTextField.setText(
+			player == null
+					? ""
+					: player.getName());
+		sideTextField.setText(
+			player == null
+					? ""
+					: player.getSide().toString());
 	}
 
 	@Override
