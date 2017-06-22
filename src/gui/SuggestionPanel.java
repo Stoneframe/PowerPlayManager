@@ -71,13 +71,16 @@ public abstract class SuggestionPanel extends JPanel
 	{
 		removeAll();
 
-		for (PlayerEvaluator evaluator : getSortedEvaluators())
+		if (attributes != null)
 		{
-			add(new JLabel(evaluator.getName()));
-			add(new JLabel(
-					String.format(
-						"%.1f",
-						getValue(attributes, evaluator))));
+			for (PlayerEvaluator evaluator : getSortedEvaluators())
+			{
+				add(new JLabel(evaluator.getName()));
+				add(new JLabel(
+						String.format(
+							"%.1f",
+							getValue(attributes, evaluator))));
+			}
 		}
 
 		updateUI();
@@ -85,8 +88,6 @@ public abstract class SuggestionPanel extends JPanel
 
 	private PlayerEvaluator[] getSortedEvaluators()
 	{
-		if (attributes == null) return new PlayerEvaluator[0];
-
 		return evaluators
 				.stream()
 				.sorted((a, b) -> compare(attributes, b, a))
