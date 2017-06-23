@@ -299,9 +299,7 @@ public class RosterTablePanel extends JPanel
 		@Override
 		public Object getValueAt(int row, int column)
 		{
-			return roster != null
-					? columnDatas[column].getValue(roster.get(row))
-					: null;
+			return columnDatas[column].getValue(roster.get(row));
 		}
 
 		@Override
