@@ -78,7 +78,7 @@ public class RosterTablePanel extends JPanel
 	public RosterTablePanel()
 	{
 		roster = new Roster();
-		
+
 		rosterTableModel = new RosterTableModel();
 
 		rosterTable = new JTable(rosterTableModel);
@@ -154,15 +154,29 @@ public class RosterTablePanel extends JPanel
 
 	public void bind(Roster roster)
 	{
-		this.roster = roster;
-		
-		if (rosterTableModel != null)
+		if (this.roster != null)
 		{
-			rosterTableModel.dispose();
+			for (Player player : this.roster)
+			{
+				player.removePropertyChangedListener(rosterTableModel);
+			}
+
+			this.roster.removeCollectionChangedListener(rosterTableModel);
 		}
-		
-		rosterTableModel = new RosterTableModel();
-		rosterTable.setModel(rosterTableModel);
+
+		this.roster = roster;
+
+		if (this.roster != null)
+		{
+			for (Player player : this.roster)
+			{
+				player.addPropertyChangedListener(rosterTableModel);
+			}
+
+			this.roster.addCollectionChangedListener(rosterTableModel);
+		}
+
+		rosterTableModel.fireTableDataChanged();
 	}
 
 	public void setPlayerSelectedListener(PlayerSelectedListener listener)
@@ -269,16 +283,6 @@ public class RosterTablePanel extends JPanel
 	{
 		private static final long serialVersionUID = -3862251740620048034L;
 
-		public RosterTableModel()
-		{
-			roster.addCollectionChangedListener(this);
-
-			for (Player player : roster)
-			{
-				player.addPropertyChangedListener(this);
-			}
-		}
-
 		@Override
 		public String getColumnName(int column)
 		{
@@ -288,7 +292,7 @@ public class RosterTablePanel extends JPanel
 		@Override
 		public Class<?> getColumnClass(int columnIndex)
 		{
-			return roster.size() > 0
+			return roster != null && roster.size() > 0
 					? getValueAt(0, columnIndex).getClass()
 					: Object.class;
 		}
@@ -296,13 +300,15 @@ public class RosterTablePanel extends JPanel
 		@Override
 		public Object getValueAt(int row, int column)
 		{
-			return columnDatas[column].getValue(roster.get(row));
+			return roster != null
+					? columnDatas[column].getValue(roster.get(row))
+					: null;
 		}
 
 		@Override
 		public int getRowCount()
 		{
-			return roster.size();
+			return roster != null ? roster.size() : 0;
 		}
 
 		@Override
@@ -347,16 +353,6 @@ public class RosterTablePanel extends JPanel
 			fireTableRowsUpdated(
 				roster.indexOf(player),
 				roster.indexOf(player));
-		}
-
-		public void dispose()
-		{
-			for (Player player : roster)
-			{
-				player.removePropertyChangedListener(this);
-			}
-
-			roster.removeCollectionChangedListener(this);
 		}
 	}
 }
