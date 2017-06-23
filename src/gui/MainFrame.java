@@ -90,7 +90,8 @@ public class MainFrame extends JFrame
 			});
 
 		// Roster table panel
-		rosterTablePanel = new RosterTablePanel(roster);
+		rosterTablePanel = new RosterTablePanel();
+		rosterTablePanel.bind(roster);
 		rosterTablePanel.setPlayerEvaluators(evaluators);
 		rosterTablePanel.setPlayerSelectedListener(new PlayerSelectedListener()
 		{

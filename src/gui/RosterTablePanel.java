@@ -73,9 +73,13 @@ public class RosterTablePanel extends JPanel
 
 	private JTable rosterTable;
 
-	public RosterTablePanel(Roster roster)
+	private Roster roster;
+
+	public RosterTablePanel()
 	{
-		rosterTableModel = new RosterTableModel(roster);
+		roster = new Roster();
+		
+		rosterTableModel = new RosterTableModel();
 
 		rosterTable = new JTable(rosterTableModel);
 		rosterTable.setAutoCreateRowSorter(true);
@@ -146,6 +150,19 @@ public class RosterTablePanel extends JPanel
 
 		add(rosterTable.getTableHeader(), BorderLayout.PAGE_START);
 		add(new JScrollPane(rosterTable));
+	}
+
+	public void bind(Roster roster)
+	{
+		this.roster = roster;
+		
+		if (rosterTableModel != null)
+		{
+			rosterTableModel.dispose();
+		}
+		
+		rosterTableModel = new RosterTableModel();
+		rosterTable.setModel(rosterTableModel);
 	}
 
 	public void setPlayerSelectedListener(PlayerSelectedListener listener)
@@ -252,12 +269,14 @@ public class RosterTablePanel extends JPanel
 	{
 		private static final long serialVersionUID = -3862251740620048034L;
 
-		private Roster roster;
-
-		public RosterTableModel(Roster roster)
+		public RosterTableModel()
 		{
-			this.roster = roster;
-			this.roster.addCollectionChangedListener(this);
+			roster.addCollectionChangedListener(this);
+
+			for (Player player : roster)
+			{
+				player.addPropertyChangedListener(this);
+			}
 		}
 
 		@Override
@@ -328,6 +347,16 @@ public class RosterTablePanel extends JPanel
 			fireTableRowsUpdated(
 				roster.indexOf(player),
 				roster.indexOf(player));
+		}
+
+		public void dispose()
+		{
+			for (Player player : roster)
+			{
+				player.removePropertyChangedListener(this);
+			}
+
+			roster.removeCollectionChangedListener(this);
 		}
 	}
 }
