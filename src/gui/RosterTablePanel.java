@@ -185,17 +185,9 @@ public class RosterTablePanel extends JPanel
 
 	public void setPlayerEvaluators(List<PlayerEvaluator> evaluators)
 	{
-		this.evaluators.clear();
-		this.evaluators.addAll(evaluators);
+		this.evaluators = evaluators;
 
-		int selectedRow = rosterTable.getSelectedRow();
-
-		rosterTableModel.fireTableDataChanged();
-
-		if (selectedRow >= 0)
-		{
-			rosterTable.setRowSelectionInterval(selectedRow, selectedRow);
-		}
+		rosterTableModel.fireAllTableCellsUpdated();
 	}
 
 	private String getPlayersBestPositionName(
@@ -350,6 +342,17 @@ public class RosterTablePanel extends JPanel
 			fireTableRowsUpdated(
 				roster.indexOf(player),
 				roster.indexOf(player));
+		}
+
+		public void fireAllTableCellsUpdated()
+		{
+			for (int row = 0; row < getRowCount(); row++)
+			{
+				for (int column = 0; column < getColumnCount(); column++)
+				{
+					fireTableCellUpdated(row, column);
+				}
+			}
 		}
 	}
 }
