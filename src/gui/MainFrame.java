@@ -64,7 +64,7 @@ public class MainFrame extends JFrame
 		super("PPM Assistant");
 
 		// Menu bar
-		menuBar = new MenuBar(this);
+		menuBar = new MenuBar(this, roster);
 
 		// Parse panel
 		parsePanel = new ParsePanel();
