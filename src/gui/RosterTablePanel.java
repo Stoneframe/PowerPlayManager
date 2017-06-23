@@ -51,21 +51,21 @@ public class RosterTablePanel extends JPanel
 			new ColumnData("Total", p -> p.getAttributes().getTotalRating()),
 			new ColumnData(
 					"Position",
-					(p) -> getHighestName(
+					(p) -> getPlayersBestPositionName(
 						new RatingEvaluatorComparator(p.getAttributes()),
 						evaluators)),
 			new ColumnData(
 					"Highest Rating",
-					(p) -> getHighestRatingValue(evaluators, p),
+					(p) -> getPlayersBestPositionRating(evaluators, p),
 					(v) -> String.format("%.1f", v)),
 			new ColumnData(
 					"Training",
-					(p) -> getHighestName(
+					(p) -> getPlayersBestPositionName(
 						new QualityEvaluatorComparator(p.getAttributes()),
 						evaluators)),
 			new ColumnData(
 					"Highest Quality",
-					(p) -> getHighestQualityValue(evaluators, p),
+					(p) -> getPlayersBestPositionQuality(evaluators, p),
 					(v) -> String.format("%.1f", v)),
 	};
 
@@ -89,8 +89,7 @@ public class RosterTablePanel extends JPanel
 			{
 				public void valueChanged(ListSelectionEvent e)
 				{
-					if (e.getValueIsAdjusting())
-						return;
+					if (e.getValueIsAdjusting()) return;
 
 					if (playerSelectedListener != null)
 					{
@@ -199,7 +198,7 @@ public class RosterTablePanel extends JPanel
 		}
 	}
 
-	private String getHighestName(
+	private String getPlayersBestPositionName(
 			EvaluatorComparator evaluatorComparator,
 			List<PlayerEvaluator> evaluators)
 	{
@@ -213,7 +212,7 @@ public class RosterTablePanel extends JPanel
 				: "No suggestion";
 	}
 
-	private Double getHighestRatingValue(
+	private Double getPlayersBestPositionRating(
 			List<PlayerEvaluator> evaluators,
 			Player player)
 	{
@@ -225,7 +224,7 @@ public class RosterTablePanel extends JPanel
 				.get();
 	}
 
-	private Double getHighestQualityValue(
+	private Double getPlayersBestPositionQuality(
 			List<PlayerEvaluator> evaluators,
 			Player player)
 	{
