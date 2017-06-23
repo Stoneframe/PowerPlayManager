@@ -27,17 +27,11 @@ public class MenuBar extends JMenuBar
 		// Build the menu
 		menu = new JMenu("File");
 		menu.setMnemonic(KeyEvent.VK_F);
-		menu.getAccessibleContext().setAccessibleDescription(
-			"The only menu in this program that has menu items");
 		add(menu);
 
 		// 'Open' item
 		menuItemOpen = new JMenuItem("Open roster", KeyEvent.VK_O);
-
-		// menuItem.setAccelerator(KeyStroke.getKeyStroke(
-		// KeyEvent.VK_1, ActionEvent.ALT_MASK));
-		// menuItem.getAccessibleContext().setAccessibleDescription(
-		// "This doesn't really do anything");
+		menuItemOpen.setMnemonic(KeyEvent.VK_O);
 		menuItemOpen.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -55,11 +49,7 @@ public class MenuBar extends JMenuBar
 
 		// 'Save' item
 		menuItemSave = new JMenuItem("Save roster", KeyEvent.VK_S);
-
-		// menuItem.setAccelerator(KeyStroke.getKeyStroke(
-		// KeyEvent.VK_1, ActionEvent.ALT_MASK));
-		// menuItem.getAccessibleContext().setAccessibleDescription(
-		// "This doesn't really do anything");
+		menuItemSave.setMnemonic(KeyEvent.VK_S);
 		menuItemSave.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
