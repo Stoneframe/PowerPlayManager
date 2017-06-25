@@ -76,6 +76,8 @@ public class MainFrame extends JFrame
 						Object source,
 						PlayerEvaluatorsParsedEvent event)
 				{
+					evaluators = event.getPlayerEvaluators();
+
 					rosterTablePanel
 							.setPlayerEvaluators(event.getPlayerEvaluators());
 					playerPanel
