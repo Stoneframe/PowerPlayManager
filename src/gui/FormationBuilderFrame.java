@@ -16,8 +16,6 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -46,29 +44,17 @@ public class FormationBuilderFrame extends JFrame
 			List<PlayerEvaluator> evaluators)
 	{
 		templateListModel = new DefaultListModel<FormationTemplate>();
-		templateListModel.addListDataListener(new ListDataListener()
-		{
-			public void intervalRemoved(ListDataEvent e)
-			{
-				removeTemplateButton.setEnabled(!templateListModel.isEmpty());
-			}
-
-			public void intervalAdded(ListDataEvent e)
-			{
-				removeTemplateButton.setEnabled(!templateListModel.isEmpty());
-			}
-
-			public void contentsChanged(ListDataEvent e)
-			{
-			}
-		});
 
 		templateList = new JList<FormationTemplate>(templateListModel);
 		templateList.setPreferredSize(new Dimension(200, 1));
+		templateList.setBorder(BorderFactory.createEtchedBorder());
 		templateList.addListSelectionListener(new ListSelectionListener()
 		{
 			public void valueChanged(ListSelectionEvent e)
 			{
+				removeTemplateButton.setEnabled(
+					!templateList.isSelectionEmpty());
+
 				templatePanel.setFormationTemplate(
 					templateList.getSelectedValue());
 			}
@@ -131,7 +117,9 @@ public class FormationBuilderFrame extends JFrame
 
 		setLayout(new BorderLayout());
 
-		JPanel templateListPanel = new JPanel(new GridLayout(1, 1));
+		JPanel templateListPanel = new JPanel();
+
+		templateListPanel.setLayout(new GridLayout(1, 1));
 		templateListPanel.setBorder(
 			BorderFactory.createTitledBorder("Formations"));
 		templateListPanel.add(templateList);
