@@ -1,16 +1,17 @@
 package gui;
 
 import java.awt.FlowLayout;
+import java.util.List;
 
 import javax.swing.JFrame;
 
 import model.Formation;
 
-public class FormationFrame extends JFrame
+public class FormationDisplayFrame extends JFrame
 {
 	private static final long serialVersionUID = 291113971084933910L;
 
-	public FormationFrame(Formation... formations)
+	public FormationDisplayFrame(List<Formation> formations)
 	{
 		super("Formations");
 

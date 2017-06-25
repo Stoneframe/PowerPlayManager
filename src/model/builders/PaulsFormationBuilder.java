@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 
 import model.Formation;
 import model.FormationBuilder;
+import model.FormationTemplate;
 import model.Player;
 import model.PlayerEvaluator;
 import model.Roster;
@@ -15,6 +16,20 @@ import model.comparators.RatingComparator;
 
 public class PaulsFormationBuilder implements FormationBuilder
 {
+	@Override
+	public Formation createFormation(Roster roster, FormationTemplate template)
+	{
+		return createFormation(
+			roster,
+			template.getName(),
+			template.getPivotEvaluator(),
+			template.getLeftWingEvaluator(),
+			template.getRightWingEvaluator(),
+			template.getCenterBackEvaluator(),
+			template.getLeftBackEvaluator(),
+			template.getRightBackEvaluator());
+	}
+
 	@Override
 	public Formation createFormation(
 			Roster roster,

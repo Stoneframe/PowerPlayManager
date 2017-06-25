@@ -69,4 +69,10 @@ public class PlayerEvaluator
 				 agr / attributes.getQAgr());
 		// @formatter:on
 	}
+
+	@Override
+	public String toString()
+	{
+		return getName();
+	}
 }

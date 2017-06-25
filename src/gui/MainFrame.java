@@ -15,12 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import model.Formation;
-import model.FormationBuilder;
 import model.PlayerEvaluator;
 import model.Roster;
-import model.builders.PaulsFormationBuilder;
-import model.evaluators.BackPlayerEvaluator;
 import model.evaluators.DefensiveBackPlayerEvaluator;
 import model.evaluators.DefensivePivotPlayerEvaluator;
 import model.evaluators.DefensiveWingPlayerEvaluator;
@@ -28,8 +24,6 @@ import model.evaluators.GoaliePlayerEvaluator;
 import model.evaluators.OffensiveBackPlayerEvaluator;
 import model.evaluators.OffensivePivotPlayerEvaluator;
 import model.evaluators.OffensiveWingPlayerEvaluator;
-import model.evaluators.PivotPlayerEvaluator;
-import model.evaluators.WingPlayerEvaluator;
 
 public class MainFrame extends JFrame
 {
@@ -111,52 +105,11 @@ public class MainFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				FormationBuilder formationBuilder = new PaulsFormationBuilder();
-
-				Roster offRoster = roster.copy();
-
-				Formation offFormation = formationBuilder.createFormation(
-					offRoster,
-					"Offensive",
-					new OffensivePivotPlayerEvaluator(),
-					new OffensiveWingPlayerEvaluator(),
-					new OffensiveWingPlayerEvaluator(),
-					new OffensiveBackPlayerEvaluator(),
-					new OffensiveBackPlayerEvaluator(),
-					new OffensiveBackPlayerEvaluator());
-
-				Roster defRoster = roster.copy();
-
-				Formation defFormation = formationBuilder.createFormation(
-					defRoster,
-					"Defensive",
-					new DefensivePivotPlayerEvaluator(),
-					new DefensiveWingPlayerEvaluator(),
-					new DefensiveWingPlayerEvaluator(),
-					new DefensiveBackPlayerEvaluator(),
-					new DefensiveBackPlayerEvaluator(),
-					new DefensiveBackPlayerEvaluator());
-
-				Roster subRoster = Roster.intersection(offRoster, defRoster);
-
-				Formation subFormation = formationBuilder.createFormation(
-					subRoster,
-					"Substitute",
-					new PivotPlayerEvaluator(),
-					new WingPlayerEvaluator(),
-					new WingPlayerEvaluator(),
-					new BackPlayerEvaluator(),
-					new BackPlayerEvaluator(),
-					new BackPlayerEvaluator());
-
 				SwingUtilities.invokeLater(new Runnable()
 				{
 					public void run()
 					{
-						new FormationFrame(
-								offFormation,
-								defFormation,
-								subFormation);
+						new FormationBuilderFrame(roster.copy(), evaluators);
 					}
 				});
 			}
