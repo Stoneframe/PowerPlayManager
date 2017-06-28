@@ -166,7 +166,7 @@ public class RosterTablePanel extends JPanel
 										new Color(153, 255, 153));
 								}
 							}
-							else if (isSymmetricPlayer(player))
+							else if (isHighQualityPlayer(player))
 							{
 								if (isSelected)
 								{
@@ -201,8 +201,7 @@ public class RosterTablePanel extends JPanel
 							return bestPositionQuality > 70;
 						}
 
-						private boolean isSymmetricPlayer(
-								Player player)
+						private boolean isSymmetricPlayer(Player player)
 						{
 							String bestRatingPos =
 									getPlayersBestPositionName(
