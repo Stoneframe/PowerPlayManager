@@ -113,115 +113,7 @@ public class RosterTablePanel extends JPanel
 							: null;
 				}
 			});
-		rosterTable.setColumnModel(
-			new DefaultTableColumnModel()
-			{
-				private static final long serialVersionUID =
-						-318707452817342668L;
-
-				@Override
-				public TableColumn getColumn(int columnIndex)
-				{
-					TableColumn column = super.getColumn(columnIndex);
-
-					column.setCellRenderer(new DefaultTableCellRenderer()
-					{
-						private static final long serialVersionUID =
-								-871237359467912116L;
-
-						@Override
-						public Component getTableCellRendererComponent(
-								JTable table,
-								Object value,
-								boolean isSelected,
-								boolean hasFocus,
-								int row,
-								int column)
-						{
-							value = columnDatas[columnIndex].formatValue(value);
-
-							Component component =
-									super.getTableCellRendererComponent(
-										table,
-										value,
-										isSelected,
-										hasFocus,
-										row,
-										column);
-
-							Player player = roster.get(
-								table.convertRowIndexToModel(row));
-
-							if (isHighQualityPlayer(player)
-									&& isSymmetricPlayer(player))
-							{
-								if (isSelected)
-								{
-									component.setBackground(
-										new Color(0, 255, 0));
-								}
-								else
-								{
-									component.setBackground(
-										new Color(153, 255, 153));
-								}
-							}
-							else if (isHighQualityPlayer(player))
-							{
-								if (isSelected)
-								{
-									component.setBackground(
-										new Color(255, 255, 0));
-								}
-								else
-								{
-									component.setBackground(
-										new Color(255, 255, 153));
-								}
-							}
-							else
-							{
-								if (isSelected)
-								{
-									component.setBackground(
-										table.getSelectionBackground());
-								}
-							}
-
-							return component;
-						}
-
-						private boolean isHighQualityPlayer(Player player)
-						{
-							Double bestPositionQuality =
-									getPlayersBestPositionQuality(
-										evaluators,
-										player);
-
-							return bestPositionQuality > 70;
-						}
-
-						private boolean isSymmetricPlayer(Player player)
-						{
-							String bestRatingPos =
-									getPlayersBestPositionName(
-										new RatingEvaluatorComparator(
-												player.getAttributes()),
-										evaluators);
-
-							String bestQualityPos =
-									getPlayersBestPositionName(
-										new QualityEvaluatorComparator(
-												player.getAttributes()),
-										evaluators);
-
-							return bestRatingPos.equals(bestQualityPos);
-						}
-					});
-
-					return column;
-				}
-			});
+		rosterTable.setColumnModel(new RosterTableColumnModel());
 		rosterTable.setModel(rosterTableModel);
 
 		setBorder(new CompoundBorder(
@@ -436,6 +328,111 @@ public class RosterTablePanel extends JPanel
 					fireTableCellUpdated(row, column);
 				}
 			}
+		}
+	}
+
+	private class RosterTableColumnModel extends DefaultTableColumnModel
+	{
+		private static final long serialVersionUID = -318707452817342668L;
+
+		private final Color SELECTED_HIGH_QUALITY_AND_SYMMETRIC =
+				new Color(0, 255, 0);
+		private final Color UNSELECTED_HIGH_QUALITY_AND_SYMMETRIC =
+				new Color(153, 255, 153);
+		private final Color SELECTED_HIGH_QUALITY =
+				new Color(255, 255, 0);
+		private final Color UNSELECTED_HIGH_QUALITY =
+				new Color(255, 255, 153);
+
+		private final int BEST_POSITION_QUALITY_LIMIT = 70;
+
+		@Override
+		public TableColumn getColumn(int columnIndex)
+		{
+			TableColumn column = super.getColumn(columnIndex);
+
+			column.setCellRenderer(new DefaultTableCellRenderer()
+			{
+				private static final long serialVersionUID =
+						-871237359467912116L;
+
+				@Override
+				public Component getTableCellRendererComponent(
+						JTable table,
+						Object value,
+						boolean isSelected,
+						boolean hasFocus,
+						int row,
+						int column)
+				{
+					value = columnDatas[columnIndex].formatValue(value);
+
+					Component component =
+							super.getTableCellRendererComponent(
+								table,
+								value,
+								isSelected,
+								hasFocus,
+								row,
+								column);
+
+					Player player = roster
+							.get(table.convertRowIndexToModel(row));
+
+					Color color = Color.WHITE;
+
+					if (isHighQualityPlayer(player)
+							&& isSymmetricPlayer(player))
+					{
+						color = isSelected
+								? SELECTED_HIGH_QUALITY_AND_SYMMETRIC
+								: UNSELECTED_HIGH_QUALITY_AND_SYMMETRIC;
+					}
+					else if (isHighQualityPlayer(player))
+					{
+						color = isSelected
+								? SELECTED_HIGH_QUALITY
+								: UNSELECTED_HIGH_QUALITY;
+					}
+					else if (isSelected)
+					{
+						color = table.getSelectionBackground();
+					}
+
+					component.setBackground(color);
+
+					return component;
+				}
+
+				private boolean isHighQualityPlayer(Player player)
+				{
+					Double bestPositionQuality =
+							getPlayersBestPositionQuality(
+								evaluators,
+								player);
+
+					return bestPositionQuality > BEST_POSITION_QUALITY_LIMIT;
+				}
+
+				private boolean isSymmetricPlayer(Player player)
+				{
+					String bestRatingPosition =
+							getPlayersBestPositionName(
+								new RatingEvaluatorComparator(
+										player.getAttributes()),
+								evaluators);
+
+					String bestQualityPosition =
+							getPlayersBestPositionName(
+								new QualityEvaluatorComparator(
+										player.getAttributes()),
+								evaluators);
+
+					return bestRatingPosition.equals(bestQualityPosition);
+				}
+			});
+
+			return column;
 		}
 	}
 }
