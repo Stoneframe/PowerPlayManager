@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,8 +15,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import model.CollectionChangedEvent;
 import model.CollectionChangedListeners;
@@ -34,7 +37,8 @@ public class RosterTablePanel extends JPanel
 
 	private PlayerSelectedListener playerSelectedListener;
 
-	private List<PlayerEvaluator> evaluators = new LinkedList<PlayerEvaluator>();
+	private List<PlayerEvaluator> evaluators =
+			new LinkedList<PlayerEvaluator>();
 
 	private ColumnData[] columnDatas =
 	{
@@ -81,7 +85,7 @@ public class RosterTablePanel extends JPanel
 
 		rosterTableModel = new RosterTableModel();
 
-		rosterTable = new JTable(rosterTableModel);
+		rosterTable = new JTable();
 		rosterTable.setAutoCreateRowSorter(true);
 		rosterTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		rosterTable.getSelectionModel().addListSelectionListener(
@@ -109,37 +113,117 @@ public class RosterTablePanel extends JPanel
 							: null;
 				}
 			});
+		rosterTable.setColumnModel(
+			new DefaultTableColumnModel()
+			{
+				private static final long serialVersionUID =
+						-318707452817342668L;
 
-		for (int i = 0; i < rosterTable.getColumnCount(); ++i)
-		{
-			ColumnData columnData = columnDatas[i];
-
-			rosterTable.getColumnModel().getColumn(i).setCellRenderer(
-				new DefaultTableCellRenderer()
+				@Override
+				public TableColumn getColumn(int columnIndex)
 				{
-					private static final long serialVersionUID = -3849162741094455295L;
+					TableColumn column = super.getColumn(columnIndex);
 
-					@Override
-					public Component getTableCellRendererComponent(
-							JTable table,
-							Object value,
-							boolean isSelected,
-							boolean hasFocus,
-							int row,
-							int column)
+					column.setCellRenderer(new DefaultTableCellRenderer()
 					{
-						value = columnData.formatValue(value);
+						private static final long serialVersionUID =
+								-871237359467912116L;
 
-						return super.getTableCellRendererComponent(
-							table,
-							value,
-							isSelected,
-							hasFocus,
-							row,
-							column);
-					}
-				});
-		}
+						@Override
+						public Component getTableCellRendererComponent(
+								JTable table,
+								Object value,
+								boolean isSelected,
+								boolean hasFocus,
+								int row,
+								int column)
+						{
+							value = columnDatas[columnIndex].formatValue(value);
+
+							Component component =
+									super.getTableCellRendererComponent(
+										table,
+										value,
+										isSelected,
+										hasFocus,
+										row,
+										column);
+
+							Player player = roster.get(
+								table.convertRowIndexToModel(row));
+
+							if (isHighQualityPlayer(player)
+									&& isSymmetricPlayer(player))
+							{
+								if (isSelected)
+								{
+									component.setBackground(
+										new Color(0, 255, 0));
+								}
+								else
+								{
+									component.setBackground(
+										new Color(153, 255, 153));
+								}
+							}
+							else if (isSymmetricPlayer(player))
+							{
+								if (isSelected)
+								{
+									component.setBackground(
+										new Color(255, 255, 0));
+								}
+								else
+								{
+									component.setBackground(
+										new Color(255, 255, 153));
+								}
+							}
+							else
+							{
+								if (isSelected)
+								{
+									component.setBackground(
+										table.getSelectionBackground());
+								}
+							}
+
+							return component;
+						}
+
+						private boolean isHighQualityPlayer(Player player)
+						{
+							Double bestPositionQuality =
+									getPlayersBestPositionQuality(
+										evaluators,
+										player);
+
+							return bestPositionQuality > 70;
+						}
+
+						private boolean isSymmetricPlayer(
+								Player player)
+						{
+							String bestRatingPos =
+									getPlayersBestPositionName(
+										new RatingEvaluatorComparator(
+												player.getAttributes()),
+										evaluators);
+
+							String bestQualityPos =
+									getPlayersBestPositionName(
+										new QualityEvaluatorComparator(
+												player.getAttributes()),
+										evaluators);
+
+							return bestRatingPos.equals(bestQualityPos);
+						}
+					});
+
+					return column;
+				}
+			});
+		rosterTable.setModel(rosterTableModel);
 
 		setBorder(new CompoundBorder(
 				BorderFactory.createTitledBorder("Roster"),
@@ -267,7 +351,7 @@ public class RosterTablePanel extends JPanel
 		}
 	}
 
-	private class RosterTableModel extends AbstractTableModel
+	private class RosterTableModel extends DefaultTableModel
 			implements
 			CollectionChangedListeners,
 			PropertyChangedListener
