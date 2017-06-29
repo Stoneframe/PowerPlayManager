@@ -3,14 +3,18 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -73,14 +77,40 @@ public class RosterTablePanel extends JPanel
 					(v) -> String.format("%.1f", v)),
 	};
 
-	private RosterTableModel rosterTableModel;
+	private JLabel highQualityLimitLabel;
+	private JLabel lowQualityLimitLabel;
+
+	private JTextField highQualityLimitTextField;
+	private JTextField lowQualityLimitTextField;
+
+	private JButton applyButton;
 
 	private JTable rosterTable;
+
+	private JPanel controllerPanel;
+	private JPanel tablePanel;
+
+	private RosterTableModel rosterTableModel;
 
 	private Roster roster;
 
 	public RosterTablePanel()
 	{
+		highQualityLimitLabel = new JLabel("High Quality:");
+		lowQualityLimitLabel = new JLabel("Low Quality:");
+
+		highQualityLimitTextField = new JTextField(5);
+		lowQualityLimitTextField = new JTextField(5);
+
+		applyButton = new JButton("Apply");
+
+		controllerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		controllerPanel.add(highQualityLimitLabel);
+		controllerPanel.add(highQualityLimitTextField);
+		controllerPanel.add(lowQualityLimitLabel);
+		controllerPanel.add(lowQualityLimitTextField);
+		controllerPanel.add(applyButton);
+
 		roster = new Roster();
 
 		rosterTableModel = new RosterTableModel();
@@ -116,14 +146,18 @@ public class RosterTablePanel extends JPanel
 		rosterTable.setColumnModel(new RosterTableColumnModel());
 		rosterTable.setModel(rosterTableModel);
 
+		tablePanel = new JPanel(new BorderLayout());
+		tablePanel.add(rosterTable.getTableHeader(), BorderLayout.PAGE_START);
+		tablePanel.add(new JScrollPane(rosterTable), BorderLayout.CENTER);
+
 		setBorder(new CompoundBorder(
 				BorderFactory.createTitledBorder("Roster"),
 				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		setLayout(new BorderLayout());
 
-		add(rosterTable.getTableHeader(), BorderLayout.PAGE_START);
-		add(new JScrollPane(rosterTable));
+		add(tablePanel, BorderLayout.CENTER);
+		add(controllerPanel, BorderLayout.SOUTH);
 	}
 
 	public void bind(Roster roster)
@@ -343,8 +377,13 @@ public class RosterTablePanel extends JPanel
 				new Color(255, 255, 0);
 		private final Color UNSELECTED_HIGH_QUALITY =
 				new Color(255, 255, 153);
+		private final Color SELECTED_LOW_QUALITY =
+				new Color(255, 0, 0);
+		private final Color UNSELECTED_LOW_QUALITY =
+				new Color(255, 153, 153);
 
-		private final int BEST_POSITION_QUALITY_LIMIT = 70;
+		private final int HIGH_QUALITY_LIMIT = 70;
+		private final int LOW_QUALITY_LIMIT = 50;
 
 		@Override
 		public TableColumn getColumn(int columnIndex)
@@ -394,6 +433,12 @@ public class RosterTablePanel extends JPanel
 								? SELECTED_HIGH_QUALITY
 								: UNSELECTED_HIGH_QUALITY;
 					}
+					else if (isLowQualityPlayer(player))
+					{
+						color = isSelected
+								? SELECTED_LOW_QUALITY
+								: UNSELECTED_LOW_QUALITY;
+					}
 					else if (isSelected)
 					{
 						color = table.getSelectionBackground();
@@ -411,7 +456,17 @@ public class RosterTablePanel extends JPanel
 								evaluators,
 								player);
 
-					return bestPositionQuality > BEST_POSITION_QUALITY_LIMIT;
+					return bestPositionQuality > HIGH_QUALITY_LIMIT;
+				}
+
+				private boolean isLowQualityPlayer(Player player)
+				{
+					Double bestPositionQuality =
+							getPlayersBestPositionQuality(
+								evaluators,
+								player);
+
+					return bestPositionQuality < LOW_QUALITY_LIMIT;
 				}
 
 				private boolean isSymmetricPlayer(Player player)
