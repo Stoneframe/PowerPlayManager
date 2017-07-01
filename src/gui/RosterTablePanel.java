@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
@@ -46,35 +48,39 @@ public class RosterTablePanel extends JPanel
 
 	private ColumnData[] columnDatas =
 	{
-			new ColumnData("Name", p -> p.getName()),
-			new ColumnData("Side", p -> p.getSide()),
-			new ColumnData("Goa", p -> p.getAttributes().getGoa()),
-			new ColumnData("FiP", p -> p.getAttributes().getFip()),
-			new ColumnData("Sho", p -> p.getAttributes().getSho()),
-			new ColumnData("Blk", p -> p.getAttributes().getBlk()),
-			new ColumnData("Pas", p -> p.getAttributes().getPas()),
-			new ColumnData("Tec", p -> p.getAttributes().getTec()),
-			new ColumnData("Spe", p -> p.getAttributes().getSpe()),
-			new ColumnData("Agr", p -> p.getAttributes().getAgr()),
-			new ColumnData("Total", p -> p.getAttributes().getTotalRating()),
+			new ColumnData("Name", player -> player.getName()),
+			new ColumnData("Side", player -> player.getSide()),
+			new ColumnData("Goa", player -> player.getAttributes().getGoa()),
+			new ColumnData("FiP", player -> player.getAttributes().getFip()),
+			new ColumnData("Sho", player -> player.getAttributes().getSho()),
+			new ColumnData("Blk", player -> player.getAttributes().getBlk()),
+			new ColumnData("Pas", player -> player.getAttributes().getPas()),
+			new ColumnData("Tec", player -> player.getAttributes().getTec()),
+			new ColumnData("Spe", player -> player.getAttributes().getSpe()),
+			new ColumnData("Agr", player -> player.getAttributes().getAgr()),
+			new ColumnData(
+					"Total",
+					player -> player.getAttributes().getTotalRating()),
 			new ColumnData(
 					"Position",
-					(p) -> getPlayersBestPositionName(
-						new RatingEvaluatorComparator(p.getAttributes()),
+					(player) -> getPlayersBestPositionName(
+						new RatingEvaluatorComparator(player.getAttributes()),
 						evaluators)),
 			new ColumnData(
 					"Highest Rating",
-					(p) -> getPlayersBestPositionRating(evaluators, p),
-					(v) -> String.format("%.1f", v)),
+					(player) -> getPlayersBestPositionRating(evaluators,
+						player),
+					(value) -> String.format("%.1f", value)),
 			new ColumnData(
 					"Training",
-					(p) -> getPlayersBestPositionName(
-						new QualityEvaluatorComparator(p.getAttributes()),
+					(player) -> getPlayersBestPositionName(
+						new QualityEvaluatorComparator(player.getAttributes()),
 						evaluators)),
 			new ColumnData(
 					"Highest Quality",
-					(p) -> getPlayersBestPositionQuality(evaluators, p),
-					(v) -> String.format("%.1f", v)),
+					(player) -> getPlayersBestPositionQuality(evaluators,
+						player),
+					(value) -> String.format("%.1f", value)),
 	};
 
 	private JLabel highQualityLimitLabel;
@@ -90,29 +96,16 @@ public class RosterTablePanel extends JPanel
 	private JPanel controllerPanel;
 	private JPanel tablePanel;
 
+	private RosterTableColumnModel rosterTableColumnModel;
 	private RosterTableModel rosterTableModel;
 
 	private Roster roster;
 
 	public RosterTablePanel()
 	{
-		highQualityLimitLabel = new JLabel("High Quality:");
-		lowQualityLimitLabel = new JLabel("Low Quality:");
-
-		highQualityLimitTextField = new JTextField(5);
-		lowQualityLimitTextField = new JTextField(5);
-
-		applyButton = new JButton("Apply");
-
-		controllerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		controllerPanel.add(highQualityLimitLabel);
-		controllerPanel.add(highQualityLimitTextField);
-		controllerPanel.add(lowQualityLimitLabel);
-		controllerPanel.add(lowQualityLimitTextField);
-		controllerPanel.add(applyButton);
-
 		roster = new Roster();
 
+		rosterTableColumnModel = new RosterTableColumnModel();
 		rosterTableModel = new RosterTableModel();
 
 		rosterTable = new JTable();
@@ -132,23 +125,35 @@ public class RosterTablePanel extends JPanel
 							new PlayerSelectedEvent(this, getSelectedPlayer()));
 					}
 				}
-
-				private Player getSelectedPlayer()
-				{
-					int selectedRow = rosterTable.getSelectedRow();
-
-					return selectedRow >= 0
-							? roster.get(
-								rosterTable.convertRowIndexToModel(selectedRow))
-							: null;
-				}
 			});
-		rosterTable.setColumnModel(new RosterTableColumnModel());
+		rosterTable.setColumnModel(rosterTableColumnModel);
 		rosterTable.setModel(rosterTableModel);
 
 		tablePanel = new JPanel(new BorderLayout());
 		tablePanel.add(rosterTable.getTableHeader(), BorderLayout.PAGE_START);
 		tablePanel.add(new JScrollPane(rosterTable), BorderLayout.CENTER);
+
+		highQualityLimitLabel = new JLabel("High Quality:");
+		lowQualityLimitLabel = new JLabel("Low Quality:");
+
+		highQualityLimitTextField = new JTextField(5);
+		lowQualityLimitTextField = new JTextField(5);
+
+		applyButton = new JButton("Apply");
+		applyButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				rosterTableModel.fireAllTableCellsUpdated();
+			}
+		});
+
+		controllerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		controllerPanel.add(highQualityLimitLabel);
+		controllerPanel.add(highQualityLimitTextField);
+		controllerPanel.add(lowQualityLimitLabel);
+		controllerPanel.add(lowQualityLimitTextField);
+		controllerPanel.add(applyButton);
 
 		setBorder(new CompoundBorder(
 				BorderFactory.createTitledBorder("Roster"),
@@ -197,6 +202,38 @@ public class RosterTablePanel extends JPanel
 		this.evaluators = evaluators;
 
 		rosterTableModel.fireAllTableCellsUpdated();
+	}
+
+	private Player getSelectedPlayer()
+	{
+		int selectedRow = rosterTable.getSelectedRow();
+
+		return selectedRow >= 0
+				? roster.get(
+					rosterTable.convertRowIndexToModel(selectedRow))
+				: null;
+	}
+
+	private int getHighQualityLimit()
+	{
+		return parseInteger(highQualityLimitTextField.getText(), 100);
+	}
+
+	private int getLowQualityLimit()
+	{
+		return parseInteger(lowQualityLimitTextField.getText(), 0);
+	}
+
+	private static int parseInteger(String text, int dfault)
+	{
+		try
+		{
+			return Integer.parseInt(text);
+		}
+		catch (NumberFormatException e)
+		{
+			return dfault;
+		}
 	}
 
 	private String getPlayersBestPositionName(
@@ -370,20 +407,17 @@ public class RosterTablePanel extends JPanel
 		private static final long serialVersionUID = -318707452817342668L;
 
 		private final Color SELECTED_HIGH_QUALITY_AND_SYMMETRIC =
-				new Color(0, 255, 0);
+				Colors.GREEN;
 		private final Color UNSELECTED_HIGH_QUALITY_AND_SYMMETRIC =
-				new Color(153, 255, 153);
+				Colors.LIGHT_GREEN;
 		private final Color SELECTED_HIGH_QUALITY =
-				new Color(255, 255, 0);
+				Colors.BLUE;
 		private final Color UNSELECTED_HIGH_QUALITY =
-				new Color(255, 255, 153);
+				Colors.LIGHT_BLUE;
 		private final Color SELECTED_LOW_QUALITY =
-				new Color(255, 0, 0);
+				Colors.RED;
 		private final Color UNSELECTED_LOW_QUALITY =
-				new Color(255, 153, 153);
-
-		private final int HIGH_QUALITY_LIMIT = 70;
-		private final int LOW_QUALITY_LIMIT = 50;
+				Colors.LIGHT_RED;
 
 		@Override
 		public TableColumn getColumn(int columnIndex)
@@ -456,7 +490,7 @@ public class RosterTablePanel extends JPanel
 								evaluators,
 								player);
 
-					return bestPositionQuality > HIGH_QUALITY_LIMIT;
+					return bestPositionQuality > getHighQualityLimit();
 				}
 
 				private boolean isLowQualityPlayer(Player player)
@@ -466,7 +500,7 @@ public class RosterTablePanel extends JPanel
 								evaluators,
 								player);
 
-					return bestPositionQuality < LOW_QUALITY_LIMIT;
+					return bestPositionQuality < getLowQualityLimit();
 				}
 
 				private boolean isSymmetricPlayer(Player player)
