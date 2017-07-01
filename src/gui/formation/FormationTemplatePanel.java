@@ -1,4 +1,4 @@
-package gui;
+package gui.formation;
 
 import java.awt.GridLayout;
 import java.util.List;

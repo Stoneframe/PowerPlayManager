@@ -1,4 +1,4 @@
-package gui;
+package gui.roster;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import gui.util.Colors;
 import model.CollectionChangedEvent;
 import model.CollectionChangedListeners;
 import model.Player;

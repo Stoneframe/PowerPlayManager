@@ -1,4 +1,4 @@
-package gui;
+package gui.parse;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;

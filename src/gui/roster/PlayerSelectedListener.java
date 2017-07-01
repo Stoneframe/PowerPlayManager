@@ -1,4 +1,4 @@
-package gui;
+package gui.roster;
 
 import java.util.EventListener;
 

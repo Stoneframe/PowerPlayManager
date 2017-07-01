@@ -1,4 +1,4 @@
-package gui;
+package gui.player;
 
 import java.awt.GridLayout;
 import java.util.function.Supplier;
