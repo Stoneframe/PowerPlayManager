@@ -9,13 +9,17 @@ import java.io.IOException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
+
+import model.Attributes;
 import model.Roster;
 import model.Side;
 import model.SideAdapter;
 
 public class FileHandler
 {
-	public static void saveRosterToFile(File file, Roster roster)
+	public static <A extends Attributes> void saveRosterToFile(
+			File file,
+			Roster<A> roster)
 	{
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(Side.class, new SideAdapter());
@@ -35,7 +39,7 @@ public class FileHandler
 		}
 	}
 
-	public static Roster loadRosterFromFile(File file)
+	public static <A extends Attributes> Roster<A> loadRosterFromFile(File file)
 	{
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(Side.class, new SideAdapter());
@@ -43,7 +47,7 @@ public class FileHandler
 		try
 		{
 			JsonReader reader = new JsonReader(new FileReader(file));
-			Roster roster = gson.fromJson(reader, Roster.class);
+			Roster<A> roster = gson.fromJson(reader, Roster.class);
 			return roster;
 		}
 		catch (FileNotFoundException e)

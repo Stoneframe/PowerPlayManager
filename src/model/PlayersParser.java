@@ -2,9 +2,10 @@ package model;
 
 import java.util.List;
 
-import model.parsers.ParseException;
+import parsers.ParseException;
 
 public interface PlayersParser
 {
-	public List<Player> parsePlayers(String textToParse) throws ParseException;
+	public List<Player<?>> parsePlayers(String textToParse)
+			throws ParseException;
 }

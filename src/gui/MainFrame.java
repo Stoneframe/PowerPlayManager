@@ -15,15 +15,16 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import model.PlayerEvaluator;
+import evaluators.PlayerEvaluator;
+import evaluators.handball.HandballDefBackPlayerEvaluator;
+import evaluators.handball.HandballDefPivotPlayerEvaluator;
+import evaluators.handball.HandballDefWingPlayerEvaluator;
+import evaluators.handball.HandballGoaliePlayerEvaluator;
+import evaluators.handball.HandballOffBackPlayerEvaluator;
+import evaluators.handball.HandballOffPivotPlayerEvaluator;
+import evaluators.handball.HandballOffWingPlayerEvaluator;
 import model.Roster;
-import model.evaluators.DefensiveBackPlayerEvaluator;
-import model.evaluators.DefensivePivotPlayerEvaluator;
-import model.evaluators.DefensiveWingPlayerEvaluator;
-import model.evaluators.GoaliePlayerEvaluator;
-import model.evaluators.OffensiveBackPlayerEvaluator;
-import model.evaluators.OffensivePivotPlayerEvaluator;
-import model.evaluators.OffensiveWingPlayerEvaluator;
+import model.handball.HandballAttributes;
 
 public class MainFrame extends JFrame
 {
@@ -38,20 +39,20 @@ public class MainFrame extends JFrame
 	private JButton createFormationsButton;
 	private JButton clearRosterButton;
 
-	private Roster roster = new Roster();
+	private Roster<?> roster = new Roster<HandballAttributes>();
 
-	private List<PlayerEvaluator> evaluators = new LinkedList<PlayerEvaluator>(
+	private List<PlayerEvaluator<?>> evaluators = new LinkedList<PlayerEvaluator<?>>(
 			Arrays.asList(
-				new GoaliePlayerEvaluator(),
+				new HandballGoaliePlayerEvaluator(),
 				// new BackPlayerEvaluator(),
 				// new PivotPlayerEvaluator(),
 				// new WingPlayerEvaluator(),
-				new DefensiveBackPlayerEvaluator(),
-				new DefensivePivotPlayerEvaluator(),
-				new DefensiveWingPlayerEvaluator(),
-				new OffensiveBackPlayerEvaluator(),
-				new OffensivePivotPlayerEvaluator(),
-				new OffensiveWingPlayerEvaluator()));
+				new HandballDefBackPlayerEvaluator(),
+				new HandballDefPivotPlayerEvaluator(),
+				new HandballDefWingPlayerEvaluator(),
+				new HandballOffBackPlayerEvaluator(),
+				new HandballOffPivotPlayerEvaluator(),
+				new HandballOffWingPlayerEvaluator()));
 
 	public MainFrame()
 	{

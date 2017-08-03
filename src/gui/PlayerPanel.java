@@ -10,8 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import evaluators.PlayerEvaluator;
+import model.Attributes;
 import model.Player;
-import model.PlayerEvaluator;
 import model.PropertyChangedEvent;
 import model.PropertyChangedListener;
 
@@ -19,7 +20,7 @@ public class PlayerPanel extends JPanel implements PropertyChangedListener
 {
 	private static final long serialVersionUID = 8319489027333955979L;
 
-	private Player player;
+	private Player<?> player;
 
 	private JLabel nameLabel;
 	private JLabel sideLabel;
@@ -27,7 +28,7 @@ public class PlayerPanel extends JPanel implements PropertyChangedListener
 	private JTextField nameTextField;
 	private JTextField sideTextField;
 
-	private AttributePanel attributePanel;
+	private HandballAttributePanel attributePanel;
 
 	private PositionSuggestionPanel positionSuggestionPanel;
 	private TrainingSuggestionPanel trainingSuggestionPanel;
@@ -42,7 +43,7 @@ public class PlayerPanel extends JPanel implements PropertyChangedListener
 		sideTextField = new JTextField(15);
 		sideTextField.setEditable(false);
 
-		attributePanel = new AttributePanel();
+		attributePanel = new HandballAttributePanel();
 
 		positionSuggestionPanel = new PositionSuggestionPanel();
 
@@ -97,7 +98,7 @@ public class PlayerPanel extends JPanel implements PropertyChangedListener
 		add(trainingSuggestionPanel, c);
 	}
 
-	public void bind(Player player)
+	public void bind(Player<Attributes> player)
 	{
 		if (this.player != null)
 		{
@@ -120,7 +121,7 @@ public class PlayerPanel extends JPanel implements PropertyChangedListener
 		update();
 	}
 
-	public void setPlayerEvaluators(List<PlayerEvaluator> evaluators)
+	public void setPlayerEvaluators(List<PlayerEvaluator<Attributes>> evaluators)
 	{
 		positionSuggestionPanel.setPlayerEvaluators(evaluators);
 		trainingSuggestionPanel.setPlayerEvaluators(evaluators);

@@ -17,16 +17,16 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import comparators.EvaluatorComparator;
+import comparators.QualityEvaluatorComparator;
+import comparators.RatingEvaluatorComparator;
+import evaluators.PlayerEvaluator;
 import model.CollectionChangedEvent;
 import model.CollectionChangedListeners;
 import model.Player;
-import model.PlayerEvaluator;
 import model.PropertyChangedEvent;
 import model.PropertyChangedListener;
 import model.Roster;
-import model.comparators.EvaluatorComparator;
-import model.comparators.QualityEvaluatorComparator;
-import model.comparators.RatingEvaluatorComparator;
 
 public class RosterTablePanel extends JPanel
 {
@@ -34,20 +34,20 @@ public class RosterTablePanel extends JPanel
 
 	private PlayerSelectedListener playerSelectedListener;
 
-	private List<PlayerEvaluator> evaluators = new LinkedList<PlayerEvaluator>();
+	private List<PlayerEvaluator<?>> evaluators = new LinkedList<PlayerEvaluator<?>>();
 
 	private ColumnData[] columnDatas =
 	{
 			new ColumnData("Name", p -> p.getName()),
 			new ColumnData("Side", p -> p.getSide()),
-			new ColumnData("Goa", p -> p.getAttributes().getGoa()),
-			new ColumnData("FiP", p -> p.getAttributes().getFip()),
-			new ColumnData("Sho", p -> p.getAttributes().getSho()),
-			new ColumnData("Blk", p -> p.getAttributes().getBlk()),
-			new ColumnData("Pas", p -> p.getAttributes().getPas()),
-			new ColumnData("Tec", p -> p.getAttributes().getTec()),
-			new ColumnData("Spe", p -> p.getAttributes().getSpe()),
-			new ColumnData("Agr", p -> p.getAttributes().getAgr()),
+//			new ColumnData("Goa", p -> p.getAttributes().getGoa()),
+//			new ColumnData("FiP", p -> p.getAttributes().getFip()),
+//			new ColumnData("Sho", p -> p.getAttributes().getSho()),
+//			new ColumnData("Blk", p -> p.getAttributes().getBlk()),
+//			new ColumnData("Pas", p -> p.getAttributes().getPas()),
+//			new ColumnData("Tec", p -> p.getAttributes().getTec()),
+//			new ColumnData("Spe", p -> p.getAttributes().getSpe()),
+//			new ColumnData("Agr", p -> p.getAttributes().getAgr()),
 			new ColumnData("Total", p -> p.getAttributes().getTotalRating()),
 			new ColumnData(
 					"Position",
@@ -183,7 +183,7 @@ public class RosterTablePanel extends JPanel
 		this.playerSelectedListener = listener;
 	}
 
-	public void setPlayerEvaluators(List<PlayerEvaluator> evaluators)
+	public void setPlayerEvaluators(List<PlayerEvaluator<?>> evaluators)
 	{
 		this.evaluators = evaluators;
 
@@ -191,10 +191,10 @@ public class RosterTablePanel extends JPanel
 	}
 
 	private String getPlayersBestPositionName(
-			EvaluatorComparator evaluatorComparator,
-			List<PlayerEvaluator> evaluators)
+			EvaluatorComparator<?> evaluatorComparator,
+			List<PlayerEvaluator<?>> evaluators)
 	{
-		PlayerEvaluator playerEvaluator = evaluators
+		PlayerEvaluator<?> playerEvaluator = evaluators
 				.stream()
 				.max((a, b) -> evaluatorComparator.compare(a, b))
 				.get();
@@ -205,8 +205,8 @@ public class RosterTablePanel extends JPanel
 	}
 
 	private Double getPlayersBestPositionRating(
-			List<PlayerEvaluator> evaluators,
-			Player player)
+			List<PlayerEvaluator<?>> evaluators,
+			Player<?> player)
 	{
 		return evaluators
 				.stream()

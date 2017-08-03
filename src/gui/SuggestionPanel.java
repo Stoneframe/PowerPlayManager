@@ -2,14 +2,15 @@ package gui;
 
 import java.awt.GridLayout;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 
+import evaluators.PlayerEvaluator;
 import model.Attributes;
-import model.PlayerEvaluator;
 import model.PropertyChangedEvent;
 import model.PropertyChangedListener;
 
@@ -22,7 +23,7 @@ public abstract class SuggestionPanel extends JPanel
 	private static final int DISPLAYED_POSITIONS_LIMIT = 3;
 
 	private Attributes attributes;
-	private List<PlayerEvaluator> evaluators;
+	private List<PlayerEvaluator<Attributes>> evaluators;
 
 	public SuggestionPanel(String title)
 	{
@@ -51,7 +52,8 @@ public abstract class SuggestionPanel extends JPanel
 		update();
 	}
 
-	public void setPlayerEvaluators(List<PlayerEvaluator> evaluators)
+	public void setPlayerEvaluators(
+			List<PlayerEvaluator<Attributes>> evaluators)
 	{
 		this.evaluators = evaluators;
 
@@ -60,12 +62,12 @@ public abstract class SuggestionPanel extends JPanel
 
 	protected abstract int compare(
 			Attributes attributes,
-			PlayerEvaluator evaluator1,
-			PlayerEvaluator evaluator2);
+			PlayerEvaluator<Attributes> evaluator1,
+			PlayerEvaluator<Attributes> evaluator2);
 
 	protected abstract double getValue(
 			Attributes attributes,
-			PlayerEvaluator evaluator);
+			PlayerEvaluator<Attributes> evaluator);
 
 	private void update()
 	{
@@ -73,7 +75,7 @@ public abstract class SuggestionPanel extends JPanel
 
 		if (attributes != null)
 		{
-			for (PlayerEvaluator evaluator : getSortedEvaluators())
+			for (PlayerEvaluator<Attributes> evaluator : getSortedEvaluators())
 			{
 				add(new JLabel(evaluator.getName()));
 				add(new JLabel(
@@ -86,13 +88,13 @@ public abstract class SuggestionPanel extends JPanel
 		updateUI();
 	}
 
-	private PlayerEvaluator[] getSortedEvaluators()
+	private List<PlayerEvaluator<Attributes>> getSortedEvaluators()
 	{
 		return evaluators
 				.stream()
 				.sorted((a, b) -> compare(attributes, b, a))
 				.limit(DISPLAYED_POSITIONS_LIMIT)
-				.toArray(PlayerEvaluator[]::new);
+				.collect(Collectors.toList());
 	}
 
 	@Override

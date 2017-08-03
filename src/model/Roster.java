@@ -7,29 +7,33 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class Roster extends AbstractModelCollection implements Iterable<Player>
+public class Roster<A extends Attributes> extends AbstractModelCollection
+		implements
+		Iterable<Player<A>>
 {
-	public static Roster intersection(Roster r1, Roster r2)
+	public static <A extends Attributes> Roster<A> intersection(
+			Roster<A> r1,
+			Roster<A> r2)
 	{
-		Roster intr = r1.copy();
+		Roster<A> intr = r1.copy();
 		intr.players.retainAll(r2.players);
 		return intr;
 	}
 
-	private List<Player> players = new LinkedList<Player>();
+	private List<Player<A>> players = new LinkedList<Player<A>>();
 
 	public Roster()
 	{
 	}
 
-	private Roster(List<Player> players)
+	private Roster(List<Player<A>> players)
 	{
 		this.players.addAll(players);
 	}
 
-	public void add(Player player)
+	public void add(Player<A> player)
 	{
-		for (Player addedPlayer : players)
+		for (Player<A> addedPlayer : players)
 		{
 			if (addedPlayer.equals(player))
 			{
@@ -47,15 +51,15 @@ public class Roster extends AbstractModelCollection implements Iterable<Player>
 			player);
 	}
 
-	public void addAll(List<Player> players)
+	public void addAll(List<Player<A>> players)
 	{
-		for (Player player : players)
+		for (Player<A> player : players)
 		{
 			add(player);
 		}
 	}
 
-	public void remove(Player player)
+	public void remove(Player<A> player)
 	{
 		int index = players.indexOf(player);
 
@@ -64,12 +68,12 @@ public class Roster extends AbstractModelCollection implements Iterable<Player>
 		fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
 	}
 
-	public Player get(int index)
+	public Player<A> get(int index)
 	{
 		return players.get(index);
 	}
 
-	public int indexOf(Player player)
+	public int indexOf(Player<A> player)
 	{
 		return players.indexOf(player);
 	}
@@ -79,9 +83,9 @@ public class Roster extends AbstractModelCollection implements Iterable<Player>
 		return players.size();
 	}
 
-	public Roster copy()
+	public Roster<A> copy()
 	{
-		return new Roster(players);
+		return new Roster<A>(players);
 	}
 
 	public void clear()
@@ -92,14 +96,14 @@ public class Roster extends AbstractModelCollection implements Iterable<Player>
 		}
 	}
 
-	public Stream<Player> stream()
+	public Stream<Player<A>> stream()
 	{
 		return players.stream();
 	}
 
-	public List<Player> sort(Comparator<Player> comparator)
+	public List<Player<A>> sort(Comparator<Player<A>> comparator)
 	{
-		List<Player> copy = new LinkedList<Player>(players);
+		List<Player<A>> copy = new LinkedList<Player<A>>(players);
 
 		Collections.sort(copy, comparator);
 		Collections.reverse(copy);
@@ -107,13 +111,13 @@ public class Roster extends AbstractModelCollection implements Iterable<Player>
 		return Collections.unmodifiableList(copy);
 	}
 
-	public Player[] toArray()
+	public Player<A>[] toArray()
 	{
 		return players.toArray(new Player[0]);
 	}
 
 	@Override
-	public Iterator<Player> iterator()
+	public Iterator<Player<A>> iterator()
 	{
 		return players.iterator();
 	}

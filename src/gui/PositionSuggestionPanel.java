@@ -1,10 +1,11 @@
 package gui;
 
+import comparators.RatingEvaluatorComparator;
+import evaluators.PlayerEvaluator;
 import model.Attributes;
-import model.PlayerEvaluator;
-import model.comparators.RatingEvaluatorComparator;
 
-public class PositionSuggestionPanel extends SuggestionPanel
+public class PositionSuggestionPanel<A extends Attributes> extends
+		SuggestionPanel<A>
 {
 	private static final long serialVersionUID = -1128283837238130849L;
 
@@ -15,16 +16,18 @@ public class PositionSuggestionPanel extends SuggestionPanel
 
 	@Override
 	protected int compare(
-			Attributes attributes,
-			PlayerEvaluator evaluator1,
-			PlayerEvaluator evaluator2)
+			A attributes,
+			PlayerEvaluator<A> evaluator1,
+			PlayerEvaluator<A> evaluator2)
 	{
-		return new RatingEvaluatorComparator(attributes)
+		return new RatingEvaluatorComparator<A>(attributes)
 				.compare(evaluator1, evaluator2);
 	}
 
 	@Override
-	protected double getValue(Attributes attributes, PlayerEvaluator evaluator)
+	protected double getValue(
+			A attributes,
+			PlayerEvaluator<A> evaluator)
 	{
 		return evaluator.getRating(attributes);
 	}

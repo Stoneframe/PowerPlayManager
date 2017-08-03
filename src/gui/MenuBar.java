@@ -19,7 +19,7 @@ public class MenuBar extends JMenuBar
 
 	final JFileChooser fc = new JFileChooser();
 
-	public MenuBar(Component parentComponent, Roster roster)
+	public MenuBar(Component parentComponent, Roster<?> roster)
 	{
 		JMenu menu;
 		JMenuItem menuItemOpen, menuItemSave;

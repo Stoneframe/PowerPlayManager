@@ -3,16 +3,20 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.parsers.ParseException;
+import evaluators.PlayerEvaluator;
+import evaluators.handball.HandballPlayerEvaluator;
+import model.handball.HandballAttributes;
+import parsers.ParseException;
 
 public class PlayerEvaluatorsParser
 {
-	public List<PlayerEvaluator> parsePlayerEvaluators(String textToParse)
-			throws ParseException
+	public List<PlayerEvaluator<?>> parsePlayerEvaluators(
+			String textToParse)
+					throws ParseException
 	{
 		try
 		{
-			List<PlayerEvaluator> evaluators = new LinkedList<PlayerEvaluator>();
+			List<PlayerEvaluator<HandballAttributes>> evaluators = new LinkedList<PlayerEvaluator<Attributes>>();
 
 			String[] lines = textToParse.split("\n");
 
@@ -20,7 +24,7 @@ public class PlayerEvaluatorsParser
 			{
 				String[] columns = line.split("\t");
 
-				PlayerEvaluator evaluator = new PlayerEvaluator(
+				HandballPlayerEvaluator evaluator = new HandballPlayerEvaluator(
 						columns[0],
 						Integer.parseInt(columns[1]),
 						Integer.parseInt(columns[2]),

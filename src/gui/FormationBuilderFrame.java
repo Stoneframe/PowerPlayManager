@@ -19,20 +19,21 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import model.Formation;
-import model.FormationTemplate;
-import model.PlayerEvaluator;
+import builders.PaulsFormationBuilder;
+import evaluators.handball.HandballPlayerEvaluator;
+import model.HandballFormation;
+import model.HandballFormationTemplate;
 import model.Roster;
-import model.builders.PaulsFormationBuilder;
+import model.handball.HandballAttributes;
 
 public class FormationBuilderFrame extends JFrame
 {
 	private static final long serialVersionUID = -5043434553464317980L;
 
-	private DefaultListModel<FormationTemplate> templateListModel;
-	private JList<FormationTemplate> templateList;
+	private DefaultListModel<HandballFormationTemplate> templateListModel;
+	private JList<HandballFormationTemplate> templateList;
 
-	private FormationTemplatePanel templatePanel;
+	private HandballFormationTemplatePanel templatePanel;
 
 	private JButton addTemplateButton;
 	private JButton removeTemplateButton;
@@ -40,12 +41,12 @@ public class FormationBuilderFrame extends JFrame
 	private JButton createFormationsButton;
 
 	public FormationBuilderFrame(
-			Roster roster,
-			List<PlayerEvaluator> evaluators)
+			Roster<HandballAttributes> roster,
+			List<HandballPlayerEvaluator> evaluators)
 	{
-		templateListModel = new DefaultListModel<FormationTemplate>();
+		templateListModel = new DefaultListModel<HandballFormationTemplate>();
 
-		templateList = new JList<FormationTemplate>(templateListModel);
+		templateList = new JList<HandballFormationTemplate>(templateListModel);
 		templateList.setPreferredSize(new Dimension(200, 1));
 		templateList.setBorder(BorderFactory.createEtchedBorder());
 		templateList.addListSelectionListener(new ListSelectionListener()
@@ -60,7 +61,7 @@ public class FormationBuilderFrame extends JFrame
 			}
 		});
 
-		templatePanel = new FormationTemplatePanel(evaluators);
+		templatePanel = new HandballFormationTemplatePanel(evaluators);
 
 		addTemplateButton = new JButton("Add");
 		addTemplateButton.setMinimumSize(new Dimension(100, 20));
@@ -92,14 +93,14 @@ public class FormationBuilderFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				List<Formation> formations = new LinkedList<Formation>();
+				List<HandballFormation> formations = new LinkedList<HandballFormation>();
 
 				for (int i = 0; i < templateListModel.size(); i++)
 				{
-					FormationTemplate template = templateListModel
+					HandballFormationTemplate template = templateListModel
 							.getElementAt(i);
 
-					Formation formation = new PaulsFormationBuilder()
+					HandballFormation formation = new PaulsFormationBuilder()
 							.createFormation(roster, template);
 
 					formations.add(formation);

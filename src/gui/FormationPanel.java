@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
-import model.Formation;
+import model.HandballFormation;
 
 public class FormationPanel extends JPanel
 {
@@ -28,7 +28,7 @@ public class FormationPanel extends JPanel
 	private JTextField centerBackTextField;
 	private JTextField rightBackTextField;
 
-	public FormationPanel(Formation formation)
+	public FormationPanel(HandballFormation formation)
 	{
 		leftWingLabel = new JLabel("Left Wing:");
 		rightWingLabel = new JLabel("Right Wing:");

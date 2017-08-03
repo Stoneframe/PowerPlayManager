@@ -10,15 +10,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import evaluators.PlayerEvaluator;
+import model.Attributes;
 import model.Player;
-import model.PlayerEvaluator;
 import model.PlayerEvaluatorsParser;
 import model.PlayersParser;
-import model.parsers.MarketPlayersParser;
-import model.parsers.OverviewPlayersParser;
-import model.parsers.ParseException;
-import model.parsers.PractisePlayersParser;
-import model.parsers.PractiseProPlayersParser;
+import parsers.ParseException;
+import parsers.players.MarketPlayersParser;
+import parsers.players.OverviewPlayersParser;
+import parsers.players.PractisePlayersParser;
+import parsers.players.PractiseProPlayersParser;
 
 public class ParsePanel extends JPanel
 {
@@ -108,7 +109,7 @@ public class ParsePanel extends JPanel
 	{
 		try
 		{
-			List<Player> players = playersParser
+			List<Player<?>> players = playersParser
 					.parsePlayers(textArea.getText());
 
 			textArea.setText("");
@@ -130,7 +131,7 @@ public class ParsePanel extends JPanel
 	{
 		try
 		{
-			List<PlayerEvaluator> evaluators = new PlayerEvaluatorsParser()
+			List<PlayerEvaluator<Attributes>> evaluators = new PlayerEvaluatorsParser()
 					.parsePlayerEvaluators(textArea.getText());
 
 			textArea.setText("");

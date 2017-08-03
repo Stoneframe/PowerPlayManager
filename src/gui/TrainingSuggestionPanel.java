@@ -1,10 +1,12 @@
 package gui;
 
+import comparators.QualityEvaluatorComparator;
+import evaluators.PlayerEvaluator;
 import model.Attributes;
-import model.PlayerEvaluator;
-import model.comparators.QualityEvaluatorComparator;
 
-public class TrainingSuggestionPanel extends SuggestionPanel
+public class TrainingSuggestionPanel
+		extends
+		SuggestionPanel
 {
 	private static final long serialVersionUID = -9177249749398783715L;
 
@@ -15,9 +17,9 @@ public class TrainingSuggestionPanel extends SuggestionPanel
 
 	@Override
 	protected int compare(
-			Attributes attributes,
-			PlayerEvaluator evaluator1,
-			PlayerEvaluator evaluator2)
+			A attributes,
+			PlayerEvaluator<Attributes> evaluator1,
+			PlayerEvaluator<Attributes> evaluator2)
 
 	{
 		return new QualityEvaluatorComparator(attributes)
@@ -25,7 +27,9 @@ public class TrainingSuggestionPanel extends SuggestionPanel
 	}
 
 	@Override
-	protected double getValue(Attributes attributes, PlayerEvaluator evaluator)
+	protected double getValue(
+			A attributes,
+			PlayerEvaluator<A> evaluator)
 	{
 		return evaluator.getQuality(attributes);
 	}
