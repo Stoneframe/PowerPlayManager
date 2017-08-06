@@ -105,7 +105,7 @@ public class ParsePanel extends JPanel
 		playerEvaluatorParsedListener = listener;
 	}
 
-	private void parsePlayers(PlayersParser playersParser)
+	private void parsePlayers(PlayersParser<A> playersParser)
 	{
 		try
 		{

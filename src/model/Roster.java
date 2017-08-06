@@ -73,7 +73,7 @@ public class Roster<A extends Attributes> extends AbstractModelCollection
 		return players.get(index);
 	}
 
-	public int indexOf(Player<A> player)
+	public int indexOf(Object player)
 	{
 		return players.indexOf(player);
 	}
@@ -111,10 +111,10 @@ public class Roster<A extends Attributes> extends AbstractModelCollection
 		return Collections.unmodifiableList(copy);
 	}
 
-	public Player<A>[] toArray()
-	{
-		return players.toArray(new Player[0]);
-	}
+	// public Player<A>[] toArray()
+	// {
+	// return players.toArray(new Player[0]);
+	// }
 
 	@Override
 	public Iterator<Player<A>> iterator()

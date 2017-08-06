@@ -44,12 +44,13 @@ public abstract class Player<A extends Attributes> extends AbstractModelObject
 
 	public void merge(Player<A> other)
 	{
-		if (!this.equals(other))
-			return;
+		if (!this.equals(other)) return;
 
 		if (this.side == Side.UNKNOWN)
+		{
 			this.setSide(other.getSide());
-		
+		}
+
 		mergeAttributes(other);
 	}
 

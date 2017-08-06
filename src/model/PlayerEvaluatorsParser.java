@@ -10,13 +10,14 @@ import parsers.ParseException;
 
 public class PlayerEvaluatorsParser
 {
-	public List<PlayerEvaluator<?>> parsePlayerEvaluators(
+	public List<PlayerEvaluator<HandballAttributes>> parsePlayerEvaluators(
 			String textToParse)
-					throws ParseException
+			throws ParseException
 	{
 		try
 		{
-			List<PlayerEvaluator<HandballAttributes>> evaluators = new LinkedList<PlayerEvaluator<Attributes>>();
+			List<PlayerEvaluator<HandballAttributes>> evaluators =
+					new LinkedList<PlayerEvaluator<HandballAttributes>>();
 
 			String[] lines = textToParse.split("\n");
 

@@ -1,15 +1,17 @@
 package model;
 
+import model.handball.HandballAttributes;
+
 public class HandballFormation
 {
 	private String name;
 
-	private HandballPlayer pivot;
-	private HandballPlayer leftWing;
-	private HandballPlayer rightWing;
-	private HandballPlayer centerBack;
-	private HandballPlayer leftBack;
-	private HandballPlayer rightBack;
+	private Player<HandballAttributes> pivot;
+	private Player<HandballAttributes> leftWing;
+	private Player<HandballAttributes> rightWing;
+	private Player<HandballAttributes> centerBack;
+	private Player<HandballAttributes> leftBack;
+	private Player<HandballAttributes> rightBack;
 
 	public HandballFormation()
 	{
@@ -22,12 +24,12 @@ public class HandballFormation
 
 	public HandballFormation(
 			String name,
-			HandballPlayer pivot,
-			HandballPlayer leftWing,
-			HandballPlayer rightWing,
-			HandballPlayer centerBack,
-			HandballPlayer leftBack,
-			HandballPlayer rightBack)
+			Player<HandballAttributes> pivot,
+			Player<HandballAttributes> leftWing,
+			Player<HandballAttributes> rightWing,
+			Player<HandballAttributes> centerBack,
+			Player<HandballAttributes> leftBack,
+			Player<HandballAttributes> rightBack)
 	{
 		this.name = name;
 		this.pivot = pivot;
@@ -48,64 +50,64 @@ public class HandballFormation
 		this.name = name;
 	}
 
-	public HandballPlayer getPivot()
+	public Player<HandballAttributes> getPivot()
 	{
 		return pivot;
 	}
 
-	public void setPivot(HandballPlayer pivot)
+	public void setPivot(Player<HandballAttributes> pivot)
 	{
 		this.pivot = pivot;
 	}
 
-	public HandballPlayer getLeftWing()
+	public Player<HandballAttributes> getLeftWing()
 	{
 		return leftWing;
 	}
 
-	public void setLeftWing(HandballPlayer leftWing)
+	public void setLeftWing(Player<HandballAttributes> leftWing)
 	{
 		this.leftWing = leftWing;
 	}
 
-	public HandballPlayer getRightWing()
+	public Player<HandballAttributes> getRightWing()
 	{
 		return rightWing;
 	}
 
-	public void setRightWing(HandballPlayer rightWing)
+	public void setRightWing(Player<HandballAttributes> rightWing)
 	{
 		this.rightWing = rightWing;
 	}
 
-	public HandballPlayer getCenterBack()
+	public Player<HandballAttributes> getCenterBack()
 	{
 		return centerBack;
 	}
 
-	public void setCenterBack(HandballPlayer centerBack)
+	public void setCenterBack(Player<HandballAttributes> centerBack)
 	{
 		this.centerBack = centerBack;
 	}
 
-	public HandballPlayer getLeftBack()
+	public Player<HandballAttributes> getLeftBack()
 	{
 		return leftBack;
 	}
 
-	public void setLeftBack(HandballPlayer leftBack)
+	public void setLeftBack(Player<HandballAttributes> leftBack)
 	{
 		this.leftBack = leftBack;
 	}
 
-	public HandballPlayer getRightBack()
+	public Player<HandballAttributes> getRightBack()
 	{
 		return rightBack;
 	}
 
-	public void setRightBack(HandballPlayer rightBack)
+	public void setRightBack(Player<HandballAttributes> player)
 	{
-		this.rightBack = rightBack;
+		this.rightBack = player;
 	}
 
 	@Override

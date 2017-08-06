@@ -39,20 +39,22 @@ public class MainFrame extends JFrame
 	private JButton createFormationsButton;
 	private JButton clearRosterButton;
 
-	private Roster<?> roster = new Roster<HandballAttributes>();
+	private Roster<HandballAttributes> roster =
+			new Roster<HandballAttributes>();
 
-	private List<PlayerEvaluator<?>> evaluators = new LinkedList<PlayerEvaluator<?>>(
-			Arrays.asList(
-				new HandballGoaliePlayerEvaluator(),
-				// new BackPlayerEvaluator(),
-				// new PivotPlayerEvaluator(),
-				// new WingPlayerEvaluator(),
-				new HandballDefBackPlayerEvaluator(),
-				new HandballDefPivotPlayerEvaluator(),
-				new HandballDefWingPlayerEvaluator(),
-				new HandballOffBackPlayerEvaluator(),
-				new HandballOffPivotPlayerEvaluator(),
-				new HandballOffWingPlayerEvaluator()));
+	private List<PlayerEvaluator<HandballAttributes>> evaluators =
+			new LinkedList<PlayerEvaluator<HandballAttributes>>(
+					Arrays.asList(
+						new HandballGoaliePlayerEvaluator(),
+						// new BackPlayerEvaluator(),
+						// new PivotPlayerEvaluator(),
+						// new WingPlayerEvaluator(),
+						new HandballDefBackPlayerEvaluator(),
+						new HandballDefPivotPlayerEvaluator(),
+						new HandballDefWingPlayerEvaluator(),
+						new HandballOffBackPlayerEvaluator(),
+						new HandballOffPivotPlayerEvaluator(),
+						new HandballOffWingPlayerEvaluator()));
 
 	public MainFrame()
 	{
@@ -63,26 +65,31 @@ public class MainFrame extends JFrame
 
 		// Parse panel
 		parsePanel = new ParsePanel();
-		parsePanel.setPlayersParseListener(new PlayersParsedListener()
-		{
-			public void playersParsed(Object source, PlayersParsedEvent event)
+		parsePanel.setPlayersParseListener(
+			new PlayersParsedListener<HandballAttributes>()
 			{
-				roster.addAll(event.getPlayers());
-			}
-		});
+				public void playersParsed(
+						Object source,
+						PlayersParsedEvent<HandballAttributes> event)
+				{
+					roster.addAll(event.getPlayers());
+				}
+			});
 		parsePanel.setPlayerEvaluatorsParsedListener(
-			new PlayerEvaluatorsParsedListener()
+			new PlayerEvaluatorsParsedListener<HandballAttributes>()
 			{
 				public void playerEvaluatorsParsed(
 						Object source,
-						PlayerEvaluatorsParsedEvent event)
+						PlayerEvaluatorsParsedEvent<HandballAttributes> event)
 				{
 					evaluators = event.getPlayerEvaluators();
 
 					rosterTablePanel
-							.setPlayerEvaluators(event.getPlayerEvaluators());
+							.setPlayerEvaluators(
+								event.getPlayerEvaluators());
 					playerPanel
-							.setPlayerEvaluators(event.getPlayerEvaluators());
+							.setPlayerEvaluators(
+								event.getPlayerEvaluators());
 				}
 			});
 

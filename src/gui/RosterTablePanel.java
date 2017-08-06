@@ -21,6 +21,7 @@ import comparators.EvaluatorComparator;
 import comparators.QualityEvaluatorComparator;
 import comparators.RatingEvaluatorComparator;
 import evaluators.PlayerEvaluator;
+import model.Attributes;
 import model.CollectionChangedEvent;
 import model.CollectionChangedListeners;
 import model.Player;
@@ -28,26 +29,27 @@ import model.PropertyChangedEvent;
 import model.PropertyChangedListener;
 import model.Roster;
 
-public class RosterTablePanel extends JPanel
+public class RosterTablePanel<A extends Attributes> extends JPanel
 {
 	private static final long serialVersionUID = 6702252304393306453L;
 
 	private PlayerSelectedListener playerSelectedListener;
 
-	private List<PlayerEvaluator<?>> evaluators = new LinkedList<PlayerEvaluator<?>>();
+	private List<PlayerEvaluator<A>> evaluators =
+			new LinkedList<PlayerEvaluator<A>>();
 
 	private ColumnData[] columnDatas =
 	{
 			new ColumnData("Name", p -> p.getName()),
 			new ColumnData("Side", p -> p.getSide()),
-//			new ColumnData("Goa", p -> p.getAttributes().getGoa()),
-//			new ColumnData("FiP", p -> p.getAttributes().getFip()),
-//			new ColumnData("Sho", p -> p.getAttributes().getSho()),
-//			new ColumnData("Blk", p -> p.getAttributes().getBlk()),
-//			new ColumnData("Pas", p -> p.getAttributes().getPas()),
-//			new ColumnData("Tec", p -> p.getAttributes().getTec()),
-//			new ColumnData("Spe", p -> p.getAttributes().getSpe()),
-//			new ColumnData("Agr", p -> p.getAttributes().getAgr()),
+			// new ColumnData("Goa", p -> p.getAttributes().getGoa()),
+			// new ColumnData("FiP", p -> p.getAttributes().getFip()),
+			// new ColumnData("Sho", p -> p.getAttributes().getSho()),
+			// new ColumnData("Blk", p -> p.getAttributes().getBlk()),
+			// new ColumnData("Pas", p -> p.getAttributes().getPas()),
+			// new ColumnData("Tec", p -> p.getAttributes().getTec()),
+			// new ColumnData("Spe", p -> p.getAttributes().getSpe()),
+			// new ColumnData("Agr", p -> p.getAttributes().getAgr()),
 			new ColumnData("Total", p -> p.getAttributes().getTotalRating()),
 			new ColumnData(
 					"Position",
@@ -73,11 +75,11 @@ public class RosterTablePanel extends JPanel
 
 	private JTable rosterTable;
 
-	private Roster roster;
+	private Roster<A> roster;
 
 	public RosterTablePanel()
 	{
-		roster = new Roster();
+		roster = new Roster<A>();
 
 		rosterTableModel = new RosterTableModel();
 
@@ -99,7 +101,7 @@ public class RosterTablePanel extends JPanel
 					}
 				}
 
-				private Player getSelectedPlayer()
+				private Player<A> getSelectedPlayer()
 				{
 					int selectedRow = rosterTable.getSelectedRow();
 
@@ -117,7 +119,8 @@ public class RosterTablePanel extends JPanel
 			rosterTable.getColumnModel().getColumn(i).setCellRenderer(
 				new DefaultTableCellRenderer()
 				{
-					private static final long serialVersionUID = -3849162741094455295L;
+					private static final long serialVersionUID =
+							-3849162741094455295L;
 
 					@Override
 					public Component getTableCellRendererComponent(
@@ -151,11 +154,11 @@ public class RosterTablePanel extends JPanel
 		add(new JScrollPane(rosterTable));
 	}
 
-	public void bind(Roster roster)
+	public void bind(Roster<A> roster)
 	{
 		if (this.roster != null)
 		{
-			for (Player player : this.roster)
+			for (Player<A> player : this.roster)
 			{
 				player.removePropertyChangedListener(rosterTableModel);
 			}
@@ -167,7 +170,7 @@ public class RosterTablePanel extends JPanel
 
 		if (this.roster != null)
 		{
-			for (Player player : this.roster)
+			for (Player<A> player : this.roster)
 			{
 				player.addPropertyChangedListener(rosterTableModel);
 			}
@@ -183,7 +186,7 @@ public class RosterTablePanel extends JPanel
 		this.playerSelectedListener = listener;
 	}
 
-	public void setPlayerEvaluators(List<PlayerEvaluator<?>> evaluators)
+	public void setPlayerEvaluators(List<PlayerEvaluator<A>> evaluators)
 	{
 		this.evaluators = evaluators;
 
@@ -191,10 +194,10 @@ public class RosterTablePanel extends JPanel
 	}
 
 	private String getPlayersBestPositionName(
-			EvaluatorComparator<?> evaluatorComparator,
-			List<PlayerEvaluator<?>> evaluators)
+			EvaluatorComparator<A> evaluatorComparator,
+			List<PlayerEvaluator<A>> evaluators)
 	{
-		PlayerEvaluator<?> playerEvaluator = evaluators
+		PlayerEvaluator<A> playerEvaluator = evaluators
 				.stream()
 				.max((a, b) -> evaluatorComparator.compare(a, b))
 				.get();
@@ -205,24 +208,24 @@ public class RosterTablePanel extends JPanel
 	}
 
 	private Double getPlayersBestPositionRating(
-			List<PlayerEvaluator<?>> evaluators,
-			Player<?> player)
+			List<PlayerEvaluator<A>> evaluators,
+			Player<A> player)
 	{
 		return evaluators
 				.stream()
-				.max((a, b) -> new RatingEvaluatorComparator(
+				.max((a, b) -> new RatingEvaluatorComparator<A>(
 						player.getAttributes()).compare(a, b))
 				.map(e -> e.getRating(player.getAttributes()))
 				.get();
 	}
 
 	private Double getPlayersBestPositionQuality(
-			List<PlayerEvaluator> evaluators,
-			Player player)
+			List<PlayerEvaluator<A>> evaluators,
+			Player<A> player)
 	{
 		return evaluators
 				.stream()
-				.max((a, b) -> new QualityEvaluatorComparator(
+				.max((a, b) -> new QualityEvaluatorComparator<A>(
 						player.getAttributes()).compare(a, b))
 				.map(e -> e.getQuality(player.getAttributes()))
 				.get();
@@ -231,12 +234,12 @@ public class RosterTablePanel extends JPanel
 	private class ColumnData
 	{
 		private String name;
-		private Function<Player, Object> getValueFunction;
+		private Function<Player<A>, Object> getValueFunction;
 		private Function<Object, String> formatValueFunction;
 
 		public ColumnData(
 				String name,
-				Function<Player, Object> getValueAction,
+				Function<Player<A>, Object> getValueAction,
 				Function<Object, String> formatValueFunction)
 		{
 			this.name = name;
@@ -244,7 +247,9 @@ public class RosterTablePanel extends JPanel
 			this.formatValueFunction = formatValueFunction;
 		}
 
-		public ColumnData(String name, Function<Player, Object> getValueAction)
+		public ColumnData(
+				String name,
+				Function<Player<A>, Object> getValueAction)
 		{
 			this.name = name;
 			this.getValueFunction = getValueAction;
@@ -256,7 +261,7 @@ public class RosterTablePanel extends JPanel
 			return name;
 		}
 
-		public Object getValue(Player player)
+		public Object getValue(Player<A> player)
 		{
 			return getValueFunction.apply(player);
 		}
@@ -311,7 +316,7 @@ public class RosterTablePanel extends JPanel
 				Object source,
 				CollectionChangedEvent event)
 		{
-			Player player = (Player) event.getObjectChanged();
+			Player<?> player = (Player<?>) event.getObjectChanged();
 
 			switch (event.getAction())
 			{
@@ -337,11 +342,9 @@ public class RosterTablePanel extends JPanel
 		@Override
 		public void propertyChanged(Object source, PropertyChangedEvent event)
 		{
-			Player player = (Player) source;
-
 			fireTableRowsUpdated(
-				roster.indexOf(player),
-				roster.indexOf(player));
+				roster.indexOf(source),
+				roster.indexOf(source));
 		}
 
 		public void fireAllTableCellsUpdated()

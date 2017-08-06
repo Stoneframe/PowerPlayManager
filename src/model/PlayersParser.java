@@ -4,8 +4,8 @@ import java.util.List;
 
 import parsers.ParseException;
 
-public interface PlayersParser
+public interface PlayersParser<A extends Attributes>
 {
-	public List<Player<?>> parsePlayers(String textToParse)
+	public List<Player<A>> parsePlayers(String textToParse)
 			throws ParseException;
 }

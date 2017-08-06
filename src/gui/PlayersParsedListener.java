@@ -2,8 +2,11 @@ package gui;
 
 import java.util.EventListener;
 
-public interface PlayersParsedListener extends EventListener
+import model.Attributes;
+
+public interface PlayersParsedListener<A extends Attributes>
+		extends EventListener
 {
-	public void playersParsed(Object source, PlayersParsedEvent event);
+	public void playersParsed(Object source, PlayersParsedEvent<A> event);
 
 }
