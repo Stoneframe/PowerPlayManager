@@ -19,12 +19,13 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import builders.PaulsFormationBuilder;
+import builders.handball.HandballFormationTemplate;
+import builders.handball.PaulsHandballFormationBuilder;
 import evaluators.handball.HandballPlayerEvaluator;
-import model.HandballFormation;
-import model.HandballFormationTemplate;
+import gui.handball.HandballFormationTemplatePanel;
 import model.Roster;
 import model.handball.HandballAttributes;
+import model.handball.HandballFormation;
 
 public class FormationBuilderFrame extends JFrame
 {
@@ -93,15 +94,17 @@ public class FormationBuilderFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				List<HandballFormation> formations = new LinkedList<HandballFormation>();
+				List<HandballFormation> formations =
+						new LinkedList<HandballFormation>();
 
 				for (int i = 0; i < templateListModel.size(); i++)
 				{
-					HandballFormationTemplate template = templateListModel
-							.getElementAt(i);
+					HandballFormationTemplate template =
+							templateListModel.getElementAt(i);
 
-					HandballFormation formation = new PaulsFormationBuilder()
-							.createFormation(roster, template);
+					HandballFormation formation =
+							new PaulsHandballFormationBuilder()
+									.createFormation(roster, template);
 
 					formations.add(formation);
 				}

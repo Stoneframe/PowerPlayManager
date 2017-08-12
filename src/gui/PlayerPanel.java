@@ -13,14 +13,15 @@ import javax.swing.JTextField;
 import evaluators.PlayerEvaluator;
 import model.Attributes;
 import model.Player;
-import model.PropertyChangedEvent;
-import model.PropertyChangedListener;
+import util.PropertyChangedEvent;
+import util.PropertyChangedListener;
 
-public class PlayerPanel extends JPanel implements PropertyChangedListener
+public class PlayerPanel<A extends Attributes> extends JPanel
+		implements PropertyChangedListener
 {
 	private static final long serialVersionUID = 8319489027333955979L;
 
-	private Player<?> player;
+	private Player<A> player;
 
 	private JLabel nameLabel;
 	private JLabel sideLabel;
@@ -28,13 +29,15 @@ public class PlayerPanel extends JPanel implements PropertyChangedListener
 	private JTextField nameTextField;
 	private JTextField sideTextField;
 
-	private HandballAttributePanel attributePanel;
+	private AttributesPanel<A> attributePanel;
 
-	private PositionSuggestionPanel positionSuggestionPanel;
-	private TrainingSuggestionPanel trainingSuggestionPanel;
+	private PositionSuggestionPanel<A> positionSuggestionPanel;
+	private TrainingSuggestionPanel<A> trainingSuggestionPanel;
 
-	public PlayerPanel()
+	public PlayerPanel(AttributesPanel<A> attributePanel)
 	{
+		this.attributePanel = attributePanel;
+
 		nameLabel = new JLabel("Name:");
 		nameTextField = new JTextField(15);
 		nameTextField.setEditable(false);
@@ -43,11 +46,8 @@ public class PlayerPanel extends JPanel implements PropertyChangedListener
 		sideTextField = new JTextField(15);
 		sideTextField.setEditable(false);
 
-		attributePanel = new HandballAttributePanel();
-
-		positionSuggestionPanel = new PositionSuggestionPanel();
-
-		trainingSuggestionPanel = new TrainingSuggestionPanel();
+		positionSuggestionPanel = new PositionSuggestionPanel<A>();
+		trainingSuggestionPanel = new TrainingSuggestionPanel<A>();
 
 		setBorder(BorderFactory.createTitledBorder("Player"));
 
@@ -98,7 +98,7 @@ public class PlayerPanel extends JPanel implements PropertyChangedListener
 		add(trainingSuggestionPanel, c);
 	}
 
-	public void bind(Player<Attributes> player)
+	public void bind(Player<A> player)
 	{
 		if (this.player != null)
 		{
@@ -121,7 +121,7 @@ public class PlayerPanel extends JPanel implements PropertyChangedListener
 		update();
 	}
 
-	public void setPlayerEvaluators(List<PlayerEvaluator<Attributes>> evaluators)
+	public void setPlayerEvaluators(List<PlayerEvaluator<A>> evaluators)
 	{
 		positionSuggestionPanel.setPlayerEvaluators(evaluators);
 		trainingSuggestionPanel.setPlayerEvaluators(evaluators);

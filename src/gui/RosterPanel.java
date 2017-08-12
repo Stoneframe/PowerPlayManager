@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
@@ -22,54 +23,54 @@ import comparators.QualityEvaluatorComparator;
 import comparators.RatingEvaluatorComparator;
 import evaluators.PlayerEvaluator;
 import model.Attributes;
-import model.CollectionChangedEvent;
-import model.CollectionChangedListeners;
 import model.Player;
-import model.PropertyChangedEvent;
-import model.PropertyChangedListener;
 import model.Roster;
+import util.CollectionChangedEvent;
+import util.CollectionChangedListeners;
+import util.PropertyChangedEvent;
+import util.PropertyChangedListener;
 
-public class RosterTablePanel<A extends Attributes> extends JPanel
+public class RosterPanel<A extends Attributes> extends JPanel
 {
 	private static final long serialVersionUID = 6702252304393306453L;
 
-	private PlayerSelectedListener playerSelectedListener;
+	private PlayerSelectedListener<A> playerSelectedListener;
 
 	private List<PlayerEvaluator<A>> evaluators =
 			new LinkedList<PlayerEvaluator<A>>();
 
-	private ColumnData[] columnDatas =
-	{
-			new ColumnData("Name", p -> p.getName()),
-			new ColumnData("Side", p -> p.getSide()),
-			// new ColumnData("Goa", p -> p.getAttributes().getGoa()),
-			// new ColumnData("FiP", p -> p.getAttributes().getFip()),
-			// new ColumnData("Sho", p -> p.getAttributes().getSho()),
-			// new ColumnData("Blk", p -> p.getAttributes().getBlk()),
-			// new ColumnData("Pas", p -> p.getAttributes().getPas()),
-			// new ColumnData("Tec", p -> p.getAttributes().getTec()),
-			// new ColumnData("Spe", p -> p.getAttributes().getSpe()),
-			// new ColumnData("Agr", p -> p.getAttributes().getAgr()),
-			new ColumnData("Total", p -> p.getAttributes().getTotalRating()),
-			new ColumnData(
-					"Position",
-					(p) -> getPlayersBestPositionName(
-						new RatingEvaluatorComparator(p.getAttributes()),
-						evaluators)),
-			new ColumnData(
-					"Highest Rating",
-					(p) -> getPlayersBestPositionRating(evaluators, p),
-					(v) -> String.format("%.1f", v)),
-			new ColumnData(
-					"Training",
-					(p) -> getPlayersBestPositionName(
-						new QualityEvaluatorComparator(p.getAttributes()),
-						evaluators)),
-			new ColumnData(
-					"Highest Quality",
-					(p) -> getPlayersBestPositionQuality(evaluators, p),
-					(v) -> String.format("%.1f", v)),
-	};
+	private List<ColumnData> columnDatas = Arrays.asList(
+		new ColumnData("Name", p -> p.getName()),
+		new ColumnData("Side", p -> p.getSide()),
+
+		// new ColumnData("Goa", p -> p.getAttributes().getGoa()),
+		// new ColumnData("FiP", p -> p.getAttributes().getFip()),
+		// new ColumnData("Sho", p -> p.getAttributes().getSho()),
+		// new ColumnData("Blk", p -> p.getAttributes().getBlk()),
+		// new ColumnData("Pas", p -> p.getAttributes().getPas()),
+		// new ColumnData("Tec", p -> p.getAttributes().getTec()),
+		// new ColumnData("Spe", p -> p.getAttributes().getSpe()),
+		// new ColumnData("Agr", p -> p.getAttributes().getAgr()),
+
+		new ColumnData("Total", p -> p.getAttributes().getTotalRating()),
+		new ColumnData(
+				"Position",
+				(p) -> getPlayersBestPositionName(
+					new RatingEvaluatorComparator<A>(p.getAttributes()),
+					evaluators)),
+		new ColumnData(
+				"Highest Rating",
+				(p) -> getPlayersBestPositionRating(evaluators, p),
+				(v) -> String.format("%.1f", v)),
+		new ColumnData(
+				"Training",
+				(p) -> getPlayersBestPositionName(
+					new QualityEvaluatorComparator<A>(p.getAttributes()),
+					evaluators)),
+		new ColumnData(
+				"Highest Quality",
+				(p) -> getPlayersBestPositionQuality(evaluators, p),
+				(v) -> String.format("%.1f", v)));
 
 	private RosterTableModel rosterTableModel;
 
@@ -77,7 +78,7 @@ public class RosterTablePanel<A extends Attributes> extends JPanel
 
 	private Roster<A> roster;
 
-	public RosterTablePanel()
+	public RosterPanel()
 	{
 		roster = new Roster<A>();
 
@@ -97,7 +98,8 @@ public class RosterTablePanel<A extends Attributes> extends JPanel
 					{
 						playerSelectedListener.playerSelected(
 							this,
-							new PlayerSelectedEvent(this, getSelectedPlayer()));
+							new PlayerSelectedEvent<A>(this,
+									getSelectedPlayer()));
 					}
 				}
 
@@ -114,7 +116,7 @@ public class RosterTablePanel<A extends Attributes> extends JPanel
 
 		for (int i = 0; i < rosterTable.getColumnCount(); ++i)
 		{
-			ColumnData columnData = columnDatas[i];
+			ColumnData columnData = columnDatas.get(i);
 
 			rosterTable.getColumnModel().getColumn(i).setCellRenderer(
 				new DefaultTableCellRenderer()
@@ -181,7 +183,7 @@ public class RosterTablePanel<A extends Attributes> extends JPanel
 		rosterTableModel.fireTableDataChanged();
 	}
 
-	public void setPlayerSelectedListener(PlayerSelectedListener listener)
+	public void setPlayerSelectedListener(PlayerSelectedListener<A> listener)
 	{
 		this.playerSelectedListener = listener;
 	}
@@ -282,7 +284,7 @@ public class RosterTablePanel<A extends Attributes> extends JPanel
 		@Override
 		public String getColumnName(int column)
 		{
-			return columnDatas[column].getName();
+			return columnDatas.get(column).getName();
 		}
 
 		@Override
@@ -296,7 +298,7 @@ public class RosterTablePanel<A extends Attributes> extends JPanel
 		@Override
 		public Object getValueAt(int row, int column)
 		{
-			return columnDatas[column].getValue(roster.get(row));
+			return columnDatas.get(column).getValue(roster.get(row));
 		}
 
 		@Override
@@ -308,7 +310,7 @@ public class RosterTablePanel<A extends Attributes> extends JPanel
 		@Override
 		public int getColumnCount()
 		{
-			return columnDatas.length;
+			return columnDatas.size();
 		}
 
 		@Override

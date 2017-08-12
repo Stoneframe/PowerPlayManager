@@ -1,4 +1,4 @@
-package model;
+package builders.handball;
 
 import evaluators.PlayerEvaluator;
 import model.handball.HandballAttributes;

@@ -1,4 +1,4 @@
-package model;
+package parsers.playerevaluators;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,7 +8,7 @@ import evaluators.handball.HandballPlayerEvaluator;
 import model.handball.HandballAttributes;
 import parsers.ParseException;
 
-public class PlayerEvaluatorsParser
+public class HandballPlayerEvaluatorsParser
 {
 	public List<PlayerEvaluator<HandballAttributes>> parsePlayerEvaluators(
 			String textToParse)

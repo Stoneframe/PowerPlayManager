@@ -7,6 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import util.AbstractModelCollection;
+import util.CollectionChangedEvent;
+
 public class Roster<A extends Attributes> extends AbstractModelCollection
 		implements
 		Iterable<Player<A>>

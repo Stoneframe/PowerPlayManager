@@ -1,6 +1,7 @@
-package model;
+package model.handball;
 
-import model.handball.HandballAttributes;
+import model.Player;
+import model.Side;
 
 public class HandballPlayer extends Player<HandballAttributes>
 {
@@ -10,11 +11,5 @@ public class HandballPlayer extends Player<HandballAttributes>
 			HandballAttributes attributes)
 	{
 		super(name, side, attributes);
-	}
-
-	@Override
-	public void mergeAttributes(Player<HandballAttributes> other)
-	{
-		this.attributes.merge(other.attributes);
 	}
 }

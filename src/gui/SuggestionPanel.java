@@ -11,19 +11,18 @@ import javax.swing.border.CompoundBorder;
 
 import evaluators.PlayerEvaluator;
 import model.Attributes;
-import model.PropertyChangedEvent;
-import model.PropertyChangedListener;
+import util.PropertyChangedEvent;
+import util.PropertyChangedListener;
 
-public abstract class SuggestionPanel extends JPanel
-		implements
-		PropertyChangedListener
+public abstract class SuggestionPanel<A extends Attributes> extends JPanel
+		implements PropertyChangedListener
 {
 	private static final long serialVersionUID = 33853554129162390L;
 
 	private static final int DISPLAYED_POSITIONS_LIMIT = 3;
 
-	private Attributes attributes;
-	private List<PlayerEvaluator<Attributes>> evaluators;
+	private A attributes;
+	private List<PlayerEvaluator<A>> evaluators;
 
 	public SuggestionPanel(String title)
 	{
@@ -35,7 +34,7 @@ public abstract class SuggestionPanel extends JPanel
 		setLayout(new GridLayout(DISPLAYED_POSITIONS_LIMIT, 2));
 	}
 
-	public void bind(Attributes attributes)
+	public void bind(A attributes)
 	{
 		if (this.attributes != null)
 		{
@@ -53,7 +52,7 @@ public abstract class SuggestionPanel extends JPanel
 	}
 
 	public void setPlayerEvaluators(
-			List<PlayerEvaluator<Attributes>> evaluators)
+			List<PlayerEvaluator<A>> evaluators)
 	{
 		this.evaluators = evaluators;
 
@@ -61,13 +60,13 @@ public abstract class SuggestionPanel extends JPanel
 	}
 
 	protected abstract int compare(
-			Attributes attributes,
-			PlayerEvaluator<Attributes> evaluator1,
-			PlayerEvaluator<Attributes> evaluator2);
+			A attributes,
+			PlayerEvaluator<A> evaluator1,
+			PlayerEvaluator<A> evaluator2);
 
 	protected abstract double getValue(
-			Attributes attributes,
-			PlayerEvaluator<Attributes> evaluator);
+			A attributes,
+			PlayerEvaluator<A> evaluator);
 
 	private void update()
 	{
@@ -75,7 +74,7 @@ public abstract class SuggestionPanel extends JPanel
 
 		if (attributes != null)
 		{
-			for (PlayerEvaluator<Attributes> evaluator : getSortedEvaluators())
+			for (PlayerEvaluator<A> evaluator : getSortedEvaluators())
 			{
 				add(new JLabel(evaluator.getName()));
 				add(new JLabel(
@@ -88,7 +87,7 @@ public abstract class SuggestionPanel extends JPanel
 		updateUI();
 	}
 
-	private List<PlayerEvaluator<Attributes>> getSortedEvaluators()
+	private List<PlayerEvaluator<A>> getSortedEvaluators()
 	{
 		return evaluators
 				.stream()

@@ -1,11 +1,10 @@
-package model;
+package model.handball;
 
-import model.handball.HandballAttributes;
+import model.Formation;
+import model.Player;
 
-public class HandballFormation
+public class HandballFormation extends Formation
 {
-	private String name;
-
 	private Player<HandballAttributes> pivot;
 	private Player<HandballAttributes> leftWing;
 	private Player<HandballAttributes> rightWing;
@@ -19,7 +18,7 @@ public class HandballFormation
 
 	public HandballFormation(String name)
 	{
-		this.name = name;
+		super(name);
 	}
 
 	public HandballFormation(
@@ -31,23 +30,14 @@ public class HandballFormation
 			Player<HandballAttributes> leftBack,
 			Player<HandballAttributes> rightBack)
 	{
-		this.name = name;
+		super(name);
+
 		this.pivot = pivot;
 		this.leftWing = leftWing;
 		this.rightWing = rightWing;
 		this.centerBack = centerBack;
 		this.leftBack = leftBack;
 		this.rightBack = rightBack;
-	}
-
-	public String getName()
-	{
-		return name;
-	}
-
-	public void setName(String name)
-	{
-		this.name = name;
 	}
 
 	public Player<HandballAttributes> getPivot()

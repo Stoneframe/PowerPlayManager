@@ -35,7 +35,7 @@ public class HandballPlayerEvaluator extends PlayerEvaluator<HandballAttributes>
 		this.spe = spe;
 		this.agr = agr;
 	}
-	
+
 	@Override
 	public double getRating(HandballAttributes attributes)
 	{

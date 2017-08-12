@@ -10,10 +10,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
+import gson.SideAdapter;
 import model.Attributes;
 import model.Roster;
 import model.Side;
-import model.SideAdapter;
 
 public class FileHandler
 {

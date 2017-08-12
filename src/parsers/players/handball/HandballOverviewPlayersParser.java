@@ -1,31 +1,35 @@
-package parsers.players;
+package parsers.players.handball;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import model.Player;
-import model.PlayersParser;
 import model.Side;
 import model.handball.HandballAttributes;
+import model.handball.HandballPlayer;
 import parsers.ParseException;
+import parsers.players.PlayersParser;
 
-public class OverviewPlayersParser implements PlayersParser
+public class HandballOverviewPlayersParser
+		implements PlayersParser<HandballAttributes>
 {
 	@Override
-	public List<Player> parsePlayers(String textToParse) throws ParseException
+	public List<Player<HandballAttributes>> parsePlayers(String textToParse)
+			throws ParseException
 	{
 		try
 		{
 			String[] lines = textToParse.split("\n");
 
-			List<Player> players = new LinkedList<Player>();
+			List<Player<HandballAttributes>> players =
+					new LinkedList<Player<HandballAttributes>>();
 
 			for (int i = 0; i < lines.length; i++)
 			{
 				String[] columns = lines[i].split("\t");
 
-				Player player = new Player(
+				HandballPlayer player = new HandballPlayer(
 						parseName(columns[0]),
 						parseSide(columns[16]),
 						parseAttributes(Arrays.copyOfRange(columns, 6, 14)));
@@ -84,5 +88,11 @@ public class OverviewPlayersParser implements PlayersParser
 		attributes.setAgr(Integer.parseInt(texts[7].trim()));
 
 		return attributes;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "Overview";
 	}
 }

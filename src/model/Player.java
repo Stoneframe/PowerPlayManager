@@ -1,5 +1,7 @@
 package model;
 
+import util.AbstractModelObject;
+
 public abstract class Player<A extends Attributes> extends AbstractModelObject
 {
 	protected String name;
@@ -51,10 +53,8 @@ public abstract class Player<A extends Attributes> extends AbstractModelObject
 			this.setSide(other.getSide());
 		}
 
-		mergeAttributes(other);
+		this.attributes.merge(other.attributes);
 	}
-
-	protected abstract void mergeAttributes(Player<A> other);
 
 	@Override
 	public boolean equals(Object obj)

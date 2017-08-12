@@ -4,9 +4,8 @@ import comparators.QualityEvaluatorComparator;
 import evaluators.PlayerEvaluator;
 import model.Attributes;
 
-public class TrainingSuggestionPanel
-		extends
-		SuggestionPanel
+public class TrainingSuggestionPanel<A extends Attributes>
+		extends SuggestionPanel<A>
 {
 	private static final long serialVersionUID = -9177249749398783715L;
 
@@ -18,11 +17,11 @@ public class TrainingSuggestionPanel
 	@Override
 	protected int compare(
 			A attributes,
-			PlayerEvaluator<Attributes> evaluator1,
-			PlayerEvaluator<Attributes> evaluator2)
+			PlayerEvaluator<A> evaluator1,
+			PlayerEvaluator<A> evaluator2)
 
 	{
-		return new QualityEvaluatorComparator(attributes)
+		return new QualityEvaluatorComparator<A>(attributes)
 				.compare(evaluator1, evaluator2);
 	}
 

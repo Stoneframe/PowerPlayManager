@@ -1,4 +1,4 @@
-package model;
+package util;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,7 +9,8 @@ public abstract class AbstractModelCollection
 
 	public AbstractModelCollection()
 	{
-		collectionChangedListeners = new LinkedList<CollectionChangedListeners>();
+		collectionChangedListeners =
+				new LinkedList<CollectionChangedListeners>();
 	}
 
 	public void addCollectionChangedListener(

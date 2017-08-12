@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
-import model.HandballFormation;
+import model.handball.HandballFormation;
 
 public class FormationPanel extends JPanel
 {

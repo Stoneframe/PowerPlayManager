@@ -1,67 +1,53 @@
-package gui;
+package gui.icehockey;
 
 import java.awt.GridLayout;
-import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
-import model.Attributes;
-import model.PropertyChangedEvent;
-import model.PropertyChangedListener;
-import model.handball.HandballAttributes;
+import gui.AttributesPanel;
+import model.icehockey.IceHockeyAttributes;
 
-public class HandballAttributePanel extends JPanel
-		implements
-		PropertyChangedListener
+public class IceHockeyAttributesPanel extends AttributesPanel<IceHockeyAttributes>
 {
-	private static final long serialVersionUID = -550607296797083079L;
-
-	private static final int TEXTFIELD_COLUMNS = 4;
-
-	private HandballAttributes attributes;
+	private static final long serialVersionUID = 927418734854336851L;
 
 	private JLabel goaLabel;
-	private JLabel fipLabel;
+	private JLabel defLabel;
+	private JLabel offLabel;
 	private JLabel shoLabel;
-	private JLabel blkLabel;
 	private JLabel pasLabel;
 	private JLabel tecLabel;
-	private JLabel speLabel;
 	private JLabel agrLabel;
 	private JLabel totLabel;
 
 	private JTextField goaTextField;
 	private JTextField goaQTextField;
-	private JTextField fipTextField;
-	private JTextField fipQTextField;
+	private JTextField defTextField;
+	private JTextField defQTextField;
+	private JTextField offTextField;
+	private JTextField offQTextField;
 	private JTextField shoTextField;
 	private JTextField shoQTextField;
-	private JTextField blkTextField;
-	private JTextField blkQTextField;
 	private JTextField pasTextField;
 	private JTextField pasQTextField;
 	private JTextField tecTextField;
 	private JTextField tecQTextField;
-	private JTextField speTextField;
-	private JTextField speQTextField;
 	private JTextField agrTextField;
 	private JTextField agrQTextField;
 	private JTextField totTextField;
 	private JTextField avgQTextField;
-
-	public HandballAttributePanel()
+	
+	public IceHockeyAttributesPanel()
 	{
 		goaLabel = new JLabel("Goa:");
-		fipLabel = new JLabel("Fip:");
+		defLabel = new JLabel("Def:");
+		offLabel = new JLabel("Off:");
 		shoLabel = new JLabel("Sho:");
-		blkLabel = new JLabel("Blk:");
 		pasLabel = new JLabel("Pas:");
 		tecLabel = new JLabel("Tec:");
-		speLabel = new JLabel("Spe:");
 		agrLabel = new JLabel("Agr:");
 		totLabel = new JLabel("Tot:");
 
@@ -71,23 +57,23 @@ public class HandballAttributePanel extends JPanel
 		goaQTextField = new JTextField(TEXTFIELD_COLUMNS);
 		goaQTextField.setEditable(false);
 
-		fipTextField = new JTextField(TEXTFIELD_COLUMNS);
-		fipTextField.setEditable(false);
+		defTextField = new JTextField(TEXTFIELD_COLUMNS);
+		defTextField.setEditable(false);
 
-		fipQTextField = new JTextField(TEXTFIELD_COLUMNS);
-		fipQTextField.setEditable(false);
+		defQTextField = new JTextField(TEXTFIELD_COLUMNS);
+		defQTextField.setEditable(false);
 
+		offTextField = new JTextField(TEXTFIELD_COLUMNS);
+		offTextField.setEditable(false);
+		
+		offQTextField = new JTextField(TEXTFIELD_COLUMNS);
+		offQTextField.setEditable(false);
+		
 		shoTextField = new JTextField(TEXTFIELD_COLUMNS);
 		shoTextField.setEditable(false);
 
 		shoQTextField = new JTextField(TEXTFIELD_COLUMNS);
 		shoQTextField.setEditable(false);
-
-		blkTextField = new JTextField(TEXTFIELD_COLUMNS);
-		blkTextField.setEditable(false);
-
-		blkQTextField = new JTextField(TEXTFIELD_COLUMNS);
-		blkQTextField.setEditable(false);
 
 		pasTextField = new JTextField(TEXTFIELD_COLUMNS);
 		pasTextField.setEditable(false);
@@ -100,12 +86,6 @@ public class HandballAttributePanel extends JPanel
 
 		tecQTextField = new JTextField(TEXTFIELD_COLUMNS);
 		tecQTextField.setEditable(false);
-
-		speTextField = new JTextField(TEXTFIELD_COLUMNS);
-		speTextField.setEditable(false);
-
-		speQTextField = new JTextField(TEXTFIELD_COLUMNS);
-		speQTextField.setEditable(false);
 
 		agrTextField = new JTextField(TEXTFIELD_COLUMNS);
 		agrTextField.setEditable(false);
@@ -124,23 +104,23 @@ public class HandballAttributePanel extends JPanel
 					BorderFactory.createTitledBorder("Attributes"),
 					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-		setLayout(new GridLayout(9, 3, 5, 5));
+		setLayout(new GridLayout(8, 3, 5, 5));
 
 		add(goaLabel);
 		add(goaTextField);
 		add(goaQTextField);
 
-		add(fipLabel);
-		add(fipTextField);
-		add(fipQTextField);
+		add(defLabel);
+		add(defTextField);
+		add(defQTextField);
+		
+		add(offLabel);
+		add(offTextField);
+		add(offQTextField);
 
 		add(shoLabel);
 		add(shoTextField);
 		add(shoQTextField);
-
-		add(blkLabel);
-		add(blkTextField);
-		add(blkQTextField);
 
 		add(pasLabel);
 		add(pasTextField);
@@ -150,10 +130,6 @@ public class HandballAttributePanel extends JPanel
 		add(tecTextField);
 		add(tecQTextField);
 
-		add(speLabel);
-		add(speTextField);
-		add(speQTextField);
-
 		add(agrLabel);
 		add(agrTextField);
 		add(agrQTextField);
@@ -162,63 +138,25 @@ public class HandballAttributePanel extends JPanel
 		add(totTextField);
 		add(avgQTextField);
 	}
-
-	public void bind(Attributes attributes)
-	{
-		if (this.attributes != null)
-		{
-			this.attributes.removePropertyChangedListener(this);
-		}
-
-		this.attributes = (HandballAttributes) attributes;
-
-		if (this.attributes != null)
-		{
-			this.attributes.addPropertyChangedListener(this);
-		}
-
-		update();
-	}
-
-	private void update()
+	
+	@Override
+	protected void update()
 	{
 		goaTextField.setText(intToString(attributes::getGoa));
 		goaQTextField.setText(intToString(attributes::getQGoa));
-		fipTextField.setText(intToString(attributes::getFip));
-		fipQTextField.setText(intToString(attributes::getQFip));
+		defTextField.setText(intToString(attributes::getDef));
+		defQTextField.setText(intToString(attributes::getQDef));
+		offTextField.setText(intToString(attributes::getOff));
+		offQTextField.setText(intToString(attributes::getQOff));
 		shoTextField.setText(intToString(attributes::getSho));
 		shoQTextField.setText(intToString(attributes::getQSho));
-		blkTextField.setText(intToString(attributes::getBlk));
-		blkQTextField.setText(intToString(attributes::getQBlk));
 		pasTextField.setText(intToString(attributes::getPas));
 		pasQTextField.setText(intToString(attributes::getQPas));
 		tecTextField.setText(intToString(attributes::getTec));
 		tecQTextField.setText(intToString(attributes::getQTec));
-		speTextField.setText(intToString(attributes::getSpe));
-		speQTextField.setText(intToString(attributes::getQSpe));
 		agrTextField.setText(intToString(attributes::getAgr));
 		agrQTextField.setText(intToString(attributes::getQAgr));
 		totTextField.setText(intToString(attributes::getTotalRating));
 		avgQTextField.setText(doubleToString(attributes::getAverageQuality));
-	}
-
-	private String intToString(Supplier<Integer> getValueSupplier)
-	{
-		return attributes != null
-				? Integer.toString(getValueSupplier.get())
-				: "";
-	}
-
-	private String doubleToString(Supplier<Double> getValueSupplier)
-	{
-		return attributes != null
-				? String.format("%.1f", getValueSupplier.get())
-				: "";
-	}
-
-	@Override
-	public void propertyChanged(Object source, PropertyChangedEvent event)
-	{
-		update();
 	}
 }

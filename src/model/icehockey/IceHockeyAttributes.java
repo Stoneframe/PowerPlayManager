@@ -1,26 +1,24 @@
-package model.handball;
+package model.icehockey;
 
 import model.Attributes;
 
-public class HandballAttributes extends Attributes
+public class IceHockeyAttributes extends Attributes
 {
-	int goa;
-	int fip;
-	int sho;
-	int blk;
-	int pas;
-	int tec;
-	int spe;
-	int agr;
+	private int goa;
+	private int def;
+	private int off;
+	private int sho;
+	private int pas;
+	private int tec;
+	private int agr;
 
-	int qGoa;
-	int qFip;
-	int qSho;
-	int qBlk;
-	int qPas;
-	int qTec;
-	int qSpe;
-	int qAgr;
+	private int qGoa;
+	private int qDef;
+	private int qOff;
+	private int qSho;
+	private int qPas;
+	private int qTec;
+	private int qAgr;
 
 	public int getGoa()
 	{
@@ -31,17 +29,31 @@ public class HandballAttributes extends Attributes
 	{
 		this.goa = goa;
 		firePropertyChanged("Goa", goa);
+		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
-	public int getFip()
+	public int getDef()
 	{
-		return fip;
+		return def;
 	}
 
-	public void setFip(int fip)
+	public void setDef(int def)
 	{
-		this.fip = fip;
-		firePropertyChanged("Fip", fip);
+		this.def = def;
+		firePropertyChanged("Def", def);
+		firePropertyChanged("TotalRating", getTotalRating());
+	}
+
+	public int getOff()
+	{
+		return off;
+	}
+
+	public void setOff(int off)
+	{
+		this.off = off;
+		firePropertyChanged("Off", off);
+		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
 	public int getSho()
@@ -53,17 +65,7 @@ public class HandballAttributes extends Attributes
 	{
 		this.sho = sho;
 		firePropertyChanged("Sho", sho);
-	}
-
-	public int getBlk()
-	{
-		return blk;
-	}
-
-	public void setBlk(int blk)
-	{
-		this.blk = blk;
-		firePropertyChanged("Blk", blk);
+		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
 	public int getPas()
@@ -75,6 +77,7 @@ public class HandballAttributes extends Attributes
 	{
 		this.pas = pas;
 		firePropertyChanged("Pas", pas);
+		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
 	public int getTec()
@@ -86,17 +89,7 @@ public class HandballAttributes extends Attributes
 	{
 		this.tec = tec;
 		firePropertyChanged("Tec", tec);
-	}
-
-	public int getSpe()
-	{
-		return spe;
-	}
-
-	public void setSpe(int spe)
-	{
-		this.spe = spe;
-		firePropertyChanged("Spe", spe);
+		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
 	public int getAgr()
@@ -108,12 +101,13 @@ public class HandballAttributes extends Attributes
 	{
 		this.agr = agr;
 		firePropertyChanged("Agr", agr);
+		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
 	@Override
 	public int getTotalRating()
 	{
-		return goa + fip + sho + blk + pas + tec + spe + agr;
+		return goa + def + off + sho + pas + tec + agr;
 	}
 
 	public int getQGoa()
@@ -128,15 +122,27 @@ public class HandballAttributes extends Attributes
 		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
-	public int getQFip()
+	public int getQDef()
 	{
-		return qFip;
+		return qDef;
 	}
 
-	public void setQFip(int qFip)
+	public void setQDef(int qDef)
 	{
-		this.qFip = qFip;
-		firePropertyChanged("QFip", qFip);
+		this.qDef = qDef;
+		firePropertyChanged("QDef", qDef);
+		firePropertyChanged("AverageQuality", getAverageQuality());
+	}
+
+	public int getQOff()
+	{
+		return qOff;
+	}
+
+	public void setQOff(int qOff)
+	{
+		this.qOff = qOff;
+		firePropertyChanged("QOff", qOff);
 		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
@@ -149,18 +155,6 @@ public class HandballAttributes extends Attributes
 	{
 		this.qSho = qSho;
 		firePropertyChanged("QSho", qSho);
-		firePropertyChanged("AverageQuality", getAverageQuality());
-	}
-
-	public int getQBlk()
-	{
-		return qBlk;
-	}
-
-	public void setQBlk(int qBlk)
-	{
-		this.qBlk = qBlk;
-		firePropertyChanged("QBlk", qBlk);
 		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
@@ -188,18 +182,6 @@ public class HandballAttributes extends Attributes
 		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
-	public int getQSpe()
-	{
-		return qSpe;
-	}
-
-	public void setQSpe(int qSpe)
-	{
-		this.qSpe = qSpe;
-		firePropertyChanged("QSpe", qSpe);
-		firePropertyChanged("AverageQuality", getAverageQuality());
-	}
-
 	public int getQAgr()
 	{
 		return qAgr;
@@ -215,15 +197,15 @@ public class HandballAttributes extends Attributes
 	@Override
 	public double getAverageQuality()
 	{
-		return (qGoa + qFip + qSho + qBlk + qPas + qTec + qSpe + qAgr) / 8d;
+		return (qGoa + qDef + qOff + qSho + qPas + qTec + qAgr) / 8d;
 	}
 
 	@Override
 	public void merge(Attributes attributes)
 	{
-		if (!(attributes instanceof HandballAttributes)) return;
+		if (!(attributes instanceof IceHockeyAttributes)) return;
 
-		HandballAttributes other = (HandballAttributes) attributes;
+		IceHockeyAttributes other = (IceHockeyAttributes) attributes;
 
 		mergeAttribute(
 			() -> this.getGoa(),
@@ -231,19 +213,19 @@ public class HandballAttributes extends Attributes
 			() -> other.getGoa());
 
 		mergeAttribute(
-			() -> this.getFip(),
-			(v) -> this.setFip(v),
-			() -> other.getFip());
+			() -> this.getDef(),
+			(v) -> this.setDef(v),
+			() -> other.getDef());
+
+		mergeAttribute(
+			() -> this.getOff(),
+			(v) -> this.setOff(v),
+			() -> other.getOff());
 
 		mergeAttribute(
 			() -> this.getSho(),
 			(v) -> this.setSho(v),
 			() -> other.getSho());
-
-		mergeAttribute(
-			() -> this.getBlk(),
-			(v) -> this.setBlk(v),
-			() -> other.getBlk());
 
 		mergeAttribute(
 			() -> this.getPas(),
@@ -256,11 +238,6 @@ public class HandballAttributes extends Attributes
 			() -> other.getTec());
 
 		mergeAttribute(
-			() -> this.getSpe(),
-			(v) -> this.setSpe(v),
-			() -> other.getSpe());
-
-		mergeAttribute(
 			() -> this.getAgr(),
 			(v) -> this.setAgr(v),
 			() -> other.getAgr());
@@ -271,19 +248,19 @@ public class HandballAttributes extends Attributes
 			() -> other.getQGoa());
 
 		mergeAttribute(
-			() -> this.getQFip(),
-			(v) -> this.setQFip(v),
-			() -> other.getQFip());
+			() -> this.getQDef(),
+			(v) -> this.setQDef(v),
+			() -> other.getQDef());
+
+		mergeAttribute(
+			() -> this.getQOff(),
+			(v) -> this.setQOff(v),
+			() -> other.getQOff());
 
 		mergeAttribute(
 			() -> this.getQSho(),
 			(v) -> this.setQSho(v),
 			() -> other.getQSho());
-
-		mergeAttribute(
-			() -> this.getQBlk(),
-			(v) -> this.setQBlk(v),
-			() -> other.getQBlk());
 
 		mergeAttribute(
 			() -> this.getQPas(),
@@ -296,36 +273,8 @@ public class HandballAttributes extends Attributes
 			() -> other.getQTec());
 
 		mergeAttribute(
-			() -> this.getQSpe(),
-			(v) -> this.setQSpe(v),
-			() -> other.getQSpe());
-
-		mergeAttribute(
 			() -> this.getQAgr(),
 			(v) -> this.setQAgr(v),
 			() -> other.getQAgr());
-	}
-
-	@Override
-	public String toString()
-	{
-		return String.format(
-			"\tGoa: %d(%d)\tFip: %d(%d)\tSho: %d(%d)\tBlk: %d(%d)\tPas: %d(%d)\tTec: %d(%d)\tSpe: %d(%d)\tAgr: %d(%d)\n",
-			goa,
-			qGoa,
-			fip,
-			qFip,
-			sho,
-			qSho,
-			blk,
-			qBlk,
-			pas,
-			qPas,
-			tec,
-			qTec,
-			spe,
-			qSpe,
-			agr,
-			qAgr);
 	}
 }

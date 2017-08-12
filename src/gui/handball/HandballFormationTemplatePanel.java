@@ -1,4 +1,4 @@
-package gui;
+package gui.handball;
 
 import java.awt.GridLayout;
 import java.util.List;
@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
+import builders.handball.HandballFormationTemplate;
 import evaluators.handball.HandballPlayerEvaluator;
-import model.HandballFormationTemplate;
 
 public class HandballFormationTemplatePanel extends JPanel
 {

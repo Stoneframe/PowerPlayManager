@@ -1,151 +1,79 @@
 package gui;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import evaluators.PlayerEvaluator;
 import model.Attributes;
 import model.Player;
-import model.PlayerEvaluatorsParser;
-import model.PlayersParser;
 import parsers.ParseException;
-import parsers.players.MarketPlayersParser;
-import parsers.players.OverviewPlayersParser;
-import parsers.players.PractisePlayersParser;
-import parsers.players.PractiseProPlayersParser;
+import parsers.players.PlayersParser;
 
-public class ParsePanel extends JPanel
+public class ParsePanel<A extends Attributes> extends JPanel
 {
 	private static final long serialVersionUID = -4697990138081430891L;
 
-	private PlayersParsedListener playersParsedListener;
-	private PlayerEvaluatorsParsedListener playerEvaluatorParsedListener;
+	private PlayersParsedListener<A> playersParsedListener;
 
 	private JTextArea textArea;
-	private JButton parsePractiseButton;
-	private JButton parseProPractiseButton;
-	private JButton parseOverviewButton;
-	private JButton parseMarketButton;
-	private JButton parseTrainingProgramsButton;
+	private JComboBox<PlayersParser<A>> parsersComboBox;
+	private JButton parseButton;
 
-	public ParsePanel()
+	public ParsePanel(List<PlayersParser<A>> parsers)
 	{
 		textArea = new JTextArea(2, 25);
 
-		parsePractiseButton = new JButton("Practise Parse");
-		parsePractiseButton.addActionListener(new ActionListener()
+		parsersComboBox = new JComboBox<PlayersParser<A>>();
+		parsersComboBox.setPreferredSize(new Dimension(200, 25));
+
+		parseButton = new JButton("Parse");
+		parseButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				parsePlayers(new PractisePlayersParser());
+				try
+				{
+					PlayersParser<A> playersParser = parsersComboBox
+							.getItemAt(parsersComboBox.getSelectedIndex());
+
+					List<Player<A>> players = playersParser
+							.parsePlayers(textArea.getText());
+
+					textArea.setText("");
+
+					if (playersParsedListener != null)
+					{
+						playersParsedListener.playersParsed(
+							this,
+							new PlayersParsedEvent<A>(this, players));
+					}
+				}
+				catch (ParseException ex)
+				{
+					System.out.println("Unable to parse input");
+				}
 			}
 		});
 
-		parseProPractiseButton = new JButton("Practise (Pro) Parse");
-		parseProPractiseButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				parsePlayers(new PractiseProPlayersParser());
-			}
-		});
-
-		parseOverviewButton = new JButton("Overview Parse");
-		parseOverviewButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				parsePlayers(new OverviewPlayersParser());
-			}
-		});
-
-		parseMarketButton = new JButton("Market Parse");
-		parseMarketButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				parsePlayers(new MarketPlayersParser());
-			}
-		});
-
-		parseTrainingProgramsButton = new JButton("Training Programs Parse");
-		parseTrainingProgramsButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				parsePlayerEvaluators();
-			}
-		});
+		parsers.forEach(p -> parsersComboBox.addItem(p));
 
 		setLayout(new FlowLayout());
 
 		add(new JScrollPane(textArea));
-		add(parsePractiseButton);
-		add(parseProPractiseButton);
-		add(parseOverviewButton);
-		add(parseMarketButton);
-		add(parseTrainingProgramsButton);
+		add(parsersComboBox);
+		add(parseButton);
 	}
 
-	public void setPlayersParseListener(PlayersParsedListener listener)
+	public void setPlayersParseListener(PlayersParsedListener<A> listener)
 	{
 		playersParsedListener = listener;
-	}
-
-	public void setPlayerEvaluatorsParsedListener(
-			PlayerEvaluatorsParsedListener listener)
-	{
-		playerEvaluatorParsedListener = listener;
-	}
-
-	private void parsePlayers(PlayersParser<A> playersParser)
-	{
-		try
-		{
-			List<Player<?>> players = playersParser
-					.parsePlayers(textArea.getText());
-
-			textArea.setText("");
-
-			if (playersParsedListener != null)
-			{
-				playersParsedListener.playersParsed(
-					this,
-					new PlayersParsedEvent(this, players));
-			}
-		}
-		catch (ParseException ex)
-		{
-			System.out.println("Unable to parse input");
-		}
-	}
-
-	private void parsePlayerEvaluators()
-	{
-		try
-		{
-			List<PlayerEvaluator<Attributes>> evaluators = new PlayerEvaluatorsParser()
-					.parsePlayerEvaluators(textArea.getText());
-
-			textArea.setText("");
-
-			if (playerEvaluatorParsedListener != null)
-			{
-				playerEvaluatorParsedListener.playerEvaluatorsParsed(
-					this,
-					new PlayerEvaluatorsParsedEvent(this, evaluators));
-			}
-		}
-		catch (ParseException e)
-		{
-			System.out.println("Unable to parse input");
-		}
 	}
 }

@@ -1,39 +1,45 @@
-package parsers.players;
+package parsers.players.handball;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import model.Player;
-import model.PlayersParser;
 import model.Side;
 import model.handball.HandballAttributes;
+import model.handball.HandballPlayer;
 import parsers.ParseException;
+import parsers.players.PlayersParser;
 
-public class PractisePlayersParser implements PlayersParser
+public class HandballPractisePlayersParser
+		implements PlayersParser<HandballAttributes>
 {
 	private static final int FIELDS_PER_PLAYER = 15;
 	private static final int ATTRIBUTE_FIELDS_PER_PLAYER = 8;
 	private static final int ATTRIBUTES_START_FIELD = 5;
 
 	@Override
-	public List<Player> parsePlayers(String textToParse) throws ParseException
+	public List<Player<HandballAttributes>> parsePlayers(String textToParse)
+			throws ParseException
 	{
 		try
 		{
 			String[] lines = textToParse.replace("\n", "\t").split("\t");
 
-			List<Player> players = new LinkedList<Player>();
+			List<Player<HandballAttributes>> players =
+					new LinkedList<Player<HandballAttributes>>();
 
 			for (int i = 0; i < lines.length; i += FIELDS_PER_PLAYER)
 			{
-				Player player = new Player(
-						parseName(lines[i]),
-						Side.UNKNOWN,
-						parseAttributes(Arrays.copyOfRange(
-							lines,
-							i + ATTRIBUTES_START_FIELD,
-							i + ATTRIBUTES_START_FIELD + ATTRIBUTE_FIELDS_PER_PLAYER)));
+				HandballPlayer player =
+						new HandballPlayer(
+								parseName(lines[i]),
+								Side.UNKNOWN,
+								parseAttributes(Arrays.copyOfRange(
+									lines,
+									i + ATTRIBUTES_START_FIELD,
+									i + ATTRIBUTES_START_FIELD
+											+ ATTRIBUTE_FIELDS_PER_PLAYER)));
 
 				players.add(player);
 			}
@@ -104,5 +110,11 @@ public class PractisePlayersParser implements PlayersParser
 				rating,
 				quality
 		};
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "Practise";
 	}
 }

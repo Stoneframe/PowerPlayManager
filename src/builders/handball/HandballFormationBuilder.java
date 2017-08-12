@@ -1,7 +1,9 @@
-package model;
+package builders.handball;
 
 import evaluators.PlayerEvaluator;
+import model.Roster;
 import model.handball.HandballAttributes;
+import model.handball.HandballFormation;
 
 public interface HandballFormationBuilder
 {

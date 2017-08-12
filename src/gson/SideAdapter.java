@@ -1,10 +1,12 @@
-package model;
+package gson;
 
 import java.io.IOException;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+
+import model.Side;
 
 public final class SideAdapter extends TypeAdapter<Side>
 {

@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import model.HandballFormation;
+import model.handball.HandballFormation;
 
 public class FormationDisplayFrame extends JFrame
 {

@@ -1,4 +1,4 @@
-package builders;
+package builders.handball;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -7,15 +7,13 @@ import java.util.function.Consumer;
 
 import comparators.RatingComparator;
 import evaluators.PlayerEvaluator;
-import model.HandballFormation;
-import model.HandballFormationBuilder;
-import model.HandballFormationTemplate;
 import model.Player;
 import model.Roster;
 import model.Side;
 import model.handball.HandballAttributes;
+import model.handball.HandballFormation;
 
-public class PaulsFormationBuilder implements HandballFormationBuilder
+public class PaulsHandballFormationBuilder implements HandballFormationBuilder
 {
 	@Override
 	public HandballFormation createFormation(
