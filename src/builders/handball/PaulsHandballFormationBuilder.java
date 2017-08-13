@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import builders.formation.FormationBuilder;
 import comparators.RatingComparator;
 import evaluators.PlayerEvaluator;
 import model.Player;
@@ -13,46 +14,26 @@ import model.Side;
 import model.handball.HandballAttributes;
 import model.handball.HandballFormation;
 
-public class PaulsHandballFormationBuilder implements HandballFormationBuilder
+public class PaulsHandballFormationBuilder implements
+		FormationBuilder<HandballAttributes, HandballFormation, HandballFormationTemplate>
 {
 	@Override
 	public HandballFormation createFormation(
 			Roster<HandballAttributes> roster,
 			HandballFormationTemplate template)
 	{
-		return createFormation(
-			roster,
-			template.getName(),
-			template.getPivotEvaluator(),
-			template.getLeftWingEvaluator(),
-			template.getRightWingEvaluator(),
-			template.getCenterBackEvaluator(),
-			template.getLeftBackEvaluator(),
-			template.getRightBackEvaluator());
-	}
+		HandballFormation formation = new HandballFormation(template.getName());
 
-	@Override
-	public HandballFormation createFormation(
-			Roster<HandballAttributes> roster,
-			String name,
-			PlayerEvaluator<HandballAttributes> pivotEvaluator,
-			PlayerEvaluator<HandballAttributes> leftWingEvaluator,
-			PlayerEvaluator<HandballAttributes> rightWingEvaluator,
-			PlayerEvaluator<HandballAttributes> centerBackEvaluator,
-			PlayerEvaluator<HandballAttributes> leftBackEvaluator,
-			PlayerEvaluator<HandballAttributes> rightBackEvaluator)
-	{
-		HandballFormation formation = new HandballFormation(name);
-
-		List<PositionAssigner> positionAssigners = createPositionAssigners(
-			roster,
-			pivotEvaluator,
-			leftWingEvaluator,
-			rightWingEvaluator,
-			centerBackEvaluator,
-			leftBackEvaluator,
-			rightBackEvaluator,
-			formation);
+		List<PositionAssigner> positionAssigners =
+				createPositionAssigners(
+					roster,
+					template.getPivotEvaluator(),
+					template.getLeftWingEvaluator(),
+					template.getRightWingEvaluator(),
+					template.getCenterBackEvaluator(),
+					template.getLeftBackEvaluator(),
+					template.getRightBackEvaluator(),
+					formation);
 
 		while (!positionAssigners.isEmpty())
 		{

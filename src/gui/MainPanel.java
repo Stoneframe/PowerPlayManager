@@ -10,12 +10,19 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import builders.formation.FormationBuilder;
+import builders.formation.FormationTemplate;
 import evaluators.PlayerEvaluator;
+import gui.formation.FormationBuilderFrame;
+import gui.formation.FormationPanelFactory;
+import gui.formation.FormationTemplatePanel;
 import model.Attributes;
+import model.Formation;
 import model.Roster;
 import parsers.players.PlayersParser;
 
-public class MainPanel<A extends Attributes> extends JPanel
+public class MainPanel<A extends Attributes, F extends Formation, FT extends FormationTemplate>
+		extends JPanel
 {
 	private static final long serialVersionUID = -8438576029794021570L;
 
@@ -31,15 +38,16 @@ public class MainPanel<A extends Attributes> extends JPanel
 
 	public MainPanel(
 			AttributesPanel<A> attributesPanel,
+			FormationTemplatePanel<FT> formationTemplatePanel,
+			FormationPanelFactory<F> formationPanelFactory,
+			FormationBuilder<A, F, FT> formationBuilder,
 			List<PlayerEvaluator<A>> evaluators,
 			List<PlayersParser<A>> parsers)
 	{
 		parsePanel = new ParsePanel<A>(parsers);
 		parsePanel.setPlayersParseListener(new PlayersParsedListener<A>()
 		{
-			public void playersParsed(
-					Object source,
-					PlayersParsedEvent<A> event)
+			public void playersParsed(Object source, PlayersParsedEvent<A> event)
 			{
 				roster.addAll(event.getPlayers());
 			}
@@ -50,8 +58,7 @@ public class MainPanel<A extends Attributes> extends JPanel
 		rosterPanel.setPlayerEvaluators(evaluators);
 		rosterPanel.setPlayerSelectedListener(new PlayerSelectedListener<A>()
 		{
-			public void playerSelected(Object source,
-					PlayerSelectedEvent<A> event)
+			public void playerSelected(Object source, PlayerSelectedEvent<A> event)
 			{
 				playerPanel.bind(event.getPlayer());
 			}
@@ -69,7 +76,12 @@ public class MainPanel<A extends Attributes> extends JPanel
 				{
 					public void run()
 					{
-						//new FormationBuilderFrame(roster.copy(), evaluators);
+						new FormationBuilderFrame<A, F, FT>(
+								formationTemplatePanel,
+								formationPanelFactory,
+								roster.copy(),
+								formationBuilder,
+								evaluators);
 					}
 				});
 			}

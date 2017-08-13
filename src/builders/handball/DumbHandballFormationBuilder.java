@@ -1,5 +1,6 @@
 package builders.handball;
 
+import builders.formation.FormationBuilder;
 import comparators.RatingComparator;
 import evaluators.PlayerEvaluator;
 import model.Player;
@@ -8,43 +9,22 @@ import model.Side;
 import model.handball.HandballAttributes;
 import model.handball.HandballFormation;
 
-public class DumbHandballFormationBuilder implements HandballFormationBuilder
+public class DumbHandballFormationBuilder implements
+		FormationBuilder<HandballAttributes, HandballFormation, HandballFormationTemplate>
 {
 	@Override
 	public HandballFormation createFormation(
 			Roster<HandballAttributes> roster,
 			HandballFormationTemplate template)
 	{
-		return createFormation(
-			roster,
-			template.getName(),
-			template.getPivotEvaluator(),
-			template.getLeftWingEvaluator(),
-			template.getRightWingEvaluator(),
-			template.getCenterBackEvaluator(),
-			template.getLeftBackEvaluator(),
-			template.getRightBackEvaluator());
-	}
-
-	@Override
-	public HandballFormation createFormation(
-			Roster<HandballAttributes> roster,
-			String name,
-			PlayerEvaluator<HandballAttributes> pivotEvaluator,
-			PlayerEvaluator<HandballAttributes> leftWingEvaluator,
-			PlayerEvaluator<HandballAttributes> rightWingEvaluator,
-			PlayerEvaluator<HandballAttributes> centerBackEvaluator,
-			PlayerEvaluator<HandballAttributes> leftBackEvaluator,
-			PlayerEvaluator<HandballAttributes> rightBackEvaluator)
-	{
 		return new HandballFormation(
-				name,
-				select(roster, pivotEvaluator, Side.UNIVERSAL),
-				select(roster, leftWingEvaluator, Side.LEFT),
-				select(roster, rightWingEvaluator, Side.RIGHT),
-				select(roster, centerBackEvaluator, Side.UNIVERSAL),
-				select(roster, leftBackEvaluator, Side.LEFT),
-				select(roster, rightBackEvaluator, Side.RIGHT));
+				template.getName(),
+				select(roster, template.getPivotEvaluator(), Side.UNIVERSAL),
+				select(roster, template.getLeftWingEvaluator(), Side.LEFT),
+				select(roster, template.getRightWingEvaluator(), Side.RIGHT),
+				select(roster, template.getCenterBackEvaluator(), Side.UNIVERSAL),
+				select(roster, template.getLeftBackEvaluator(), Side.LEFT),
+				select(roster, template.getRightBackEvaluator(), Side.RIGHT));
 	}
 
 	private static Player<HandballAttributes> select(

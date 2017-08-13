@@ -1,16 +1,16 @@
-package gui;
+package gui.handball;
 
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
+import gui.formation.FormationPanel;
 import model.handball.HandballFormation;
 
-public class FormationPanel extends JPanel
+public class HandballFormationPanel extends FormationPanel
 {
 	private static final long serialVersionUID = -7652823156719901773L;
 
@@ -28,7 +28,7 @@ public class FormationPanel extends JPanel
 	private JTextField centerBackTextField;
 	private JTextField rightBackTextField;
 
-	public FormationPanel(HandballFormation formation)
+	public HandballFormationPanel(HandballFormation formation)
 	{
 		leftWingLabel = new JLabel("Left Wing:");
 		rightWingLabel = new JLabel("Right Wing:");

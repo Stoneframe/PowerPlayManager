@@ -1,4 +1,4 @@
-package gui;
+package gui.formation;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -19,22 +19,22 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import builders.handball.HandballFormationTemplate;
-import builders.handball.PaulsHandballFormationBuilder;
-import evaluators.handball.HandballPlayerEvaluator;
-import gui.handball.HandballFormationTemplatePanel;
+import builders.formation.FormationBuilder;
+import builders.formation.FormationTemplate;
+import evaluators.PlayerEvaluator;
+import model.Attributes;
+import model.Formation;
 import model.Roster;
-import model.handball.HandballAttributes;
-import model.handball.HandballFormation;
 
-public class FormationBuilderFrame extends JFrame
+public class FormationBuilderFrame<
+		A extends Attributes,
+		F extends Formation,
+		FT extends FormationTemplate> extends JFrame
 {
 	private static final long serialVersionUID = -5043434553464317980L;
 
-	private DefaultListModel<HandballFormationTemplate> templateListModel;
-	private JList<HandballFormationTemplate> templateList;
-
-	private HandballFormationTemplatePanel templatePanel;
+	private DefaultListModel<FT> templateListModel;
+	private JList<FT> templateList;
 
 	private JButton addTemplateButton;
 	private JButton removeTemplateButton;
@@ -42,27 +42,26 @@ public class FormationBuilderFrame extends JFrame
 	private JButton createFormationsButton;
 
 	public FormationBuilderFrame(
-			Roster<HandballAttributes> roster,
-			List<HandballPlayerEvaluator> evaluators)
+			FormationTemplatePanel<FT> templatePanel,
+			FormationPanelFactory<F> formationPanelFactory,
+			Roster<A> roster,
+			FormationBuilder<A, F, FT> formationBuilder,
+			List<PlayerEvaluator<A>> evaluators)
 	{
-		templateListModel = new DefaultListModel<HandballFormationTemplate>();
+		templateListModel = new DefaultListModel<FT>();
 
-		templateList = new JList<HandballFormationTemplate>(templateListModel);
+		templateList = new JList<FT>(templateListModel);
 		templateList.setPreferredSize(new Dimension(200, 1));
 		templateList.setBorder(BorderFactory.createEtchedBorder());
 		templateList.addListSelectionListener(new ListSelectionListener()
 		{
 			public void valueChanged(ListSelectionEvent e)
 			{
-				removeTemplateButton.setEnabled(
-					!templateList.isSelectionEmpty());
+				removeTemplateButton.setEnabled(!templateList.isSelectionEmpty());
 
-				templatePanel.setFormationTemplate(
-					templateList.getSelectedValue());
+				templatePanel.setFormationTemplate(templateList.getSelectedValue());
 			}
 		});
-
-		templatePanel = new HandballFormationTemplatePanel(evaluators);
 
 		addTemplateButton = new JButton("Add");
 		addTemplateButton.setMinimumSize(new Dimension(100, 20));
@@ -70,8 +69,7 @@ public class FormationBuilderFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				templateListModel.addElement(
-					templatePanel.getFormationTemplate());
+				templateListModel.addElement(templatePanel.getFormationTemplate());
 			}
 		});
 
@@ -94,17 +92,13 @@ public class FormationBuilderFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				List<HandballFormation> formations =
-						new LinkedList<HandballFormation>();
+				List<F> formations = new LinkedList<F>();
 
 				for (int i = 0; i < templateListModel.size(); i++)
 				{
-					HandballFormationTemplate template =
-							templateListModel.getElementAt(i);
+					FT formationTemplate = templateListModel.getElementAt(i);
 
-					HandballFormation formation =
-							new PaulsHandballFormationBuilder()
-									.createFormation(roster, template);
+					F formation = formationBuilder.createFormation(roster, formationTemplate);
 
 					formations.add(formation);
 				}
@@ -113,7 +107,7 @@ public class FormationBuilderFrame extends JFrame
 				{
 					public void run()
 					{
-						new FormationDisplayFrame(formations);
+						new FormationDisplayFrame<F>(formationPanelFactory, formations);
 					}
 				});
 			}
