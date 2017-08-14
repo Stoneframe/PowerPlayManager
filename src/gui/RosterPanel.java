@@ -56,8 +56,7 @@ public class RosterPanel<A extends Attributes> extends JPanel
 		new ColumnData(
 				"Position",
 				(p) -> getPlayersBestPositionName(
-					new RatingEvaluatorComparator<A>(p.getAttributes()),
-					evaluators)),
+					new RatingEvaluatorComparator<A>(p.getAttributes()), evaluators)),
 		new ColumnData(
 				"Highest Rating",
 				(p) -> getPlayersBestPositionRating(evaluators, p),
@@ -65,8 +64,7 @@ public class RosterPanel<A extends Attributes> extends JPanel
 		new ColumnData(
 				"Training",
 				(p) -> getPlayersBestPositionName(
-					new QualityEvaluatorComparator<A>(p.getAttributes()),
-					evaluators)),
+					new QualityEvaluatorComparator<A>(p.getAttributes()), evaluators)),
 		new ColumnData(
 				"Highest Quality",
 				(p) -> getPlayersBestPositionQuality(evaluators, p),
@@ -98,8 +96,7 @@ public class RosterPanel<A extends Attributes> extends JPanel
 					{
 						playerSelectedListener.playerSelected(
 							this,
-							new PlayerSelectedEvent<A>(this,
-									getSelectedPlayer()));
+							new PlayerSelectedEvent<A>(this, getSelectedPlayer()));
 					}
 				}
 
@@ -108,8 +105,7 @@ public class RosterPanel<A extends Attributes> extends JPanel
 					int selectedRow = rosterTable.getSelectedRow();
 
 					return selectedRow >= 0
-							? roster.get(
-								rosterTable.convertRowIndexToModel(selectedRow))
+							? roster.get(rosterTable.convertRowIndexToModel(selectedRow))
 							: null;
 				}
 			});
@@ -121,8 +117,7 @@ public class RosterPanel<A extends Attributes> extends JPanel
 			rosterTable.getColumnModel().getColumn(i).setCellRenderer(
 				new DefaultTableCellRenderer()
 				{
-					private static final long serialVersionUID =
-							-3849162741094455295L;
+					private static final long serialVersionUID = -3849162741094455295L;
 
 					@Override
 					public Component getTableCellRendererComponent(
