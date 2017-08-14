@@ -17,6 +17,7 @@ import evaluators.handball.HandballOffBackPlayerEvaluator;
 import evaluators.handball.HandballOffPivotPlayerEvaluator;
 import evaluators.handball.HandballOffWingPlayerEvaluator;
 import gui.handball.HandballMainPanel;
+import gui.icehockey.IceHockeyMainPanel;
 import parsers.players.handball.HandballMarketPlayersParser;
 import parsers.players.handball.HandballOverviewPlayersParser;
 import parsers.players.handball.HandballPractisePlayersParser;
@@ -31,7 +32,7 @@ public class MainFrame extends JFrame
 	private JTabbedPane tabbedPane;
 
 	private HandballMainPanel handballPanel;
-	// private MainPanel<IceHockeyAttributes> iceHockeyPanel;
+	private IceHockeyMainPanel iceHockeyPanel;
 
 	public MainFrame()
 	{
@@ -55,14 +56,13 @@ public class MainFrame extends JFrame
 					new HandballPractisePlayersParser(),
 					new HandballPractiseProPlayersParser()));
 
-		// iceHockeyPanel = new MainPanel<IceHockeyAttributes>(
-		// new IceHockeyAttributesPanel(),
-		// Arrays.asList(),
-		// Arrays.asList());
+		iceHockeyPanel = new IceHockeyMainPanel(
+				Arrays.asList(),
+				Arrays.asList());
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Handball", handballPanel);
-		// tabbedPane.addTab("Ice Hockey", iceHockeyPanel);
+		tabbedPane.addTab("Ice Hockey", iceHockeyPanel);
 
 		setLayout(new BorderLayout());
 

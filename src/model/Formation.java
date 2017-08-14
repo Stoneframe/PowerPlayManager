@@ -4,10 +4,6 @@ public class Formation
 {
 	protected String name;
 
-	protected Formation()
-	{
-	}
-
 	protected Formation(String name)
 	{
 		this.name = name;

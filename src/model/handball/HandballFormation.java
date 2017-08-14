@@ -12,10 +12,6 @@ public class HandballFormation extends Formation
 	private Player<HandballAttributes> leftBack;
 	private Player<HandballAttributes> rightBack;
 
-	public HandballFormation()
-	{
-	}
-
 	public HandballFormation(String name)
 	{
 		super(name);

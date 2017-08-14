@@ -36,8 +36,7 @@ public class HandballFormationTemplatePanel
 	private JComboBox<PlayerEvaluator<HandballAttributes>> centerBackComboBox;
 	private JComboBox<PlayerEvaluator<HandballAttributes>> rightBackComboBox;
 
-	public HandballFormationTemplatePanel(
-			List<PlayerEvaluator<HandballAttributes>> evaluators)
+	public HandballFormationTemplatePanel(List<PlayerEvaluator<HandballAttributes>> evaluators)
 	{
 		nameLabel = new JLabel("Name:");
 		leftWingLabel = new JLabel("Left Wing:");
