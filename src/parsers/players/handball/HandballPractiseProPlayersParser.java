@@ -106,9 +106,7 @@ public class HandballPractiseProPlayersParser extends PlayersParser<HandballAttr
 	private static int[] parseAttribute(String text)
 	{
 		int rating = Integer.parseInt(text.substring(0, text.length() - 2));
-
-		int quality = Integer
-				.parseInt(text.substring(text.length() - 2, text.length()));
+		int quality = Integer.parseInt(text.substring(text.length() - 2, text.length()));
 
 		return new int[]
 		{

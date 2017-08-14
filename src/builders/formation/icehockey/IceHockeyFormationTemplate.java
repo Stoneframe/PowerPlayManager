@@ -15,8 +15,8 @@ public class IceHockeyFormationTemplate extends FormationTemplate
 	public IceHockeyFormationTemplate(
 			String name,
 			PlayerEvaluator<IceHockeyAttributes> leftWingEvaluator,
-			PlayerEvaluator<IceHockeyAttributes> rightWingEvaluator,
 			PlayerEvaluator<IceHockeyAttributes> centerBackEvaluator,
+			PlayerEvaluator<IceHockeyAttributes> rightWingEvaluator,
 			PlayerEvaluator<IceHockeyAttributes> leftBackEvaluator,
 			PlayerEvaluator<IceHockeyAttributes> rightBackEvaluator)
 	{

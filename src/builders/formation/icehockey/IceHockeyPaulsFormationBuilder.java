@@ -9,7 +9,7 @@ import model.Side;
 import model.icehockey.IceHockeyAttributes;
 import model.icehockey.IceHockeyFormation;
 
-public class PaulsIceHockeyFormationBuilder extends
+public class IceHockeyPaulsFormationBuilder extends
 		PaulsFormationBuilder<IceHockeyAttributes, IceHockeyFormation, IceHockeyFormationTemplate>
 {
 	@Override
@@ -33,24 +33,28 @@ public class PaulsIceHockeyFormationBuilder extends
 					formationTemplate.getLeftWingEvaluator(),
 					Side.LEFT,
 					(player) -> formation.setLeftWing(player)));
+
 		positions.add(
 			new PositionAssigner<IceHockeyAttributes>(
 					roster,
 					formationTemplate.getCenterEvaluator(),
 					Side.UNIVERSAL,
 					(player) -> formation.setCenter(player)));
+
 		positions.add(
 			new PositionAssigner<IceHockeyAttributes>(
 					roster,
 					formationTemplate.getRightWingEvaluator(),
 					Side.RIGHT,
 					(player) -> formation.setRightWing(player)));
+
 		positions.add(
 			new PositionAssigner<IceHockeyAttributes>(
 					roster,
 					formationTemplate.getLeftBackEvaluator(),
 					Side.LEFT,
 					(player) -> formation.setLeftBack(player)));
+
 		positions.add(
 			new PositionAssigner<IceHockeyAttributes>(
 					roster,
