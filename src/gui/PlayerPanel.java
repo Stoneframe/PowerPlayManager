@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import evaluators.PlayerEvaluator;
+import gui.player.PositionSuggestionPanel;
+import gui.player.TrainingSuggestionPanel;
 import model.Attributes;
 import model.Player;
 import util.PropertyChangedEvent;

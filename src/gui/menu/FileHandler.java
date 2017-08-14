@@ -1,4 +1,4 @@
-package gui;
+package gui.menu;
 
 import java.io.File;
 import java.io.FileNotFoundException;

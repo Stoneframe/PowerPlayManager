@@ -1,4 +1,4 @@
-package gui;
+package gui.player;
 
 import comparators.RatingEvaluatorComparator;
 import evaluators.PlayerEvaluator;
