@@ -44,9 +44,9 @@ public class FormationBuilderFrame<
 	public FormationBuilderFrame(
 			FormationTemplatePanel<FT> templatePanel,
 			FormationPanelFactory<F> formationPanelFactory,
-			Roster<A> roster,
 			FormationBuilder<A, F, FT> formationBuilder,
-			List<PlayerEvaluator<A>> evaluators)
+			List<PlayerEvaluator<A>> evaluators,
+			Roster<A> roster)
 	{
 		templateListModel = new DefaultListModel<FT>();
 

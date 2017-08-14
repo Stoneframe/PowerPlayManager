@@ -38,7 +38,7 @@ public class IceHockeyFormationTemplatePanel
 	{
 		nameLabel = new JLabel("Name:");
 		leftWingLabel = new JLabel("Left Wing:");
-		centerLabel = new JLabel("Center Back:");
+		centerLabel = new JLabel("Center:");
 		rightWingLabel = new JLabel("Right Wing:");
 		leftBackLabel = new JLabel("Left Back:");
 		rightBackLabel = new JLabel("Right Back:");

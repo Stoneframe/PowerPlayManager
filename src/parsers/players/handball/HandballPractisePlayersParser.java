@@ -11,12 +11,17 @@ import model.handball.HandballPlayer;
 import parsers.ParseException;
 import parsers.players.PlayersParser;
 
-public class HandballPractisePlayersParser
-		implements PlayersParser<HandballAttributes>
+public class HandballPractisePlayersParser extends PlayersParser<HandballAttributes>
 {
 	private static final int FIELDS_PER_PLAYER = 15;
 	private static final int ATTRIBUTE_FIELDS_PER_PLAYER = 8;
 	private static final int ATTRIBUTES_START_FIELD = 5;
+
+	@Override
+	public String getName()
+	{
+		return "Practise";
+	}
 
 	@Override
 	public List<Player<HandballAttributes>> parsePlayers(String textToParse)
@@ -110,11 +115,5 @@ public class HandballPractisePlayersParser
 				rating,
 				quality
 		};
-	}
-	
-	@Override
-	public String toString()
-	{
-		return "Practise";
 	}
 }

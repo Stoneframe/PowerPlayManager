@@ -1,4 +1,4 @@
-package builders.handball;
+package builders.formation.handball;
 
 import builders.formation.FormationTemplate;
 import evaluators.PlayerEvaluator;

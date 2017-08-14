@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
-import builders.handball.HandballFormationTemplate;
+import builders.formation.handball.HandballFormationTemplate;
 import evaluators.PlayerEvaluator;
 import evaluators.handball.HandballPlayerEvaluator;
 import gui.formation.FormationTemplatePanel;

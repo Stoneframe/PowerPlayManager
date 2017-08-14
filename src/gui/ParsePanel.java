@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import gui.player.PlayersParsedEvent;
+import gui.player.PlayersParsedListener;
 import model.Attributes;
 import model.Player;
 import parsers.ParseException;

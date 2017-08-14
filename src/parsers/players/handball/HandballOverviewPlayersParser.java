@@ -11,9 +11,14 @@ import model.handball.HandballPlayer;
 import parsers.ParseException;
 import parsers.players.PlayersParser;
 
-public class HandballOverviewPlayersParser
-		implements PlayersParser<HandballAttributes>
+public class HandballOverviewPlayersParser extends PlayersParser<HandballAttributes>
 {
+	@Override
+	public String getName()
+	{
+		return "Overview";
+	}
+
 	@Override
 	public List<Player<HandballAttributes>> parsePlayers(String textToParse)
 			throws ParseException
@@ -88,11 +93,5 @@ public class HandballOverviewPlayersParser
 		attributes.setAgr(Integer.parseInt(texts[7].trim()));
 
 		return attributes;
-	}
-	
-	@Override
-	public String toString()
-	{
-		return "Overview";
 	}
 }

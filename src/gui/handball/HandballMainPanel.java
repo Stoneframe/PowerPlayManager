@@ -2,8 +2,8 @@ package gui.handball;
 
 import java.util.List;
 
-import builders.handball.HandballFormationTemplate;
-import builders.handball.PaulsHandballFormationBuilder;
+import builders.formation.handball.HandballFormationTemplate;
+import builders.formation.handball.PaulsHandballFormationBuilder;
 import evaluators.PlayerEvaluator;
 import gui.MainPanel;
 import model.handball.HandballAttributes;

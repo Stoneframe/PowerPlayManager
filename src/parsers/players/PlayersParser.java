@@ -6,8 +6,16 @@ import model.Attributes;
 import model.Player;
 import parsers.ParseException;
 
-public interface PlayersParser<A extends Attributes>
+public abstract class PlayersParser<A extends Attributes>
 {
-	public List<Player<A>> parsePlayers(String textToParse)
+	public abstract String getName();
+	
+	public abstract List<Player<A>> parsePlayers(String textToParse)
 			throws ParseException;
+	
+	@Override
+	public String toString()
+	{
+		return getName();
+	}
 }

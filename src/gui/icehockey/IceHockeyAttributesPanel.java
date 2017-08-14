@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
-import gui.AttributesPanel;
+import gui.player.AttributesPanel;
 import model.icehockey.IceHockeyAttributes;
 
 public class IceHockeyAttributesPanel extends AttributesPanel<IceHockeyAttributes>

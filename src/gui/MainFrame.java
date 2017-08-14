@@ -16,18 +16,21 @@ import evaluators.handball.HandballGoaliePlayerEvaluator;
 import evaluators.handball.HandballOffBackPlayerEvaluator;
 import evaluators.handball.HandballOffPivotPlayerEvaluator;
 import evaluators.handball.HandballOffWingPlayerEvaluator;
+import evaluators.icehockey.IceHockeyBackPlayerEvaluator;
+import evaluators.icehockey.IceHockeyCenterPlayerEvaluator;
+import evaluators.icehockey.IceHockeyGoaliePlayerEvaluator;
+import evaluators.icehockey.IceHockeyWingPlayerEvaluator;
 import gui.handball.HandballMainPanel;
 import gui.icehockey.IceHockeyMainPanel;
 import parsers.players.handball.HandballMarketPlayersParser;
 import parsers.players.handball.HandballOverviewPlayersParser;
 import parsers.players.handball.HandballPractisePlayersParser;
 import parsers.players.handball.HandballPractiseProPlayersParser;
+import parsers.players.icehockey.IceHockeyMarketPlayersParser;
 
 public class MainFrame extends JFrame
 {
 	private static final long serialVersionUID = -8026416994513756565L;
-
-	// private MenuBar menuBar;
 
 	private JTabbedPane tabbedPane;
 
@@ -37,9 +40,6 @@ public class MainFrame extends JFrame
 	public MainFrame()
 	{
 		super("PPM Assistant");
-
-		// Menu bar
-		// menuBar = new MenuBar(this, roster);
 
 		handballPanel = new HandballMainPanel(
 				Arrays.asList(
@@ -57,8 +57,13 @@ public class MainFrame extends JFrame
 					new HandballPractiseProPlayersParser()));
 
 		iceHockeyPanel = new IceHockeyMainPanel(
-				Arrays.asList(),
-				Arrays.asList());
+				Arrays.asList(
+					new IceHockeyGoaliePlayerEvaluator(),
+					new IceHockeyBackPlayerEvaluator(),
+					new IceHockeyWingPlayerEvaluator(),
+					new IceHockeyCenterPlayerEvaluator()),
+				Arrays.asList(
+					new IceHockeyMarketPlayersParser()));
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Handball", handballPanel);
@@ -66,7 +71,6 @@ public class MainFrame extends JFrame
 
 		setLayout(new BorderLayout());
 
-		// setJMenuBar(menuBar);
 		add(tabbedPane, BorderLayout.CENTER);
 
 		pack();

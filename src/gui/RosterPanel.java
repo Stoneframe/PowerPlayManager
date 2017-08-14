@@ -31,12 +31,14 @@ import comparators.EvaluatorComparator;
 import comparators.QualityEvaluatorComparator;
 import comparators.RatingEvaluatorComparator;
 import evaluators.PlayerEvaluator;
-import gui.util.Colors;
+import gui.player.PlayerSelectedEvent;
+import gui.player.PlayerSelectedListener;
 import model.Attributes;
 import model.Player;
 import model.Roster;
 import util.CollectionChangedEvent;
 import util.CollectionChangedListeners;
+import util.Colors;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 

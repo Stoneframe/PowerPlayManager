@@ -16,6 +16,12 @@ import evaluators.PlayerEvaluator;
 import gui.formation.FormationBuilderFrame;
 import gui.formation.FormationPanelFactory;
 import gui.formation.FormationTemplatePanel;
+import gui.player.AttributesPanel;
+import gui.player.PlayerPanel;
+import gui.player.PlayerSelectedEvent;
+import gui.player.PlayerSelectedListener;
+import gui.player.PlayersParsedEvent;
+import gui.player.PlayersParsedListener;
 import model.Attributes;
 import model.Formation;
 import model.Roster;
@@ -79,9 +85,9 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 						new FormationBuilderFrame<A, F, FT>(
 								formationTemplatePanel,
 								formationPanelFactory,
-								roster.copy(),
 								formationBuilder,
-								evaluators);
+								evaluators,
+								roster.copy());
 					}
 				});
 			}

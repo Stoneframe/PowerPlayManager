@@ -1,4 +1,4 @@
-package gson;
+package gui.gson;
 
 import java.io.IOException;
 

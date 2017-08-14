@@ -3,6 +3,7 @@ package gui.icehockey;
 import java.util.List;
 
 import builders.formation.icehockey.IceHockeyFormationTemplate;
+import builders.formation.icehockey.PaulsIceHockeyFormationBuilder;
 import evaluators.PlayerEvaluator;
 import gui.MainPanel;
 import model.icehockey.IceHockeyAttributes;
@@ -22,7 +23,7 @@ public class IceHockeyMainPanel
 				new IceHockeyAttributesPanel(),
 				new IceHockeyFormationTemplatePanel(evaluators),
 				new IceHockeyFormationPanelFactory(),
-				null,
+				new PaulsIceHockeyFormationBuilder(),
 				evaluators,
 				parsers);
 	}

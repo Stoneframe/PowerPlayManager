@@ -1,4 +1,4 @@
-package gui;
+package gui.player;
 
 import java.util.EventObject;
 
