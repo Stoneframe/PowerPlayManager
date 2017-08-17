@@ -1,7 +1,7 @@
 package gui.player;
 
 import comparators.RatingEvaluatorComparator;
-import evaluators.PlayerEvaluator;
+import evaluators.AttributeEvaluator;
 import model.Attributes;
 
 public class PositionSuggestionPanel<A extends Attributes> extends
@@ -17,8 +17,8 @@ public class PositionSuggestionPanel<A extends Attributes> extends
 	@Override
 	protected int compare(
 			A attributes,
-			PlayerEvaluator<A> evaluator1,
-			PlayerEvaluator<A> evaluator2)
+			AttributeEvaluator<A> evaluator1,
+			AttributeEvaluator<A> evaluator2)
 	{
 		return new RatingEvaluatorComparator<A>(attributes)
 				.compare(evaluator1, evaluator2);
@@ -27,7 +27,7 @@ public class PositionSuggestionPanel<A extends Attributes> extends
 	@Override
 	protected double getValue(
 			A attributes,
-			PlayerEvaluator<A> evaluator)
+			AttributeEvaluator<A> evaluator)
 	{
 		return evaluator.getRating(attributes);
 	}

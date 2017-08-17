@@ -2,12 +2,11 @@ package comparators;
 
 import java.util.Comparator;
 
-import evaluators.PlayerEvaluator;
+import evaluators.AttributeEvaluator;
 import model.Attributes;
 
 public abstract class EvaluatorComparator<A extends Attributes>
-		implements
-		Comparator<PlayerEvaluator<A>>
+		implements Comparator<AttributeEvaluator<A>>
 {
 	private A attributes;
 
@@ -18,8 +17,8 @@ public abstract class EvaluatorComparator<A extends Attributes>
 
 	@Override
 	public int compare(
-			PlayerEvaluator<A> evaluator1,
-			PlayerEvaluator<A> evaluator2)
+			AttributeEvaluator<A> evaluator1,
+			AttributeEvaluator<A> evaluator2)
 	{
 		return Double.compare(
 			getValue(evaluator1, attributes),
@@ -27,6 +26,6 @@ public abstract class EvaluatorComparator<A extends Attributes>
 	}
 
 	protected abstract double getValue(
-			PlayerEvaluator<A> evaluator,
+			AttributeEvaluator<A> evaluator,
 			A attributes);
 }

@@ -30,6 +30,7 @@ import javax.swing.table.TableColumn;
 import comparators.EvaluatorComparator;
 import comparators.QualityEvaluatorComparator;
 import comparators.RatingEvaluatorComparator;
+import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import gui.player.PlayerSelectedEvent;
 import gui.player.PlayerSelectedListener;
@@ -48,29 +49,36 @@ public class RosterPanel<A extends Attributes> extends JPanel
 
 	private PlayerSelectedListener<A> playerSelectedListener;
 
-	private List<PlayerEvaluator<A>> evaluators =
-			new LinkedList<PlayerEvaluator<A>>();
+	private List<AttributeEvaluator<A>> attributeEvaluators =
+			new LinkedList<AttributeEvaluator<A>>();
+
+	private PlayerEvaluator<A> playerEvaluator;
 
 	private List<ColumnData> columnDatas = Arrays.asList(
 		new ColumnData("Name", p -> p.getName()),
+		new ColumnData("Age", p -> Integer.toString(p.getAge())),
 		new ColumnData("Side", p -> p.getSide()),
 		new ColumnData("Total", p -> p.getAttributes().getTotalRating()),
 		new ColumnData(
 				"Position",
-				(p) -> getPlayersBestPositionName(
-					new RatingEvaluatorComparator<A>(p.getAttributes()), evaluators)),
+				p -> getPlayersBestPositionName(
+					new RatingEvaluatorComparator<A>(p.getAttributes()), attributeEvaluators)),
 		new ColumnData(
 				"Highest Rating",
-				(p) -> getPlayersBestPositionRating(evaluators, p),
-				(v) -> String.format("%.1f", v)),
+				p -> getPlayersBestPositionRating(attributeEvaluators, p),
+				v -> String.format("%.1f", v)),
 		new ColumnData(
 				"Training",
-				(p) -> getPlayersBestPositionName(
-					new QualityEvaluatorComparator<A>(p.getAttributes()), evaluators)),
+				p -> getPlayersBestPositionName(
+					new QualityEvaluatorComparator<A>(p.getAttributes()), attributeEvaluators)),
 		new ColumnData(
 				"Highest Quality",
-				(p) -> getPlayersBestPositionQuality(evaluators, p),
-				(v) -> String.format("%.1f", v)));
+				p -> getPlayersBestPositionQuality(attributeEvaluators, p),
+				v -> String.format("%.1f", v)),
+		new ColumnData(
+				"Value",
+				p -> playerEvaluator != null ? playerEvaluator.getValue(p) : 0,
+				v -> String.format("%.1f", v)));
 
 	private JLabel highQualityLimitLabel;
 	private JLabel lowQualityLimitLabel;
@@ -186,9 +194,16 @@ public class RosterPanel<A extends Attributes> extends JPanel
 		this.playerSelectedListener = listener;
 	}
 
-	public void setPlayerEvaluators(List<PlayerEvaluator<A>> evaluators)
+	public void setPlayerEvaluator(PlayerEvaluator<A> playerEvaluator)
 	{
-		this.evaluators = evaluators;
+		this.playerEvaluator = playerEvaluator;
+
+		rosterTableModel.fireAllTableCellsUpdated();
+	}
+
+	public void setAttributeEvaluators(List<AttributeEvaluator<A>> attributeEvaluators)
+	{
+		this.attributeEvaluators = attributeEvaluators;
 
 		rosterTableModel.fireAllTableCellsUpdated();
 	}
@@ -226,20 +241,20 @@ public class RosterPanel<A extends Attributes> extends JPanel
 
 	private String getPlayersBestPositionName(
 			EvaluatorComparator<A> evaluatorComparator,
-			List<PlayerEvaluator<A>> evaluators)
+			List<AttributeEvaluator<A>> evaluators)
 	{
-		PlayerEvaluator<A> playerEvaluator = evaluators
+		AttributeEvaluator<A> attributeEvaluator = evaluators
 				.stream()
 				.max((a, b) -> evaluatorComparator.compare(a, b))
 				.get();
 
-		return playerEvaluator != null
-				? playerEvaluator.getName()
+		return attributeEvaluator != null
+				? attributeEvaluator.getName()
 				: "No suggestion";
 	}
 
-	private Double getPlayersBestPositionRating(
-			List<PlayerEvaluator<A>> evaluators,
+	private double getPlayersBestPositionRating(
+			List<AttributeEvaluator<A>> evaluators,
 			Player<A> player)
 	{
 		return evaluators
@@ -250,8 +265,8 @@ public class RosterPanel<A extends Attributes> extends JPanel
 				.get();
 	}
 
-	private Double getPlayersBestPositionQuality(
-			List<PlayerEvaluator<A>> evaluators,
+	private double getPlayersBestPositionQuality(
+			List<AttributeEvaluator<A>> evaluators,
 			Player<A> player)
 	{
 		return evaluators
@@ -467,7 +482,7 @@ public class RosterPanel<A extends Attributes> extends JPanel
 				{
 					Double bestPositionQuality =
 							getPlayersBestPositionQuality(
-								evaluators,
+								attributeEvaluators,
 								player);
 
 					return bestPositionQuality > getHighQualityLimit();
@@ -477,7 +492,7 @@ public class RosterPanel<A extends Attributes> extends JPanel
 				{
 					Double bestPositionQuality =
 							getPlayersBestPositionQuality(
-								evaluators,
+								attributeEvaluators,
 								player);
 
 					return bestPositionQuality < getLowQualityLimit();
@@ -488,12 +503,12 @@ public class RosterPanel<A extends Attributes> extends JPanel
 					String bestRatingPosition =
 							getPlayersBestPositionName(
 								new RatingEvaluatorComparator<A>(player.getAttributes()),
-								evaluators);
+								attributeEvaluators);
 
 					String bestQualityPosition =
 							getPlayersBestPositionName(
 								new QualityEvaluatorComparator<A>(player.getAttributes()),
-								evaluators);
+								attributeEvaluators);
 
 					return bestRatingPosition.equals(bestQualityPosition);
 				}

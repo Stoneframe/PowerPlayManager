@@ -4,7 +4,8 @@ import java.util.List;
 
 import builders.formation.handball.HandballFormationTemplate;
 import builders.formation.handball.HandballPaulsFormationBuilder;
-import evaluators.PlayerEvaluator;
+import evaluators.AttributeEvaluator;
+import evaluators.handball.HandballPlayerEvaluator;
 import gui.MainPanel;
 import model.handball.HandballAttributes;
 import model.handball.HandballFormation;
@@ -16,15 +17,16 @@ public class HandballMainPanel
 	private static final long serialVersionUID = -3164509414943511994L;
 
 	public HandballMainPanel(
-			List<PlayerEvaluator<HandballAttributes>> evaluators,
+			List<AttributeEvaluator<HandballAttributes>> attributeEvaluators,
 			List<PlayersParser<HandballAttributes>> parsers)
 	{
 		super(
 				new HandballAttributesPanel(),
-				new HandballFormationTemplatePanel(evaluators),
+				new HandballFormationTemplatePanel(attributeEvaluators),
 				new HandballFormationPanelFactory(),
 				new HandballPaulsFormationBuilder(),
-				evaluators,
+				new HandballPlayerEvaluator(attributeEvaluators),
+				attributeEvaluators,
 				parsers);
 	}
 }

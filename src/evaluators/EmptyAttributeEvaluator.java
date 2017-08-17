@@ -2,9 +2,9 @@ package evaluators;
 
 import model.Attributes;
 
-public class EmptyPlayerEvaluator<A extends Attributes> extends PlayerEvaluator<A>
+public class EmptyAttributeEvaluator<A extends Attributes> extends AttributeEvaluator<A>
 {
-	public EmptyPlayerEvaluator()
+	public EmptyAttributeEvaluator()
 	{
 		super("Empty");
 	}

@@ -39,6 +39,7 @@ public class HandballPractisePlayersParser extends PlayersParser<HandballAttribu
 				HandballPlayer player =
 						new HandballPlayer(
 								parseName(lines[i]),
+								parseAge(null),
 								Side.UNKNOWN,
 								parseAttributes(Arrays.copyOfRange(
 									lines,
@@ -62,6 +63,11 @@ public class HandballPractisePlayersParser extends PlayersParser<HandballAttribu
 		String[] split = text.split(" ");
 
 		return String.format("%s %s", split[1], split[2]);
+	}
+
+	private static int parseAge(String text)
+	{
+		return 0;
 	}
 
 	private static HandballAttributes parseAttributes(String[] texts)

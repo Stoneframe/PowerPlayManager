@@ -12,6 +12,7 @@ import javax.swing.SwingUtilities;
 
 import builders.formation.FormationBuilder;
 import builders.formation.FormationTemplate;
+import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import gui.formation.FormationBuilderFrame;
 import gui.formation.FormationPanelFactory;
@@ -47,7 +48,8 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 			FormationTemplatePanel<FT> formationTemplatePanel,
 			FormationPanelFactory<F> formationPanelFactory,
 			FormationBuilder<A, F, FT> formationBuilder,
-			List<PlayerEvaluator<A>> evaluators,
+			PlayerEvaluator<A> playerEvaluator,
+			List<AttributeEvaluator<A>> attributeEvaluators,
 			List<PlayersParser<A>> parsers)
 	{
 		parsePanel = new ParsePanel<A>(parsers);
@@ -61,7 +63,8 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 
 		rosterPanel = new RosterPanel<A>();
 		rosterPanel.bind(roster);
-		rosterPanel.setPlayerEvaluators(evaluators);
+		rosterPanel.setPlayerEvaluator(playerEvaluator);
+		rosterPanel.setAttributeEvaluators(attributeEvaluators);
 		rosterPanel.setPlayerSelectedListener(new PlayerSelectedListener<A>()
 		{
 			public void playerSelected(Object source, PlayerSelectedEvent<A> event)
@@ -71,7 +74,7 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 		});
 
 		playerPanel = new PlayerPanel<A>(attributesPanel);
-		playerPanel.setPlayerEvaluators(evaluators);
+		playerPanel.setAttributeEvaluators(attributeEvaluators);
 
 		createFormationsButton = new JButton("Create Formations");
 		createFormationsButton.addActionListener(new ActionListener()
@@ -86,7 +89,7 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 								formationTemplatePanel,
 								formationPanelFactory,
 								formationBuilder,
-								evaluators,
+								attributeEvaluators,
 								roster.copy());
 					}
 				});

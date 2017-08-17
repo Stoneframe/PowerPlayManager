@@ -1,7 +1,7 @@
-package builders.formation.handball;
+package formation.handball;
 
-import builders.formation.FormationTemplate;
 import evaluators.AttributeEvaluator;
+import formation.FormationTemplate;
 import model.handball.HandballAttributes;
 
 public class HandballFormationTemplate extends FormationTemplate

@@ -10,8 +10,8 @@ import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
 import builders.formation.icehockey.IceHockeyFormationTemplate;
-import evaluators.PlayerEvaluator;
-import evaluators.icehockey.IceHockeyPlayerEvaluator;
+import evaluators.AttributeEvaluator;
+import evaluators.icehockey.IceHockeyAttributeEvaluator;
 import gui.formation.FormationTemplatePanel;
 import model.icehockey.IceHockeyAttributes;
 
@@ -28,13 +28,13 @@ public class IceHockeyFormationTemplatePanel
 	private JLabel rightBackLabel;
 
 	private JTextField nameTextField;
-	private JComboBox<PlayerEvaluator<IceHockeyAttributes>> leftWingComboBox;
-	private JComboBox<PlayerEvaluator<IceHockeyAttributes>> centerComboBox;
-	private JComboBox<PlayerEvaluator<IceHockeyAttributes>> rightWingComboBox;
-	private JComboBox<PlayerEvaluator<IceHockeyAttributes>> leftBackComboBox;
-	private JComboBox<PlayerEvaluator<IceHockeyAttributes>> rightBackComboBox;
+	private JComboBox<AttributeEvaluator<IceHockeyAttributes>> leftWingComboBox;
+	private JComboBox<AttributeEvaluator<IceHockeyAttributes>> centerComboBox;
+	private JComboBox<AttributeEvaluator<IceHockeyAttributes>> rightWingComboBox;
+	private JComboBox<AttributeEvaluator<IceHockeyAttributes>> leftBackComboBox;
+	private JComboBox<AttributeEvaluator<IceHockeyAttributes>> rightBackComboBox;
 
-	public IceHockeyFormationTemplatePanel(List<PlayerEvaluator<IceHockeyAttributes>> evaluators)
+	public IceHockeyFormationTemplatePanel(List<AttributeEvaluator<IceHockeyAttributes>> evaluators)
 	{
 		nameLabel = new JLabel("Name:");
 		leftWingLabel = new JLabel("Left Wing:");
@@ -45,11 +45,11 @@ public class IceHockeyFormationTemplatePanel
 
 		nameTextField = new JTextField(15);
 
-		leftWingComboBox = new JComboBox<PlayerEvaluator<IceHockeyAttributes>>();
-		centerComboBox = new JComboBox<PlayerEvaluator<IceHockeyAttributes>>();
-		rightWingComboBox = new JComboBox<PlayerEvaluator<IceHockeyAttributes>>();
-		leftBackComboBox = new JComboBox<PlayerEvaluator<IceHockeyAttributes>>();
-		rightBackComboBox = new JComboBox<PlayerEvaluator<IceHockeyAttributes>>();
+		leftWingComboBox = new JComboBox<AttributeEvaluator<IceHockeyAttributes>>();
+		centerComboBox = new JComboBox<AttributeEvaluator<IceHockeyAttributes>>();
+		rightWingComboBox = new JComboBox<AttributeEvaluator<IceHockeyAttributes>>();
+		leftBackComboBox = new JComboBox<AttributeEvaluator<IceHockeyAttributes>>();
+		rightBackComboBox = new JComboBox<AttributeEvaluator<IceHockeyAttributes>>();
 
 		evaluators.forEach(e -> leftWingComboBox.addItem(e));
 		evaluators.forEach(e -> centerComboBox.addItem(e));
@@ -88,11 +88,11 @@ public class IceHockeyFormationTemplatePanel
 	{
 		return new IceHockeyFormationTemplate(
 				nameTextField.getText(),
-				(IceHockeyPlayerEvaluator) leftWingComboBox.getSelectedItem(),
-				(IceHockeyPlayerEvaluator) centerComboBox.getSelectedItem(),
-				(IceHockeyPlayerEvaluator) rightWingComboBox.getSelectedItem(),
-				(IceHockeyPlayerEvaluator) leftBackComboBox.getSelectedItem(),
-				(IceHockeyPlayerEvaluator) rightBackComboBox.getSelectedItem());
+				(IceHockeyAttributeEvaluator) leftWingComboBox.getSelectedItem(),
+				(IceHockeyAttributeEvaluator) centerComboBox.getSelectedItem(),
+				(IceHockeyAttributeEvaluator) rightWingComboBox.getSelectedItem(),
+				(IceHockeyAttributeEvaluator) leftBackComboBox.getSelectedItem(),
+				(IceHockeyAttributeEvaluator) rightBackComboBox.getSelectedItem());
 	}
 
 	@Override

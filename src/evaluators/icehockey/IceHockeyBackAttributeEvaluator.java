@@ -1,6 +1,6 @@
 package evaluators.icehockey;
 
-public class IceHockeyBackPlayerEvaluator extends IceHockeyPlayerEvaluator
+public class IceHockeyBackAttributeEvaluator extends IceHockeyAttributeEvaluator
 {
 	private static final String NAME = "Back";
 
@@ -12,7 +12,7 @@ public class IceHockeyBackPlayerEvaluator extends IceHockeyPlayerEvaluator
 	private static final int TEC = 40;
 	private static final int AGR = 50;
 
-	public IceHockeyBackPlayerEvaluator()
+	public IceHockeyBackAttributeEvaluator()
 	{
 		super(NAME, GOA, DEF, OFF, SHO, PAS, TEC, AGR);
 	}

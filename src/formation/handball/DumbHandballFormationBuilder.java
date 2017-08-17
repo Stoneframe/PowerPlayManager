@@ -1,8 +1,8 @@
-package builders.formation.handball;
+package formation.handball;
 
-import builders.formation.FormationBuilder;
 import comparators.RatingComparator;
 import evaluators.AttributeEvaluator;
+import formation.FormationBuilder;
 import model.Player;
 import model.Roster;
 import model.Side;

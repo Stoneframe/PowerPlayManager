@@ -1,7 +1,7 @@
-package builders.formation.icehockey;
+package formation.icehockey;
 
-import builders.formation.FormationTemplate;
 import evaluators.AttributeEvaluator;
+import formation.FormationTemplate;
 import model.icehockey.IceHockeyAttributes;
 
 public class IceHockeyFormationTemplate extends FormationTemplate

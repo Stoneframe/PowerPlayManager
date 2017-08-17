@@ -2,7 +2,7 @@ package comparators;
 
 import java.util.Comparator;
 
-import evaluators.PlayerEvaluator;
+import evaluators.AttributeEvaluator;
 import model.Attributes;
 import model.Player;
 
@@ -10,9 +10,9 @@ public class RatingComparator<A extends Attributes>
 		implements
 		Comparator<Player<A>>
 {
-	private PlayerEvaluator<A> evaluator;
+	private AttributeEvaluator<A> evaluator;
 
-	public RatingComparator(PlayerEvaluator<A> evaluator)
+	public RatingComparator(AttributeEvaluator<A> evaluator)
 	{
 		this.evaluator = evaluator;
 	}

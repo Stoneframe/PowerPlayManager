@@ -1,65 +1,18 @@
 package evaluators.icehockey;
 
+import java.util.List;
+
+import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import model.icehockey.IceHockeyAttributes;
 
 public class IceHockeyPlayerEvaluator extends PlayerEvaluator<IceHockeyAttributes>
 {
-	private double goa;
-	private double def;
-	private double off;
-	private double sho;
-	private double pas;
-	private double tec;
-	private double agr;
+	private static final double A = -0.118, B = 5.1, C = 36.8, D = -1079;
 
 	public IceHockeyPlayerEvaluator(
-			String name,
-			double goa,
-			double def,
-			double off,
-			double sho,
-			double pas,
-			double tec,
-			double agr)
+			List<AttributeEvaluator<IceHockeyAttributes>> attributeEvaluators)
 	{
-		super(name);
-		this.goa = goa;
-		this.def = def;
-		this.off = off;
-		this.sho = sho;
-		this.pas = pas;
-		this.tec = tec;
-		this.agr = agr;
-	}
-
-	@Override
-	public double getRating(IceHockeyAttributes attributes)
-	{
-		// @formatter:off
-		return (goa * attributes.getGoa() +
-				def * attributes.getDef() +
-				off * attributes.getOff() +
-				sho * attributes.getSho() +
-				pas * attributes.getPas() +
-				tec * attributes.getTec() +
-				agr * attributes.getAgr())
-				/ (goa + def + off + sho + pas + tec + agr);
-		// @formatter:on
-	}
-
-	@Override
-	public double getQuality(IceHockeyAttributes attributes)
-	{
-		// @formatter:off
-		return (goa + def + off + sho + pas + tec + agr) /
-				(goa / attributes.getQGoa() +
-				 def / attributes.getQDef() +
-				 off / attributes.getQOff() +
-				 sho / attributes.getQSho()	+
-				 pas / attributes.getQPas() +
-				 tec / attributes.getQTec() +
-				 agr / attributes.getQAgr());
-		// @formatter:on
+		super(attributeEvaluators, A, B, C, D);
 	}
 }

@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 
-import evaluators.PlayerEvaluator;
+import evaluators.AttributeEvaluator;
 import model.Attributes;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
@@ -22,7 +22,7 @@ public abstract class SuggestionPanel<A extends Attributes> extends JPanel
 	private static final int DISPLAYED_POSITIONS_LIMIT = 3;
 
 	private A attributes;
-	private List<PlayerEvaluator<A>> evaluators;
+	private List<AttributeEvaluator<A>> evaluators;
 
 	public SuggestionPanel(String title)
 	{
@@ -51,8 +51,8 @@ public abstract class SuggestionPanel<A extends Attributes> extends JPanel
 		update();
 	}
 
-	public void setPlayerEvaluators(
-			List<PlayerEvaluator<A>> evaluators)
+	public void setAttributeEvaluators(
+			List<AttributeEvaluator<A>> evaluators)
 	{
 		this.evaluators = evaluators;
 
@@ -61,12 +61,12 @@ public abstract class SuggestionPanel<A extends Attributes> extends JPanel
 
 	protected abstract int compare(
 			A attributes,
-			PlayerEvaluator<A> evaluator1,
-			PlayerEvaluator<A> evaluator2);
+			AttributeEvaluator<A> evaluator1,
+			AttributeEvaluator<A> evaluator2);
 
 	protected abstract double getValue(
 			A attributes,
-			PlayerEvaluator<A> evaluator);
+			AttributeEvaluator<A> evaluator);
 
 	private void update()
 	{
@@ -74,7 +74,7 @@ public abstract class SuggestionPanel<A extends Attributes> extends JPanel
 
 		if (attributes != null)
 		{
-			for (PlayerEvaluator<A> evaluator : getSortedEvaluators())
+			for (AttributeEvaluator<A> evaluator : getSortedEvaluators())
 			{
 				add(new JLabel(evaluator.getName()));
 				add(new JLabel(
@@ -87,7 +87,7 @@ public abstract class SuggestionPanel<A extends Attributes> extends JPanel
 		updateUI();
 	}
 
-	private List<PlayerEvaluator<A>> getSortedEvaluators()
+	private List<AttributeEvaluator<A>> getSortedEvaluators()
 	{
 		return evaluators
 				.stream()

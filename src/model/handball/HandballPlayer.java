@@ -7,9 +7,10 @@ public class HandballPlayer extends Player<HandballAttributes>
 {
 	public HandballPlayer(
 			String name,
+			int age,
 			Side side,
 			HandballAttributes attributes)
 	{
-		super(name, side, attributes);
+		super(name, age, side, attributes);
 	}
 }

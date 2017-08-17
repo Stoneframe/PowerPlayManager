@@ -1,23 +1,22 @@
-package parsers.playerevaluators;
+package parsers.attributeevaluators;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import evaluators.PlayerEvaluator;
-import evaluators.handball.HandballPlayerEvaluator;
+import evaluators.AttributeEvaluator;
+import evaluators.handball.HandballAttributeEvaluator;
 import model.handball.HandballAttributes;
 import parsers.ParseException;
 
-public class HandballPlayerEvaluatorsParser
+public class HandballAttributeEvaluatorsParser
 {
-	public List<PlayerEvaluator<HandballAttributes>> parsePlayerEvaluators(
-			String textToParse)
+	public List<AttributeEvaluator<HandballAttributes>> parseAttributeEvaluators(String textToParse)
 			throws ParseException
 	{
 		try
 		{
-			List<PlayerEvaluator<HandballAttributes>> evaluators =
-					new LinkedList<PlayerEvaluator<HandballAttributes>>();
+			List<AttributeEvaluator<HandballAttributes>> evaluators =
+					new LinkedList<AttributeEvaluator<HandballAttributes>>();
 
 			String[] lines = textToParse.split("\n");
 
@@ -25,7 +24,7 @@ public class HandballPlayerEvaluatorsParser
 			{
 				String[] columns = line.split("\t");
 
-				HandballPlayerEvaluator evaluator = new HandballPlayerEvaluator(
+				HandballAttributeEvaluator evaluator = new HandballAttributeEvaluator(
 						columns[0],
 						Integer.parseInt(columns[1]),
 						Integer.parseInt(columns[2]),

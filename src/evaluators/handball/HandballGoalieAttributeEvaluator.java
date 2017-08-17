@@ -1,6 +1,6 @@
 package evaluators.handball;
 
-public class HandballGoaliePlayerEvaluator extends HandballPlayerEvaluator
+public class HandballGoalieAttributeEvaluator extends HandballAttributeEvaluator
 {
 	private static final String NAME = "Goalie";
 
@@ -13,7 +13,7 @@ public class HandballGoaliePlayerEvaluator extends HandballPlayerEvaluator
 	private static final int SPE = 40;
 	private static final int AGR = 0;
 
-	public HandballGoaliePlayerEvaluator()
+	public HandballGoalieAttributeEvaluator()
 	{
 		super(NAME, GOA, FIP, SHO, BLK, PAS, TEC, SPE, AGR);
 	}

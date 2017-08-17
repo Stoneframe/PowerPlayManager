@@ -5,16 +5,17 @@ import util.AbstractModelObject;
 public class Player<A extends Attributes> extends AbstractModelObject
 {
 	protected String name;
+	protected int age;
 	protected Side side;
 	protected A attributes;
 
-	protected Player(String name, Side side, A attributes)
+	protected Player(String name, int age, Side side, A attributes)
 	{
 		this.name = name;
+		this.age = age;
 		this.side = side;
 		this.attributes = attributes;
-		this.attributes.addPropertyChangedListener(
-			(s, e) -> firePropertyChanged(e));
+		this.attributes.addPropertyChangedListener((s, e) -> firePropertyChanged(e));
 	}
 
 	public String getName()
@@ -26,6 +27,17 @@ public class Player<A extends Attributes> extends AbstractModelObject
 	{
 		this.name = name;
 		firePropertyChanged("Name", name);
+	}
+
+	public int getAge()
+	{
+		return age;
+	}
+
+	public void setAge(int age)
+	{
+		this.age = age;
+		firePropertyChanged("Age", age);
 	}
 
 	public Side getSide()
@@ -47,6 +59,11 @@ public class Player<A extends Attributes> extends AbstractModelObject
 	public void merge(Player<A> other)
 	{
 		if (!this.equals(other)) return;
+
+		if (this.age == 0)
+		{
+			this.setAge(other.getAge());
+		}
 
 		if (this.side == Side.UNKNOWN)
 		{

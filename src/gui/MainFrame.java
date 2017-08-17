@@ -9,18 +9,18 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import evaluators.handball.HandballDefBackPlayerEvaluator;
-import evaluators.handball.HandballDefPivotPlayerEvaluator;
-import evaluators.handball.HandballDefWingPlayerEvaluator;
-import evaluators.handball.HandballGoaliePlayerEvaluator;
-import evaluators.handball.HandballOffBackPlayerEvaluator;
-import evaluators.handball.HandballOffPivotPlayerEvaluator;
-import evaluators.handball.HandballOffWingPlayerEvaluator;
-import evaluators.icehockey.IceHockeyBackPlayerEvaluator;
-import evaluators.icehockey.IceHockeyCenterPlayerEvaluator;
-import evaluators.icehockey.IceHockeyGoaliePlayerEvaluator;
-import evaluators.icehockey.IceHockeySpecialPlayerEvaluator;
-import evaluators.icehockey.IceHockeyWingPlayerEvaluator;
+import evaluators.handball.HandballDefBackAttributeEvaluator;
+import evaluators.handball.HandballDefPivotAttributeEvaluator;
+import evaluators.handball.HandballDefWingAttributeEvaluator;
+import evaluators.handball.HandballGoalieAttributeEvaluator;
+import evaluators.handball.HandballOffBackAttributeEvaluator;
+import evaluators.handball.HandballOffPivotAttributeEvaluator;
+import evaluators.handball.HandballOffWingAttributeEvaluator;
+import evaluators.icehockey.IceHockeyBackAttributeEvaluator;
+import evaluators.icehockey.IceHockeyCenterAttributeEvaluator;
+import evaluators.icehockey.IceHockeyGoalieAttributeEvaluator;
+import evaluators.icehockey.IceHockeySpecialAttributeEvaluator;
+import evaluators.icehockey.IceHockeyWingAttributeEvaluator;
 import gui.handball.HandballMainPanel;
 import gui.icehockey.IceHockeyMainPanel;
 import parsers.players.handball.HandballMarketPlayersParser;
@@ -46,13 +46,13 @@ public class MainFrame extends JFrame
 
 		handballPanel = new HandballMainPanel(
 				Arrays.asList(
-					new HandballGoaliePlayerEvaluator(),
-					new HandballDefBackPlayerEvaluator(),
-					new HandballDefPivotPlayerEvaluator(),
-					new HandballDefWingPlayerEvaluator(),
-					new HandballOffBackPlayerEvaluator(),
-					new HandballOffPivotPlayerEvaluator(),
-					new HandballOffWingPlayerEvaluator()),
+					new HandballGoalieAttributeEvaluator(),
+					new HandballDefBackAttributeEvaluator(),
+					new HandballDefPivotAttributeEvaluator(),
+					new HandballDefWingAttributeEvaluator(),
+					new HandballOffBackAttributeEvaluator(),
+					new HandballOffPivotAttributeEvaluator(),
+					new HandballOffWingAttributeEvaluator()),
 				Arrays.asList(
 					new HandballMarketPlayersParser(),
 					new HandballOverviewPlayersParser(),
@@ -61,11 +61,11 @@ public class MainFrame extends JFrame
 
 		iceHockeyPanel = new IceHockeyMainPanel(
 				Arrays.asList(
-					new IceHockeyGoaliePlayerEvaluator(),
-					new IceHockeyBackPlayerEvaluator(),
-					new IceHockeyWingPlayerEvaluator(),
-					new IceHockeyCenterPlayerEvaluator(),
-					new IceHockeySpecialPlayerEvaluator()),
+					new IceHockeyGoalieAttributeEvaluator(),
+					new IceHockeyBackAttributeEvaluator(),
+					new IceHockeyWingAttributeEvaluator(),
+					new IceHockeyCenterAttributeEvaluator(),
+					new IceHockeySpecialAttributeEvaluator()),
 				Arrays.asList(
 					new IceHockeyMarketPlayersParser(),
 					new IceHockeyOverviewPlayersParser(),

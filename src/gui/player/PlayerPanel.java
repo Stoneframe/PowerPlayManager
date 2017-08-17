@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import evaluators.PlayerEvaluator;
+import evaluators.AttributeEvaluator;
 import model.Attributes;
 import model.Player;
 import util.PropertyChangedEvent;
@@ -24,9 +24,11 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 	private Player<A> player;
 
 	private JLabel nameLabel;
+	private JLabel ageLabel;
 	private JLabel sideLabel;
 
 	private JTextField nameTextField;
+	private JTextField ageTextField;
 	private JTextField sideTextField;
 
 	private AttributesPanel<A> attributePanel;
@@ -41,6 +43,10 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 		nameLabel = new JLabel("Name:");
 		nameTextField = new JTextField(15);
 		nameTextField.setEditable(false);
+
+		ageLabel = new JLabel("Age:");
+		ageTextField = new JTextField(15);
+		ageTextField.setEditable(false);
 
 		sideLabel = new JLabel("Side:");
 		sideTextField = new JTextField(15);
@@ -72,6 +78,15 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 		c.gridx = 0;
 		c.gridy = 1;
 
+		add(ageLabel, c);
+
+		c.gridx = 1;
+
+		add(ageTextField, c);
+
+		c.gridx = 0;
+		c.gridy = 2;
+
 		add(sideLabel, c);
 
 		c.gridx = 1;
@@ -79,19 +94,19 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 		add(sideTextField, c);
 
 		c.gridx = 0;
-		c.gridy = 2;
+		c.gridy = 3;
 		c.gridwidth = 2;
 
 		add(attributePanel, c);
 
 		c.gridx = 0;
-		c.gridy = 3;
+		c.gridy = 4;
 		c.gridwidth = 2;
 
 		add(positionSuggestionPanel, c);
 
 		c.gridx = 0;
-		c.gridy = 4;
+		c.gridy = 5;
 		c.gridwidth = 2;
 		c.weighty = 100;
 
@@ -121,22 +136,17 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 		update();
 	}
 
-	public void setPlayerEvaluators(List<PlayerEvaluator<A>> evaluators)
+	public void setAttributeEvaluators(List<AttributeEvaluator<A>> evaluators)
 	{
-		positionSuggestionPanel.setPlayerEvaluators(evaluators);
-		trainingSuggestionPanel.setPlayerEvaluators(evaluators);
+		positionSuggestionPanel.setAttributeEvaluators(evaluators);
+		trainingSuggestionPanel.setAttributeEvaluators(evaluators);
 	}
 
 	private void update()
 	{
-		nameTextField.setText(
-			player == null
-					? ""
-					: player.getName());
-		sideTextField.setText(
-			player == null
-					? ""
-					: player.getSide().toString());
+		nameTextField.setText(player == null ? "" : player.getName());
+		ageTextField.setText(player == null ? "" : Integer.toString(player.getAge()));
+		sideTextField.setText(player == null ? "" : player.getSide().toString());
 	}
 
 	@Override

@@ -1,18 +1,18 @@
 package evaluators.icehockey;
 
-public class IceHockeyWingPlayerEvaluator extends IceHockeyPlayerEvaluator
+public class IceHockeySpecialAttributeEvaluator extends IceHockeyAttributeEvaluator
 {
-	private static final String NAME = "Wing";
+	private static final String NAME = "Special";
 
 	private static final int GOA = 0;
 	private static final int DEF = 0;
 	private static final int OFF = 100;
 	private static final int SHO = 70;
-	private static final int PAS = 0;
+	private static final int PAS = 25;
 	private static final int TEC = 50;
-	private static final int AGR = 50;
+	private static final int AGR = 25;
 
-	public IceHockeyWingPlayerEvaluator()
+	public IceHockeySpecialAttributeEvaluator()
 	{
 		super(NAME, GOA, DEF, OFF, SHO, PAS, TEC, AGR);
 	}

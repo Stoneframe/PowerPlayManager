@@ -21,7 +21,7 @@ import javax.swing.event.ListSelectionListener;
 
 import builders.formation.FormationBuilder;
 import builders.formation.FormationTemplate;
-import evaluators.PlayerEvaluator;
+import evaluators.AttributeEvaluator;
 import model.Attributes;
 import model.Formation;
 import model.Roster;
@@ -45,7 +45,7 @@ public class FormationBuilderFrame<
 			FormationTemplatePanel<FT> templatePanel,
 			FormationPanelFactory<F> formationPanelFactory,
 			FormationBuilder<A, F, FT> formationBuilder,
-			List<PlayerEvaluator<A>> evaluators,
+			List<AttributeEvaluator<A>> evaluators,
 			Roster<A> roster)
 	{
 		templateListModel = new DefaultListModel<FT>();

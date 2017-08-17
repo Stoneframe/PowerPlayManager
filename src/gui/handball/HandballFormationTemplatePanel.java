@@ -10,8 +10,8 @@ import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
 import builders.formation.handball.HandballFormationTemplate;
-import evaluators.PlayerEvaluator;
-import evaluators.handball.HandballPlayerEvaluator;
+import evaluators.AttributeEvaluator;
+import evaluators.handball.HandballAttributeEvaluator;
 import gui.formation.FormationTemplatePanel;
 import model.handball.HandballAttributes;
 
@@ -29,14 +29,14 @@ public class HandballFormationTemplatePanel
 	private JLabel rightBackLabel;
 
 	private JTextField nameTextField;
-	private JComboBox<PlayerEvaluator<HandballAttributes>> leftWingComboBox;
-	private JComboBox<PlayerEvaluator<HandballAttributes>> rightWingComboBox;
-	private JComboBox<PlayerEvaluator<HandballAttributes>> pivotComboBox;
-	private JComboBox<PlayerEvaluator<HandballAttributes>> leftBackComboBox;
-	private JComboBox<PlayerEvaluator<HandballAttributes>> centerBackComboBox;
-	private JComboBox<PlayerEvaluator<HandballAttributes>> rightBackComboBox;
+	private JComboBox<AttributeEvaluator<HandballAttributes>> leftWingComboBox;
+	private JComboBox<AttributeEvaluator<HandballAttributes>> rightWingComboBox;
+	private JComboBox<AttributeEvaluator<HandballAttributes>> pivotComboBox;
+	private JComboBox<AttributeEvaluator<HandballAttributes>> leftBackComboBox;
+	private JComboBox<AttributeEvaluator<HandballAttributes>> centerBackComboBox;
+	private JComboBox<AttributeEvaluator<HandballAttributes>> rightBackComboBox;
 
-	public HandballFormationTemplatePanel(List<PlayerEvaluator<HandballAttributes>> evaluators)
+	public HandballFormationTemplatePanel(List<AttributeEvaluator<HandballAttributes>> evaluators)
 	{
 		nameLabel = new JLabel("Name:");
 		leftWingLabel = new JLabel("Left Wing:");
@@ -48,12 +48,12 @@ public class HandballFormationTemplatePanel
 
 		nameTextField = new JTextField(15);
 
-		leftWingComboBox = new JComboBox<PlayerEvaluator<HandballAttributes>>();
-		rightWingComboBox = new JComboBox<PlayerEvaluator<HandballAttributes>>();
-		pivotComboBox = new JComboBox<PlayerEvaluator<HandballAttributes>>();
-		leftBackComboBox = new JComboBox<PlayerEvaluator<HandballAttributes>>();
-		centerBackComboBox = new JComboBox<PlayerEvaluator<HandballAttributes>>();
-		rightBackComboBox = new JComboBox<PlayerEvaluator<HandballAttributes>>();
+		leftWingComboBox = new JComboBox<AttributeEvaluator<HandballAttributes>>();
+		rightWingComboBox = new JComboBox<AttributeEvaluator<HandballAttributes>>();
+		pivotComboBox = new JComboBox<AttributeEvaluator<HandballAttributes>>();
+		leftBackComboBox = new JComboBox<AttributeEvaluator<HandballAttributes>>();
+		centerBackComboBox = new JComboBox<AttributeEvaluator<HandballAttributes>>();
+		rightBackComboBox = new JComboBox<AttributeEvaluator<HandballAttributes>>();
 
 		evaluators.forEach(e -> leftWingComboBox.addItem(e));
 		evaluators.forEach(e -> rightWingComboBox.addItem(e));
@@ -95,12 +95,12 @@ public class HandballFormationTemplatePanel
 	{
 		return new HandballFormationTemplate(
 				nameTextField.getText(),
-				(HandballPlayerEvaluator) pivotComboBox.getSelectedItem(),
-				(HandballPlayerEvaluator) leftWingComboBox.getSelectedItem(),
-				(HandballPlayerEvaluator) rightWingComboBox.getSelectedItem(),
-				(HandballPlayerEvaluator) centerBackComboBox.getSelectedItem(),
-				(HandballPlayerEvaluator) leftBackComboBox.getSelectedItem(),
-				(HandballPlayerEvaluator) rightBackComboBox.getSelectedItem());
+				(HandballAttributeEvaluator) pivotComboBox.getSelectedItem(),
+				(HandballAttributeEvaluator) leftWingComboBox.getSelectedItem(),
+				(HandballAttributeEvaluator) rightWingComboBox.getSelectedItem(),
+				(HandballAttributeEvaluator) centerBackComboBox.getSelectedItem(),
+				(HandballAttributeEvaluator) leftBackComboBox.getSelectedItem(),
+				(HandballAttributeEvaluator) rightBackComboBox.getSelectedItem());
 	}
 
 	public void setFormationTemplate(HandballFormationTemplate template)
