@@ -49,6 +49,7 @@ public class IceHockeyMarketPlayersParser extends PlayersParser<IceHockeyAttribu
 		return new IceHockeyPlayer(
 				parseName(lines[0]),
 				parseAge(lines[3].split("\t")[0]),
+				parseCL(lines[3].split("\t")[3]),
 				parseSide(lines[3]),
 				parseAttributes(lines[3]));
 	}
@@ -63,6 +64,11 @@ public class IceHockeyMarketPlayersParser extends PlayersParser<IceHockeyAttribu
 	private static int parseAge(String text)
 	{
 		return Integer.parseInt(text);
+	}
+
+	private static int parseCL(String text)
+	{
+		return Integer.parseInt(text.split("/")[0]);
 	}
 
 	private static Side parseSide(String text)

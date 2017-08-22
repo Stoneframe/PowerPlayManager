@@ -34,6 +34,7 @@ public class HandballMarketPlayersParser extends PlayersParser<HandballAttribute
 				HandballPlayer player = new HandballPlayer(
 						parseName(lines[i]),
 						parseAge(null),
+						0,
 						parseSide(lines[i + 3].split("\t")[14]),
 						parseAttributes(
 							Arrays.copyOfRange(lines[i + 3].trim().split("\t"), 4, 12)));

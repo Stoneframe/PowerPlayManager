@@ -40,6 +40,7 @@ public class HandballPractisePlayersParser extends PlayersParser<HandballAttribu
 						new HandballPlayer(
 								parseName(lines[i]),
 								parseAge(null),
+								0,
 								Side.UNKNOWN,
 								parseAttributes(Arrays.copyOfRange(
 									lines,

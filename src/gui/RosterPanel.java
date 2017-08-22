@@ -57,6 +57,7 @@ public class RosterPanel<A extends Attributes> extends JPanel
 	private List<ColumnData> columnDatas = Arrays.asList(
 		new ColumnData("Name", p -> p.getName()),
 		new ColumnData("Age", p -> Integer.toString(p.getAge())),
+		new ColumnData("CL", p -> Integer.toString(p.getCL())),
 		new ColumnData("Side", p -> p.getSide()),
 		new ColumnData("Total", p -> p.getAttributes().getTotalRating()),
 		new ColumnData(
@@ -76,8 +77,16 @@ public class RosterPanel<A extends Attributes> extends JPanel
 				p -> getPlayersBestPositionQuality(attributeEvaluators, p),
 				v -> String.format("%.1f", v)),
 		new ColumnData(
-				"Value",
-				p -> playerEvaluator != null ? playerEvaluator.getValue(p) : 0,
+				"R Value",
+				p -> playerEvaluator != null ? playerEvaluator.getRValue(p) : 0,
+				v -> String.format("%.1f", v)),
+		new ColumnData(
+				"CL Value",
+				p -> playerEvaluator != null ? playerEvaluator.getCLValue(p) : 0,
+				v -> String.format("%.2f", v)),
+		new ColumnData(
+				"X Value",
+				p -> playerEvaluator != null ? playerEvaluator.getXValue(p) : 0,
 				v -> String.format("%.1f", v)));
 
 	private JLabel highQualityLimitLabel;
@@ -322,6 +331,12 @@ public class RosterPanel<A extends Attributes> extends JPanel
 			PropertyChangedListener
 	{
 		private static final long serialVersionUID = -3862251740620048034L;
+
+		@Override
+		public boolean isCellEditable(int row, int column)
+		{
+			return false;
+		}
 
 		@Override
 		public String getColumnName(int column)

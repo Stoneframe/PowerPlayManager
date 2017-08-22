@@ -6,13 +6,15 @@ public class Player<A extends Attributes> extends AbstractModelObject
 {
 	protected String name;
 	protected int age;
+	protected int cl;
 	protected Side side;
 	protected A attributes;
 
-	protected Player(String name, int age, Side side, A attributes)
+	protected Player(String name, int age, int cl, Side side, A attributes)
 	{
 		this.name = name;
 		this.age = age;
+		this.cl = cl;
 		this.side = side;
 		this.attributes = attributes;
 		this.attributes.addPropertyChangedListener((s, e) -> firePropertyChanged(e));
@@ -40,6 +42,17 @@ public class Player<A extends Attributes> extends AbstractModelObject
 		firePropertyChanged("Age", age);
 	}
 
+	public int getCL()
+	{
+		return cl;
+	}
+
+	public void setCL(int cl)
+	{
+		this.cl = cl;
+		firePropertyChanged("CL", cl);
+	}
+
 	public Side getSide()
 	{
 		return side;
@@ -63,6 +76,11 @@ public class Player<A extends Attributes> extends AbstractModelObject
 		if (this.age == 0)
 		{
 			this.setAge(other.getAge());
+		}
+
+		if (this.cl == 0)
+		{
+			this.setCL(other.getCL());
 		}
 
 		if (this.side == Side.UNKNOWN)

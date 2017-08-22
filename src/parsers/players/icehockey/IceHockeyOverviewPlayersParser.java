@@ -51,6 +51,7 @@ public class IceHockeyOverviewPlayersParser extends PlayersParser<IceHockeyAttri
 		return new IceHockeyPlayer(
 				parseName(columns[0]),
 				parseAge(columns[2]),
+				parseCL(columns[5]),
 				parseSide(columns[15]),
 				parseAttributes(Arrays.copyOfRange(columns, 6, 14)));
 	}
@@ -65,6 +66,11 @@ public class IceHockeyOverviewPlayersParser extends PlayersParser<IceHockeyAttri
 	private static int parseAge(String text)
 	{
 		return Integer.parseInt(text);
+	}
+
+	private static int parseCL(String text)
+	{
+		return Integer.parseInt(text.split("/")[0]);
 	}
 
 	private static Side parseSide(String text)
