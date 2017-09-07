@@ -3,7 +3,6 @@ package gui.handball;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
@@ -16,16 +15,6 @@ public class HandballAttributesPanel extends AttributesPanel<HandballAttributes>
 		PropertyChangedListener
 {
 	private static final long serialVersionUID = -550607296797083079L;
-
-	private JLabel goaLabel;
-	private JLabel fipLabel;
-	private JLabel shoLabel;
-	private JLabel blkLabel;
-	private JLabel pasLabel;
-	private JLabel tecLabel;
-	private JLabel speLabel;
-	private JLabel agrLabel;
-	private JLabel totLabel;
 
 	private JTextField goaTextField;
 	private JTextField goaQTextField;
@@ -48,16 +37,6 @@ public class HandballAttributesPanel extends AttributesPanel<HandballAttributes>
 
 	public HandballAttributesPanel()
 	{
-		goaLabel = new JLabel("Goa:");
-		fipLabel = new JLabel("Fip:");
-		shoLabel = new JLabel("Sho:");
-		blkLabel = new JLabel("Blk:");
-		pasLabel = new JLabel("Pas:");
-		tecLabel = new JLabel("Tec:");
-		speLabel = new JLabel("Spe:");
-		agrLabel = new JLabel("Agr:");
-		totLabel = new JLabel("Tot:");
-
 		goaTextField = new JTextField(TEXTFIELD_COLUMNS);
 		goaTextField.setEditable(false);
 
@@ -119,41 +98,15 @@ public class HandballAttributesPanel extends AttributesPanel<HandballAttributes>
 
 		setLayout(new GridLayout(9, 3, 5, 5));
 
-		add(goaLabel);
-		add(goaTextField);
-		add(goaQTextField);
-
-		add(fipLabel);
-		add(fipTextField);
-		add(fipQTextField);
-
-		add(shoLabel);
-		add(shoTextField);
-		add(shoQTextField);
-
-		add(blkLabel);
-		add(blkTextField);
-		add(blkQTextField);
-
-		add(pasLabel);
-		add(pasTextField);
-		add(pasQTextField);
-
-		add(tecLabel);
-		add(tecTextField);
-		add(tecQTextField);
-
-		add(speLabel);
-		add(speTextField);
-		add(speQTextField);
-
-		add(agrLabel);
-		add(agrTextField);
-		add(agrQTextField);
-
-		add(totLabel);
-		add(totTextField);
-		add(avgQTextField);
+		addRow("Goa:", goaTextField, goaQTextField);
+		addRow("Fip:", fipTextField, fipQTextField);
+		addRow("Sho:", shoTextField, shoQTextField);
+		addRow("Blk:", blkTextField, blkQTextField);
+		addRow("Pas:", pasTextField, pasQTextField);
+		addRow("Tec:", tecTextField, tecQTextField);
+		addRow("Spe:", speTextField, speQTextField);
+		addRow("Agr:", agrTextField, agrQTextField);
+		addRow("Tot:", totTextField, avgQTextField);
 	}
 
 	@Override
