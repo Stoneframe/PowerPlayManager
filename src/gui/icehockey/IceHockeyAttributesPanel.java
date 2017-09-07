@@ -3,7 +3,6 @@ package gui.icehockey;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
@@ -13,15 +12,6 @@ import model.icehockey.IceHockeyAttributes;
 public class IceHockeyAttributesPanel extends AttributesPanel<IceHockeyAttributes>
 {
 	private static final long serialVersionUID = 927418734854336851L;
-
-	private JLabel goaLabel;
-	private JLabel defLabel;
-	private JLabel offLabel;
-	private JLabel shoLabel;
-	private JLabel pasLabel;
-	private JLabel tecLabel;
-	private JLabel agrLabel;
-	private JLabel totLabel;
 
 	private JTextField goaTextField;
 	private JTextField goaQTextField;
@@ -39,18 +29,9 @@ public class IceHockeyAttributesPanel extends AttributesPanel<IceHockeyAttribute
 	private JTextField agrQTextField;
 	private JTextField totTextField;
 	private JTextField avgQTextField;
-	
+
 	public IceHockeyAttributesPanel()
 	{
-		goaLabel = new JLabel("Goa:");
-		defLabel = new JLabel("Def:");
-		offLabel = new JLabel("Off:");
-		shoLabel = new JLabel("Sho:");
-		pasLabel = new JLabel("Pas:");
-		tecLabel = new JLabel("Tec:");
-		agrLabel = new JLabel("Agr:");
-		totLabel = new JLabel("Tot:");
-
 		goaTextField = new JTextField(TEXTFIELD_COLUMNS);
 		goaTextField.setEditable(false);
 
@@ -65,10 +46,10 @@ public class IceHockeyAttributesPanel extends AttributesPanel<IceHockeyAttribute
 
 		offTextField = new JTextField(TEXTFIELD_COLUMNS);
 		offTextField.setEditable(false);
-		
+
 		offQTextField = new JTextField(TEXTFIELD_COLUMNS);
 		offQTextField.setEditable(false);
-		
+
 		shoTextField = new JTextField(TEXTFIELD_COLUMNS);
 		shoTextField.setEditable(false);
 
@@ -106,39 +87,16 @@ public class IceHockeyAttributesPanel extends AttributesPanel<IceHockeyAttribute
 
 		setLayout(new GridLayout(8, 3, 5, 5));
 
-		add(goaLabel);
-		add(goaTextField);
-		add(goaQTextField);
-
-		add(defLabel);
-		add(defTextField);
-		add(defQTextField);
-		
-		add(offLabel);
-		add(offTextField);
-		add(offQTextField);
-
-		add(shoLabel);
-		add(shoTextField);
-		add(shoQTextField);
-
-		add(pasLabel);
-		add(pasTextField);
-		add(pasQTextField);
-
-		add(tecLabel);
-		add(tecTextField);
-		add(tecQTextField);
-
-		add(agrLabel);
-		add(agrTextField);
-		add(agrQTextField);
-
-		add(totLabel);
-		add(totTextField);
-		add(avgQTextField);
+		addRow("Goa:", goaTextField, goaQTextField);
+		addRow("Def:", defTextField, defQTextField);
+		addRow("Off:", offTextField, offQTextField);
+		addRow("Sho:", shoTextField, shoQTextField);
+		addRow("Pas:", pasTextField, pasQTextField);
+		addRow("Tec:", tecTextField, tecQTextField);
+		addRow("Agr:", agrTextField, agrQTextField);
+		addRow("Tot:", totTextField, avgQTextField);
 	}
-	
+
 	@Override
 	protected void update()
 	{

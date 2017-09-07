@@ -47,9 +47,9 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 
 		SimpleFormPanel playerFormPanel = new SimpleFormPanel();
 
-		playerFormPanel.addField("Name: ", nameTextField);
-		playerFormPanel.addField("Age:", ageTextField);
-		playerFormPanel.addField("Side:", sideTextField);
+		playerFormPanel.addRow("Name: ", nameTextField);
+		playerFormPanel.addRow("Age:", ageTextField);
+		playerFormPanel.addRow("Side:", sideTextField);
 
 		positionSuggestionPanel = new PositionSuggestionPanel<A>();
 		trainingSuggestionPanel = new TrainingSuggestionPanel<A>();

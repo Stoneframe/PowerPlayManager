@@ -25,13 +25,16 @@ public class SimpleFormPanel extends JPanel
 		gbc.gridy = 0;
 	}
 
-	public void addField(String labelText, JComponent component)
+	public void addRow(String labelText, JComponent... components)
 	{
 		gbc.gridx = 0;
 		add(new JLabel(labelText), gbc);
 
-		gbc.gridx = 1;
-		add(component, gbc);
+		for (JComponent component : components)
+		{
+			gbc.gridx++;
+			add(component, gbc);
+		}
 
 		gbc.gridy++;
 	}

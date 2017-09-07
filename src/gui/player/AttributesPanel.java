@@ -2,13 +2,12 @@ package gui.player;
 
 import java.util.function.Supplier;
 
-import javax.swing.JPanel;
-
+import gui.util.SimpleFormPanel;
 import model.Attributes;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public abstract class AttributesPanel<A extends Attributes> extends JPanel
+public abstract class AttributesPanel<A extends Attributes> extends SimpleFormPanel
 		implements
 		PropertyChangedListener
 {
