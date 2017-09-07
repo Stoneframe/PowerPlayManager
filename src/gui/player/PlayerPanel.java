@@ -6,11 +6,11 @@ import java.awt.Insets;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import evaluators.AttributeEvaluator;
+import gui.util.SimpleFormPanel;
 import model.Attributes;
 import model.Player;
 import util.PropertyChangedEvent;
@@ -22,10 +22,6 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 	private static final long serialVersionUID = 8319489027333955979L;
 
 	private Player<A> player;
-
-	private JLabel nameLabel;
-	private JLabel ageLabel;
-	private JLabel sideLabel;
 
 	private JTextField nameTextField;
 	private JTextField ageTextField;
@@ -40,17 +36,20 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 	{
 		this.attributePanel = attributePanel;
 
-		nameLabel = new JLabel("Name:");
 		nameTextField = new JTextField(15);
 		nameTextField.setEditable(false);
 
-		ageLabel = new JLabel("Age:");
 		ageTextField = new JTextField(15);
 		ageTextField.setEditable(false);
 
-		sideLabel = new JLabel("Side:");
 		sideTextField = new JTextField(15);
 		sideTextField.setEditable(false);
+
+		SimpleFormPanel playerFormPanel = new SimpleFormPanel();
+
+		playerFormPanel.addField("Name: ", nameTextField);
+		playerFormPanel.addField("Age:", ageTextField);
+		playerFormPanel.addField("Side:", sideTextField);
 
 		positionSuggestionPanel = new PositionSuggestionPanel<A>();
 		trainingSuggestionPanel = new TrainingSuggestionPanel<A>();
@@ -65,51 +64,19 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 5, 5, 5);
 		c.weighty = 1;
-
 		c.gridx = 0;
+
 		c.gridy = 0;
+		add(playerFormPanel, c);
 
-		add(nameLabel, c);
-
-		c.gridx = 1;
-
-		add(nameTextField, c);
-
-		c.gridx = 0;
 		c.gridy = 1;
-
-		add(ageLabel, c);
-
-		c.gridx = 1;
-
-		add(ageTextField, c);
-
-		c.gridx = 0;
-		c.gridy = 2;
-
-		add(sideLabel, c);
-
-		c.gridx = 1;
-
-		add(sideTextField, c);
-
-		c.gridx = 0;
-		c.gridy = 3;
-		c.gridwidth = 2;
-
 		add(attributePanel, c);
 
-		c.gridx = 0;
-		c.gridy = 4;
-		c.gridwidth = 2;
-
+		c.gridy = 2;
 		add(positionSuggestionPanel, c);
 
-		c.gridx = 0;
-		c.gridy = 5;
-		c.gridwidth = 2;
+		c.gridy = 3;
 		c.weighty = 100;
-
 		add(trainingSuggestionPanel, c);
 	}
 
