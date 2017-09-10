@@ -2,8 +2,9 @@ package evaluators;
 
 import model.Attributes;
 import model.Player;
+import util.AbstractModelObject;
 
-public class PlayerEvaluator<A extends Attributes>
+public class PlayerEvaluator<A extends Attributes> extends AbstractModelObject
 {
 	private static final int DAYS_PER_SEASON = 112;
 
@@ -21,11 +22,15 @@ public class PlayerEvaluator<A extends Attributes>
 		this.age15Rating = age15Rating;
 	}
 
-	public void setCoeffs(int a, int b, int c)
+	public void setCoeffs(double a, double b, double c)
 	{
 		this.a = a;
 		this.b = b;
 		this.c = c;
+		firePropertyChanged("Coeffs", new double[]
+		{
+				a, b, c
+		});
 	}
 
 	public void setAge15Rating(int age15Rating)

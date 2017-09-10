@@ -30,6 +30,7 @@ import javax.swing.table.TableColumn;
 import comparators.EvaluatorComparator;
 import comparators.QualityEvaluatorComparator;
 import comparators.RatingEvaluatorComparator;
+import development.TeamDevelopmentCalculator;
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import gui.player.PlayerSelectedEvent;
@@ -105,6 +106,8 @@ public class RosterPanel<A extends Attributes> extends JPanel
 
 	private JButton applyButton;
 
+	private JButton calcDevelopCurveButton;
+
 	private JTable rosterTable;
 
 	private JPanel controllerPanel;
@@ -114,6 +117,9 @@ public class RosterPanel<A extends Attributes> extends JPanel
 	private RosterTableModel rosterTableModel;
 
 	private Roster<A> roster;
+
+	private PropertyChangedListener propertyChangedListener =
+			(o, e) -> rosterTableModel.fireAllTableCellsUpdated();
 
 	public RosterPanel()
 	{
@@ -162,12 +168,24 @@ public class RosterPanel<A extends Attributes> extends JPanel
 			}
 		});
 
+		calcDevelopCurveButton = new JButton("Development Curve");
+		calcDevelopCurveButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				double[] coeffs = TeamDevelopmentCalculator.calculateDevelopmentCurve(roster);
+
+				playerEvaluator.setCoeffs(coeffs[0], coeffs[1], coeffs[2]);
+			}
+		});
+
 		controllerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		controllerPanel.add(highQualityLimitLabel);
 		controllerPanel.add(highQualityLimitTextField);
 		controllerPanel.add(lowQualityLimitLabel);
 		controllerPanel.add(lowQualityLimitTextField);
 		controllerPanel.add(applyButton);
+		controllerPanel.add(calcDevelopCurveButton);
 
 		setBorder(new CompoundBorder(
 				BorderFactory.createTitledBorder("Roster"),
@@ -213,7 +231,17 @@ public class RosterPanel<A extends Attributes> extends JPanel
 
 	public void setPlayerEvaluator(PlayerEvaluator<A> playerEvaluator)
 	{
+		if (this.playerEvaluator != null)
+		{
+			this.playerEvaluator.removePropertyChangedListener(propertyChangedListener);
+		}
+
 		this.playerEvaluator = playerEvaluator;
+
+		if (this.playerEvaluator != null)
+		{
+			this.playerEvaluator.addPropertyChangedListener(propertyChangedListener);
+		}
 
 		rosterTableModel.fireAllTableCellsUpdated();
 	}
