@@ -81,11 +81,11 @@ public class RosterPanel<A extends Attributes> extends JPanel
 				p -> playerEvaluator != null ? playerEvaluator.getCLValue(p) : 0,
 				v -> String.format("%.2f", v)),
 		new ColumnData(
-				"R Value",
+				"Rating Value",
 				p -> playerEvaluator != null ? playerEvaluator.getRatingValue(p) : 0,
 				v -> String.format("%.2f", v)),
 		new ColumnData(
-				"T Value",
+				"Training Value",
 				p -> playerEvaluator != null ? playerEvaluator.getTrainingValue(p) : 0,
 				v -> String.format("%.2f", v)),
 		new ColumnData(
