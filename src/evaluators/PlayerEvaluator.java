@@ -21,6 +21,18 @@ public class PlayerEvaluator<A extends Attributes>
 		this.age15Rating = age15Rating;
 	}
 
+	public void setCoeffs(int a, int b, int c)
+	{
+		this.a = a;
+		this.b = b;
+		this.c = c;
+	}
+
+	public void setAge15Rating(int age15Rating)
+	{
+		this.age15Rating = age15Rating;
+	}
+
 	public double getCLValue(Player<A> player)
 	{
 		int age = player.getAge();
