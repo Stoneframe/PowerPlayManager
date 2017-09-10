@@ -10,8 +10,9 @@ public class IceHockeyPlayer extends Player<IceHockeyAttributes>
 			int age,
 			int cl,
 			Side side,
-			IceHockeyAttributes attributes)
+			IceHockeyAttributes attributes,
+			double training)
 	{
-		super(name, age, cl, side, attributes);
+		super(name, age, cl, side, attributes, training);
 	}
 }

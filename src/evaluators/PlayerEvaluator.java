@@ -1,13 +1,12 @@
 package evaluators;
 
-import java.util.List;
-
-import comparators.QualityEvaluatorComparator;
 import model.Attributes;
 import model.Player;
 
 public class PlayerEvaluator<A extends Attributes>
 {
+	private static final int DAYS_PER_SEASON = 112;
+
 	private static int lowerBoundary(int cl)
 	{
 		return (int) (-3.5 * cl + 28.8);
@@ -18,27 +17,18 @@ public class PlayerEvaluator<A extends Attributes>
 		return (int) (-3.8 * cl + 41.2);
 	}
 
-	private List<AttributeEvaluator<A>> attributeEvaluators;
-	private double a, b, c, d;
+	private double a, b, c, age15Rating;
 
 	public PlayerEvaluator(
-			List<AttributeEvaluator<A>> attributeEvaluators,
 			double a,
 			double b,
 			double c,
-			double d)
+			double age15Rating)
 	{
-		this.attributeEvaluators = attributeEvaluators;
 		this.a = a;
 		this.b = b;
 		this.c = c;
-		this.d = d;
-	}
-
-	public double getRValue(Player<A> player)
-	{
-		return player.getAttributes().getTotalRating() / getGrowthValue(player.getAge())
-				* getQuality(player.getAttributes());
+		this.age15Rating = age15Rating;
 	}
 
 	public double getCLValue(Player<A> player)
@@ -52,22 +42,56 @@ public class PlayerEvaluator<A extends Attributes>
 		return (double) (age - lower) / (double) (upper - lower);
 	}
 
-	public double getXValue(Player<A> player)
+	public double getRatingValue(Player<A> player)
 	{
-		return getRValue(player) * getCLValue(player);
+		return player.getAttributes().getTotalRating() / getGrowthValue(player.getAge());
+	}
+
+	public double getTrainingValue(Player<A> player)
+	{
+		return player.getTraining() / f(player.getAge());
+	}
+
+	public double calculateRatingForAge(Player<A> player, int age)
+	{
+		return F(player.getAge(), age) * DAYS_PER_SEASON * getTrainingValue(player)
+				+ player.getAttributes().getTotalRating();
 	}
 
 	private double getGrowthValue(int x)
 	{
-		return a * Math.pow(x, 3) + b * Math.pow(x, 2) + c * Math.pow(x, 1) + d;
+		return F(15, x) * DAYS_PER_SEASON + age15Rating;
 	}
 
-	private double getQuality(A attributes)
+	private double f(int x)
 	{
-		return attributeEvaluators
-				.stream()
-				.max((a, b) -> new QualityEvaluatorComparator<A>(attributes).compare(a, b))
-				.map(e -> e.getQuality(attributes))
-				.get();
+		return a * Math.pow(x, 2) + b * Math.pow(x, 1) + c;
+	}
+
+	private double F(int a, int b)
+	{
+		boolean invert = false;
+
+		if (a == b)
+		{
+			return 0;
+		}
+		else if (b < a)
+		{
+			invert = true;
+
+			int t = a;
+			a = b;
+			b = t;
+		}
+
+		double sum = 0.5 * f(a) + 0.5 * f(b);
+
+		for (int x = a + 1; x < b; x++)
+		{
+			sum += f(x);
+		}
+
+		return invert ? -sum : sum;
 	}
 }

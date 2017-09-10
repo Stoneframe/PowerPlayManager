@@ -3,6 +3,8 @@ package gui.player;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -26,6 +28,7 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 	private JTextField nameTextField;
 	private JTextField ageTextField;
 	private JTextField sideTextField;
+	private JTextField trainingTextField;
 
 	private AttributesPanel<A> attributePanel;
 
@@ -45,11 +48,29 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 		sideTextField = new JTextField(15);
 		sideTextField.setEditable(false);
 
+		trainingTextField = new JTextField(15);
+		trainingTextField.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				try
+				{
+					double training = Double.parseDouble(trainingTextField.getText());
+
+					player.setTraining(training);
+				}
+				catch (NumberFormatException ex)
+				{
+				}
+			}
+		});
+
 		SimpleFormPanel playerFormPanel = new SimpleFormPanel();
 
 		playerFormPanel.addRow("Name: ", nameTextField);
 		playerFormPanel.addRow("Age:", ageTextField);
 		playerFormPanel.addRow("Side:", sideTextField);
+		playerFormPanel.addRow("Training:", trainingTextField);
 
 		positionSuggestionPanel = new PositionSuggestionPanel<A>();
 		trainingSuggestionPanel = new TrainingSuggestionPanel<A>();
@@ -114,6 +135,7 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 		nameTextField.setText(player == null ? "" : player.getName());
 		ageTextField.setText(player == null ? "" : Integer.toString(player.getAge()));
 		sideTextField.setText(player == null ? "" : player.getSide().toString());
+		trainingTextField.setText(player == null ? "" : Double.toString(player.getTraining()));
 	}
 
 	@Override

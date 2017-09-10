@@ -51,7 +51,8 @@ public class IceHockeyMarketPlayersParser extends PlayersParser<IceHockeyAttribu
 				parseAge(lines[3].split("\t")[0]),
 				parseCL(lines[3].split("\t")[3]),
 				parseSide(lines[3]),
-				parseAttributes(lines[3]));
+				parseAttributes(lines[3]),
+				0);
 	}
 
 	private static String parseName(String text)

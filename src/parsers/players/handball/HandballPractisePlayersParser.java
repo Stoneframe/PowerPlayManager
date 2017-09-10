@@ -46,7 +46,8 @@ public class HandballPractisePlayersParser extends PlayersParser<HandballAttribu
 									lines,
 									i + ATTRIBUTES_START_FIELD,
 									i + ATTRIBUTES_START_FIELD
-											+ ATTRIBUTE_FIELDS_PER_PLAYER)));
+											+ ATTRIBUTE_FIELDS_PER_PLAYER)),
+								0);
 
 				players.add(player);
 			}

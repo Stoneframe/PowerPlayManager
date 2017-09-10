@@ -39,7 +39,8 @@ public class HandballOverviewPlayersParser extends PlayersParser<HandballAttribu
 						parseAge(null),
 						0,
 						parseSide(columns[16]),
-						parseAttributes(Arrays.copyOfRange(columns, 6, 14)));
+						parseAttributes(Arrays.copyOfRange(columns, 6, 14)),
+						0);
 
 				players.add(player);
 			}

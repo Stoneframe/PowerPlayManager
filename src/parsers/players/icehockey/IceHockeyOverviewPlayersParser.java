@@ -53,7 +53,8 @@ public class IceHockeyOverviewPlayersParser extends PlayersParser<IceHockeyAttri
 				parseAge(columns[2]),
 				parseCL(columns[5]),
 				parseSide(columns[15]),
-				parseAttributes(Arrays.copyOfRange(columns, 6, 14)));
+				parseAttributes(Arrays.copyOfRange(columns, 6, 14)),
+				0);
 	}
 
 	private static String parseName(String text)

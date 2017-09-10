@@ -10,8 +10,9 @@ public class HandballPlayer extends Player<HandballAttributes>
 			int age,
 			int cl,
 			Side side,
-			HandballAttributes attributes)
+			HandballAttributes attributes,
+			double training)
 	{
-		super(name, age, cl, side, attributes);
+		super(name, age, cl, side, attributes, training);
 	}
 }

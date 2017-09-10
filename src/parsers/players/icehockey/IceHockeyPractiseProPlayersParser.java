@@ -53,7 +53,8 @@ public class IceHockeyPractiseProPlayersParser extends PlayersParser<IceHockeyAt
 				parseAge(lines[2]),
 				parseCL(lines[4]),
 				Side.UNKNOWN,
-				parseAttributes(Arrays.copyOfRange(lines, 5, 18)));
+				parseAttributes(Arrays.copyOfRange(lines, 5, 18)),
+				parseTraining(lines[19]));
 	}
 
 	private static String parseName(String text)
@@ -118,5 +119,10 @@ public class IceHockeyPractiseProPlayersParser extends PlayersParser<IceHockeyAt
 				rating,
 				quality
 		};
+	}
+
+	private static double parseTraining(String text)
+	{
+		return Double.parseDouble(text);
 	}
 }

@@ -77,17 +77,25 @@ public class RosterPanel<A extends Attributes> extends JPanel
 				p -> getPlayersBestPositionQuality(attributeEvaluators, p),
 				v -> String.format("%.1f", v)),
 		new ColumnData(
-				"R Value",
-				p -> playerEvaluator != null ? playerEvaluator.getRValue(p) : 0,
-				v -> String.format("%.1f", v)),
-		new ColumnData(
 				"CL Value",
 				p -> playerEvaluator != null ? playerEvaluator.getCLValue(p) : 0,
 				v -> String.format("%.2f", v)),
 		new ColumnData(
-				"X Value",
-				p -> playerEvaluator != null ? playerEvaluator.getXValue(p) : 0,
-				v -> String.format("%.1f", v)));
+				"R Value",
+				p -> playerEvaluator != null ? playerEvaluator.getRatingValue(p) : 0,
+				v -> String.format("%.2f", v)),
+		new ColumnData(
+				"T Value",
+				p -> playerEvaluator != null ? playerEvaluator.getTrainingValue(p) : 0,
+				v -> String.format("%.2f", v)),
+		new ColumnData(
+				"Age 25",
+				p -> playerEvaluator != null ? playerEvaluator.calculateRatingForAge(p, 25) : 0,
+				v -> String.format("%.2f", v)),
+		new ColumnData(
+				"Age 30",
+				p -> playerEvaluator != null ? playerEvaluator.calculateRatingForAge(p, 30) : 0,
+				v -> String.format("%.2f", v)));
 
 	private JLabel highQualityLimitLabel;
 	private JLabel lowQualityLimitLabel;
