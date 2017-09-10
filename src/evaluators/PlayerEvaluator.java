@@ -7,16 +7,6 @@ public class PlayerEvaluator<A extends Attributes>
 {
 	private static final int DAYS_PER_SEASON = 112;
 
-	private static int lowerBoundary(int cl)
-	{
-		return (int) (-3.5 * cl + 28.8);
-	}
-
-	private static int upperBoundary(int cl)
-	{
-		return (int) (-3.8 * cl + 41.2);
-	}
-
 	private double a, b, c, age15Rating;
 
 	public PlayerEvaluator(
@@ -93,5 +83,15 @@ public class PlayerEvaluator<A extends Attributes>
 		}
 
 		return invert ? -sum : sum;
+	}
+
+	private static int lowerBoundary(int cl)
+	{
+		return (int) (-3.5 * cl + 28.8);
+	}
+
+	private static int upperBoundary(int cl)
+	{
+		return (int) (-3.8 * cl + 41.2);
 	}
 }
