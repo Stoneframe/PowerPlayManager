@@ -14,6 +14,8 @@ import parsers.players.PlayersParser;
 public class HandballPractiseProPlayersParser extends PlayersParser<HandballAttributes>
 {
 	private static final int FIELDS_PER_PLAYER = 23;
+	private static final int AGE_FIELD = 2;
+	private static final int CL_FIELD = 4;
 	private static final int ATTRIBUTE_FIELDS_PER_PLAYER = 15;
 	private static final int ATTRIBUTES_START_FIELD = 5;
 
@@ -38,8 +40,8 @@ public class HandballPractiseProPlayersParser extends PlayersParser<HandballAttr
 				HandballPlayer player =
 						new HandballPlayer(
 								parseName(lines[i]),
-								parseAge(null),
-								0,
+								parseAge(lines[i + AGE_FIELD]),
+								parseCL(lines[i + CL_FIELD]),
 								Side.UNKNOWN,
 								parseAttributes(
 									Arrays.copyOfRange(
@@ -47,7 +49,7 @@ public class HandballPractiseProPlayersParser extends PlayersParser<HandballAttr
 										i + ATTRIBUTES_START_FIELD,
 										i + ATTRIBUTES_START_FIELD
 												+ ATTRIBUTE_FIELDS_PER_PLAYER)),
-								0);
+								parseTraining(lines[i + 21]));
 
 				players.add(player);
 			}
@@ -69,7 +71,12 @@ public class HandballPractiseProPlayersParser extends PlayersParser<HandballAttr
 
 	private static int parseAge(String text)
 	{
-		return 0;
+		return Integer.parseInt(text);
+	}
+
+	private static int parseCL(String text)
+	{
+		return Integer.parseInt(text.split("/")[0]);
 	}
 
 	private static HandballAttributes parseAttributes(String[] texts)
@@ -121,5 +128,10 @@ public class HandballPractiseProPlayersParser extends PlayersParser<HandballAttr
 				rating,
 				quality
 		};
+	}
+
+	private static double parseTraining(String text)
+	{
+		return Double.parseDouble(text);
 	}
 }

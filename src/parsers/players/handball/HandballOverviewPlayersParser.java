@@ -36,8 +36,8 @@ public class HandballOverviewPlayersParser extends PlayersParser<HandballAttribu
 
 				HandballPlayer player = new HandballPlayer(
 						parseName(columns[0]),
-						parseAge(null),
-						0,
+						parseAge(columns[2]),
+						parseCL(columns[5]),
 						parseSide(columns[16]),
 						parseAttributes(Arrays.copyOfRange(columns, 6, 14)),
 						0);
@@ -62,7 +62,12 @@ public class HandballOverviewPlayersParser extends PlayersParser<HandballAttribu
 
 	private static int parseAge(String text)
 	{
-		return 0;
+		return Integer.parseInt(text);
+	}
+
+	private static int parseCL(String text)
+	{
+		return Integer.parseInt(text.split("/")[0]);
 	}
 
 	private static Side parseSide(String text)

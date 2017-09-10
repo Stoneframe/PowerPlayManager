@@ -33,8 +33,8 @@ public class HandballMarketPlayersParser extends PlayersParser<HandballAttribute
 			{
 				HandballPlayer player = new HandballPlayer(
 						parseName(lines[i]),
-						parseAge(null),
-						0,
+						parseAge(lines[i + 3].split("\t")[0]),
+						parseCL(lines[i + 3].split("\t")[3]),
 						parseSide(lines[i + 3].split("\t")[14]),
 						parseAttributes(
 							Arrays.copyOfRange(lines[i + 3].trim().split("\t"), 4, 12)),
@@ -60,7 +60,12 @@ public class HandballMarketPlayersParser extends PlayersParser<HandballAttribute
 
 	private static int parseAge(String text)
 	{
-		return 0;
+		return Integer.parseInt(text);
+	}
+
+	private static int parseCL(String text)
+	{
+		return Integer.parseInt(text.split("/")[0]);
 	}
 
 	private static Side parseSide(String text)
