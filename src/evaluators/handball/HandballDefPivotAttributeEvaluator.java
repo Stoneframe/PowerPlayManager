@@ -6,12 +6,12 @@ public class HandballDefPivotAttributeEvaluator extends HandballAttributeEvaluat
 
 	private static final int GOA = 0;
 	private static final int FIP = 100;
-	private static final int SHO = 40;
-	private static final int BLK = 80;
-	private static final int PAS = 40;
-	private static final int TEC = 60;
-	private static final int SPE = 40;
-	private static final int AGR = 80;
+	private static final int SHO = 0;
+	private static final int BLK = 50;
+	private static final int PAS = 30;
+	private static final int TEC = 50;
+	private static final int SPE = 30;
+	private static final int AGR = 70;
 
 	public HandballDefPivotAttributeEvaluator()
 	{

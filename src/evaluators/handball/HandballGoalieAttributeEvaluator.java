@@ -7,10 +7,10 @@ public class HandballGoalieAttributeEvaluator extends HandballAttributeEvaluator
 	private static final int GOA = 100;
 	private static final int FIP = 0;
 	private static final int SHO = 0;
-	private static final int BLK = 80;
-	private static final int PAS = 60;
-	private static final int TEC = 40;
-	private static final int SPE = 40;
+	private static final int BLK = 70;
+	private static final int PAS = 50;
+	private static final int TEC = 30;
+	private static final int SPE = 30;
 	private static final int AGR = 0;
 
 	public HandballGoalieAttributeEvaluator()

@@ -18,6 +18,7 @@ public class HandballPractisePlayersParser extends PlayersParser<HandballAttribu
 	private static final int CL_FIELD = 4;
 	private static final int ATTRIBUTE_FIELDS_PER_PLAYER = 8;
 	private static final int ATTRIBUTES_START_FIELD = 5;
+	private static final int TRAINING_FIELD = 13;
 
 	@Override
 	public String getName()
@@ -49,7 +50,7 @@ public class HandballPractisePlayersParser extends PlayersParser<HandballAttribu
 									i + ATTRIBUTES_START_FIELD,
 									i + ATTRIBUTES_START_FIELD
 											+ ATTRIBUTE_FIELDS_PER_PLAYER)),
-								parseTraining(lines[13]));
+								parseTraining(lines[i + TRAINING_FIELD]));
 
 				players.add(player);
 			}
