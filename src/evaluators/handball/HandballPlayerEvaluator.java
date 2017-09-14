@@ -1,5 +1,8 @@
 package evaluators.handball;
 
+import java.util.List;
+
+import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import model.handball.HandballAttributes;
 
@@ -8,8 +11,14 @@ public class HandballPlayerEvaluator extends PlayerEvaluator<HandballAttributes>
 	private static final double A = -0.001801, B = 0.01567, C = 1.351;
 	private static final double AGE_15_RATING = 190;
 
-	public HandballPlayerEvaluator()
+	public HandballPlayerEvaluator(List<AttributeEvaluator<HandballAttributes>> evaluators)
 	{
-		super(A, B, C, AGE_15_RATING);
+		super(A, B, C, AGE_15_RATING, evaluators);
+	}
+
+	@Override
+	protected double getTrainingEffectivness()
+	{
+		return 0.33;
 	}
 }

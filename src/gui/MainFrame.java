@@ -64,7 +64,6 @@ public class MainFrame extends JFrame
 					new IceHockeyGoalieAttributeEvaluator(),
 					new IceHockeyBackAttributeEvaluator(),
 					new IceHockeyWingAttributeEvaluator(),
-					new IceHockeyCenterAttributeEvaluator(),
 					new IceHockeySpecialAttributeEvaluator()),
 				Arrays.asList(
 					new IceHockeyMarketPlayersParser(),

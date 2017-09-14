@@ -1,24 +1,63 @@
 package evaluators;
 
+import java.util.List;
+
+import comparators.QualityEvaluatorComparator;
+import comparators.RatingEvaluatorComparator;
 import model.Attributes;
 import model.Player;
 
-public class PlayerEvaluator<A extends Attributes>
+public abstract class PlayerEvaluator<A extends Attributes>
 {
 	private static final int DAYS_PER_SEASON = 112;
 
 	private double a, b, c, age15Rating;
 
+	private List<AttributeEvaluator<A>> attributeEvaluators;
+
 	public PlayerEvaluator(
 			double a,
 			double b,
 			double c,
-			double age15Rating)
+			double age15Rating,
+			List<AttributeEvaluator<A>> evaluators)
 	{
 		this.a = a;
 		this.b = b;
 		this.c = c;
 		this.age15Rating = age15Rating;
+		this.attributeEvaluators = evaluators;
+	}
+
+	public void setAttributeEvaluators(List<AttributeEvaluator<A>> attributeEvaluators)
+	{
+		this.attributeEvaluators = attributeEvaluators;
+	}
+
+	public PositionNameValue getBestPositionRating(Player<A> player)
+	{
+		AttributeEvaluator<A> evaluator = attributeEvaluators
+				.stream()
+				.max((a, b) -> new RatingEvaluatorComparator<A>(
+						player.getAttributes()).compare(a, b))
+				.get();
+
+		return new PositionNameValue(
+				evaluator.getName(),
+				evaluator.getRating(player.getAttributes()));
+	}
+
+	public PositionNameValue getBestPositionQuality(Player<A> player)
+	{
+		AttributeEvaluator<A> evaluator = attributeEvaluators
+				.stream()
+				.max((a, b) -> new QualityEvaluatorComparator<A>(
+						player.getAttributes()).compare(a, b))
+				.get();
+
+		return new PositionNameValue(
+				evaluator.getName(),
+				evaluator.getQuality(player.getAttributes()));
 	}
 
 	public double getCLValue(Player<A> player)
@@ -32,6 +71,12 @@ public class PlayerEvaluator<A extends Attributes>
 		return (double) (age - lower) / (double) (upper - lower);
 	}
 
+	public double calculateRatingForAge(Player<A> player, int age)
+	{
+		return F(player.getAge(), age) * DAYS_PER_SEASON * getTrainingValue(player)
+				+ player.getAttributes().getTotalRating();
+	}
+
 	public double getRatingValue(Player<A> player)
 	{
 		return player.getAttributes().getTotalRating() / getGrowthValue(player.getAge());
@@ -39,13 +84,20 @@ public class PlayerEvaluator<A extends Attributes>
 
 	public double getTrainingValue(Player<A> player)
 	{
-		return player.getTraining() / f(player.getAge());
+		double training = player.getTraining() != 0
+				? player.getTraining()
+				: calculateTraning(player);
+
+		return training / f(player.getAge());
 	}
 
-	public double calculateRatingForAge(Player<A> player, int age)
+	private double calculateTraning(Player<A> player)
 	{
-		return F(player.getAge(), age) * DAYS_PER_SEASON * getTrainingValue(player)
-				+ player.getAttributes().getTotalRating();
+		return -0.02278 * player.getAge()
+				+ 0.1291 * player.getCL()
+				- 0.0003325 * player.getAttributes().getAverageQuality()
+				+ 0.009671 * getBestPositionQuality(player).getValue()
+						* getTrainingEffectivness();
 	}
 
 	private double getGrowthValue(int x)
@@ -94,4 +146,6 @@ public class PlayerEvaluator<A extends Attributes>
 	{
 		return (int) (-3.8 * cl + 41.2);
 	}
+
+	protected abstract double getTrainingEffectivness();
 }

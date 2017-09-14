@@ -61,10 +61,8 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 			}
 		});
 
-		rosterPanel = new RosterPanel<A>();
+		rosterPanel = new RosterPanel<A>(playerEvaluator);
 		rosterPanel.bind(roster);
-		rosterPanel.setPlayerEvaluator(playerEvaluator);
-		rosterPanel.setAttributeEvaluators(attributeEvaluators);
 		rosterPanel.setPlayerSelectedListener(new PlayerSelectedListener<A>()
 		{
 			public void playerSelected(Object source, PlayerSelectedEvent<A> event)

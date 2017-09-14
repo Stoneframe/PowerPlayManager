@@ -25,7 +25,7 @@ public class HandballMainPanel
 				new HandballFormationTemplatePanel(attributeEvaluators),
 				new HandballFormationPanelFactory(),
 				new HandballPaulsFormationBuilder(),
-				new HandballPlayerEvaluator(),
+				new HandballPlayerEvaluator(attributeEvaluators),
 				attributeEvaluators,
 				parsers);
 	}

@@ -25,7 +25,7 @@ public class IceHockeyMainPanel
 				new IceHockeyFormationTemplatePanel(attributeEvaluators),
 				new IceHockeyFormationPanelFactory(),
 				new IceHockeyPaulsFormationBuilder(),
-				new IceHockeyPlayerEvaluator(),
+				new IceHockeyPlayerEvaluator(attributeEvaluators),
 				attributeEvaluators,
 				parsers);
 	}
