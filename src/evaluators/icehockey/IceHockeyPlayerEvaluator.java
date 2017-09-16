@@ -15,10 +15,4 @@ public class IceHockeyPlayerEvaluator extends PlayerEvaluator<IceHockeyAttribute
 	{
 		super(A, B, C, AGE_15_RATING, evaluators);
 	}
-
-	@Override
-	protected double getTrainingEffectivness()
-	{
-		return 1;
-	}
 }

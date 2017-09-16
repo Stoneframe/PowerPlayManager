@@ -15,10 +15,4 @@ public class HandballPlayerEvaluator extends PlayerEvaluator<HandballAttributes>
 	{
 		super(A, B, C, AGE_15_RATING, evaluators);
 	}
-
-	@Override
-	protected double getTrainingEffectivness()
-	{
-		return 0.33;
-	}
 }
