@@ -11,7 +11,7 @@ public class TrainingSuggestionPanel<A extends Attributes>
 
 	public TrainingSuggestionPanel()
 	{
-		super("Traning");
+		super("Training");
 	}
 
 	@Override
