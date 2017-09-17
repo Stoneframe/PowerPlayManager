@@ -7,11 +7,14 @@ import comparators.RatingEvaluatorComparator;
 import model.Attributes;
 import model.Player;
 
-public abstract class PlayerEvaluator<A extends Attributes>
+public class PlayerEvaluator<A extends Attributes>
 {
 	private static final int DAYS_PER_SEASON = 112;
 
 	private double a, b, c, age15Rating;
+
+	private int facilityLevel = 1;
+	private int staffEffectivness = 0;
 
 	private List<AttributeEvaluator<A>> attributeEvaluators;
 
@@ -27,6 +30,26 @@ public abstract class PlayerEvaluator<A extends Attributes>
 		this.c = c;
 		this.age15Rating = age15Rating;
 		this.attributeEvaluators = evaluators;
+	}
+
+	public int getFacilityLevel()
+	{
+		return facilityLevel;
+	}
+
+	public void setFacilityLevel(int facilityLevel)
+	{
+		this.facilityLevel = facilityLevel;
+	}
+
+	public int getStaffEffectivness()
+	{
+		return staffEffectivness;
+	}
+
+	public void setStaffEffectivness(int staffEffectivness)
+	{
+		this.staffEffectivness = staffEffectivness;
 	}
 
 	public void setAttributeEvaluators(List<AttributeEvaluator<A>> attributeEvaluators)
@@ -73,8 +96,10 @@ public abstract class PlayerEvaluator<A extends Attributes>
 
 	public double calculateRatingForAge(Player<A> player, int age)
 	{
+		// @formatter:off
 		return F(player.getAge(), age) * DAYS_PER_SEASON * getTrainingValue(player)
-				+ player.getAttributes().getTotalRating();
+					+ player.getAttributes().getTotalRating();
+		// @formatter:on
 	}
 
 	public double getRatingValue(Player<A> player)
@@ -93,11 +118,13 @@ public abstract class PlayerEvaluator<A extends Attributes>
 
 	private double calculateTraning(Player<A> player)
 	{
-		return -0.02278 * player.getAge()
-				+ 0.1291 * player.getCL()
+		// @formatter:off
+		return (-0.02278 * player.getAge()
+				+ 0.1291 * player.getCL() 
 				- 0.0003325 * player.getAttributes().getAverageQuality()
-				+ 0.009671 * getBestPositionQuality(player).getValue()
-						* getTrainingEffectivness();
+				+ 0.009671 * getBestPositionQuality(player).getValue())
+					* getTrainingEffectivness();
+		// @formatter:on
 	}
 
 	private double getGrowthValue(int x)
@@ -147,5 +174,10 @@ public abstract class PlayerEvaluator<A extends Attributes>
 		return (int) (-3.8 * cl + 41.2);
 	}
 
-	protected abstract double getTrainingEffectivness();
+	protected double getTrainingEffectivness()
+	{
+		// @formatter:off
+		return 0.274137 + 0.0000172331 * (6 + facilityLevel + Math.pow(facilityLevel, 2)) * (200 + staffEffectivness);
+		// @formatter:on
+	}
 }

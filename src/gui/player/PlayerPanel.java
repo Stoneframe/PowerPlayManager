@@ -1,5 +1,7 @@
 package gui.player;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,6 +11,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import evaluators.AttributeEvaluator;
@@ -19,7 +22,8 @@ import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
 public class PlayerPanel<A extends Attributes> extends JPanel
-		implements PropertyChangedListener
+		implements
+		PropertyChangedListener
 {
 	private static final long serialVersionUID = 8319489027333955979L;
 
@@ -38,6 +42,8 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 	public PlayerPanel(AttributesPanel<A> attributePanel)
 	{
 		this.attributePanel = attributePanel;
+
+		setPreferredSize(new Dimension(275, 0));
 
 		nameTextField = new JTextField(15);
 		nameTextField.setEditable(false);
@@ -77,8 +83,6 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 
 		setBorder(BorderFactory.createTitledBorder("Player"));
 
-		setLayout(new GridBagLayout());
-
 		GridBagConstraints c = new GridBagConstraints();
 
 		c.anchor = GridBagConstraints.NORTHWEST;
@@ -87,18 +91,28 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 		c.weighty = 1;
 		c.gridx = 0;
 
+		JPanel panel = new JPanel(new GridBagLayout());
+
 		c.gridy = 0;
-		add(playerFormPanel, c);
+		panel.add(playerFormPanel, c);
 
 		c.gridy = 1;
-		add(attributePanel, c);
+		panel.add(attributePanel, c);
 
 		c.gridy = 2;
-		add(positionSuggestionPanel, c);
+		panel.add(positionSuggestionPanel, c);
 
 		c.gridy = 3;
 		c.weighty = 100;
-		add(trainingSuggestionPanel, c);
+		panel.add(trainingSuggestionPanel, c);
+
+		JScrollPane scrollPane = new JScrollPane(panel);
+
+		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+
+		setLayout(new BorderLayout());
+
+		add(scrollPane, BorderLayout.CENTER);
 	}
 
 	public void bind(Player<A> player)

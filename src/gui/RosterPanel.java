@@ -104,8 +104,8 @@ public class RosterPanel<A extends Attributes> extends JPanel
 				p -> playerEvaluator.calculateRatingForAge(p, 30),
 				v -> String.format("%.0f", v)));
 
-	private JLabel highQualityLimitLabel;
-	private JLabel lowQualityLimitLabel;
+	private JTextField facilityLevelTextField;
+	private JTextField staffEffectivnessTextField;
 
 	private JTextField highQualityLimitTextField;
 	private JTextField lowQualityLimitTextField;
@@ -162,7 +162,8 @@ public class RosterPanel<A extends Attributes> extends JPanel
 				{
 					Player<A> player = roster.get(rosterTable.convertRowIndexToModel(row));
 
-					builder.append(String.format("%s (%s) - %s",
+					builder.append(String.format(
+						"%s (%s) - %s",
 						playerEvaluator.getBestPositionRating(player).getName(),
 						player.getSide(),
 						player.getName()));
@@ -181,7 +182,8 @@ public class RosterPanel<A extends Attributes> extends JPanel
 
 				StringSelection selection = new StringSelection(builder.toString());
 
-				Toolkit.getDefaultToolkit()
+				Toolkit
+						.getDefaultToolkit()
 						.getSystemClipboard()
 						.setContents(selection, selection);
 			}
@@ -191,25 +193,39 @@ public class RosterPanel<A extends Attributes> extends JPanel
 		tablePanel.add(rosterTable.getTableHeader(), BorderLayout.PAGE_START);
 		tablePanel.add(new JScrollPane(rosterTable), BorderLayout.CENTER);
 
-		highQualityLimitLabel = new JLabel("High Quality:");
-		lowQualityLimitLabel = new JLabel("Low Quality:");
-
 		highQualityLimitTextField = new JTextField(5);
 		lowQualityLimitTextField = new JTextField(5);
+
+		facilityLevelTextField = new JTextField(
+				Integer.toString(playerEvaluator.getFacilityLevel()),
+				5);
+		staffEffectivnessTextField = new JTextField(
+				Integer.toString(playerEvaluator.getStaffEffectivness()),
+				5);
 
 		applyButton = new JButton("Apply");
 		applyButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				int facilityLevel = parseInteger(facilityLevelTextField.getText(), 1);
+				int staffEffectivness = parseInteger(staffEffectivnessTextField.getText(), 0);
+
+				playerEvaluator.setFacilityLevel(facilityLevel);
+				playerEvaluator.setStaffEffectivness(staffEffectivness);
+
 				rosterTableModel.fireAllTableCellsUpdated();
 			}
 		});
 
 		controllerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		controllerPanel.add(highQualityLimitLabel);
+		controllerPanel.add(new JLabel("Facility Level:"));
+		controllerPanel.add(facilityLevelTextField);
+		controllerPanel.add(new JLabel("Staff Effectivness:"));
+		controllerPanel.add(staffEffectivnessTextField);
+		controllerPanel.add(new JLabel("High Quality:"));
 		controllerPanel.add(highQualityLimitTextField);
-		controllerPanel.add(lowQualityLimitLabel);
+		controllerPanel.add(new JLabel("Low Quality:"));
 		controllerPanel.add(lowQualityLimitTextField);
 		controllerPanel.add(applyButton);
 
@@ -425,18 +441,12 @@ public class RosterPanel<A extends Attributes> extends JPanel
 	{
 		private static final long serialVersionUID = -318707452817342668L;
 
-		private final Color SELECTED_HIGH_QUALITY_AND_SYMMETRIC =
-				Colors.GREEN;
-		private final Color UNSELECTED_HIGH_QUALITY_AND_SYMMETRIC =
-				Colors.LIGHT_GREEN;
-		private final Color SELECTED_HIGH_QUALITY =
-				Colors.BLUE;
-		private final Color UNSELECTED_HIGH_QUALITY =
-				Colors.LIGHT_BLUE;
-		private final Color SELECTED_LOW_QUALITY =
-				Colors.RED;
-		private final Color UNSELECTED_LOW_QUALITY =
-				Colors.LIGHT_RED;
+		private final Color SELECTED_HIGH_QUALITY_AND_SYMMETRIC = Colors.GREEN;
+		private final Color UNSELECTED_HIGH_QUALITY_AND_SYMMETRIC = Colors.LIGHT_GREEN;
+		private final Color SELECTED_HIGH_QUALITY = Colors.BLUE;
+		private final Color UNSELECTED_HIGH_QUALITY = Colors.LIGHT_BLUE;
+		private final Color SELECTED_LOW_QUALITY = Colors.RED;
+		private final Color UNSELECTED_LOW_QUALITY = Colors.LIGHT_RED;
 
 		@Override
 		public TableColumn getColumn(int columnIndex)
@@ -445,8 +455,7 @@ public class RosterPanel<A extends Attributes> extends JPanel
 
 			column.setCellRenderer(new DefaultTableCellRenderer()
 			{
-				private static final long serialVersionUID =
-						-871237359467912116L;
+				private static final long serialVersionUID = -871237359467912116L;
 
 				@Override
 				public Component getTableCellRendererComponent(
@@ -459,14 +468,13 @@ public class RosterPanel<A extends Attributes> extends JPanel
 				{
 					value = columnDatas.get(columnIndex).formatValue(value);
 
-					Component component =
-							super.getTableCellRendererComponent(
-								table,
-								value,
-								isSelected,
-								hasFocus,
-								row,
-								column);
+					Component component = super.getTableCellRendererComponent(
+						table,
+						value,
+						isSelected,
+						hasFocus,
+						row,
+						column);
 
 					Player<A> player = roster.get(table.convertRowIndexToModel(row));
 
