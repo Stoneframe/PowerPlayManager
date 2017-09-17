@@ -1,6 +1,7 @@
 package gui.player;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -41,6 +42,8 @@ public class PlayerPanel<A extends Attributes> extends JPanel
 	public PlayerPanel(AttributesPanel<A> attributePanel)
 	{
 		this.attributePanel = attributePanel;
+
+		setPreferredSize(new Dimension(275, 0));
 
 		nameTextField = new JTextField(15);
 		nameTextField.setEditable(false);
