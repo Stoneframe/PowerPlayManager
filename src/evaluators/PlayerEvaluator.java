@@ -95,12 +95,12 @@ public class PlayerEvaluator<A extends Attributes>
 	{
 		double training = player.getTraining() != 0
 				? player.getTraining()
-				: calculateTraning(player);
+				: calculatePlayerTraining(player);
 
 		return training / f(player.getAge());
 	}
 
-	private double calculateTraning(Player<A> player)
+	private double calculatePlayerTraining(Player<A> player)
 	{
 		return getTrainingFacilityEffectivness() * getEstimatedPlayerTraining(player);
 	}
