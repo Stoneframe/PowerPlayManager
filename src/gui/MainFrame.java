@@ -9,6 +9,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import evaluators.FacilityEvaluator;
 import evaluators.handball.HandballDefBackAttributeEvaluator;
 import evaluators.handball.HandballDefPivotAttributeEvaluator;
 import evaluators.handball.HandballDefWingAttributeEvaluator;
@@ -45,6 +46,7 @@ public class MainFrame extends JFrame
 		super("PPM Assistant");
 
 		handballPanel = new HandballMainPanel(
+				new FacilityEvaluator(),
 				Arrays.asList(
 					new HandballGoalieAttributeEvaluator(),
 					new HandballDefBackAttributeEvaluator(),
@@ -60,6 +62,7 @@ public class MainFrame extends JFrame
 					new HandballPractiseProPlayersParser()));
 
 		iceHockeyPanel = new IceHockeyMainPanel(
+				new FacilityEvaluator(),
 				Arrays.asList(
 					new IceHockeyGoalieAttributeEvaluator(),
 					new IceHockeyBackAttributeEvaluator(),

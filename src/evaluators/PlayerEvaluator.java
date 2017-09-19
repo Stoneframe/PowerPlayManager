@@ -18,18 +18,22 @@ public class PlayerEvaluator<A extends Attributes>
 
 	private List<AttributeEvaluator<A>> attributeEvaluators;
 
+	private FacilityEvaluator facilityEvaluator;
+
 	public PlayerEvaluator(
 			double a,
 			double b,
 			double c,
 			double age15Rating,
-			List<AttributeEvaluator<A>> evaluators)
+			List<AttributeEvaluator<A>> attributeEvaluators,
+			FacilityEvaluator facilityEvaluator)
 	{
 		this.a = a;
 		this.b = b;
 		this.c = c;
 		this.age15Rating = age15Rating;
-		this.attributeEvaluators = evaluators;
+		this.attributeEvaluators = attributeEvaluators;
+		this.facilityEvaluator = facilityEvaluator;
 	}
 
 	public int getFacilityLevel()
@@ -96,10 +100,8 @@ public class PlayerEvaluator<A extends Attributes>
 
 	public double calculateRatingForAge(Player<A> player, int age)
 	{
-		// @formatter:off
 		return F(player.getAge(), age) * DAYS_PER_SEASON * getTrainingValue(player)
-					+ player.getAttributes().getTotalRating();
-		// @formatter:on
+				+ player.getAttributes().getTotalRating();
 	}
 
 	public double getRatingValue(Player<A> player)
@@ -118,13 +120,25 @@ public class PlayerEvaluator<A extends Attributes>
 
 	private double calculateTraning(Player<A> player)
 	{
-		// @formatter:off
-		return (-0.02278 * player.getAge()
-				+ 0.1291 * player.getCL() 
+		return getTrainingFacilityEffectivness() * getEstimatedPlayerTraining(player);
+	}
+
+	private double getTrainingFacilityEffectivness()
+	{
+		double facilityEffectivness =
+				facilityEvaluator.getOverallEffectivness(
+					facilityLevel,
+					staffEffectivness);
+
+		return (40 + facilityEffectivness) / 145;
+	}
+
+	private double getEstimatedPlayerTraining(Player<A> player)
+	{
+		return -0.02278 * player.getAge()
+				+ 0.1291 * player.getCL()
 				- 0.0003325 * player.getAttributes().getAverageQuality()
-				+ 0.009671 * getBestPositionQuality(player).getValue())
-					* getTrainingEffectivness();
-		// @formatter:on
+				+ 0.009671 * getBestPositionQuality(player).getValue();
 	}
 
 	private double getGrowthValue(int x)
@@ -172,12 +186,5 @@ public class PlayerEvaluator<A extends Attributes>
 	private static int upperBoundary(int cl)
 	{
 		return (int) (-3.8 * cl + 41.2);
-	}
-
-	protected double getTrainingEffectivness()
-	{
-		// @formatter:off
-		return 0.274137 + 0.0000172331 * (6 + facilityLevel + Math.pow(facilityLevel, 2)) * (200 + staffEffectivness);
-		// @formatter:on
 	}
 }
