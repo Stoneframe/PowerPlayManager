@@ -91,7 +91,7 @@ public class PlayerEvaluator<A extends Attributes>
 				+ player.getAttributes().getTotalRating();
 	}
 
-	public double getTrainingValue(Player<A> player)
+	private double getTrainingValue(Player<A> player)
 	{
 		double training = player.getTraining() != 0
 				? player.getTraining()
