@@ -11,7 +11,7 @@ public class PlayerEvaluator<A extends Attributes>
 {
 	private static final int DAYS_PER_SEASON = 112;
 
-	private double a, b, c, age15Rating;
+	private double a, b, c;
 
 	private int facilityLevel = 1;
 	private int staffEffectivness = 0;
@@ -24,14 +24,12 @@ public class PlayerEvaluator<A extends Attributes>
 			double a,
 			double b,
 			double c,
-			double age15Rating,
 			List<AttributeEvaluator<A>> attributeEvaluators,
 			FacilityEvaluator facilityEvaluator)
 	{
 		this.a = a;
 		this.b = b;
 		this.c = c;
-		this.age15Rating = age15Rating;
 		this.attributeEvaluators = attributeEvaluators;
 		this.facilityEvaluator = facilityEvaluator;
 	}
@@ -93,11 +91,6 @@ public class PlayerEvaluator<A extends Attributes>
 				+ player.getAttributes().getTotalRating();
 	}
 
-	public double getRatingValue(Player<A> player)
-	{
-		return player.getAttributes().getTotalRating() / getGrowthValue(player.getAge());
-	}
-
 	public double getTrainingValue(Player<A> player)
 	{
 		double training = player.getTraining() != 0
@@ -128,11 +121,6 @@ public class PlayerEvaluator<A extends Attributes>
 				+ 0.1291 * player.getCL()
 				- 0.0003325 * player.getAttributes().getAverageQuality()
 				+ 0.009671 * getBestPositionQuality(player).getValue();
-	}
-
-	private double getGrowthValue(int x)
-	{
-		return F(15, x) * DAYS_PER_SEASON + age15Rating;
 	}
 
 	private double f(int x)
