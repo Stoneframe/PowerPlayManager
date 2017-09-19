@@ -87,17 +87,6 @@ public class PlayerEvaluator<A extends Attributes>
 				evaluator.getQuality(player.getAttributes()));
 	}
 
-	public double getCLValue(Player<A> player)
-	{
-		int age = player.getAge();
-		int cl = player.getCL();
-
-		int lower = lowerBoundary(cl);
-		int upper = upperBoundary(cl);
-
-		return (double) (age - lower) / (double) (upper - lower);
-	}
-
 	public double calculateRatingForAge(Player<A> player, int age)
 	{
 		return F(player.getAge(), age) * DAYS_PER_SEASON * getTrainingValue(player)
@@ -176,15 +165,5 @@ public class PlayerEvaluator<A extends Attributes>
 		}
 
 		return invert ? -sum : sum;
-	}
-
-	private static int lowerBoundary(int cl)
-	{
-		return (int) (-3.5 * cl + 28.8);
-	}
-
-	private static int upperBoundary(int cl)
-	{
-		return (int) (-3.8 * cl + 41.2);
 	}
 }
