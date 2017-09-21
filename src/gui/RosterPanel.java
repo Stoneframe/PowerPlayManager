@@ -162,11 +162,12 @@ public class RosterPanel<A extends Attributes> extends JPanel
 				{
 					Player<A> player = roster.get(rosterTable.convertRowIndexToModel(row));
 
-					builder.append(String.format(
-						"%s (%s) - %s",
-						playerEvaluator.getBestPositionRating(player).getName(),
-						player.getSide(),
-						player.getName()));
+					builder.append(
+						String.format(
+							"%s (%s) - %s",
+							playerEvaluator.getBestPositionRating(player).getName(),
+							player.getSide(),
+							player.getName()));
 
 					Object value = columnDatas
 							.get(rosterTable.getSelectedColumn())
@@ -229,9 +230,10 @@ public class RosterPanel<A extends Attributes> extends JPanel
 		controllerPanel.add(lowQualityLimitTextField);
 		controllerPanel.add(applyButton);
 
-		setBorder(new CompoundBorder(
-				BorderFactory.createTitledBorder("Roster"),
-				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		setBorder(
+			new CompoundBorder(
+					BorderFactory.createTitledBorder("Roster"),
+					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		setLayout(new BorderLayout());
 
