@@ -3,7 +3,8 @@ package comparators;
 import evaluators.AttributeEvaluator;
 import model.Attributes;
 
-public class QualityEvaluatorComparator<A extends Attributes> extends EvaluatorComparator<A>
+public class QualityEvaluatorComparator<A extends Attributes>
+	extends EvaluatorComparator<A>
 {
 	public QualityEvaluatorComparator(A attributes)
 	{

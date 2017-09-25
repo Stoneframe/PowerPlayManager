@@ -2,7 +2,8 @@ package model;
 
 import util.AbstractModelObject;
 
-public class Player<A extends Attributes> extends AbstractModelObject
+public class Player<A extends Attributes>
+	extends AbstractModelObject
 {
 	protected String name;
 	protected int age;

@@ -3,7 +3,8 @@ package evaluators.handball;
 import evaluators.AttributeEvaluator;
 import model.handball.HandballAttributes;
 
-public class HandballAttributeEvaluator extends AttributeEvaluator<HandballAttributes>
+public class HandballAttributeEvaluator
+	extends AttributeEvaluator<HandballAttributes>
 {
 	private double goa;
 	private double fip;

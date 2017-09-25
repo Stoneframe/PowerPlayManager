@@ -32,8 +32,7 @@ public class FormationBuilderFrame<
 		A extends Attributes,
 		F extends Formation,
 		FT extends FormationTemplate>
-		extends
-		JFrame
+	extends JFrame
 {
 	private static final long serialVersionUID = -5043434553464317980L;
 

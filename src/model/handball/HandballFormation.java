@@ -3,7 +3,8 @@ package model.handball;
 import model.Formation;
 import model.Player;
 
-public class HandballFormation extends Formation
+public class HandballFormation
+	extends Formation
 {
 	private Player<HandballAttributes> pivot;
 	private Player<HandballAttributes> leftWing;

@@ -11,7 +11,8 @@ import model.handball.HandballPlayer;
 import parsers.ParseException;
 import parsers.players.PlayersParser;
 
-public class HandballPractisePlayersParser extends PlayersParser<HandballAttributes>
+public class HandballPractisePlayersParser
+	extends PlayersParser<HandballAttributes>
 {
 	private static final int FIELDS_PER_PLAYER = 15;
 	private static final int AGE_FIELD = 2;

@@ -3,7 +3,8 @@ package model.icehockey;
 import model.Formation;
 import model.Player;
 
-public class IceHockeyFormation extends Formation
+public class IceHockeyFormation
+	extends Formation
 {
 	private Player<IceHockeyAttributes> leftWing;
 	private Player<IceHockeyAttributes> center;

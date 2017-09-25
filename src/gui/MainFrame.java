@@ -36,7 +36,8 @@ import parsers.players.icehockey.IceHockeyOverviewPlayersParser;
 import parsers.players.icehockey.IceHockeyPractiseProPlayersParser;
 import parsers.players.icehockey.IceHockeyProfilePlayersParser;
 
-public class MainFrame extends JFrame
+public class MainFrame
+	extends JFrame
 {
 	private static final long serialVersionUID = -8026416994513756565L;
 

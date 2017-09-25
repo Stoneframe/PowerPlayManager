@@ -8,7 +8,8 @@ import com.google.gson.stream.JsonWriter;
 
 import model.Side;
 
-public final class SideAdapter extends TypeAdapter<Side>
+public final class SideAdapter
+	extends TypeAdapter<Side>
 {
 
 	public SideAdapter()

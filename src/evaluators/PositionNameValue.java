@@ -7,7 +7,6 @@ public class PositionNameValue
 
 	public PositionNameValue(String name, double value)
 	{
-		super();
 		this.name = name;
 		this.value = value;
 	}

@@ -10,8 +10,8 @@ import model.icehockey.IceHockeyAttributes;
 import model.icehockey.IceHockeyFormation;
 
 public class IceHockeyPaulsFormationBuilder
-		extends
-		PaulsFormationBuilder<IceHockeyAttributes, IceHockeyFormation, IceHockeyFormationTemplate>
+	extends
+	PaulsFormationBuilder<IceHockeyAttributes, IceHockeyFormation, IceHockeyFormationTemplate>
 {
 	@Override
 	protected IceHockeyFormation createFormation(String name)
@@ -25,7 +25,8 @@ public class IceHockeyPaulsFormationBuilder
 			IceHockeyFormationTemplate formationTemplate,
 			IceHockeyFormation formation)
 	{
-		List<PositionAssigner<IceHockeyAttributes>> positions = new LinkedList<PositionAssigner<IceHockeyAttributes>>();
+		List<PositionAssigner<IceHockeyAttributes>> positions =
+				new LinkedList<PositionAssigner<IceHockeyAttributes>>();
 
 		positions.add(
 			new PositionAssigner<IceHockeyAttributes>(

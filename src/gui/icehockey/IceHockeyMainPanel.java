@@ -13,8 +13,7 @@ import model.icehockey.IceHockeyFormation;
 import parsers.players.PlayersParser;
 
 public class IceHockeyMainPanel
-		extends
-		MainPanel<IceHockeyAttributes, IceHockeyFormation, IceHockeyFormationTemplate>
+	extends MainPanel<IceHockeyAttributes, IceHockeyFormation, IceHockeyFormationTemplate>
 {
 	private static final long serialVersionUID = -9170227741926378853L;
 

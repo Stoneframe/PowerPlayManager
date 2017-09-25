@@ -11,8 +11,7 @@ import gui.formation.FormationTemplatePanel;
 import model.handball.HandballAttributes;
 
 public class HandballFormationTemplatePanel
-		extends
-		FormationTemplatePanel<HandballFormationTemplate>
+	extends FormationTemplatePanel<HandballFormationTemplate>
 {
 	private static final long serialVersionUID = -1572635059590322744L;
 

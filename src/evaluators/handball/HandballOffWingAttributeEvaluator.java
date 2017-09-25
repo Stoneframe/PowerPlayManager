@@ -1,6 +1,7 @@
 package evaluators.handball;
 
-public class HandballOffWingAttributeEvaluator extends HandballAttributeEvaluator
+public class HandballOffWingAttributeEvaluator
+	extends HandballAttributeEvaluator
 {
 	private static final String NAME = "Off. Wing";
 

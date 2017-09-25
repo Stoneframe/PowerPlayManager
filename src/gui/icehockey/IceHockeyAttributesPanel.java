@@ -9,7 +9,8 @@ import javax.swing.border.CompoundBorder;
 import gui.player.AttributesPanel;
 import model.icehockey.IceHockeyAttributes;
 
-public class IceHockeyAttributesPanel extends AttributesPanel<IceHockeyAttributes>
+public class IceHockeyAttributesPanel
+	extends AttributesPanel<IceHockeyAttributes>
 {
 	private static final long serialVersionUID = 927418734854336851L;
 

@@ -29,8 +29,7 @@ import model.Roster;
 import parsers.players.PlayersParser;
 
 public class MainPanel<A extends Attributes, F extends Formation, FT extends FormationTemplate>
-		extends
-		JPanel
+	extends JPanel
 {
 	private static final long serialVersionUID = -8438576029794021570L;
 

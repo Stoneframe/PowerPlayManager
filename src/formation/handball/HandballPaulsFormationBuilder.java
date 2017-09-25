@@ -10,8 +10,8 @@ import model.handball.HandballAttributes;
 import model.handball.HandballFormation;
 
 public class HandballPaulsFormationBuilder
-		extends
-		PaulsFormationBuilder<HandballAttributes, HandballFormation, HandballFormationTemplate>
+	extends
+	PaulsFormationBuilder<HandballAttributes, HandballFormation, HandballFormationTemplate>
 {
 
 	@Override
@@ -26,7 +26,8 @@ public class HandballPaulsFormationBuilder
 			HandballFormationTemplate formationTemplate,
 			HandballFormation formation)
 	{
-		List<PositionAssigner<HandballAttributes>> positions = new LinkedList<PositionAssigner<HandballAttributes>>();
+		List<PositionAssigner<HandballAttributes>> positions =
+				new LinkedList<PositionAssigner<HandballAttributes>>();
 
 		positions.add(
 			new PositionAssigner<HandballAttributes>(

@@ -11,7 +11,8 @@ import model.handball.HandballPlayer;
 import parsers.ParseException;
 import parsers.players.PlayersParser;
 
-public class HandballOverviewPlayersParser extends PlayersParser<HandballAttributes>
+public class HandballOverviewPlayersParser
+	extends PlayersParser<HandballAttributes>
 {
 	@Override
 	public String getName()

@@ -10,7 +10,8 @@ import javax.swing.border.CompoundBorder;
 import gui.formation.FormationPanel;
 import model.icehockey.IceHockeyFormation;
 
-public class IceHockeyFormationPanel extends FormationPanel
+public class IceHockeyFormationPanel
+	extends FormationPanel
 {
 	private static final long serialVersionUID = 6877705226792737170L;
 

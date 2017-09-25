@@ -9,7 +9,7 @@ import gui.formation.FormationTemplatePanelFactory;
 import model.handball.HandballAttributes;
 
 public class HandballFormationTemplatePanelFactory
-		implements
+	implements
 		FormationTemplatePanelFactory<HandballFormationTemplate, HandballAttributes>
 {
 	@Override

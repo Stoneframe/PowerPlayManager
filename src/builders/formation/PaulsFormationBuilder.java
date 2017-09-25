@@ -16,7 +16,7 @@ public abstract class PaulsFormationBuilder<
 		A extends Attributes,
 		F extends Formation,
 		FT extends FormationTemplate>
-		implements
+	implements
 		FormationBuilder<A, F, FT>
 {
 	@Override
@@ -47,7 +47,7 @@ public abstract class PaulsFormationBuilder<
 			F formation);
 
 	protected static class PositionAssigner<A extends Attributes>
-			implements
+		implements
 			Comparable<PositionAssigner<A>>
 	{
 		private AttributeEvaluator<A> evaluator;

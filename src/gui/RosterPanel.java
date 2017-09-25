@@ -43,7 +43,8 @@ import util.Colors;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public class RosterPanel<A extends Attributes> extends JPanel
+public class RosterPanel<A extends Attributes>
+	extends JPanel
 {
 	private static final long serialVersionUID = 6702252304393306453L;
 
@@ -350,8 +351,9 @@ public class RosterPanel<A extends Attributes> extends JPanel
 		}
 	}
 
-	private class RosterTableModel extends DefaultTableModel
-			implements
+	private class RosterTableModel
+		extends DefaultTableModel
+		implements
 			CollectionChangedListeners,
 			PropertyChangedListener
 	{
@@ -439,7 +441,8 @@ public class RosterPanel<A extends Attributes> extends JPanel
 		}
 	}
 
-	private class RosterTableColumnModel extends DefaultTableColumnModel
+	private class RosterTableColumnModel
+		extends DefaultTableColumnModel
 	{
 		private static final long serialVersionUID = -318707452817342668L;
 

@@ -13,8 +13,7 @@ import model.handball.HandballFormation;
 import parsers.players.PlayersParser;
 
 public class HandballMainPanel
-		extends
-		MainPanel<HandballAttributes, HandballFormation, HandballFormationTemplate>
+	extends MainPanel<HandballAttributes, HandballFormation, HandballFormationTemplate>
 {
 	private static final long serialVersionUID = -3164509414943511994L;
 

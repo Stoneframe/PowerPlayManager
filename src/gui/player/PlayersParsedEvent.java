@@ -6,7 +6,8 @@ import java.util.List;
 import model.Attributes;
 import model.Player;
 
-public class PlayersParsedEvent<A extends Attributes> extends EventObject
+public class PlayersParsedEvent<A extends Attributes>
+	extends EventObject
 {
 	private static final long serialVersionUID = -3051108627753324500L;
 

@@ -2,7 +2,8 @@ package model.icehockey;
 
 import model.Attributes;
 
-public class IceHockeyAttributes extends Attributes
+public class IceHockeyAttributes
+	extends Attributes
 {
 	private int goa;
 	private int def;

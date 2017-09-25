@@ -11,7 +11,8 @@ import model.icehockey.IceHockeyPlayer;
 import parsers.ParseException;
 import parsers.players.PlayersParser;
 
-public class IceHockeyOverviewPlayersParser extends PlayersParser<IceHockeyAttributes>
+public class IceHockeyOverviewPlayersParser
+	extends PlayersParser<IceHockeyAttributes>
 {
 	@Override
 	public String getName()
@@ -24,7 +25,8 @@ public class IceHockeyOverviewPlayersParser extends PlayersParser<IceHockeyAttri
 	{
 		try
 		{
-			List<Player<IceHockeyAttributes>> players = new LinkedList<Player<IceHockeyAttributes>>();
+			List<Player<IceHockeyAttributes>> players =
+					new LinkedList<Player<IceHockeyAttributes>>();
 
 			String[] lines = textToParse.split("\n");
 

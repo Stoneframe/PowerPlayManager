@@ -5,7 +5,8 @@ import java.util.function.Supplier;
 
 import util.AbstractModelObject;
 
-public abstract class Attributes extends AbstractModelObject
+public abstract class Attributes
+	extends AbstractModelObject
 {
 	public abstract int getTotalRating();
 

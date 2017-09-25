@@ -1,6 +1,7 @@
 package parsers;
 
-public class ParseException extends Exception
+public class ParseException
+	extends Exception
 {
 	private static final long serialVersionUID = -723352291226812735L;
 

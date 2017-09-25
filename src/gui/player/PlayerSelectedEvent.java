@@ -5,7 +5,8 @@ import java.util.EventObject;
 import model.Attributes;
 import model.Player;
 
-public class PlayerSelectedEvent<A extends Attributes> extends EventObject
+public class PlayerSelectedEvent<A extends Attributes>
+	extends EventObject
 {
 	private static final long serialVersionUID = -1549968126000310448L;
 

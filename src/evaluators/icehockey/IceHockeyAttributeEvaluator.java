@@ -3,7 +3,8 @@ package evaluators.icehockey;
 import evaluators.AttributeEvaluator;
 import model.icehockey.IceHockeyAttributes;
 
-public class IceHockeyAttributeEvaluator extends AttributeEvaluator<IceHockeyAttributes>
+public class IceHockeyAttributeEvaluator
+	extends AttributeEvaluator<IceHockeyAttributes>
 {
 	private double goa;
 	private double def;

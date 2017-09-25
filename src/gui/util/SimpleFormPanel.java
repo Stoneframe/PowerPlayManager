@@ -8,7 +8,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class SimpleFormPanel extends JPanel
+public class SimpleFormPanel
+	extends JPanel
 {
 	private static final long serialVersionUID = -4219336409881101811L;
 

@@ -2,7 +2,8 @@ package evaluators;
 
 import model.Attributes;
 
-public class EmptyAttributeEvaluator<A extends Attributes> extends AttributeEvaluator<A>
+public class EmptyAttributeEvaluator<A extends Attributes>
+	extends AttributeEvaluator<A>
 {
 	public EmptyAttributeEvaluator()
 	{

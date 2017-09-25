@@ -10,8 +10,9 @@ import java.util.stream.Stream;
 import util.AbstractModelCollection;
 import util.CollectionChangedEvent;
 
-public class Roster<A extends Attributes> extends AbstractModelCollection
-		implements
+public class Roster<A extends Attributes>
+	extends AbstractModelCollection
+	implements
 		Iterable<Player<A>>
 {
 	public static <A extends Attributes> Roster<A> intersection(

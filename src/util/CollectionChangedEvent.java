@@ -2,7 +2,8 @@ package util;
 
 import java.util.EventObject;
 
-public class CollectionChangedEvent extends EventObject
+public class CollectionChangedEvent
+	extends EventObject
 {
 	private static final long serialVersionUID = -1145036641593124455L;
 

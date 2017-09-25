@@ -9,7 +9,7 @@ import gui.formation.FormationTemplatePanelFactory;
 import model.icehockey.IceHockeyAttributes;
 
 public class IceHockeyFormationTemplatePanelFactory
-		implements
+	implements
 		FormationTemplatePanelFactory<IceHockeyFormationTemplate, IceHockeyAttributes>
 {
 	@Override

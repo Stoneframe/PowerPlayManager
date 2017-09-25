@@ -10,7 +10,7 @@ import model.handball.HandballAttributes;
 import model.handball.HandballFormation;
 
 public class DumbHandballFormationBuilder
-		implements
+	implements
 		FormationBuilder<HandballAttributes, HandballFormation, HandballFormationTemplate>
 {
 	@Override

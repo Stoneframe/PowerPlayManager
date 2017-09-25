@@ -12,7 +12,8 @@ import gui.util.SimpleFormPanel;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public abstract class FormationTemplatePanel<FT extends FormationTemplate> extends SimpleFormPanel
+public abstract class FormationTemplatePanel<FT extends FormationTemplate>
+	extends SimpleFormPanel
 {
 	private static final long serialVersionUID = -1572635059590322744L;
 

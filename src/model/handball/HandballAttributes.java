@@ -2,7 +2,8 @@ package model.handball;
 
 import model.Attributes;
 
-public class HandballAttributes extends Attributes
+public class HandballAttributes
+	extends Attributes
 {
 	int goa;
 	int fip;

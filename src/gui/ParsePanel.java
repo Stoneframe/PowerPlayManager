@@ -19,7 +19,8 @@ import model.Player;
 import parsers.ParseException;
 import parsers.players.PlayersParser;
 
-public class ParsePanel<A extends Attributes> extends JPanel
+public class ParsePanel<A extends Attributes>
+	extends JPanel
 {
 	private static final long serialVersionUID = -4697990138081430891L;
 

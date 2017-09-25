@@ -11,8 +11,7 @@ import gui.formation.FormationTemplatePanel;
 import model.icehockey.IceHockeyAttributes;
 
 public class IceHockeyFormationTemplatePanel
-		extends
-		FormationTemplatePanel<IceHockeyFormationTemplate>
+	extends FormationTemplatePanel<IceHockeyFormationTemplate>
 {
 	private static final long serialVersionUID = 6358768840962999641L;
 
