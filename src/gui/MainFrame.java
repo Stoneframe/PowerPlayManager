@@ -23,6 +23,7 @@ import evaluators.handball.HandballWingAttributeEvaluator;
 import evaluators.icehockey.IceHockeyBackAttributeEvaluator;
 import evaluators.icehockey.IceHockeyCenterAttributeEvaluator;
 import evaluators.icehockey.IceHockeyGoalieAttributeEvaluator;
+import evaluators.icehockey.IceHockeyOffBackAttributeEvaluator;
 import evaluators.icehockey.IceHockeyWingAttributeEvaluator;
 import gui.handball.HandballMainPanel;
 import gui.icehockey.IceHockeyMainPanel;
@@ -73,7 +74,8 @@ public class MainFrame extends JFrame
 					new IceHockeyGoalieAttributeEvaluator(),
 					new IceHockeyBackAttributeEvaluator(),
 					new IceHockeyWingAttributeEvaluator(),
-					new IceHockeyCenterAttributeEvaluator()),
+					new IceHockeyCenterAttributeEvaluator(),
+					new IceHockeyOffBackAttributeEvaluator()),
 				Arrays.asList(
 					new IceHockeyProfilePlayersParser(),
 					new IceHockeyMarketPlayersParser(),
