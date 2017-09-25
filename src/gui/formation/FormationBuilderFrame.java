@@ -28,7 +28,10 @@ import model.Roster;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public class FormationBuilderFrame<A extends Attributes, F extends Formation, FT extends FormationTemplate>
+public class FormationBuilderFrame<
+		A extends Attributes,
+		F extends Formation,
+		FT extends FormationTemplate>
 		extends
 		JFrame
 {
@@ -45,7 +48,7 @@ public class FormationBuilderFrame<A extends Attributes, F extends Formation, FT
 	private JButton createFormationsButton;
 
 	public FormationBuilderFrame(
-			FormationTemplatePanelFactory<FT, A> templatePanelFactory,
+			FormationTemplatePanelFactory<FT, A> formationTemplatePanelFactory,
 			FormationPanelFactory<F> formationPanelFactory,
 			FormationBuilder<A, F, FT> formationBuilder,
 			List<AttributeEvaluator<A>> attributeEvaluators,
@@ -66,7 +69,7 @@ public class FormationBuilderFrame<A extends Attributes, F extends Formation, FT
 			}
 		});
 
-		templatePanel = templatePanelFactory.newInstance(attributeEvaluators);
+		templatePanel = formationTemplatePanelFactory.newInstance(attributeEvaluators);
 		templatePanel.setNameTextPropertyChangedListener(new PropertyChangedListener()
 		{
 			public void propertyChanged(Object source, PropertyChangedEvent event)

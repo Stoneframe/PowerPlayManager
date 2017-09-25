@@ -12,7 +12,10 @@ import model.Player;
 import model.Roster;
 import model.Side;
 
-public abstract class PaulsFormationBuilder<A extends Attributes, F extends Formation, FT extends FormationTemplate>
+public abstract class PaulsFormationBuilder<
+		A extends Attributes,
+		F extends Formation,
+		FT extends FormationTemplate>
 		implements
 		FormationBuilder<A, F, FT>
 {
