@@ -27,8 +27,7 @@ public class HandballOverviewPlayersParser extends PlayersParser<HandballAttribu
 		{
 			String[] lines = textToParse.split("\n");
 
-			List<Player<HandballAttributes>> players =
-					new LinkedList<Player<HandballAttributes>>();
+			List<Player<HandballAttributes>> players = new LinkedList<Player<HandballAttributes>>();
 
 			for (int i = 0; i < lines.length; i++)
 			{

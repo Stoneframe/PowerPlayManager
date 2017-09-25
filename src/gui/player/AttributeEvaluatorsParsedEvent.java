@@ -7,7 +7,8 @@ import evaluators.AttributeEvaluator;
 import model.Attributes;
 
 public class AttributeEvaluatorsParsedEvent<A extends Attributes>
-		extends EventObject
+		extends
+		EventObject
 {
 	private static final long serialVersionUID = 5087168124511401024L;
 

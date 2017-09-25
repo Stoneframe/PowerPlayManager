@@ -16,7 +16,7 @@ import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import gui.formation.FormationBuilderFrame;
 import gui.formation.FormationPanelFactory;
-import gui.formation.FormationTemplatePanel;
+import gui.formation.FormationTemplatePanelFactory;
 import gui.player.AttributesPanel;
 import gui.player.PlayerPanel;
 import gui.player.PlayerSelectedEvent;
@@ -46,7 +46,7 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 
 	public MainPanel(
 			AttributesPanel<A> attributesPanel,
-			FormationTemplatePanel<FT> formationTemplatePanel,
+			FormationTemplatePanelFactory<FT, A> formationTemplatePanelFactory,
 			FormationPanelFactory<F> formationPanelFactory,
 			FormationBuilder<A, F, FT> formationBuilder,
 			PlayerEvaluator<A> playerEvaluator,
@@ -85,7 +85,7 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 					public void run()
 					{
 						new FormationBuilderFrame<A, F, FT>(
-								formationTemplatePanel,
+								formationTemplatePanelFactory,
 								formationPanelFactory,
 								formationBuilder,
 								attributeEvaluators,

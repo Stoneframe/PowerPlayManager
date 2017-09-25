@@ -15,8 +15,7 @@ public class HandballAttributeEvaluatorsParser
 	{
 		try
 		{
-			List<AttributeEvaluator<HandballAttributes>> evaluators =
-					new LinkedList<AttributeEvaluator<HandballAttributes>>();
+			List<AttributeEvaluator<HandballAttributes>> evaluators = new LinkedList<AttributeEvaluator<HandballAttributes>>();
 
 			String[] lines = textToParse.split("\n");
 

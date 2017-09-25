@@ -5,7 +5,8 @@ import java.util.EventListener;
 import model.Attributes;
 
 public interface PlayersParsedListener<A extends Attributes>
-		extends EventListener
+		extends
+		EventListener
 {
 	public void playersParsed(Object source, PlayersParsedEvent<A> event);
 

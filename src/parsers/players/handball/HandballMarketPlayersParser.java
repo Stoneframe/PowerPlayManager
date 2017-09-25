@@ -24,8 +24,7 @@ public class HandballMarketPlayersParser extends PlayersParser<HandballAttribute
 	{
 		try
 		{
-			List<Player<HandballAttributes>> players =
-					new LinkedList<Player<HandballAttributes>>();
+			List<Player<HandballAttributes>> players = new LinkedList<Player<HandballAttributes>>();
 
 			String[] lines = textToParse.split("\n");
 

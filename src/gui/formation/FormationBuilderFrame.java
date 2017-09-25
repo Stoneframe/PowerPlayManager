@@ -25,16 +25,19 @@ import evaluators.AttributeEvaluator;
 import model.Attributes;
 import model.Formation;
 import model.Roster;
+import util.PropertyChangedEvent;
+import util.PropertyChangedListener;
 
-public class FormationBuilderFrame<
-		A extends Attributes,
-		F extends Formation,
-		FT extends FormationTemplate> extends JFrame
+public class FormationBuilderFrame<A extends Attributes, F extends Formation, FT extends FormationTemplate>
+		extends
+		JFrame
 {
 	private static final long serialVersionUID = -5043434553464317980L;
 
 	private DefaultListModel<FT> templateListModel;
 	private JList<FT> templateList;
+
+	private FormationTemplatePanel<FT> templatePanel;
 
 	private JButton addTemplateButton;
 	private JButton removeTemplateButton;
@@ -42,10 +45,10 @@ public class FormationBuilderFrame<
 	private JButton createFormationsButton;
 
 	public FormationBuilderFrame(
-			FormationTemplatePanel<FT> templatePanel,
+			FormationTemplatePanelFactory<FT, A> templatePanelFactory,
 			FormationPanelFactory<F> formationPanelFactory,
 			FormationBuilder<A, F, FT> formationBuilder,
-			List<AttributeEvaluator<A>> evaluators,
+			List<AttributeEvaluator<A>> attributeEvaluators,
 			Roster<A> roster)
 	{
 		templateListModel = new DefaultListModel<FT>();
@@ -63,7 +66,17 @@ public class FormationBuilderFrame<
 			}
 		});
 
+		templatePanel = templatePanelFactory.newInstance(attributeEvaluators);
+		templatePanel.setNameTextPropertyChangedListener(new PropertyChangedListener()
+		{
+			public void propertyChanged(Object source, PropertyChangedEvent event)
+			{
+				addTemplateButton.setEnabled(!((String) event.getPropertyValue()).equals(""));
+			}
+		});
+
 		addTemplateButton = new JButton("Add");
+		addTemplateButton.setEnabled(false);
 		addTemplateButton.setMinimumSize(new Dimension(100, 20));
 		addTemplateButton.addActionListener(new ActionListener()
 		{
@@ -118,8 +131,7 @@ public class FormationBuilderFrame<
 		JPanel templateListPanel = new JPanel();
 
 		templateListPanel.setLayout(new GridLayout(1, 1));
-		templateListPanel.setBorder(
-			BorderFactory.createTitledBorder("Formations"));
+		templateListPanel.setBorder(BorderFactory.createTitledBorder("Formations"));
 		templateListPanel.add(templateList);
 
 		add(templateListPanel, BorderLayout.WEST);

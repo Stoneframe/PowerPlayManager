@@ -26,8 +26,7 @@ public class HandballPaulsFormationBuilder
 			HandballFormationTemplate formationTemplate,
 			HandballFormation formation)
 	{
-		List<PositionAssigner<HandballAttributes>> positions =
-				new LinkedList<PositionAssigner<HandballAttributes>>();
+		List<PositionAssigner<HandballAttributes>> positions = new LinkedList<PositionAssigner<HandballAttributes>>();
 
 		positions.add(
 			new PositionAssigner<HandballAttributes>(

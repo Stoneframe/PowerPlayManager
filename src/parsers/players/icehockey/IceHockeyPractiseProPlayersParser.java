@@ -24,16 +24,14 @@ public class IceHockeyPractiseProPlayersParser extends PlayersParser<IceHockeyAt
 	{
 		try
 		{
-			List<Player<IceHockeyAttributes>> players =
-					new LinkedList<Player<IceHockeyAttributes>>();
+			List<Player<IceHockeyAttributes>> players = new LinkedList<Player<IceHockeyAttributes>>();
 
 			String[] lines = textToParse.split("\n");
 
 			for (int i = 0; i < lines.length; i += 15)
 			{
-				IceHockeyPlayer player =
-						parsePlayer(
-							String.join("\t", Arrays.copyOfRange(lines, i, i + 15)).split("\t"));
+				IceHockeyPlayer player = parsePlayer(
+					String.join("\t", Arrays.copyOfRange(lines, i, i + 15)).split("\t"));
 
 				players.add(player);
 			}

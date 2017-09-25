@@ -63,7 +63,7 @@ public class IceHockeyFormationPanel extends FormationPanel
 
 		add(leftWingLabel);
 		add(leftWingTextField);
-		
+
 		add(centerLabel);
 		add(centerTextField);
 

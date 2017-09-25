@@ -24,8 +24,7 @@ public class IceHockeyMarketPlayersParser extends PlayersParser<IceHockeyAttribu
 	{
 		try
 		{
-			List<Player<IceHockeyAttributes>> players =
-					new LinkedList<Player<IceHockeyAttributes>>();
+			List<Player<IceHockeyAttributes>> players = new LinkedList<Player<IceHockeyAttributes>>();
 
 			String[] lines = textToParse.split("\n");
 

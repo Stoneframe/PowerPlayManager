@@ -34,23 +34,21 @@ public class HandballPractisePlayersParser extends PlayersParser<HandballAttribu
 		{
 			String[] lines = textToParse.replace("\n", "\t").split("\t");
 
-			List<Player<HandballAttributes>> players =
-					new LinkedList<Player<HandballAttributes>>();
+			List<Player<HandballAttributes>> players = new LinkedList<Player<HandballAttributes>>();
 
 			for (int i = 0; i < lines.length; i += FIELDS_PER_PLAYER)
 			{
-				HandballPlayer player =
-						new HandballPlayer(
-								parseName(lines[i]),
-								parseAge(lines[i + AGE_FIELD]),
-								parseCL(lines[i + CL_FIELD]),
-								Side.UNKNOWN,
-								parseAttributes(Arrays.copyOfRange(
-									lines,
-									i + ATTRIBUTES_START_FIELD,
-									i + ATTRIBUTES_START_FIELD
-											+ ATTRIBUTE_FIELDS_PER_PLAYER)),
-								parseTraining(lines[i + TRAINING_FIELD]));
+				HandballPlayer player = new HandballPlayer(
+						parseName(lines[i]),
+						parseAge(lines[i + AGE_FIELD]),
+						parseCL(lines[i + CL_FIELD]),
+						Side.UNKNOWN,
+						parseAttributes(
+							Arrays.copyOfRange(
+								lines,
+								i + ATTRIBUTES_START_FIELD,
+								i + ATTRIBUTES_START_FIELD + ATTRIBUTE_FIELDS_PER_PLAYER)),
+						parseTraining(lines[i + TRAINING_FIELD]));
 
 				players.add(player);
 			}

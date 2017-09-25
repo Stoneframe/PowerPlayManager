@@ -41,7 +41,8 @@ public class IceHockeyProfilePlayersParser extends PlayersParser<IceHockeyAttrib
 
 	private static int parseAge(String text)
 	{
-		String ageText = Arrays.stream(text.split("\n"))
+		String ageText = Arrays
+				.stream(text.split("\n"))
 				.filter(s -> s.startsWith("Ålder"))
 				.findFirst()
 				.get();
@@ -51,7 +52,8 @@ public class IceHockeyProfilePlayersParser extends PlayersParser<IceHockeyAttrib
 
 	private static int parseCL(String text)
 	{
-		String clText = Arrays.stream(text.split("\n"))
+		String clText = Arrays
+				.stream(text.split("\n"))
 				.filter(s -> s.startsWith("KL"))
 				.findFirst()
 				.get();
@@ -66,7 +68,8 @@ public class IceHockeyProfilePlayersParser extends PlayersParser<IceHockeyAttrib
 
 	private static Side parseSide(String text)
 	{
-		String side = Arrays.stream(text.split("\n"))
+		String side = Arrays
+				.stream(text.split("\n"))
 				.filter(s -> s.startsWith("FvS"))
 				.findFirst()
 				.get()
@@ -127,7 +130,8 @@ public class IceHockeyProfilePlayersParser extends PlayersParser<IceHockeyAttrib
 
 	private static int[] parseAttribute(String text, String attrName)
 	{
-		String[] split = Arrays.stream(text.split("\n"))
+		String[] split = Arrays
+				.stream(text.split("\n"))
 				.filter(s -> s.startsWith(attrName))
 				.findFirst()
 				.get()

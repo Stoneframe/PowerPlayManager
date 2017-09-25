@@ -5,7 +5,8 @@ import java.util.EventListener;
 import model.Attributes;
 
 public interface PlayerSelectedListener<A extends Attributes>
-		extends EventListener
+		extends
+		EventListener
 {
 	public void playerSelected(Object source, PlayerSelectedEvent<A> event);
 }
