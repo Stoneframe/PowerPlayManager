@@ -53,6 +53,8 @@ public class FormationBuilderFrame<
 			List<AttributeEvaluator<A>> attributeEvaluators,
 			Roster<A> roster)
 	{
+		super("Formations Builder");
+
 		templateListModel = new DefaultListModel<FT>();
 
 		templateList = new JList<FT>(templateListModel);
