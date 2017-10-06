@@ -402,7 +402,7 @@ public class RosterPanel<A extends Attributes>
 				Object source,
 				CollectionChangedEvent event)
 		{
-			Player<?> player = (Player<?>) event.getObjectChanged();
+			Player<?> player = (Player<?>)event.getObjectChanged();
 
 			switch (event.getAction())
 			{
@@ -424,7 +424,7 @@ public class RosterPanel<A extends Attributes>
 		@Override
 		public void propertyChanged(Object source, PropertyChangedEvent event)
 		{
-			Player<?> player = (Player<?>) source;
+			Player<?> player = (Player<?>)source;
 
 			fireTableRowsUpdated(roster.indexOf(player), roster.indexOf(player));
 		}

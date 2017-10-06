@@ -51,12 +51,12 @@ public class HandballFormationTemplatePanel
 	{
 		return new HandballFormationTemplate(
 				nameTextField.getText(),
-				(HandballAttributeEvaluator) pivotComboBox.getSelectedItem(),
-				(HandballAttributeEvaluator) leftWingComboBox.getSelectedItem(),
-				(HandballAttributeEvaluator) rightWingComboBox.getSelectedItem(),
-				(HandballAttributeEvaluator) centerBackComboBox.getSelectedItem(),
-				(HandballAttributeEvaluator) leftBackComboBox.getSelectedItem(),
-				(HandballAttributeEvaluator) rightBackComboBox.getSelectedItem());
+				(HandballAttributeEvaluator)pivotComboBox.getSelectedItem(),
+				(HandballAttributeEvaluator)leftWingComboBox.getSelectedItem(),
+				(HandballAttributeEvaluator)rightWingComboBox.getSelectedItem(),
+				(HandballAttributeEvaluator)centerBackComboBox.getSelectedItem(),
+				(HandballAttributeEvaluator)leftBackComboBox.getSelectedItem(),
+				(HandballAttributeEvaluator)rightBackComboBox.getSelectedItem());
 	}
 
 	public void setFormationTemplate(HandballFormationTemplate template)

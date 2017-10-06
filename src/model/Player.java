@@ -114,7 +114,7 @@ public class Player<A extends Attributes>
 		if (!(obj instanceof Player<?>))
 			return false;
 
-		Player<?> other = (Player<?>) obj;
+		Player<?> other = (Player<?>)obj;
 
 		return this.name.equals(other.name);
 	}

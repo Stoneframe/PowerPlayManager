@@ -224,7 +224,7 @@ public class HandballAttributes
 	{
 		if (!(attributes instanceof HandballAttributes)) return;
 
-		HandballAttributes other = (HandballAttributes) attributes;
+		HandballAttributes other = (HandballAttributes)attributes;
 
 		mergeAttribute(() -> this.getGoa(), (v) -> this.setGoa(v), () -> other.getGoa());
 		mergeAttribute(() -> this.getFip(), (v) -> this.setFip(v), () -> other.getFip());

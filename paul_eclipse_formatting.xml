@@ -281,7 +281,7 @@
 <setting id="org.eclipse.jdt.core.formatter.insert_space_before_opening_bracket_in_array_reference" value="do not insert"/>
 <setting id="org.eclipse.jdt.core.formatter.insert_space_before_opening_paren_in_method_declaration" value="do not insert"/>
 <setting id="org.eclipse.jdt.core.formatter.wrap_outer_expressions_when_nested" value="true"/>
-<setting id="org.eclipse.jdt.core.formatter.insert_space_after_closing_paren_in_cast" value="insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_after_closing_paren_in_cast" value="do not insert"/>
 <setting id="org.eclipse.jdt.core.formatter.brace_position_for_enum_constant" value="next_line"/>
 <setting id="org.eclipse.jdt.core.formatter.brace_position_for_type_declaration" value="next_line"/>
 <setting id="org.eclipse.jdt.core.formatter.blank_lines_before_package" value="0"/>

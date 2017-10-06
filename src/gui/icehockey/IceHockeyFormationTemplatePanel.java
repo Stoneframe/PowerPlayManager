@@ -48,11 +48,11 @@ public class IceHockeyFormationTemplatePanel
 	{
 		return new IceHockeyFormationTemplate(
 				nameTextField.getText(),
-				(IceHockeyAttributeEvaluator) leftWingComboBox.getSelectedItem(),
-				(IceHockeyAttributeEvaluator) centerComboBox.getSelectedItem(),
-				(IceHockeyAttributeEvaluator) rightWingComboBox.getSelectedItem(),
-				(IceHockeyAttributeEvaluator) leftBackComboBox.getSelectedItem(),
-				(IceHockeyAttributeEvaluator) rightBackComboBox.getSelectedItem());
+				(IceHockeyAttributeEvaluator)leftWingComboBox.getSelectedItem(),
+				(IceHockeyAttributeEvaluator)centerComboBox.getSelectedItem(),
+				(IceHockeyAttributeEvaluator)rightWingComboBox.getSelectedItem(),
+				(IceHockeyAttributeEvaluator)leftBackComboBox.getSelectedItem(),
+				(IceHockeyAttributeEvaluator)rightBackComboBox.getSelectedItem());
 	}
 
 	@Override

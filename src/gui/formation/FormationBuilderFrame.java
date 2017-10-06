@@ -75,7 +75,7 @@ public class FormationBuilderFrame<
 		{
 			public void propertyChanged(Object source, PropertyChangedEvent event)
 			{
-				addTemplateButton.setEnabled(!((String) event.getPropertyValue()).equals(""));
+				addTemplateButton.setEnabled(!((String)event.getPropertyValue()).equals(""));
 			}
 		});
 

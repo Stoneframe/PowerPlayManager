@@ -206,7 +206,7 @@ public class IceHockeyAttributes
 	{
 		if (!(attributes instanceof IceHockeyAttributes)) return;
 
-		IceHockeyAttributes other = (IceHockeyAttributes) attributes;
+		IceHockeyAttributes other = (IceHockeyAttributes)attributes;
 
 		mergeAttribute(
 			() -> this.getGoa(),
