@@ -1,7 +1,8 @@
-package gui;
+package gui.parse;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -32,10 +33,9 @@ public class ParsePanel<A extends Attributes>
 
 	public ParsePanel(List<PlayersParser<A>> parsers)
 	{
-		textArea = new JTextArea(2, 25);
+		textArea = new JTextArea(30, 50);
 
 		parsersComboBox = new JComboBox<PlayersParser<A>>();
-		parsersComboBox.setPreferredSize(new Dimension(200, 25));
 
 		parseButton = new JButton("Parse");
 		parseButton.addActionListener(new ActionListener()
@@ -66,13 +66,32 @@ public class ParsePanel<A extends Attributes>
 			}
 		});
 
-		parsers.forEach(p -> parsersComboBox.addItem(p));
+		parsers.forEach(parsersComboBox::addItem);
 
-		setLayout(new FlowLayout());
+		setLayout(new GridBagLayout());
 
-		add(new JScrollPane(textArea));
-		add(parsersComboBox);
-		add(parseButton);
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.gridwidth = 2;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+
+		add(new JScrollPane(textArea), gbc);
+
+		gbc.gridwidth = 1;
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 2;
+
+		add(parsersComboBox, gbc);
+
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		gbc.weightx = 1;
+
+		add(parseButton, gbc);
 	}
 
 	public void setPlayersParseListener(PlayersParsedListener<A> listener)

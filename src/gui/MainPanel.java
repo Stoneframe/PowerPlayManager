@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -17,6 +18,7 @@ import evaluators.PlayerEvaluator;
 import gui.formation.FormationBuilderFrame;
 import gui.formation.FormationPanelFactory;
 import gui.formation.FormationTemplatePanelFactory;
+import gui.parse.ParsePanel;
 import gui.player.AttributesPanel;
 import gui.player.PlayerPanel;
 import gui.player.PlayerSelectedEvent;
@@ -25,6 +27,7 @@ import gui.player.PlayersParsedEvent;
 import gui.player.PlayersParsedListener;
 import model.Attributes;
 import model.Formation;
+import model.Player;
 import model.Roster;
 import parsers.players.PlayersParser;
 
@@ -38,6 +41,8 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 	private PlayerPanel<A> playerPanel;
 
 	private JPanel buttonPanel;
+	private JButton addPlayersButton;
+	private JButton removePlayersButton;
 	private JButton createFormationsButton;
 	private JButton clearRosterButton;
 
@@ -74,6 +79,38 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 		playerPanel = new PlayerPanel<A>(attributesPanel);
 		playerPanel.setAttributeEvaluators(attributeEvaluators);
 
+		addPlayersButton = new JButton("Add Players");
+		addPlayersButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				SwingUtilities.invokeLater(new Runnable()
+				{
+					public void run()
+					{
+						JFrame parseFrame = new JFrame("Add Players");
+
+						parseFrame.setContentPane(parsePanel);
+						parseFrame.pack();
+						parseFrame.setLocationRelativeTo(null);
+						parseFrame.setVisible(true);
+					}
+				});
+			}
+		});
+
+		removePlayersButton = new JButton("Remove Players");
+		removePlayersButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				for (Player<A> player : rosterPanel.getSelectedPlayers())
+				{
+					roster.remove(player);
+				}
+			}
+		});
+
 		createFormationsButton = new JButton("Create Formations");
 		createFormationsButton.addActionListener(new ActionListener()
 		{
@@ -104,11 +141,13 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 		});
 
 		buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+		buttonPanel.add(addPlayersButton);
+		buttonPanel.add(removePlayersButton);
 		buttonPanel.add(createFormationsButton);
 		buttonPanel.add(clearRosterButton);
 
 		setLayout(new BorderLayout());
-		add(parsePanel, BorderLayout.NORTH);
+
 		add(rosterPanel, BorderLayout.CENTER);
 		add(playerPanel, BorderLayout.EAST);
 		add(buttonPanel, BorderLayout.SOUTH);

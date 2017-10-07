@@ -153,6 +153,7 @@ public class FormationBuilderFrame<
 		add(createFormationsButton, BorderLayout.SOUTH);
 
 		pack();
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 }

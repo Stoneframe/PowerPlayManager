@@ -92,6 +92,7 @@ public class MainFrame
 		add(tabbedPane, BorderLayout.CENTER);
 
 		pack();
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}

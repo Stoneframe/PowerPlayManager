@@ -26,6 +26,7 @@ public class FormationDisplayFrame<F extends Formation>
 		}
 
 		pack();
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 }

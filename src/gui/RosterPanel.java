@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -159,10 +160,8 @@ public class RosterPanel<A extends Attributes>
 			{
 				StringBuilder builder = new StringBuilder();
 
-				for (int row : rosterTable.getSelectedRows())
+				for (Player<A> player : getSelectedPlayers())
 				{
-					Player<A> player = roster.get(rosterTable.convertRowIndexToModel(row));
-
 					builder.append(
 						String.format(
 							"%s (%s) - %s",
@@ -220,7 +219,7 @@ public class RosterPanel<A extends Attributes>
 			}
 		});
 
-		controllerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		controllerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		controllerPanel.add(new JLabel("Facility Level:"));
 		controllerPanel.add(facilityLevelTextField);
 		controllerPanel.add(new JLabel("Staff Effectivness:"));
@@ -281,7 +280,21 @@ public class RosterPanel<A extends Attributes>
 		rosterTableModel.fireAllTableCellsUpdated();
 	}
 
-	private Player<A> getSelectedPlayer()
+	public List<Player<A>> getSelectedPlayers()
+	{
+		List<Player<A>> players = new LinkedList<Player<A>>();
+
+		for (int row : rosterTable.getSelectedRows())
+		{
+			Player<A> player = roster.get(rosterTable.convertRowIndexToModel(row));
+
+			players.add(player);
+		}
+
+		return players;
+	}
+
+	public Player<A> getSelectedPlayer()
 	{
 		int selectedRow = rosterTable.getSelectedRow();
 
