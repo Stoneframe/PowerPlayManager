@@ -7,7 +7,8 @@ import javax.swing.JFrame;
 
 import model.Formation;
 
-public class FormationDisplayFrame<F extends Formation> extends JFrame
+public class FormationDisplayFrame<F extends Formation>
+	extends JFrame
 {
 	private static final long serialVersionUID = 291113971084933910L;
 

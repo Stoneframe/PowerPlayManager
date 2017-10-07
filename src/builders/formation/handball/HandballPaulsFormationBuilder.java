@@ -10,8 +10,7 @@ import model.handball.HandballAttributes;
 import model.handball.HandballFormation;
 
 public class HandballPaulsFormationBuilder
-		extends
-		PaulsFormationBuilder<HandballAttributes, HandballFormation, HandballFormationTemplate>
+	extends PaulsFormationBuilder<HandballAttributes, HandballFormation, HandballFormationTemplate>
 {
 
 	@Override

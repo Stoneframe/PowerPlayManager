@@ -11,7 +11,8 @@ import model.icehockey.IceHockeyPlayer;
 import parsers.ParseException;
 import parsers.players.PlayersParser;
 
-public class IceHockeyPractiseProPlayersParser extends PlayersParser<IceHockeyAttributes>
+public class IceHockeyPractiseProPlayersParser
+	extends PlayersParser<IceHockeyAttributes>
 {
 	@Override
 	public String getName()
@@ -31,9 +32,8 @@ public class IceHockeyPractiseProPlayersParser extends PlayersParser<IceHockeyAt
 
 			for (int i = 0; i < lines.length; i += 15)
 			{
-				IceHockeyPlayer player =
-						parsePlayer(
-							String.join("\t", Arrays.copyOfRange(lines, i, i + 15)).split("\t"));
+				IceHockeyPlayer player = parsePlayer(
+					String.join("\t", Arrays.copyOfRange(lines, i, i + 15)).split("\t"));
 
 				players.add(player);
 			}

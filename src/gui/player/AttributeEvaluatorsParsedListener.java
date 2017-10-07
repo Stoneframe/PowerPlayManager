@@ -4,7 +4,9 @@ import java.util.EventListener;
 
 import model.Attributes;
 
-public interface AttributeEvaluatorsParsedListener<A extends Attributes> extends EventListener
+public interface AttributeEvaluatorsParsedListener<A extends Attributes>
+	extends
+		EventListener
 {
 	public void attributeEvaluatorsParsed(
 			Object source,

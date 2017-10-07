@@ -43,7 +43,8 @@ import util.Colors;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public class RosterPanel<A extends Attributes> extends JPanel
+public class RosterPanel<A extends Attributes>
+	extends JPanel
 {
 	private static final long serialVersionUID = 6702252304393306453L;
 
@@ -162,11 +163,12 @@ public class RosterPanel<A extends Attributes> extends JPanel
 				{
 					Player<A> player = roster.get(rosterTable.convertRowIndexToModel(row));
 
-					builder.append(String.format(
-						"%s (%s) - %s",
-						playerEvaluator.getBestPositionRating(player).getName(),
-						player.getSide(),
-						player.getName()));
+					builder.append(
+						String.format(
+							"%s (%s) - %s",
+							playerEvaluator.getBestPositionRating(player).getName(),
+							player.getSide(),
+							player.getName()));
 
 					Object value = columnDatas
 							.get(rosterTable.getSelectedColumn())
@@ -229,9 +231,10 @@ public class RosterPanel<A extends Attributes> extends JPanel
 		controllerPanel.add(lowQualityLimitTextField);
 		controllerPanel.add(applyButton);
 
-		setBorder(new CompoundBorder(
-				BorderFactory.createTitledBorder("Roster"),
-				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		setBorder(
+			new CompoundBorder(
+					BorderFactory.createTitledBorder("Roster"),
+					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		setLayout(new BorderLayout());
 
@@ -348,8 +351,9 @@ public class RosterPanel<A extends Attributes> extends JPanel
 		}
 	}
 
-	private class RosterTableModel extends DefaultTableModel
-			implements
+	private class RosterTableModel
+		extends DefaultTableModel
+		implements
 			CollectionChangedListeners,
 			PropertyChangedListener
 	{
@@ -398,7 +402,7 @@ public class RosterPanel<A extends Attributes> extends JPanel
 				Object source,
 				CollectionChangedEvent event)
 		{
-			Player<?> player = (Player<?>) event.getObjectChanged();
+			Player<?> player = (Player<?>)event.getObjectChanged();
 
 			switch (event.getAction())
 			{
@@ -420,7 +424,7 @@ public class RosterPanel<A extends Attributes> extends JPanel
 		@Override
 		public void propertyChanged(Object source, PropertyChangedEvent event)
 		{
-			Player<?> player = (Player<?>) source;
+			Player<?> player = (Player<?>)source;
 
 			fireTableRowsUpdated(roster.indexOf(player), roster.indexOf(player));
 		}
@@ -437,7 +441,8 @@ public class RosterPanel<A extends Attributes> extends JPanel
 		}
 	}
 
-	private class RosterTableColumnModel extends DefaultTableColumnModel
+	private class RosterTableColumnModel
+		extends DefaultTableColumnModel
 	{
 		private static final long serialVersionUID = -318707452817342668L;
 

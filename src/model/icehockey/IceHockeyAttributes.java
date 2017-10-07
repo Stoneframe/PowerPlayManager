@@ -2,7 +2,8 @@ package model.icehockey;
 
 import model.Attributes;
 
-public class IceHockeyAttributes extends Attributes
+public class IceHockeyAttributes
+	extends Attributes
 {
 	private int goa;
 	private int def;
@@ -205,7 +206,7 @@ public class IceHockeyAttributes extends Attributes
 	{
 		if (!(attributes instanceof IceHockeyAttributes)) return;
 
-		IceHockeyAttributes other = (IceHockeyAttributes) attributes;
+		IceHockeyAttributes other = (IceHockeyAttributes)attributes;
 
 		mergeAttribute(
 			() -> this.getGoa(),

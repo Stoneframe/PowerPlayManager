@@ -9,8 +9,9 @@ import model.Side;
 import model.icehockey.IceHockeyAttributes;
 import model.icehockey.IceHockeyFormation;
 
-public class IceHockeyPaulsFormationBuilder extends
-		PaulsFormationBuilder<IceHockeyAttributes, IceHockeyFormation, IceHockeyFormationTemplate>
+public class IceHockeyPaulsFormationBuilder
+	extends
+	PaulsFormationBuilder<IceHockeyAttributes, IceHockeyFormation, IceHockeyFormationTemplate>
 {
 	@Override
 	protected IceHockeyFormation createFormation(String name)

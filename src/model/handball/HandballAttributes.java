@@ -2,7 +2,8 @@ package model.handball;
 
 import model.Attributes;
 
-public class HandballAttributes extends Attributes
+public class HandballAttributes
+	extends Attributes
 {
 	int goa;
 	int fip;
@@ -223,7 +224,7 @@ public class HandballAttributes extends Attributes
 	{
 		if (!(attributes instanceof HandballAttributes)) return;
 
-		HandballAttributes other = (HandballAttributes) attributes;
+		HandballAttributes other = (HandballAttributes)attributes;
 
 		mergeAttribute(() -> this.getGoa(), (v) -> this.setGoa(v), () -> other.getGoa());
 		mergeAttribute(() -> this.getFip(), (v) -> this.setFip(v), () -> other.getFip());

@@ -13,7 +13,8 @@ public abstract class Side
 	@Override
 	public abstract String toString();
 
-	private static class Unknown extends Side
+	private static class Unknown
+		extends Side
 	{
 		@Override
 		public boolean equals(Object obj)
@@ -28,7 +29,8 @@ public abstract class Side
 		}
 	}
 
-	private static class Left extends Side
+	private static class Left
+		extends Side
 	{
 		@Override
 		public boolean equals(Object obj)
@@ -43,7 +45,8 @@ public abstract class Side
 		}
 	}
 
-	private static class Universal extends Side
+	private static class Universal
+		extends Side
 	{
 		@Override
 		public boolean equals(Object obj)
@@ -58,7 +61,8 @@ public abstract class Side
 		}
 	}
 
-	private static class Right extends Side
+	private static class Right
+		extends Side
 	{
 		@Override
 		public boolean equals(Object obj)

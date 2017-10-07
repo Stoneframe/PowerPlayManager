@@ -2,7 +2,8 @@ package model;
 
 import util.AbstractModelObject;
 
-public class Player<A extends Attributes> extends AbstractModelObject
+public class Player<A extends Attributes>
+	extends AbstractModelObject
 {
 	protected String name;
 	protected int age;
@@ -113,7 +114,7 @@ public class Player<A extends Attributes> extends AbstractModelObject
 		if (!(obj instanceof Player<?>))
 			return false;
 
-		Player<?> other = (Player<?>) obj;
+		Player<?> other = (Player<?>)obj;
 
 		return this.name.equals(other.name);
 	}

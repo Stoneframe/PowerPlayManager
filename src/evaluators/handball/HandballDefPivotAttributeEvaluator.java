@@ -1,6 +1,7 @@
 package evaluators.handball;
 
-public class HandballDefPivotAttributeEvaluator extends HandballAttributeEvaluator
+public class HandballDefPivotAttributeEvaluator
+	extends HandballAttributeEvaluator
 {
 	private static final String NAME = "Def. Pivot";
 

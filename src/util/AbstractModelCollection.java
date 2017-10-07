@@ -9,8 +9,7 @@ public abstract class AbstractModelCollection
 
 	public AbstractModelCollection()
 	{
-		collectionChangedListeners =
-				new LinkedList<CollectionChangedListeners>();
+		collectionChangedListeners = new LinkedList<CollectionChangedListeners>();
 	}
 
 	public void addCollectionChangedListener(

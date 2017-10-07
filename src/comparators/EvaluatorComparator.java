@@ -6,7 +6,8 @@ import evaluators.AttributeEvaluator;
 import model.Attributes;
 
 public abstract class EvaluatorComparator<A extends Attributes>
-		implements Comparator<AttributeEvaluator<A>>
+	implements
+		Comparator<AttributeEvaluator<A>>
 {
 	private A attributes;
 

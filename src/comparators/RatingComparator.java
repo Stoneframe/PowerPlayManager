@@ -7,7 +7,7 @@ import model.Attributes;
 import model.Player;
 
 public class RatingComparator<A extends Attributes>
-		implements
+	implements
 		Comparator<Player<A>>
 {
 	private AttributeEvaluator<A> evaluator;

@@ -7,8 +7,9 @@ import model.Attributes;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public abstract class AttributesPanel<A extends Attributes> extends SimpleFormPanel
-		implements
+public abstract class AttributesPanel<A extends Attributes>
+	extends SimpleFormPanel
+	implements
 		PropertyChangedListener
 {
 	private static final long serialVersionUID = -7993333522332535462L;

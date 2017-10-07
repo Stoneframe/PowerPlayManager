@@ -21,8 +21,9 @@ import model.Player;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public class PlayerPanel<A extends Attributes> extends JPanel
-		implements
+public class PlayerPanel<A extends Attributes>
+	extends JPanel
+	implements
 		PropertyChangedListener
 {
 	private static final long serialVersionUID = 8319489027333955979L;

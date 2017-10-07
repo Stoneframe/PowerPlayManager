@@ -10,8 +10,9 @@ import gui.player.AttributesPanel;
 import model.handball.HandballAttributes;
 import util.PropertyChangedListener;
 
-public class HandballAttributesPanel extends AttributesPanel<HandballAttributes>
-		implements
+public class HandballAttributesPanel
+	extends AttributesPanel<HandballAttributes>
+	implements
 		PropertyChangedListener
 {
 	private static final long serialVersionUID = -550607296797083079L;

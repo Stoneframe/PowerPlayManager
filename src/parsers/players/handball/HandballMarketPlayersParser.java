@@ -11,7 +11,8 @@ import model.handball.HandballPlayer;
 import parsers.ParseException;
 import parsers.players.PlayersParser;
 
-public class HandballMarketPlayersParser extends PlayersParser<HandballAttributes>
+public class HandballMarketPlayersParser
+	extends PlayersParser<HandballAttributes>
 {
 	@Override
 	public String getName()
@@ -24,8 +25,7 @@ public class HandballMarketPlayersParser extends PlayersParser<HandballAttribute
 	{
 		try
 		{
-			List<Player<HandballAttributes>> players =
-					new LinkedList<Player<HandballAttributes>>();
+			List<Player<HandballAttributes>> players = new LinkedList<Player<HandballAttributes>>();
 
 			String[] lines = textToParse.split("\n");
 

@@ -4,7 +4,8 @@ import evaluators.AttributeEvaluator;
 import formation.FormationTemplate;
 import model.icehockey.IceHockeyAttributes;
 
-public class IceHockeyFormationTemplate extends FormationTemplate
+public class IceHockeyFormationTemplate
+	extends FormationTemplate
 {
 	private AttributeEvaluator<IceHockeyAttributes> leftWingEvaluator;
 	private AttributeEvaluator<IceHockeyAttributes> centerEvaluator;

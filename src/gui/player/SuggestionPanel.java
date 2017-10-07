@@ -14,8 +14,10 @@ import model.Attributes;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public abstract class SuggestionPanel<A extends Attributes> extends JPanel
-		implements PropertyChangedListener
+public abstract class SuggestionPanel<A extends Attributes>
+	extends JPanel
+	implements
+		PropertyChangedListener
 {
 	private static final long serialVersionUID = 33853554129162390L;
 
@@ -77,10 +79,7 @@ public abstract class SuggestionPanel<A extends Attributes> extends JPanel
 			for (AttributeEvaluator<A> evaluator : getSortedEvaluators())
 			{
 				add(new JLabel(evaluator.getName()));
-				add(new JLabel(
-						String.format(
-							"%.1f",
-							getValue(attributes, evaluator))));
+				add(new JLabel(String.format("%.1f", getValue(attributes, evaluator))));
 			}
 		}
 

@@ -9,10 +9,10 @@ import parsers.ParseException;
 public abstract class PlayersParser<A extends Attributes>
 {
 	public abstract String getName();
-	
+
 	public abstract List<Player<A>> parsePlayers(String textToParse)
 			throws ParseException;
-	
+
 	@Override
 	public String toString()
 	{

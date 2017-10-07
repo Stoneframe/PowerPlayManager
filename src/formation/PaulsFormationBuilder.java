@@ -12,16 +12,22 @@ import model.Player;
 import model.Roster;
 import model.Side;
 
-public abstract class PaulsFormationBuilder<A extends Attributes, F extends Formation,
-		FT extends FormationTemplate> implements FormationBuilder<A, F, FT>
+public abstract class PaulsFormationBuilder<
+		A extends Attributes,
+		F extends Formation,
+		FT extends FormationTemplate>
+	implements
+		FormationBuilder<A, F, FT>
 {
 	@Override
 	public F createFormation(Roster<A> roster, FT template)
 	{
 		F formation = createFormation(template.getName());
 
-		List<PositionAssigner<A>> positionAssigners =
-				createPositionAssigners(roster, template, formation);
+		List<PositionAssigner<A>> positionAssigners = createPositionAssigners(
+			roster,
+			template,
+			formation);
 
 		while (!positionAssigners.isEmpty())
 		{
@@ -41,7 +47,8 @@ public abstract class PaulsFormationBuilder<A extends Attributes, F extends Form
 			F formation);
 
 	protected static class PositionAssigner<A extends Attributes>
-			implements Comparable<PositionAssigner<A>>
+		implements
+			Comparable<PositionAssigner<A>>
 	{
 		private AttributeEvaluator<A> evaluator;
 		private Side side;

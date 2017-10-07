@@ -99,9 +99,8 @@ public class PlayerEvaluator<A extends Attributes>
 		AttributeEvaluator<A> evaluator = attributeEvaluators
 				.stream()
 				.max(
-					(a, b) -> new RatingEvaluatorComparator<A>(player.getAttributes()).compare(
-						a,
-						b))
+					(a, b) -> new RatingEvaluatorComparator<A>(player.getAttributes())
+							.compare(a, b))
 				.get();
 
 		return new PositionNameValue(

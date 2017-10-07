@@ -23,6 +23,7 @@ import evaluators.handball.HandballWingAttributeEvaluator;
 import evaluators.icehockey.IceHockeyBackAttributeEvaluator;
 import evaluators.icehockey.IceHockeyCenterAttributeEvaluator;
 import evaluators.icehockey.IceHockeyGoalieAttributeEvaluator;
+import evaluators.icehockey.IceHockeyOffBackAttributeEvaluator;
 import evaluators.icehockey.IceHockeyWingAttributeEvaluator;
 import gui.handball.HandballMainPanel;
 import gui.icehockey.IceHockeyMainPanel;
@@ -35,7 +36,8 @@ import parsers.players.icehockey.IceHockeyOverviewPlayersParser;
 import parsers.players.icehockey.IceHockeyPractiseProPlayersParser;
 import parsers.players.icehockey.IceHockeyProfilePlayersParser;
 
-public class MainFrame extends JFrame
+public class MainFrame
+	extends JFrame
 {
 	private static final long serialVersionUID = -8026416994513756565L;
 
@@ -73,7 +75,8 @@ public class MainFrame extends JFrame
 					new IceHockeyGoalieAttributeEvaluator(),
 					new IceHockeyBackAttributeEvaluator(),
 					new IceHockeyWingAttributeEvaluator(),
-					new IceHockeyCenterAttributeEvaluator()),
+					new IceHockeyCenterAttributeEvaluator(),
+					new IceHockeyOffBackAttributeEvaluator()),
 				Arrays.asList(
 					new IceHockeyProfilePlayersParser(),
 					new IceHockeyMarketPlayersParser(),

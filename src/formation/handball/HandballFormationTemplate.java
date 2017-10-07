@@ -4,7 +4,8 @@ import evaluators.AttributeEvaluator;
 import formation.FormationTemplate;
 import model.handball.HandballAttributes;
 
-public class HandballFormationTemplate extends FormationTemplate
+public class HandballFormationTemplate
+	extends FormationTemplate
 {
 	private AttributeEvaluator<HandballAttributes> pivotEvaluator;
 	private AttributeEvaluator<HandballAttributes> leftWingEvaluator;

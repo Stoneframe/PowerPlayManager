@@ -13,7 +13,8 @@ import javax.swing.JMenuItem;
 
 import model.Roster;
 
-public class MenuBar extends JMenuBar
+public class MenuBar
+	extends JMenuBar
 {
 	private static final long serialVersionUID = -5511353684955783810L;
 

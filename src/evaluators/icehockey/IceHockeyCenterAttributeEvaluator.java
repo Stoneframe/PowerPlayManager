@@ -1,6 +1,7 @@
 package evaluators.icehockey;
 
-public class IceHockeyCenterAttributeEvaluator extends IceHockeyAttributeEvaluator
+public class IceHockeyCenterAttributeEvaluator
+	extends IceHockeyAttributeEvaluator
 {
 	private static final String NAME = "Center";
 

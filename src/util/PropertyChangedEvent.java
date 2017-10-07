@@ -2,7 +2,8 @@ package util;
 
 import java.util.EventObject;
 
-public class PropertyChangedEvent extends EventObject
+public class PropertyChangedEvent
+	extends EventObject
 {
 	private static final long serialVersionUID = -2598466606625997422L;
 
