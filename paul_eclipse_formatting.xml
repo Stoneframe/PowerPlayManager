@@ -89,7 +89,7 @@
 <setting id="org.eclipse.jdt.core.formatter.number_of_blank_lines_at_beginning_of_method_body" value="0"/>
 <setting id="org.eclipse.jdt.core.formatter.insert_space_after_closing_angle_bracket_in_type_arguments" value="insert"/>
 <setting id="org.eclipse.jdt.core.formatter.keep_else_statement_on_same_line" value="true"/>
-<setting id="org.eclipse.jdt.core.formatter.alignment_for_binary_expression" value="0"/>
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_binary_expression" value="48"/>
 <setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_catch_clause" value="common_lines"/>
 <setting id="org.eclipse.jdt.core.formatter.insert_space_after_comma_in_parameterized_type_reference" value="insert"/>
 <setting id="org.eclipse.jdt.core.formatter.insert_space_before_comma_in_array_initializer" value="do not insert"/>
@@ -102,7 +102,7 @@
 <setting id="org.eclipse.jdt.core.formatter.insert_space_after_question_in_conditional" value="insert"/>
 <setting id="org.eclipse.jdt.core.formatter.brace_position_for_block" value="next_line"/>
 <setting id="org.eclipse.jdt.core.formatter.brace_position_for_constructor_declaration" value="next_line"/>
-<setting id="org.eclipse.jdt.core.formatter.brace_position_for_lambda_body" value="next_line"/>
+<setting id="org.eclipse.jdt.core.formatter.brace_position_for_lambda_body" value="next_line_shifted"/>
 <setting id="org.eclipse.jdt.core.formatter.compact_else_if" value="true"/>
 <setting id="org.eclipse.jdt.core.formatter.insert_space_before_comma_in_type_parameters" value="do not insert"/>
 <setting id="org.eclipse.jdt.core.formatter.insert_space_before_opening_paren_in_catch" value="insert"/>

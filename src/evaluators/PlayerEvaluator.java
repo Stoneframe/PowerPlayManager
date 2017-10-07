@@ -69,9 +69,8 @@ public class PlayerEvaluator<A extends Attributes>
 
 	public double calculateRatingForAge(Player<A> player, int age)
 	{
-		return F(player.getAge(), age) * DAYS_PER_SEASON * getTrainingValue(player) + player
-				.getAttributes()
-				.getTotalRating();
+		return F(player.getAge(), age) * DAYS_PER_SEASON * getTrainingValue(player)
+				+ player.getAttributes().getTotalRating();
 	}
 
 	private double f(int x)
@@ -88,9 +87,11 @@ public class PlayerEvaluator<A extends Attributes>
 	{
 		AttributeEvaluator<A> evaluator = attributeEvaluators
 				.stream()
-				.max(
-					(a, b) -> new QualityEvaluatorComparator<A>(player.getAttributes())
-							.compare(a, b))
+				.max((a, b) ->
+					{
+						return new QualityEvaluatorComparator<A>(player.getAttributes())
+								.compare(a, b);
+					})
 				.get();
 
 		return new PositionNameValue(
@@ -102,9 +103,11 @@ public class PlayerEvaluator<A extends Attributes>
 	{
 		AttributeEvaluator<A> evaluator = attributeEvaluators
 				.stream()
-				.max(
-					(a, b) -> new RatingEvaluatorComparator<A>(player.getAttributes())
-							.compare(a, b))
+				.max((a, b) ->
+					{
+						return new RatingEvaluatorComparator<A>(player.getAttributes())
+								.compare(a, b);
+					})
 				.get();
 
 		return new PositionNameValue(
@@ -114,9 +117,10 @@ public class PlayerEvaluator<A extends Attributes>
 
 	private double getEstimatedPlayerTraining(Player<A> player)
 	{
-		return -0.02278 * player.getAge() + 0.1291 * player.getCL() - 0.0003325 * player
-				.getAttributes()
-				.getAverageQuality() + 0.009671 * getBestPositionQuality(player).getValue();
+		return -0.02278 * player.getAge()
+				+ 0.1291 * player.getCL()
+				- 0.0003325 * player.getAttributes().getAverageQuality()
+				+ 0.009671 * getBestPositionQuality(player).getValue();
 	}
 
 	public int getFacilityLevel()
