@@ -87,11 +87,7 @@ public class PlayerEvaluator<A extends Attributes>
 	{
 		AttributeEvaluator<A> evaluator = attributeEvaluators
 				.stream()
-				.max((a, b) ->
-					{
-						return new QualityEvaluatorComparator<A>(player.getAttributes())
-								.compare(a, b);
-					})
+				.max(new QualityEvaluatorComparator<A>(player.getAttributes())::compare)
 				.get();
 
 		return new PositionNameValue(
@@ -103,11 +99,7 @@ public class PlayerEvaluator<A extends Attributes>
 	{
 		AttributeEvaluator<A> evaluator = attributeEvaluators
 				.stream()
-				.max((a, b) ->
-					{
-						return new RatingEvaluatorComparator<A>(player.getAttributes())
-								.compare(a, b);
-					})
+				.max(new RatingEvaluatorComparator<A>(player.getAttributes())::compare)
 				.get();
 
 		return new PositionNameValue(
