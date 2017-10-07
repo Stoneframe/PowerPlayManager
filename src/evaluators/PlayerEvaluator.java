@@ -11,9 +11,12 @@ import model.Player;
 public class PlayerEvaluator<A extends Attributes>
 {
 	private static final int DAYS_PER_SEASON = 112;
+
 	private int facilityLevel = 1;
 	private int staffEffectivness = 0;
+
 	private double a, b, c;
+
 	private List<AttributeEvaluator<A>> attributeEvaluators;
 	private FacilityEvaluator facilityEvaluator;
 
@@ -66,8 +69,9 @@ public class PlayerEvaluator<A extends Attributes>
 
 	public double calculateRatingForAge(Player<A> player, int age)
 	{
-		return F(player.getAge(), age) * DAYS_PER_SEASON * getTrainingValue(player)
-				+ player.getAttributes().getTotalRating();
+		return F(player.getAge(), age) * DAYS_PER_SEASON * getTrainingValue(player) + player
+				.getAttributes()
+				.getTotalRating();
 	}
 
 	private double f(int x)
@@ -110,10 +114,9 @@ public class PlayerEvaluator<A extends Attributes>
 
 	private double getEstimatedPlayerTraining(Player<A> player)
 	{
-		return -0.02278 * player.getAge()
-				+ 0.1291 * player.getCL()
-				- 0.0003325 * player.getAttributes().getAverageQuality()
-				+ 0.009671 * getBestPositionQuality(player).getValue();
+		return -0.02278 * player.getAge() + 0.1291 * player.getCL() - 0.0003325 * player
+				.getAttributes()
+				.getAverageQuality() + 0.009671 * getBestPositionQuality(player).getValue();
 	}
 
 	public int getFacilityLevel()
