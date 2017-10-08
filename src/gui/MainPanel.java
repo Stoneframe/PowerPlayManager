@@ -18,7 +18,6 @@ import evaluators.PlayerEvaluator;
 import gui.formation.FormationBuilderFrame;
 import gui.formation.FormationPanelFactory;
 import gui.formation.FormationTemplatePanelFactory;
-import gui.parse.ParsePanel;
 import gui.player.AttributesPanel;
 import gui.player.PlayerPanel;
 import gui.player.PlayerSelectedEvent;

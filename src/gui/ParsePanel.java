@@ -1,4 +1,4 @@
-package gui.parse;
+package gui;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
