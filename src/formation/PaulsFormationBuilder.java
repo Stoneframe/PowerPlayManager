@@ -24,10 +24,8 @@ public abstract class PaulsFormationBuilder<
 	{
 		F formation = createFormation(template.getName());
 
-		List<PositionAssigner<A>> positionAssigners = createPositionAssigners(
-			roster,
-			template,
-			formation);
+		List<PositionAssigner<A>> positionAssigners =
+				createPositionAssigners(roster, template, formation);
 
 		while (!positionAssigners.isEmpty())
 		{

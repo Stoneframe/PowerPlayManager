@@ -9,7 +9,7 @@ import model.Side;
 import model.handball.HandballAttributes;
 import model.handball.HandballFormation;
 
-public class DumbHandballFormationBuilder
+public class HandballDumbFormationBuilder
 	implements
 		FormationBuilder<HandballAttributes, HandballFormation, HandballFormationTemplate>
 {
