@@ -29,6 +29,7 @@ import model.Formation;
 import model.Player;
 import model.Roster;
 import parsers.players.PlayersParser;
+import predictors.PlayerPredictor;
 
 public class MainPanel<A extends Attributes, F extends Formation, FT extends FormationTemplate>
 	extends JPanel
@@ -54,6 +55,7 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 			FormationBuilder<A, F, FT> formationBuilder,
 			PlayerEvaluator<A> playerEvaluator,
 			List<AttributeEvaluator<A>> attributeEvaluators,
+			PlayerPredictor<A> playerPredictor,
 			List<PlayersParser<A>> parsers)
 	{
 		parsePanel = new ParsePanel<A>(parsers);
@@ -124,6 +126,7 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 								formationPanelFactory,
 								formationBuilder,
 								attributeEvaluators,
+								playerPredictor,
 								roster.copy());
 					}
 				});

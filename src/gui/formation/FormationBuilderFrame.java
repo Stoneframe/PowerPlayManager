@@ -26,6 +26,7 @@ import evaluators.AttributeEvaluator;
 import model.Attributes;
 import model.Formation;
 import model.Roster;
+import predictors.PlayerPredictor;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
@@ -54,9 +55,12 @@ public class FormationBuilderFrame<
 			FormationPanelFactory<F> formationPanelFactory,
 			FormationBuilder<A, F, FT> formationBuilder,
 			List<AttributeEvaluator<A>> attributeEvaluators,
+			PlayerPredictor<A> playerPredictor,
 			Roster<A> roster)
 	{
 		super("Formations Builder");
+
+		roster.forEach(player -> playerPredictor.predictPlayerAttributes(player, 5));
 
 		templateListModel = new DefaultListModel<FT>();
 

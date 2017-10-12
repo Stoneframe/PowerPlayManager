@@ -6,11 +6,12 @@ import builders.formation.handball.HandballFormationTemplate;
 import builders.formation.handball.HandballPaulsFormationBuilder;
 import evaluators.AttributeEvaluator;
 import evaluators.FacilityEvaluator;
-import evaluators.handball.HandballPlayerEvaluator;
+import evaluators.PlayerEvaluator;
 import gui.MainPanel;
 import model.handball.HandballAttributes;
 import model.handball.HandballFormation;
 import parsers.players.PlayersParser;
+import predictors.handball.HandballPlayerPredictor;
 
 public class HandballMainPanel
 	extends MainPanel<HandballAttributes, HandballFormation, HandballFormationTemplate>
@@ -19,6 +20,7 @@ public class HandballMainPanel
 
 	public HandballMainPanel(
 			FacilityEvaluator facilityEvaluator,
+			PlayerEvaluator<HandballAttributes> playerEvaluator,
 			List<AttributeEvaluator<HandballAttributes>> attributeEvaluators,
 			List<PlayersParser<HandballAttributes>> parsers)
 	{
@@ -27,8 +29,9 @@ public class HandballMainPanel
 				new HandballFormationTemplatePanelFactory(),
 				new HandballFormationPanelFactory(),
 				new HandballPaulsFormationBuilder(),
-				new HandballPlayerEvaluator(attributeEvaluators, facilityEvaluator),
+				playerEvaluator,
 				attributeEvaluators,
+				new HandballPlayerPredictor(playerEvaluator, attributeEvaluators),
 				parsers);
 	}
 }

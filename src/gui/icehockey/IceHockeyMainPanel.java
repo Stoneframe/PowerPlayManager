@@ -29,6 +29,7 @@ public class IceHockeyMainPanel
 				new IceHockeyPaulsFormationBuilder(),
 				new IceHockeyPlayerEvaluator(attributeEvaluators, facilityEvaluator),
 				attributeEvaluators,
+				null,
 				parsers);
 	}
 }

@@ -3,13 +3,16 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import evaluators.AttributeEvaluator;
 import evaluators.FacilityEvaluator;
+import evaluators.PlayerEvaluator;
 import evaluators.handball.HandballBackAttributeEvaluator;
 import evaluators.handball.HandballDefBackAttributeEvaluator;
 import evaluators.handball.HandballDefPivotAttributeEvaluator;
@@ -19,6 +22,7 @@ import evaluators.handball.HandballOffBackAttributeEvaluator;
 import evaluators.handball.HandballOffPivotAttributeEvaluator;
 import evaluators.handball.HandballOffWingAttributeEvaluator;
 import evaluators.handball.HandballPivotAttributeEvaluator;
+import evaluators.handball.HandballPlayerEvaluator;
 import evaluators.handball.HandballWingAttributeEvaluator;
 import evaluators.icehockey.IceHockeyBackAttributeEvaluator;
 import evaluators.icehockey.IceHockeyCenterAttributeEvaluator;
@@ -27,6 +31,7 @@ import evaluators.icehockey.IceHockeyOffBackAttributeEvaluator;
 import evaluators.icehockey.IceHockeyWingAttributeEvaluator;
 import gui.handball.HandballMainPanel;
 import gui.icehockey.IceHockeyMainPanel;
+import model.handball.HandballAttributes;
 import parsers.players.handball.HandballMarketPlayersParser;
 import parsers.players.handball.HandballOverviewPlayersParser;
 import parsers.players.handball.HandballPractisePlayersParser;
@@ -51,8 +56,9 @@ public class MainFrame
 	{
 		super("PPM Assistant");
 
-		handballPanel = new HandballMainPanel(
-				new FacilityEvaluator(),
+		FacilityEvaluator facilityEvaluator = new FacilityEvaluator();
+
+		List<AttributeEvaluator<HandballAttributes>> attributeEvaluators =
 				Arrays.asList(
 					new HandballGoalieAttributeEvaluator(),
 					new HandballBackAttributeEvaluator(),
@@ -63,7 +69,15 @@ public class MainFrame
 					new HandballDefWingAttributeEvaluator(),
 					new HandballOffBackAttributeEvaluator(),
 					new HandballOffPivotAttributeEvaluator(),
-					new HandballOffWingAttributeEvaluator()),
+					new HandballOffWingAttributeEvaluator());
+
+		PlayerEvaluator<HandballAttributes> playerEvaluator =
+				new HandballPlayerEvaluator(attributeEvaluators, facilityEvaluator);
+
+		handballPanel = new HandballMainPanel(
+				facilityEvaluator,
+				playerEvaluator,
+				attributeEvaluators,
 				Arrays.asList(
 					new HandballProfilePlayersParser(),
 					new HandballMarketPlayersParser(),
@@ -72,7 +86,7 @@ public class MainFrame
 					new HandballPractiseProPlayersParser()));
 
 		iceHockeyPanel = new IceHockeyMainPanel(
-				new FacilityEvaluator(),
+				facilityEvaluator,
 				Arrays.asList(
 					new IceHockeyGoalieAttributeEvaluator(),
 					new IceHockeyBackAttributeEvaluator(),

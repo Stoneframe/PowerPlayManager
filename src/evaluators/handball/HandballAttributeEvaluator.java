@@ -68,4 +68,49 @@ public class HandballAttributeEvaluator
 				 agr / attributes.getQAgr());
 		// @formatter:on
 	}
+
+	public double getGoaWeight()
+	{
+		return goa / getTotal();
+	}
+
+	public double getFipWeight()
+	{
+		return fip / getTotal();
+	}
+
+	public double getShoWeight()
+	{
+		return sho / getTotal();
+	}
+
+	public double getBlkWeight()
+	{
+		return blk / getTotal();
+	}
+
+	public double getPasWeight()
+	{
+		return pas / getTotal();
+	}
+
+	public double getTecWeight()
+	{
+		return tec / getTotal();
+	}
+
+	public double getSpeWeight()
+	{
+		return spe / getTotal();
+	}
+
+	public double getAgrWeight()
+	{
+		return agr / getTotal();
+	}
+
+	private double getTotal()
+	{
+		return goa + fip + sho + blk + pas + tec + spe + agr;
+	}
 }
