@@ -244,6 +244,32 @@ public class HandballAttributes
 		mergeAttribute(() -> this.getQAgr(), (v) -> this.setQAgr(v), () -> other.getQAgr());
 	}
 
+//	@Override
+//	public Attributes copy()
+//	{
+//		HandballAttributes clone = new HandballAttributes();
+//		
+//		clone.goa = goa;
+//		clone.fip = fip;
+//		clone.sho = sho;
+//		clone.blk = blk;
+//		clone.pas = pas;
+//		clone.tec = tec;
+//		clone.spe = spe;
+//		clone.agr = agr;
+//		
+//		clone.qGoa = qGoa;
+//		clone.qFip = qFip;
+//		clone.qSho = qSho;
+//		clone.qBlk = qBlk;
+//		clone.qPas = qPas;
+//		clone.qTec = qTec;
+//		clone.qSpe = qSpe;
+//		clone.qAgr = qAgr;
+//		
+//		return clone;
+//	}
+
 	@Override
 	public String toString()
 	{
@@ -265,5 +291,31 @@ public class HandballAttributes
 			qSpe,
 			agr,
 			qAgr);
+	}
+
+	@Override
+	public HandballAttributes copy()
+	{
+		HandballAttributes clone = new HandballAttributes();
+		
+		clone.goa = goa;
+		clone.fip = fip;
+		clone.sho = sho;
+		clone.blk = blk;
+		clone.pas = pas;
+		clone.tec = tec;
+		clone.spe = spe;
+		clone.agr = agr;
+		
+		clone.qGoa = qGoa;
+		clone.qFip = qFip;
+		clone.qSho = qSho;
+		clone.qBlk = qBlk;
+		clone.qPas = qPas;
+		clone.qTec = qTec;
+		clone.qSpe = qSpe;
+		clone.qAgr = qAgr;
+		
+		return clone;
 	}
 }

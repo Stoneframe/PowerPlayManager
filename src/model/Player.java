@@ -2,7 +2,7 @@ package model;
 
 import util.AbstractModelObject;
 
-public class Player<A extends Attributes>
+public abstract class Player<A extends Attributes>
 	extends AbstractModelObject
 {
 	protected String name;
@@ -104,6 +104,8 @@ public class Player<A extends Attributes>
 
 		this.attributes.merge(other.attributes);
 	}
+
+	public abstract Player<A> copy();
 
 	@Override
 	public boolean equals(Object obj)

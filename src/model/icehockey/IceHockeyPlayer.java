@@ -16,4 +16,10 @@ public class IceHockeyPlayer
 	{
 		super(name, age, cl, side, attributes, training);
 	}
+
+	@Override
+	public Player<IceHockeyAttributes> copy()
+	{
+		return new IceHockeyPlayer(name, age, cl, side, attributes.copy(), training);
+	}
 }

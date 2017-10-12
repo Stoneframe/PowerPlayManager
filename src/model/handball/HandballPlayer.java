@@ -16,4 +16,10 @@ public class HandballPlayer
 	{
 		super(name, age, cl, side, attributes, training);
 	}
+
+	@Override
+	public Player<HandballAttributes> copy()
+	{
+		return new HandballPlayer(name, age, cl, side, attributes.copy(), training);
+	}
 }

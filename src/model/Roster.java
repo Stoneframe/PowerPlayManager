@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import util.AbstractModelCollection;
@@ -89,7 +90,8 @@ public class Roster<A extends Attributes>
 
 	public Roster<A> copy()
 	{
-		return new Roster<A>(players);
+		return new Roster<A>(
+				players.stream().map(player -> player.copy()).collect(Collectors.toList()));
 	}
 
 	public void clear()
@@ -114,11 +116,6 @@ public class Roster<A extends Attributes>
 
 		return Collections.unmodifiableList(copy);
 	}
-
-	// public Player<A>[] toArray()
-	// {
-	// return players.toArray(new Player[0]);
-	// }
 
 	@Override
 	public Iterator<Player<A>> iterator()

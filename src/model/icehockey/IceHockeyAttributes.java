@@ -208,74 +208,43 @@ public class IceHockeyAttributes
 
 		IceHockeyAttributes other = (IceHockeyAttributes)attributes;
 
-		mergeAttribute(
-			() -> this.getGoa(),
-			(v) -> this.setGoa(v),
-			() -> other.getGoa());
+		mergeAttribute(() -> this.getGoa(), (v) -> this.setGoa(v), () -> other.getGoa());
+		mergeAttribute(() -> this.getDef(), (v) -> this.setDef(v), () -> other.getDef());
+		mergeAttribute(() -> this.getOff(), (v) -> this.setOff(v), () -> other.getOff());
+		mergeAttribute(() -> this.getSho(), (v) -> this.setSho(v), () -> other.getSho());
+		mergeAttribute(() -> this.getPas(), (v) -> this.setPas(v), () -> other.getPas());
+		mergeAttribute(() -> this.getTec(), (v) -> this.setTec(v), () -> other.getTec());
+		mergeAttribute(() -> this.getAgr(), (v) -> this.setAgr(v), () -> other.getAgr());
+		mergeAttribute(() -> this.getQGoa(), (v) -> this.setQGoa(v), () -> other.getQGoa());
+		mergeAttribute(() -> this.getQDef(), (v) -> this.setQDef(v), () -> other.getQDef());
+		mergeAttribute(() -> this.getQOff(), (v) -> this.setQOff(v), () -> other.getQOff());
+		mergeAttribute(() -> this.getQSho(), (v) -> this.setQSho(v), () -> other.getQSho());
+		mergeAttribute(() -> this.getQPas(), (v) -> this.setQPas(v), () -> other.getQPas());
+		mergeAttribute(() -> this.getQTec(), (v) -> this.setQTec(v), () -> other.getQTec());
+		mergeAttribute(() -> this.getQAgr(), (v) -> this.setQAgr(v), () -> other.getQAgr());
+	}
 
-		mergeAttribute(
-			() -> this.getDef(),
-			(v) -> this.setDef(v),
-			() -> other.getDef());
+	@Override
+	public IceHockeyAttributes copy()
+	{
+		IceHockeyAttributes clone = new IceHockeyAttributes();
 
-		mergeAttribute(
-			() -> this.getOff(),
-			(v) -> this.setOff(v),
-			() -> other.getOff());
+		clone.goa = goa;
+		clone.def = def;
+		clone.off = off;
+		clone.sho = sho;
+		clone.pas = pas;
+		clone.tec = tec;
+		clone.agr = agr;
 
-		mergeAttribute(
-			() -> this.getSho(),
-			(v) -> this.setSho(v),
-			() -> other.getSho());
+		clone.qGoa = qGoa;
+		clone.qOff = qOff;
+		clone.qDef = qDef;
+		clone.qSho = qSho;
+		clone.qPas = qPas;
+		clone.qTec = qTec;
+		clone.qAgr = qAgr;
 
-		mergeAttribute(
-			() -> this.getPas(),
-			(v) -> this.setPas(v),
-			() -> other.getPas());
-
-		mergeAttribute(
-			() -> this.getTec(),
-			(v) -> this.setTec(v),
-			() -> other.getTec());
-
-		mergeAttribute(
-			() -> this.getAgr(),
-			(v) -> this.setAgr(v),
-			() -> other.getAgr());
-
-		mergeAttribute(
-			() -> this.getQGoa(),
-			(v) -> this.setQGoa(v),
-			() -> other.getQGoa());
-
-		mergeAttribute(
-			() -> this.getQDef(),
-			(v) -> this.setQDef(v),
-			() -> other.getQDef());
-
-		mergeAttribute(
-			() -> this.getQOff(),
-			(v) -> this.setQOff(v),
-			() -> other.getQOff());
-
-		mergeAttribute(
-			() -> this.getQSho(),
-			(v) -> this.setQSho(v),
-			() -> other.getQSho());
-
-		mergeAttribute(
-			() -> this.getQPas(),
-			(v) -> this.setQPas(v),
-			() -> other.getQPas());
-
-		mergeAttribute(
-			() -> this.getQTec(),
-			(v) -> this.setQTec(v),
-			() -> other.getQTec());
-
-		mergeAttribute(
-			() -> this.getQAgr(),
-			(v) -> this.setQAgr(v),
-			() -> other.getQAgr());
+		return clone;
 	}
 }
