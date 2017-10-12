@@ -83,18 +83,6 @@ public class PlayerEvaluator<A extends Attributes>
 		this.attributeEvaluators = attributeEvaluators;
 	}
 
-	public PositionNameValue getBestPositionQuality(Player<A> player)
-	{
-		AttributeEvaluator<A> evaluator = attributeEvaluators
-				.stream()
-				.max(new QualityEvaluatorComparator<A>(player.getAttributes())::compare)
-				.get();
-
-		return new PositionNameValue(
-				evaluator.getName(),
-				evaluator.getQuality(player.getAttributes()));
-	}
-
 	public PositionNameValue getBestPositionRating(Player<A> player)
 	{
 		AttributeEvaluator<A> evaluator = attributeEvaluators
@@ -105,6 +93,18 @@ public class PlayerEvaluator<A extends Attributes>
 		return new PositionNameValue(
 				evaluator.getName(),
 				evaluator.getRating(player.getAttributes()));
+	}
+
+	public PositionNameValue getBestPositionQuality(Player<A> player)
+	{
+		AttributeEvaluator<A> evaluator = attributeEvaluators
+				.stream()
+				.max(new QualityEvaluatorComparator<A>(player.getAttributes())::compare)
+				.get();
+
+		return new PositionNameValue(
+				evaluator.getName(),
+				evaluator.getQuality(player.getAttributes()));
 	}
 
 	private double getEstimatedPlayerTraining(Player<A> player)
