@@ -21,7 +21,7 @@ public class IceHockeyFormationTemplate
 			AttributeEvaluator<IceHockeyAttributes> leftBackEvaluator,
 			AttributeEvaluator<IceHockeyAttributes> rightBackEvaluator)
 	{
-		super(name);
+		super(name, 5);
 		this.leftWingEvaluator = leftWingEvaluator;
 		this.centerEvaluator = centerBackEvaluator;
 		this.rightWingEvaluator = rightWingEvaluator;

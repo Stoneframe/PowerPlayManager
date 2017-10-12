@@ -93,6 +93,7 @@ public class FormationBuilderFrame<
 			public void actionPerformed(ActionEvent e)
 			{
 				templateListModel.addElement(templatePanel.getFormationTemplate());
+				createFormationsButton.setEnabled(canCreateFormations(roster));
 			}
 		});
 
@@ -106,27 +107,23 @@ public class FormationBuilderFrame<
 				if (!templateList.isSelectionEmpty())
 				{
 					templateListModel.remove(templateList.getSelectedIndex());
+					createFormationsButton.setEnabled(canCreateFormations(roster));
 				}
 			}
 		});
 
 		createFormationsButton = new JButton("Create Formations");
+		createFormationsButton.setEnabled(canCreateFormations(roster));
 		createFormationsButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				List<FT> formationTemplates = new LinkedList<>();
-
-				for (int i = 0; i < templateListModel.size(); i++)
-				{
-					FT formationTemplate = templateListModel.getElementAt(i);
-
-					formationTemplates.add(formationTemplate);
-				}
+				List<FT> formationTemplates = getFormationTemplates();
 
 				List<F> formations = formationBuilder.createFormations(roster, formationTemplates);
 
 				nbrPlayersRemainingLabel.setText(createPlayersRemainingText(roster));
+				createFormationsButton.setEnabled(canCreateFormations(roster));
 
 				SwingUtilities.invokeLater(new Runnable()
 				{
@@ -169,8 +166,36 @@ public class FormationBuilderFrame<
 		setVisible(true);
 	}
 
-	private String createPlayersRemainingText(Roster<A> roster)
+	private static String createPlayersRemainingText(Roster<?> roster)
 	{
 		return "Number of players remaining: " + roster.size();
+	}
+
+	private boolean canCreateFormations(Roster<A> roster)
+	{
+		return isEnoughPlayers(roster) && !getFormationTemplates().isEmpty();
+	}
+
+	private boolean isEnoughPlayers(Roster<?> roster)
+	{
+		int totalNbrOfRequiredPlayers = getFormationTemplates()
+				.stream()
+				.mapToInt(ft -> ft.getNumberOfRequiredPlayers())
+				.sum();
+
+		return totalNbrOfRequiredPlayers <= roster.size();
+	}
+
+	private List<FT> getFormationTemplates()
+	{
+		List<FT> formationTemplates = new LinkedList<>();
+
+		for (int i = 0; i < templateListModel.size(); i++)
+		{
+			FT formationTemplate = templateListModel.getElementAt(i);
+
+			formationTemplates.add(formationTemplate);
+		}
+		return formationTemplates;
 	}
 }

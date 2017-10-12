@@ -23,7 +23,7 @@ public class HandballFormationTemplate
 			AttributeEvaluator<HandballAttributes> leftBackEvaluator,
 			AttributeEvaluator<HandballAttributes> rightBackEvaluator)
 	{
-		super(name);
+		super(name, 6);
 		this.pivotEvaluator = pivotEvaluator;
 		this.leftWingEvaluator = leftWingEvaluator;
 		this.rightWingEvaluator = rightWingEvaluator;
