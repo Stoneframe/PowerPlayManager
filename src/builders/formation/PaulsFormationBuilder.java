@@ -1,6 +1,7 @@
 package builders.formation;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -24,10 +25,8 @@ public abstract class PaulsFormationBuilder<
 	{
 		F formation = createFormation(template.getName());
 
-		List<PositionAssigner<A>> positionAssigners = createPositionAssigners(
-			roster,
-			template,
-			formation);
+		List<PositionAssigner<A>> positionAssigners =
+				createPositionAssigners(roster, template, formation);
 
 		while (!positionAssigners.isEmpty())
 		{
@@ -37,6 +36,32 @@ public abstract class PaulsFormationBuilder<
 		}
 
 		return formation;
+	}
+
+	@Override
+	public List<F> createFormations(Roster<A> roster, List<FT> formationTemplates)
+	{
+		List<F> formations = new LinkedList<>();
+
+		List<PositionAssigner<A>> positionAssigners = new LinkedList<>();
+
+		for (FT formationTemplate : formationTemplates)
+		{
+			F formation = createFormation(formationTemplate.getName());
+
+			formations.add(formation);
+
+			positionAssigners.addAll(createPositionAssigners(roster, formationTemplate, formation));
+		}
+
+		while (!positionAssigners.isEmpty())
+		{
+			Collections.sort(positionAssigners);
+			PositionAssigner<A> assigner = positionAssigners.remove(0);
+			assigner.assignPosition();
+		}
+
+		return formations;
 	}
 
 	protected abstract F createFormation(String name);

@@ -12,7 +12,6 @@ import model.handball.HandballFormation;
 public class HandballPaulsFormationBuilder
 	extends PaulsFormationBuilder<HandballAttributes, HandballFormation, HandballFormationTemplate>
 {
-
 	@Override
 	protected HandballFormation createFormation(String name)
 	{

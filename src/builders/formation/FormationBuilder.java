@@ -1,5 +1,7 @@
 package builders.formation;
 
+import java.util.List;
+
 import model.Attributes;
 import model.Formation;
 import model.Roster;
@@ -10,4 +12,6 @@ public interface FormationBuilder<
 		FT extends FormationTemplate>
 {
 	public F createFormation(Roster<A> roster, FT template);
+	
+	public List<F> createFormations(Roster<A> roster, List<FT> formationTemplates);
 }

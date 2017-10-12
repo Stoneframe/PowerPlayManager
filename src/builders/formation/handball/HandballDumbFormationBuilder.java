@@ -1,5 +1,8 @@
 package builders.formation.handball;
 
+import java.util.Arrays;
+import java.util.List;
+
 import builders.formation.FormationBuilder;
 import comparators.RatingComparator;
 import evaluators.AttributeEvaluator;
@@ -9,7 +12,7 @@ import model.Side;
 import model.handball.HandballAttributes;
 import model.handball.HandballFormation;
 
-public class DumbHandballFormationBuilder
+public class HandballDumbFormationBuilder
 	implements
 		FormationBuilder<HandballAttributes, HandballFormation, HandballFormationTemplate>
 {
@@ -26,6 +29,14 @@ public class DumbHandballFormationBuilder
 				select(roster, template.getCenterBackEvaluator(), Side.UNIVERSAL),
 				select(roster, template.getLeftBackEvaluator(), Side.LEFT),
 				select(roster, template.getRightBackEvaluator(), Side.RIGHT));
+	}
+
+	@Override
+	public List<HandballFormation> createFormations(
+			Roster<HandballAttributes> roster,
+			List<HandballFormationTemplate> formationTemplates)
+	{
+		return Arrays.asList(createFormation(roster, formationTemplates.get(0)));
 	}
 
 	private static Player<HandballAttributes> select(

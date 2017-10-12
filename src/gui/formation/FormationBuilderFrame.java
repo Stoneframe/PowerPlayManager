@@ -109,16 +109,16 @@ public class FormationBuilderFrame<
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				List<F> formations = new LinkedList<F>();
+				List<FT> formationTemplates = new LinkedList<>();
 
 				for (int i = 0; i < templateListModel.size(); i++)
 				{
 					FT formationTemplate = templateListModel.getElementAt(i);
 
-					F formation = formationBuilder.createFormation(roster, formationTemplate);
-
-					formations.add(formation);
+					formationTemplates.add(formationTemplate);
 				}
+
+				List<F> formations = formationBuilder.createFormations(roster, formationTemplates);
 
 				SwingUtilities.invokeLater(new Runnable()
 				{
