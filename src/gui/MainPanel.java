@@ -117,6 +117,8 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				roster.forEach(player -> playerPredictor.predictPlayerAttributes(player, 5));
+
 				SwingUtilities.invokeLater(new Runnable()
 				{
 					public void run()
@@ -126,7 +128,6 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 								formationPanelFactory,
 								formationBuilder,
 								attributeEvaluators,
-								playerPredictor,
 								roster.copy());
 					}
 				});

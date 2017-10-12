@@ -27,6 +27,8 @@ public class HandballPlayerPredictor
 		HandballAttributeEvaluator bestAttributeEvaluator =
 				getBestAttributeEvaluator(player, playerEvaluator, attributeEvaluators);
 
+		player.setAge(player.getAge() + yearsIntoFuture);
+
 		HandballAttributes attributes = player.getAttributes();
 
 		attributes.setGoa(
