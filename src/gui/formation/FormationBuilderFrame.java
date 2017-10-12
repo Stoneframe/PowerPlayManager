@@ -13,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -40,6 +41,8 @@ public class FormationBuilderFrame<
 	private JList<FT> templateList;
 
 	private FormationTemplatePanel<FT> templatePanel;
+
+	private JLabel nbrPlayersRemainingLabel;
 
 	private JButton addTemplateButton;
 	private JButton removeTemplateButton;
@@ -78,6 +81,9 @@ public class FormationBuilderFrame<
 				addTemplateButton.setEnabled(!((String)event.getPropertyValue()).equals(""));
 			}
 		});
+
+		nbrPlayersRemainingLabel = new JLabel(createPlayersRemainingText(roster));
+		nbrPlayersRemainingLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
 
 		addTemplateButton = new JButton("Add");
 		addTemplateButton.setEnabled(false);
@@ -120,6 +126,8 @@ public class FormationBuilderFrame<
 
 				List<F> formations = formationBuilder.createFormations(roster, formationTemplates);
 
+				nbrPlayersRemainingLabel.setText(createPlayersRemainingText(roster));
+
 				SwingUtilities.invokeLater(new Runnable()
 				{
 					public void run()
@@ -142,18 +150,27 @@ public class FormationBuilderFrame<
 
 		add(templatePanel, BorderLayout.CENTER);
 
-		JPanel addRemoveButtonPanel = new JPanel();
+		JPanel addRemoveButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-		addRemoveButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		addRemoveButtonPanel.add(addTemplateButton);
 		addRemoveButtonPanel.add(removeTemplateButton);
 
-		add(addRemoveButtonPanel, BorderLayout.NORTH);
+		JPanel topPanel = new JPanel(new BorderLayout());
+
+		topPanel.add(nbrPlayersRemainingLabel, BorderLayout.WEST);
+		topPanel.add(addRemoveButtonPanel, BorderLayout.EAST);
+
+		add(topPanel, BorderLayout.NORTH);
 
 		add(createFormationsButton, BorderLayout.SOUTH);
 
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
+	}
+
+	private String createPlayersRemainingText(Roster<A> roster)
+	{
+		return "Number of players remaining: " + roster.size();
 	}
 }
