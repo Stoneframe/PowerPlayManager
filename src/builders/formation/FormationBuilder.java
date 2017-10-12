@@ -11,7 +11,5 @@ public interface FormationBuilder<
 		F extends Formation,
 		FT extends FormationTemplate>
 {
-	public F createFormation(Roster<A> roster, FT template);
-	
 	public List<F> createFormations(Roster<A> roster, List<FT> formationTemplates);
 }
