@@ -31,6 +31,7 @@ import parsers.players.handball.HandballMarketPlayersParser;
 import parsers.players.handball.HandballOverviewPlayersParser;
 import parsers.players.handball.HandballPractisePlayersParser;
 import parsers.players.handball.HandballPractiseProPlayersParser;
+import parsers.players.handball.HandballProfilePlayersParser;
 import parsers.players.icehockey.IceHockeyMarketPlayersParser;
 import parsers.players.icehockey.IceHockeyOverviewPlayersParser;
 import parsers.players.icehockey.IceHockeyPractiseProPlayersParser;
@@ -64,6 +65,7 @@ public class MainFrame
 					new HandballOffPivotAttributeEvaluator(),
 					new HandballOffWingAttributeEvaluator()),
 				Arrays.asList(
+					new HandballProfilePlayersParser(),
 					new HandballMarketPlayersParser(),
 					new HandballOverviewPlayersParser(),
 					new HandballPractisePlayersParser(),
