@@ -7,7 +7,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
-import builders.formation.FormationTemplate;
+import formation.FormationTemplate;
 import gui.util.SimpleFormPanel;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;

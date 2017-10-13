@@ -2,11 +2,11 @@ package gui.icehockey;
 
 import java.util.List;
 
-import builders.formation.icehockey.IceHockeyFormationTemplate;
-import builders.formation.icehockey.IceHockeyPaulsFormationBuilder;
 import evaluators.AttributeEvaluator;
 import evaluators.FacilityEvaluator;
 import evaluators.icehockey.IceHockeyPlayerEvaluator;
+import formation.icehockey.IceHockeyFormationTemplate;
+import formation.icehockey.IceHockeyPaulsFormationBuilder;
 import gui.MainPanel;
 import model.icehockey.IceHockeyAttributes;
 import model.icehockey.IceHockeyFormation;

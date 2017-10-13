@@ -20,9 +20,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import builders.formation.FormationBuilder;
-import builders.formation.FormationTemplate;
 import evaluators.AttributeEvaluator;
+import formation.FormationBuilder;
+import formation.FormationTemplate;
 import model.Attributes;
 import model.Formation;
 import model.Roster;

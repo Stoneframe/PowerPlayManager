@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import comparators.RatingComparator;
 import evaluators.AttributeEvaluator;
@@ -21,36 +22,19 @@ public abstract class PaulsFormationBuilder<
 		FormationBuilder<A, F, FT>
 {
 	@Override
-	public F createFormation(Roster<A> roster, FT template)
-	{
-		F formation = createFormation(template.getName());
-
-		List<PositionAssigner<A>> positionAssigners =
-				createPositionAssigners(roster, template, formation);
-
-		while (!positionAssigners.isEmpty())
-		{
-			Collections.sort(positionAssigners);
-			PositionAssigner<A> assigner = positionAssigners.remove(0);
-			assigner.assignPosition();
-		}
-
-		return formation;
-	}
-
-	public List<F> createFormation(Roster<A> roster, List<FT> templates)
+	public List<F> createFormations(Roster<A> roster, List<FT> formationTemplates)
 	{
 		List<F> formations = new LinkedList<>();
 
 		List<PositionAssigner<A>> positionAssigners = new LinkedList<>();
 
-		for (FT template : templates)
+		for (FT formationTemplate : formationTemplates)
 		{
-			F formation = createFormation(template.getName());
-
-			positionAssigners.addAll(createPositionAssigners(roster, template, formation));
+			F formation = createFormation(formationTemplate.getName());
 
 			formations.add(formation);
+
+			positionAssigners.addAll(createPositionAssigners(roster, formationTemplate, formation));
 		}
 
 		while (!positionAssigners.isEmpty())
@@ -95,26 +79,43 @@ public abstract class PaulsFormationBuilder<
 		public int compareTo(PositionAssigner<A> other)
 		{
 			return Double.compare(
-				other.evaluator.getRating(other.preferedPlayer().getAttributes()),
-				this.evaluator.getRating(this.preferedPlayer().getAttributes()));
+				getTotalRatingOfBestAndSecondBestPlayers(other),
+				getTotalRatingOfBestAndSecondBestPlayers(this));
 		}
 
 		public void assignPosition()
 		{
-			Player<A> player = preferedPlayer();
+			Player<A> player = getBestPlayer();
 			assignAction.accept(player);
 			roster.remove(player);
 		}
 
-		private Player<A> preferedPlayer()
+		private Player<A> getBestPlayer()
 		{
-			Player<A> player = roster
+			return getOrderedPlayers().findFirst().get();
+		}
+
+		private Player<A> getSecondBestPlayer()
+		{
+			return getOrderedPlayers().skip(1).findFirst().get();
+		}
+
+		private Stream<Player<A>> getOrderedPlayers()
+		{
+			return roster
 					.stream()
 					.filter(p -> p.getSide().equals(side))
-					.max(new RatingComparator<A>(evaluator))
-					.get();
+					.sorted(new RatingComparator<>(evaluator).reversed());
+		}
 
-			return player;
+		private double getTotalRatingOfBestAndSecondBestPlayers(
+				PositionAssigner<A> positionAssigner)
+		{
+			Player<A> bestPlayer = positionAssigner.getBestPlayer();
+			Player<A> secondBestPlayer = positionAssigner.getSecondBestPlayer();
+
+			return positionAssigner.evaluator.getRating(bestPlayer.getAttributes())
+					- positionAssigner.evaluator.getRating(secondBestPlayer.getAttributes());
 		}
 	}
 }
