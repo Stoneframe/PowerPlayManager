@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
-import builders.formation.handball.HandballFormationTemplate;
 import evaluators.AttributeEvaluator;
 import evaluators.handball.HandballAttributeEvaluator;
+import formation.handball.HandballFormationTemplate;
 import gui.formation.FormationTemplatePanel;
 import model.handball.HandballAttributes;
 

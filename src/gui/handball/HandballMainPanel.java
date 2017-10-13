@@ -2,11 +2,11 @@ package gui.handball;
 
 import java.util.List;
 
-import builders.formation.handball.HandballFormationTemplate;
-import builders.formation.handball.HandballPaulsFormationBuilder;
 import evaluators.AttributeEvaluator;
 import evaluators.FacilityEvaluator;
 import evaluators.handball.HandballPlayerEvaluator;
+import formation.handball.HandballFormationTemplate;
+import formation.handball.HandballPaulsFormationBuilder;
 import gui.MainPanel;
 import model.handball.HandballAttributes;
 import model.handball.HandballFormation;

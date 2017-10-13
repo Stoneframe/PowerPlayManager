@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
-import builders.formation.icehockey.IceHockeyFormationTemplate;
 import evaluators.AttributeEvaluator;
 import evaluators.icehockey.IceHockeyAttributeEvaluator;
+import formation.icehockey.IceHockeyFormationTemplate;
 import gui.formation.FormationTemplatePanel;
 import model.icehockey.IceHockeyAttributes;
 

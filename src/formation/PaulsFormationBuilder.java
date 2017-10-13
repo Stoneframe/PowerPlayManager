@@ -21,36 +21,19 @@ public abstract class PaulsFormationBuilder<
 		FormationBuilder<A, F, FT>
 {
 	@Override
-	public F createFormation(Roster<A> roster, FT template)
-	{
-		F formation = createFormation(template.getName());
-
-		List<PositionAssigner<A>> positionAssigners =
-				createPositionAssigners(roster, template, formation);
-
-		while (!positionAssigners.isEmpty())
-		{
-			Collections.sort(positionAssigners);
-			PositionAssigner<A> assigner = positionAssigners.remove(0);
-			assigner.assignPosition();
-		}
-
-		return formation;
-	}
-
-	public List<F> createFormation(Roster<A> roster, List<FT> templates)
+	public List<F> createFormations(Roster<A> roster, List<FT> formationTemplates)
 	{
 		List<F> formations = new LinkedList<>();
 
 		List<PositionAssigner<A>> positionAssigners = new LinkedList<>();
 
-		for (FT template : templates)
+		for (FT formationTemplate : formationTemplates)
 		{
-			F formation = createFormation(template.getName());
-
-			positionAssigners.addAll(createPositionAssigners(roster, template, formation));
+			F formation = createFormation(formationTemplate.getName());
 
 			formations.add(formation);
+
+			positionAssigners.addAll(createPositionAssigners(roster, formationTemplate, formation));
 		}
 
 		while (!positionAssigners.isEmpty())

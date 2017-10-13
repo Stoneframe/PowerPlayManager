@@ -11,10 +11,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import builders.formation.FormationBuilder;
-import builders.formation.FormationTemplate;
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
+import formation.FormationBuilder;
+import formation.FormationTemplate;
 import gui.formation.FormationBuilderFrame;
 import gui.formation.FormationPanelFactory;
 import gui.formation.FormationTemplatePanelFactory;
