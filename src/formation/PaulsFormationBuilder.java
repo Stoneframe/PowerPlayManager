@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import comparators.RatingComparator;
 import evaluators.AttributeEvaluator;
@@ -77,27 +78,49 @@ public abstract class PaulsFormationBuilder<
 		@Override
 		public int compareTo(PositionAssigner<A> other)
 		{
+			Player<A> thisBestPlayer = this.getBestPlayer();
+			Player<A> otherBestPlayer = other.getBestPlayer();
+
+			int bestPlayersComparison = Double.compare(
+				other.evaluator.getRating(otherBestPlayer.getAttributes()),
+				this.evaluator.getRating(thisBestPlayer.getAttributes()));
+
+			if (bestPlayersComparison != 0)
+			{
+				return bestPlayersComparison;
+			}
+
+			Player<A> thisSecondBestPlayer = this.getSecondBestPlayer();
+			Player<A> otherSecondBestPlayer = other.getSecondBestPlayer();
+
 			return Double.compare(
-				other.evaluator.getRating(other.preferedPlayer().getAttributes()),
-				this.evaluator.getRating(this.preferedPlayer().getAttributes()));
+				this.evaluator.getRating(thisSecondBestPlayer.getAttributes()),
+				other.evaluator.getRating(otherSecondBestPlayer.getAttributes()));
 		}
 
 		public void assignPosition()
 		{
-			Player<A> player = preferedPlayer();
+			Player<A> player = getBestPlayer();
 			assignAction.accept(player);
 			roster.remove(player);
 		}
 
-		private Player<A> preferedPlayer()
+		private Player<A> getBestPlayer()
 		{
-			Player<A> player = roster
+			return getSortedPlayerStream().findFirst().get();
+		}
+
+		private Player<A> getSecondBestPlayer()
+		{
+			return getSortedPlayerStream().skip(1).findFirst().get();
+		}
+
+		private Stream<Player<A>> getSortedPlayerStream()
+		{
+			return roster
 					.stream()
 					.filter(p -> p.getSide().equals(side))
-					.max(new RatingComparator<A>(evaluator))
-					.get();
-
-			return player;
+					.sorted(new RatingComparator<>(evaluator).reversed());
 		}
 	}
 }
