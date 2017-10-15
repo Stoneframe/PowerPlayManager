@@ -22,15 +22,22 @@ public class HandballProfilePlayersParser
 	@Override
 	public List<Player<HandballAttributes>> parsePlayers(String textToParse) throws ParseException
 	{
-		HandballPlayer player = new HandballPlayer(
-				parseName(textToParse),
-				parseAge(textToParse),
-				parseCL(textToParse),
-				parseSide(textToParse),
-				parseAttributes(textToParse),
-				parseTraining(textToParse));
+		try
+		{
+			HandballPlayer player = new HandballPlayer(
+					parseName(textToParse),
+					parseAge(textToParse),
+					parseCL(textToParse),
+					parseSide(textToParse),
+					parseAttributes(textToParse),
+					parseTraining(textToParse));
 
-		return Arrays.asList(player);
+			return Arrays.asList(player);
+		}
+		catch (Exception e)
+		{
+			throw new ParseException(e);
+		}
 	}
 
 	private static String parseName(String text)

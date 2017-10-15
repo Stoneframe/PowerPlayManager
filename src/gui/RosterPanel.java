@@ -147,8 +147,8 @@ public class RosterPanel<A extends Attributes>
 					if (playerSelectedListener != null)
 					{
 						playerSelectedListener.playerSelected(
-							this,
-							new PlayerSelectedEvent<A>(this, getSelectedPlayer()));
+							RosterPanel.this,
+							new PlayerSelectedEvent<A>(RosterPanel.this, getSelectedPlayer()));
 					}
 				}
 			});

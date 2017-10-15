@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -55,13 +56,17 @@ public class ParsePanel<A extends Attributes>
 					if (playersParsedListener != null)
 					{
 						playersParsedListener.playersParsed(
-							this,
-							new PlayersParsedEvent<A>(this, players));
+							ParsePanel.this,
+							new PlayersParsedEvent<A>(ParsePanel.this, players));
 					}
 				}
 				catch (ParseException ex)
 				{
-					System.out.println("Unable to parse input");
+					JOptionPane.showMessageDialog(
+						ParsePanel.this,
+						"Unable to parse input",
+						"Parse Error",
+						JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
