@@ -41,7 +41,7 @@ public abstract class PaulsFormationBuilder<
 		{
 			Collections.sort(positionAssigners);
 			PositionAssigner<A> assigner = positionAssigners.remove(0);
-			assigner.assignPosition();
+			assigner.assignBestPlayerToPosition();
 		}
 
 		return formations;
@@ -78,31 +78,35 @@ public abstract class PaulsFormationBuilder<
 		@Override
 		public int compareTo(PositionAssigner<A> other)
 		{
-			Player<A> thisBestPlayer = this.getBestPlayer();
-			Player<A> otherBestPlayer = other.getBestPlayer();
-
 			int bestPlayersComparison = Double.compare(
-				other.evaluator.getRating(otherBestPlayer.getAttributes()),
-				this.evaluator.getRating(thisBestPlayer.getAttributes()));
+				other.getBestPlayerRating(),
+				this.getBestPlayerRating());
 
 			if (bestPlayersComparison != 0)
 			{
 				return bestPlayersComparison;
 			}
 
-			Player<A> thisSecondBestPlayer = this.getSecondBestPlayer();
-			Player<A> otherSecondBestPlayer = other.getSecondBestPlayer();
-
 			return Double.compare(
-				this.evaluator.getRating(thisSecondBestPlayer.getAttributes()),
-				other.evaluator.getRating(otherSecondBestPlayer.getAttributes()));
+				this.getSecondBestPlayerRating(),
+				other.getSecondBestPlayerRating());
 		}
 
-		public void assignPosition()
+		public void assignBestPlayerToPosition()
 		{
 			Player<A> player = getBestPlayer();
 			assignAction.accept(player);
 			roster.remove(player);
+		}
+
+		private double getBestPlayerRating()
+		{
+			return evaluator.getRating(getBestPlayer().getAttributes());
+		}
+
+		private double getSecondBestPlayerRating()
+		{
+			return evaluator.getRating(getSecondBestPlayer().getAttributes());
 		}
 
 		private Player<A> getBestPlayer()
