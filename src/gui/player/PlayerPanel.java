@@ -40,9 +40,12 @@ public class PlayerPanel<A extends Attributes>
 	private PositionSuggestionPanel<A> positionSuggestionPanel;
 	private TrainingSuggestionPanel<A> trainingSuggestionPanel;
 
-	public PlayerPanel(AttributesPanel<A> attributePanel)
+	private TrainingPanel<A> trainingPanel;
+
+	public PlayerPanel(AttributesPanel<A> attributePanel, TrainingPanel<A> trainingPanel)
 	{
 		this.attributePanel = attributePanel;
+		this.trainingPanel = trainingPanel;
 
 		setPreferredSize(new Dimension(275, 0));
 
@@ -104,8 +107,11 @@ public class PlayerPanel<A extends Attributes>
 		panel.add(positionSuggestionPanel, c);
 
 		c.gridy = 3;
-		c.weighty = 100;
 		panel.add(trainingSuggestionPanel, c);
+
+		c.gridy = 4;
+		c.weighty = 100;
+		panel.add(trainingPanel, c);
 
 		JScrollPane scrollPane = new JScrollPane(panel);
 
@@ -123,6 +129,7 @@ public class PlayerPanel<A extends Attributes>
 			attributePanel.bind(null);
 			positionSuggestionPanel.bind(null);
 			trainingSuggestionPanel.bind(null);
+			trainingPanel.bind(null);
 			this.player.removePropertyChangedListener(this);
 		}
 
@@ -133,6 +140,7 @@ public class PlayerPanel<A extends Attributes>
 			attributePanel.bind(player.getAttributes());
 			positionSuggestionPanel.bind(player.getAttributes());
 			trainingSuggestionPanel.bind(player.getAttributes());
+			trainingPanel.bind(player.getAttributes());
 			this.player.addPropertyChangedListener(this);
 		}
 

@@ -24,6 +24,7 @@ import gui.player.PlayerSelectedEvent;
 import gui.player.PlayerSelectedListener;
 import gui.player.PlayersParsedEvent;
 import gui.player.PlayersParsedListener;
+import gui.player.TrainingPanel;
 import model.Attributes;
 import model.Formation;
 import model.Player;
@@ -49,6 +50,7 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 
 	public MainPanel(
 			AttributesPanel<A> attributesPanel,
+			TrainingPanel<A> trainingPanel,
 			FormationTemplatePanelFactory<FT, A> formationTemplatePanelFactory,
 			FormationPanelFactory<F> formationPanelFactory,
 			FormationBuilder<A, F, FT> formationBuilder,
@@ -75,7 +77,7 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 			}
 		});
 
-		playerPanel = new PlayerPanel<A>(attributesPanel);
+		playerPanel = new PlayerPanel<A>(attributesPanel, trainingPanel);
 		playerPanel.setAttributeEvaluators(attributeEvaluators);
 
 		addPlayersButton = new JButton("Add Players");

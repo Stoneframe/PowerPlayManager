@@ -1,6 +1,10 @@
 package evaluators.handball;
 
+import java.util.Arrays;
+import java.util.List;
+
 import evaluators.AttributeEvaluator;
+import javafx.util.Pair;
 import model.handball.HandballAttributes;
 
 public class HandballAttributeEvaluator
@@ -67,5 +71,19 @@ public class HandballAttributeEvaluator
 				 spe / attributes.getQSpe() +
 				 agr / attributes.getQAgr());
 		// @formatter:on
+	}
+
+	@Override
+	protected List<Pair<String, Double>> createPairs(HandballAttributes attributes)
+	{
+		return Arrays.asList(
+			createPair("Goalkeeping", attributes.getGoa(), goa),
+			createPair("Field Play", attributes.getFip(), fip),
+			createPair("Shooting", attributes.getSho(), sho),
+			createPair("Blocking", attributes.getBlk(), blk),
+			createPair("Passing", attributes.getPas(), pas),
+			createPair("Technique", attributes.getTec(), tec),
+			createPair("Speed", attributes.getSpe(), spe),
+			createPair("Aggressivness", attributes.getAgr(), agr));
 	}
 }

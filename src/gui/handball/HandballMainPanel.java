@@ -24,6 +24,7 @@ public class HandballMainPanel
 	{
 		super(
 				new HandballAttributesPanel(),
+				new HandballTrainingPanel(attributeEvaluators),
 				new HandballFormationTemplatePanelFactory(),
 				new HandballFormationPanelFactory(),
 				new HandballPaulsFormationBuilder(),

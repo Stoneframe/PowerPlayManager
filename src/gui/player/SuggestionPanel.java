@@ -53,8 +53,7 @@ public abstract class SuggestionPanel<A extends Attributes>
 		update();
 	}
 
-	public void setAttributeEvaluators(
-			List<AttributeEvaluator<A>> evaluators)
+	public void setAttributeEvaluators(List<AttributeEvaluator<A>> evaluators)
 	{
 		this.evaluators = evaluators;
 

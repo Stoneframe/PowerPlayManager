@@ -1,6 +1,10 @@
 package evaluators.icehockey;
 
+import java.util.Arrays;
+import java.util.List;
+
 import evaluators.AttributeEvaluator;
+import javafx.util.Pair;
 import model.icehockey.IceHockeyAttributes;
 
 public class IceHockeyAttributeEvaluator
@@ -62,5 +66,18 @@ public class IceHockeyAttributeEvaluator
 				 tec / attributes.getQTec() +
 				 agr / attributes.getQAgr());
 		// @formatter:on
+	}
+
+	@Override
+	protected List<Pair<String, Double>> createPairs(IceHockeyAttributes attributes)
+	{
+		return Arrays.asList(
+			createPair("Goaltending", attributes.getGoa(), goa),
+			createPair("Defense", attributes.getDef(), def),
+			createPair("Offense", attributes.getOff(), off),
+			createPair("Shooting", attributes.getSho(), sho),
+			createPair("Passing", attributes.getPas(), pas),
+			createPair("Technique", attributes.getTec(), tec),
+			createPair("Aggressivness", attributes.getAgr(), agr));
 	}
 }
