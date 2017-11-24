@@ -54,9 +54,9 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 			FormationTemplatePanelFactory<FT, A> formationTemplatePanelFactory,
 			FormationPanelFactory<F> formationPanelFactory,
 			FormationBuilder<A, F, FT> formationBuilder,
+			List<PlayersParser<A>> parsers,
 			PlayerEvaluator<A> playerEvaluator,
-			List<AttributeEvaluator<A>> attributeEvaluators,
-			List<PlayersParser<A>> parsers)
+			List<AttributeEvaluator<A>> attributeEvaluators)
 	{
 		parsePanel = new ParsePanel<A>(parsers);
 		parsePanel.setPlayersParseListener(new PlayersParsedListener<A>()

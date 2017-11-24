@@ -1,8 +1,6 @@
 package gui.handball;
 
-import java.util.List;
-
-import evaluators.AttributeEvaluator;
+import evaluators.PlayerEvaluator;
 import gui.player.TrainingPanel;
 import model.handball.HandballAttributes;
 
@@ -11,8 +9,8 @@ public class HandballTrainingPanel
 {
 	private static final long serialVersionUID = 1036769887458963598L;
 
-	public HandballTrainingPanel(List<AttributeEvaluator<HandballAttributes>> attributeEvaluators)
+	public HandballTrainingPanel(PlayerEvaluator<HandballAttributes> playerEvaluator)
 	{
-		super(attributeEvaluators);
+		super(playerEvaluator);
 	}
 }

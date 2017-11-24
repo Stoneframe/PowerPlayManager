@@ -1,15 +1,15 @@
 package gui.player;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
+import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.CompoundBorder;
 
 import evaluators.AttributeEvaluator;
+import evaluators.PlayerEvaluator;
 import model.Attributes;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
@@ -24,28 +24,29 @@ public abstract class TrainingPanel<A extends Attributes>
 	private JComboBox<AttributeEvaluator<A>> positionComboBox;
 	private JTextField nextAttributeTextField;
 
-	private AttributeEvaluator<A> selectedEvaluator;
+	private PlayerEvaluator<A> playerEvaluator;
 	private A attributes;
 
-	protected TrainingPanel(List<AttributeEvaluator<A>> attributeEvaluators)
+	protected TrainingPanel(PlayerEvaluator<A> playerEvaluator)
 	{
+		this.playerEvaluator = playerEvaluator;
+
 		positionComboBox = new JComboBox<>();
-		positionComboBox.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				update();
-			}
-		});
+		positionComboBox.addActionListener(e -> onAttributeEvaluatorSelected());
 
-		nextAttributeTextField = new JTextField(10);
+		nextAttributeTextField = new JTextField();
 
-		attributeEvaluators.forEach(e -> positionComboBox.addItem(e));
+		playerEvaluator.getAttributeEvaluators().forEach(e -> positionComboBox.addItem(e));
 
-		setLayout(new BorderLayout());
+		setBorder(
+			new CompoundBorder(
+					BorderFactory.createTitledBorder("Training Planner"),
+					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-		add(positionComboBox, BorderLayout.WEST);
-		add(nextAttributeTextField, BorderLayout.EAST);
+		setLayout(new GridLayout(1, 2, 10, 10));
+
+		add(positionComboBox);
+		add(nextAttributeTextField);
 	}
 
 	public void bind(A attributes)
@@ -62,20 +63,44 @@ public abstract class TrainingPanel<A extends Attributes>
 			this.attributes.addPropertyChangedListener(this);
 		}
 
-		update();
+		onAttributesChanged();
 	}
 
-	private void update()
+	private void onAttributesChanged()
 	{
-		selectedEvaluator = positionComboBox.getItemAt(positionComboBox.getSelectedIndex());
+		AttributeEvaluator<A> attributeEvaluator = getEvaluatorForBestPosition();
 
+		positionComboBox.setSelectedItem(attributeEvaluator);
+
+		setNextAttributeToTrain(attributeEvaluator);
+	}
+
+	private void onAttributeEvaluatorSelected()
+	{
+		setNextAttributeToTrain(getSelectedEvaluator());
+	}
+
+	private AttributeEvaluator<A> getEvaluatorForBestPosition()
+	{
+		return attributes != null
+				? playerEvaluator.getBestEvaluatorByQuality(attributes)
+				: null;
+	}
+
+	private AttributeEvaluator<A> getSelectedEvaluator()
+	{
+		return positionComboBox.getItemAt(positionComboBox.getSelectedIndex());
+	}
+
+	private void setNextAttributeToTrain(AttributeEvaluator<A> attributeEvaluator)
+	{
 		nextAttributeTextField.setText(
-			attributes != null ? selectedEvaluator.getNextTraining(attributes) : "");
+			attributes != null ? attributeEvaluator.getNextTraining(attributes) : "");
 	}
 
 	@Override
 	public void propertyChanged(Object source, PropertyChangedEvent event)
 	{
-		update();
+		onAttributesChanged();
 	}
 }

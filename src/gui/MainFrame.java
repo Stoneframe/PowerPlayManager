@@ -19,11 +19,13 @@ import evaluators.handball.HandballOffBackAttributeEvaluator;
 import evaluators.handball.HandballOffPivotAttributeEvaluator;
 import evaluators.handball.HandballOffWingAttributeEvaluator;
 import evaluators.handball.HandballPivotAttributeEvaluator;
+import evaluators.handball.HandballPlayerEvaluator;
 import evaluators.handball.HandballWingAttributeEvaluator;
 import evaluators.icehockey.IceHockeyBackAttributeEvaluator;
 import evaluators.icehockey.IceHockeyCenterAttributeEvaluator;
 import evaluators.icehockey.IceHockeyGoalieAttributeEvaluator;
 import evaluators.icehockey.IceHockeyOffBackAttributeEvaluator;
+import evaluators.icehockey.IceHockeyPlayerEvaluator;
 import evaluators.icehockey.IceHockeyWingAttributeEvaluator;
 import gui.handball.HandballMainPanel;
 import gui.icehockey.IceHockeyMainPanel;
@@ -52,38 +54,40 @@ public class MainFrame
 		super("PPM Assistant");
 
 		handballPanel = new HandballMainPanel(
-				new FacilityEvaluator(),
-				Arrays.asList(
-					new HandballGoalieAttributeEvaluator(),
-					new HandballBackAttributeEvaluator(),
-					new HandballPivotAttributeEvaluator(),
-					new HandballWingAttributeEvaluator(),
-					new HandballDefBackAttributeEvaluator(),
-					new HandballDefPivotAttributeEvaluator(),
-					new HandballDefWingAttributeEvaluator(),
-					new HandballOffBackAttributeEvaluator(),
-					new HandballOffPivotAttributeEvaluator(),
-					new HandballOffWingAttributeEvaluator()),
 				Arrays.asList(
 					new HandballProfilePlayersParser(),
 					new HandballMarketPlayersParser(),
 					new HandballOverviewPlayersParser(),
 					new HandballPractisePlayersParser(),
-					new HandballPractiseProPlayersParser()));
+					new HandballPractiseProPlayersParser()),
+				new HandballPlayerEvaluator(
+						new FacilityEvaluator(),
+						Arrays.asList(
+							new HandballGoalieAttributeEvaluator(),
+							new HandballBackAttributeEvaluator(),
+							new HandballPivotAttributeEvaluator(),
+							new HandballWingAttributeEvaluator(),
+							new HandballDefBackAttributeEvaluator(),
+							new HandballDefPivotAttributeEvaluator(),
+							new HandballDefWingAttributeEvaluator(),
+							new HandballOffBackAttributeEvaluator(),
+							new HandballOffPivotAttributeEvaluator(),
+							new HandballOffWingAttributeEvaluator())));
 
 		iceHockeyPanel = new IceHockeyMainPanel(
-				new FacilityEvaluator(),
-				Arrays.asList(
-					new IceHockeyGoalieAttributeEvaluator(),
-					new IceHockeyBackAttributeEvaluator(),
-					new IceHockeyWingAttributeEvaluator(),
-					new IceHockeyCenterAttributeEvaluator(),
-					new IceHockeyOffBackAttributeEvaluator()),
 				Arrays.asList(
 					new IceHockeyProfilePlayersParser(),
 					new IceHockeyMarketPlayersParser(),
 					new IceHockeyOverviewPlayersParser(),
-					new IceHockeyPractiseProPlayersParser()));
+					new IceHockeyPractiseProPlayersParser()),
+				new IceHockeyPlayerEvaluator(
+						new FacilityEvaluator(),
+						Arrays.asList(
+							new IceHockeyGoalieAttributeEvaluator(),
+							new IceHockeyBackAttributeEvaluator(),
+							new IceHockeyWingAttributeEvaluator(),
+							new IceHockeyCenterAttributeEvaluator(),
+							new IceHockeyOffBackAttributeEvaluator())));
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Handball", handballPanel);

@@ -13,9 +13,9 @@ public class IceHockeyPlayerEvaluator
 	private static final double A = -0.001801, B = 0.01567, C = 1.351;
 
 	public IceHockeyPlayerEvaluator(
-			List<AttributeEvaluator<IceHockeyAttributes>> attributeEvaluators,
-			FacilityEvaluator facilityEvaluator)
+			FacilityEvaluator facilityEvaluator,
+			List<AttributeEvaluator<IceHockeyAttributes>> attributeEvaluators)
 	{
-		super(A, B, C, attributeEvaluators, facilityEvaluator);
+		super(A, B, C, facilityEvaluator, attributeEvaluators);
 	}
 }

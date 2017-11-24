@@ -24,14 +24,19 @@ public class PlayerEvaluator<A extends Attributes>
 			double a,
 			double b,
 			double c,
-			List<AttributeEvaluator<A>> attributeEvaluators,
-			FacilityEvaluator facilityEvaluator)
+			FacilityEvaluator facilityEvaluator,
+			List<AttributeEvaluator<A>> attributeEvaluators)
 	{
 		this.a = a;
 		this.b = b;
 		this.c = c;
 		this.attributeEvaluators = attributeEvaluators;
 		this.facilityEvaluator = facilityEvaluator;
+	}
+
+	public List<AttributeEvaluator<A>> getAttributeEvaluators()
+	{
+		return attributeEvaluators;
 	}
 
 	public void setAttributeEvaluators(List<AttributeEvaluator<A>> attributeEvaluators)
@@ -59,12 +64,25 @@ public class PlayerEvaluator<A extends Attributes>
 		this.staffEffectivness = staffEffectivness;
 	}
 
+	public AttributeEvaluator<A> getBestEvaluatorByRating(A attributes)
+	{
+		return attributeEvaluators
+				.stream()
+				.max(new RatingEvaluatorComparator<A>(attributes)::compare)
+				.get();
+	}
+
+	public AttributeEvaluator<A> getBestEvaluatorByQuality(A attributes)
+	{
+		return attributeEvaluators
+				.stream()
+				.max(new QualityEvaluatorComparator<A>(attributes)::compare)
+				.get();
+	}
+
 	public PositionNameValue getBestPositionRating(Player<A> player)
 	{
-		AttributeEvaluator<A> evaluator = attributeEvaluators
-				.stream()
-				.max(new RatingEvaluatorComparator<A>(player.getAttributes())::compare)
-				.get();
+		AttributeEvaluator<A> evaluator = getBestEvaluatorByRating(player.getAttributes());
 
 		return new PositionNameValue(
 				evaluator.getName(),
@@ -73,10 +91,7 @@ public class PlayerEvaluator<A extends Attributes>
 
 	public PositionNameValue getBestPositionQuality(Player<A> player)
 	{
-		AttributeEvaluator<A> evaluator = attributeEvaluators
-				.stream()
-				.max(new QualityEvaluatorComparator<A>(player.getAttributes())::compare)
-				.get();
+		AttributeEvaluator<A> evaluator = getBestEvaluatorByQuality(player.getAttributes());
 
 		return new PositionNameValue(
 				evaluator.getName(),
