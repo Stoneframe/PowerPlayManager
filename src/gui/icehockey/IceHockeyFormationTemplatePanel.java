@@ -2,12 +2,11 @@ package gui.icehockey;
 
 import java.util.List;
 
-import javax.swing.JComboBox;
-
 import evaluators.AttributeEvaluator;
 import evaluators.icehockey.IceHockeyAttributeEvaluator;
 import formation.icehockey.IceHockeyFormationTemplate;
 import gui.formation.FormationTemplatePanel;
+import gui.util.PpmComboBox;
 import model.icehockey.IceHockeyAttributes;
 
 public class IceHockeyFormationTemplatePanel
@@ -15,26 +14,20 @@ public class IceHockeyFormationTemplatePanel
 {
 	private static final long serialVersionUID = 6358768840962999641L;
 
-	private JComboBox<AttributeEvaluator<IceHockeyAttributes>> leftWingComboBox;
-	private JComboBox<AttributeEvaluator<IceHockeyAttributes>> centerComboBox;
-	private JComboBox<AttributeEvaluator<IceHockeyAttributes>> rightWingComboBox;
-	private JComboBox<AttributeEvaluator<IceHockeyAttributes>> leftBackComboBox;
-	private JComboBox<AttributeEvaluator<IceHockeyAttributes>> rightBackComboBox;
+	private PpmComboBox<AttributeEvaluator<IceHockeyAttributes>> leftWingComboBox;
+	private PpmComboBox<AttributeEvaluator<IceHockeyAttributes>> centerComboBox;
+	private PpmComboBox<AttributeEvaluator<IceHockeyAttributes>> rightWingComboBox;
+	private PpmComboBox<AttributeEvaluator<IceHockeyAttributes>> leftBackComboBox;
+	private PpmComboBox<AttributeEvaluator<IceHockeyAttributes>> rightBackComboBox;
 
 	public IceHockeyFormationTemplatePanel(
 			List<AttributeEvaluator<IceHockeyAttributes>> attributeEaluators)
 	{
-		leftWingComboBox = new JComboBox<AttributeEvaluator<IceHockeyAttributes>>();
-		centerComboBox = new JComboBox<AttributeEvaluator<IceHockeyAttributes>>();
-		rightWingComboBox = new JComboBox<AttributeEvaluator<IceHockeyAttributes>>();
-		leftBackComboBox = new JComboBox<AttributeEvaluator<IceHockeyAttributes>>();
-		rightBackComboBox = new JComboBox<AttributeEvaluator<IceHockeyAttributes>>();
-
-		attributeEaluators.forEach(e -> leftWingComboBox.addItem(e));
-		attributeEaluators.forEach(e -> centerComboBox.addItem(e));
-		attributeEaluators.forEach(e -> rightWingComboBox.addItem(e));
-		attributeEaluators.forEach(e -> leftBackComboBox.addItem(e));
-		attributeEaluators.forEach(e -> rightBackComboBox.addItem(e));
+		leftWingComboBox = new PpmComboBox<>(attributeEaluators);
+		centerComboBox = new PpmComboBox<>(attributeEaluators);
+		rightWingComboBox = new PpmComboBox<>(attributeEaluators);
+		leftBackComboBox = new PpmComboBox<>(attributeEaluators);
+		rightBackComboBox = new PpmComboBox<>(attributeEaluators);
 
 		addRow("Left Wing:", leftWingComboBox);
 		addRow("Center:", centerComboBox);

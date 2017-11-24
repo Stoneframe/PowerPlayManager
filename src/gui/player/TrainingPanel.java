@@ -3,13 +3,13 @@ package gui.player;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
+import gui.util.PpmComboBox;
 import model.Attributes;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
@@ -21,7 +21,7 @@ public abstract class TrainingPanel<A extends Attributes>
 {
 	private static final long serialVersionUID = -5619394098750253039L;
 
-	private JComboBox<AttributeEvaluator<A>> positionComboBox;
+	private PpmComboBox<AttributeEvaluator<A>> positionComboBox;
 	private JTextField nextAttributeTextField;
 
 	private PlayerEvaluator<A> playerEvaluator;
@@ -31,12 +31,10 @@ public abstract class TrainingPanel<A extends Attributes>
 	{
 		this.playerEvaluator = playerEvaluator;
 
-		positionComboBox = new JComboBox<>();
+		positionComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators());
 		positionComboBox.addActionListener(e -> onAttributeEvaluatorSelected());
 
 		nextAttributeTextField = new JTextField();
-
-		playerEvaluator.getAttributeEvaluators().forEach(e -> positionComboBox.addItem(e));
 
 		setBorder(
 			new CompoundBorder(
@@ -89,7 +87,7 @@ public abstract class TrainingPanel<A extends Attributes>
 
 	private AttributeEvaluator<A> getSelectedEvaluator()
 	{
-		return positionComboBox.getItemAt(positionComboBox.getSelectedIndex());
+		return positionComboBox.getSelection();
 	}
 
 	private void setNextAttributeToTrain(AttributeEvaluator<A> attributeEvaluator)

@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -16,6 +15,7 @@ import javax.swing.JTextArea;
 
 import gui.player.PlayersParsedEvent;
 import gui.player.PlayersParsedListener;
+import gui.util.PpmComboBox;
 import model.Attributes;
 import model.Player;
 import parsers.ParseException;
@@ -29,14 +29,14 @@ public class ParsePanel<A extends Attributes>
 	private PlayersParsedListener<A> playersParsedListener;
 
 	private JTextArea textArea;
-	private JComboBox<PlayersParser<A>> parsersComboBox;
+	private PpmComboBox<PlayersParser<A>> parsersComboBox;
 	private JButton parseButton;
 
 	public ParsePanel(List<PlayersParser<A>> parsers)
 	{
 		textArea = new JTextArea(30, 50);
 
-		parsersComboBox = new JComboBox<PlayersParser<A>>();
+		parsersComboBox = new PpmComboBox<PlayersParser<A>>(parsers);
 
 		parseButton = new JButton("Parse");
 		parseButton.addActionListener(new ActionListener()
@@ -45,11 +45,9 @@ public class ParsePanel<A extends Attributes>
 			{
 				try
 				{
-					PlayersParser<A> playersParser = parsersComboBox
-							.getItemAt(parsersComboBox.getSelectedIndex());
+					PlayersParser<A> playersParser = parsersComboBox.getSelection();
 
-					List<Player<A>> players = playersParser
-							.parsePlayers(textArea.getText());
+					List<Player<A>> players = playersParser.parsePlayers(textArea.getText());
 
 					textArea.setText("");
 
@@ -70,8 +68,6 @@ public class ParsePanel<A extends Attributes>
 				}
 			}
 		});
-
-		parsers.forEach(parsersComboBox::addItem);
 
 		setLayout(new GridBagLayout());
 

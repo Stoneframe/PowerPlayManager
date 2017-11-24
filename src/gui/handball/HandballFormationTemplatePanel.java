@@ -2,12 +2,11 @@ package gui.handball;
 
 import java.util.List;
 
-import javax.swing.JComboBox;
-
 import evaluators.AttributeEvaluator;
 import evaluators.handball.HandballAttributeEvaluator;
 import formation.handball.HandballFormationTemplate;
 import gui.formation.FormationTemplatePanel;
+import gui.util.PpmComboBox;
 import model.handball.HandballAttributes;
 
 public class HandballFormationTemplatePanel
@@ -15,29 +14,22 @@ public class HandballFormationTemplatePanel
 {
 	private static final long serialVersionUID = -1572635059590322744L;
 
-	private JComboBox<AttributeEvaluator<HandballAttributes>> leftWingComboBox;
-	private JComboBox<AttributeEvaluator<HandballAttributes>> rightWingComboBox;
-	private JComboBox<AttributeEvaluator<HandballAttributes>> pivotComboBox;
-	private JComboBox<AttributeEvaluator<HandballAttributes>> leftBackComboBox;
-	private JComboBox<AttributeEvaluator<HandballAttributes>> centerBackComboBox;
-	private JComboBox<AttributeEvaluator<HandballAttributes>> rightBackComboBox;
+	private PpmComboBox<AttributeEvaluator<HandballAttributes>> leftWingComboBox;
+	private PpmComboBox<AttributeEvaluator<HandballAttributes>> rightWingComboBox;
+	private PpmComboBox<AttributeEvaluator<HandballAttributes>> pivotComboBox;
+	private PpmComboBox<AttributeEvaluator<HandballAttributes>> leftBackComboBox;
+	private PpmComboBox<AttributeEvaluator<HandballAttributes>> centerBackComboBox;
+	private PpmComboBox<AttributeEvaluator<HandballAttributes>> rightBackComboBox;
 
 	public HandballFormationTemplatePanel(
 			List<AttributeEvaluator<HandballAttributes>> attributeEvaluators)
 	{
-		leftWingComboBox = new JComboBox<AttributeEvaluator<HandballAttributes>>();
-		rightWingComboBox = new JComboBox<AttributeEvaluator<HandballAttributes>>();
-		pivotComboBox = new JComboBox<AttributeEvaluator<HandballAttributes>>();
-		leftBackComboBox = new JComboBox<AttributeEvaluator<HandballAttributes>>();
-		centerBackComboBox = new JComboBox<AttributeEvaluator<HandballAttributes>>();
-		rightBackComboBox = new JComboBox<AttributeEvaluator<HandballAttributes>>();
-
-		attributeEvaluators.forEach(e -> leftWingComboBox.addItem(e));
-		attributeEvaluators.forEach(e -> rightWingComboBox.addItem(e));
-		attributeEvaluators.forEach(e -> pivotComboBox.addItem(e));
-		attributeEvaluators.forEach(e -> leftBackComboBox.addItem(e));
-		attributeEvaluators.forEach(e -> centerBackComboBox.addItem(e));
-		attributeEvaluators.forEach(e -> rightBackComboBox.addItem(e));
+		leftWingComboBox = new PpmComboBox<>(attributeEvaluators);
+		rightWingComboBox = new PpmComboBox<>(attributeEvaluators);
+		pivotComboBox = new PpmComboBox<>(attributeEvaluators);
+		leftBackComboBox = new PpmComboBox<>(attributeEvaluators);
+		centerBackComboBox = new PpmComboBox<>(attributeEvaluators);
+		rightBackComboBox = new PpmComboBox<>(attributeEvaluators);
 
 		addRow("Left Wing:", leftWingComboBox);
 		addRow("Right Wing:", rightWingComboBox);
