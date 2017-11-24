@@ -21,13 +21,13 @@ public class IceHockeyFormationTemplatePanel
 	private PpmComboBox<AttributeEvaluator<IceHockeyAttributes>> rightBackComboBox;
 
 	public IceHockeyFormationTemplatePanel(
-			List<AttributeEvaluator<IceHockeyAttributes>> attributeEaluators)
+			List<AttributeEvaluator<IceHockeyAttributes>> attributeEvaluators)
 	{
-		leftWingComboBox = new PpmComboBox<>(attributeEaluators);
-		centerComboBox = new PpmComboBox<>(attributeEaluators);
-		rightWingComboBox = new PpmComboBox<>(attributeEaluators);
-		leftBackComboBox = new PpmComboBox<>(attributeEaluators);
-		rightBackComboBox = new PpmComboBox<>(attributeEaluators);
+		leftWingComboBox = new PpmComboBox<>(attributeEvaluators);
+		centerComboBox = new PpmComboBox<>(attributeEvaluators);
+		rightWingComboBox = new PpmComboBox<>(attributeEvaluators);
+		leftBackComboBox = new PpmComboBox<>(attributeEvaluators);
+		rightBackComboBox = new PpmComboBox<>(attributeEvaluators);
 
 		addRow("Left Wing:", leftWingComboBox);
 		addRow("Center:", centerComboBox);
