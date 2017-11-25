@@ -1,11 +1,11 @@
 package gui.handball;
 
 import evaluators.PlayerEvaluator;
-import gui.player.TrainingPanel;
+import gui.player.TrainingPlannerPanel;
 import model.handball.HandballAttributes;
 
 public class HandballTrainingPanel
-	extends TrainingPanel<HandballAttributes>
+	extends TrainingPlannerPanel<HandballAttributes>
 {
 	private static final long serialVersionUID = 1036769887458963598L;
 

@@ -40,9 +40,9 @@ public class PlayerPanel<A extends Attributes>
 	private PositionSuggestionPanel<A> positionSuggestionPanel;
 	private TrainingSuggestionPanel<A> trainingSuggestionPanel;
 
-	private TrainingPanel<A> trainingPanel;
+	private TrainingPlannerPanel<A> trainingPanel;
 
-	public PlayerPanel(AttributesPanel<A> attributePanel, TrainingPanel<A> trainingPanel)
+	public PlayerPanel(AttributesPanel<A> attributePanel, TrainingPlannerPanel<A> trainingPanel)
 	{
 		this.attributePanel = attributePanel;
 		this.trainingPanel = trainingPanel;

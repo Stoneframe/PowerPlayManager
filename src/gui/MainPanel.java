@@ -24,7 +24,7 @@ import gui.player.PlayerSelectedEvent;
 import gui.player.PlayerSelectedListener;
 import gui.player.PlayersParsedEvent;
 import gui.player.PlayersParsedListener;
-import gui.player.TrainingPanel;
+import gui.player.TrainingPlannerPanel;
 import model.Attributes;
 import model.Formation;
 import model.Player;
@@ -50,7 +50,7 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 
 	public MainPanel(
 			AttributesPanel<A> attributesPanel,
-			TrainingPanel<A> trainingPanel,
+			TrainingPlannerPanel<A> trainingPanel,
 			FormationTemplatePanelFactory<FT, A> formationTemplatePanelFactory,
 			FormationPanelFactory<F> formationPanelFactory,
 			FormationBuilder<A, F, FT> formationBuilder,

@@ -1,11 +1,11 @@
 package gui.icehockey;
 
 import evaluators.PlayerEvaluator;
-import gui.player.TrainingPanel;
+import gui.player.TrainingPlannerPanel;
 import model.icehockey.IceHockeyAttributes;
 
 public class IceHockeyTrainingPanel
-	extends TrainingPanel<IceHockeyAttributes>
+	extends TrainingPlannerPanel<IceHockeyAttributes>
 {
 	private static final long serialVersionUID = 3550520789124931078L;
 

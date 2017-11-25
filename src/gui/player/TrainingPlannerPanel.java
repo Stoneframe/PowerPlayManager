@@ -14,7 +14,7 @@ import model.Attributes;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public abstract class TrainingPanel<A extends Attributes>
+public abstract class TrainingPlannerPanel<A extends Attributes>
 	extends JPanel
 	implements
 		PropertyChangedListener
@@ -27,7 +27,7 @@ public abstract class TrainingPanel<A extends Attributes>
 	private PlayerEvaluator<A> playerEvaluator;
 	private A attributes;
 
-	protected TrainingPanel(PlayerEvaluator<A> playerEvaluator)
+	protected TrainingPlannerPanel(PlayerEvaluator<A> playerEvaluator)
 	{
 		this.playerEvaluator = playerEvaluator;
 
@@ -35,6 +35,7 @@ public abstract class TrainingPanel<A extends Attributes>
 		positionComboBox.addActionListener(e -> onAttributeEvaluatorSelected());
 
 		nextAttributeTextField = new JTextField();
+		nextAttributeTextField.setEnabled(false);
 
 		setBorder(
 			new CompoundBorder(
