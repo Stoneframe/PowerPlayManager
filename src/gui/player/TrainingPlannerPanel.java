@@ -35,7 +35,7 @@ public abstract class TrainingPlannerPanel<A extends Attributes>
 		positionComboBox.addActionListener(e -> onAttributeEvaluatorSelected());
 
 		nextAttributeTextField = new JTextField();
-		nextAttributeTextField.setEnabled(false);
+		nextAttributeTextField.setEditable(false);
 
 		setBorder(
 			new CompoundBorder(
