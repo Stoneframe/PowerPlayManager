@@ -15,28 +15,32 @@ public class HandballFormationPanel
 {
 	private static final long serialVersionUID = -7652823156719901773L;
 
+	private JLabel pivotLabel;
 	private JLabel leftWingLabel;
 	private JLabel rightWingLabel;
-	private JLabel pivotLabel;
 	private JLabel leftBackLabel;
 	private JLabel centerBackLabel;
 	private JLabel rightBackLabel;
 
+	private JTextField pivotTextField;
 	private JTextField leftWingTextField;
 	private JTextField rightWingTextField;
-	private JTextField pivotTextField;
 	private JTextField leftBackTextField;
 	private JTextField centerBackTextField;
 	private JTextField rightBackTextField;
 
 	public HandballFormationPanel(HandballFormation formation)
 	{
+		pivotLabel = new JLabel("Pivot:");
 		leftWingLabel = new JLabel("Left Wing:");
 		rightWingLabel = new JLabel("Right Wing:");
-		pivotLabel = new JLabel("Pivot:");
 		leftBackLabel = new JLabel("Left Back:");
 		centerBackLabel = new JLabel("Center Back:");
 		rightBackLabel = new JLabel("Right Back:");
+
+		pivotTextField = new JTextField(15);
+		pivotTextField.setEditable(false);
+		pivotTextField.setText(formation.getPivot().getName());
 
 		leftWingTextField = new JTextField(15);
 		leftWingTextField.setEditable(false);
@@ -45,10 +49,6 @@ public class HandballFormationPanel
 		rightWingTextField = new JTextField(15);
 		rightWingTextField.setEditable(false);
 		rightWingTextField.setText(formation.getRightWing().getName());
-
-		pivotTextField = new JTextField(15);
-		pivotTextField.setEditable(false);
-		pivotTextField.setText(formation.getPivot().getName());
 
 		leftBackTextField = new JTextField(15);
 		leftBackTextField.setEditable(false);
@@ -69,14 +69,14 @@ public class HandballFormationPanel
 
 		setLayout(new GridLayout(6, 2));
 
+		add(pivotLabel);
+		add(pivotTextField);
+
 		add(leftWingLabel);
 		add(leftWingTextField);
 
 		add(rightWingLabel);
 		add(rightWingTextField);
-
-		add(pivotLabel);
-		add(pivotTextField);
 
 		add(leftBackLabel);
 		add(leftBackTextField);
