@@ -14,9 +14,9 @@ public class HandballFormationTemplatePanel
 {
 	private static final long serialVersionUID = -1572635059590322744L;
 
+	private PpmComboBox<AttributeEvaluator<HandballAttributes>> pivotComboBox;
 	private PpmComboBox<AttributeEvaluator<HandballAttributes>> leftWingComboBox;
 	private PpmComboBox<AttributeEvaluator<HandballAttributes>> rightWingComboBox;
-	private PpmComboBox<AttributeEvaluator<HandballAttributes>> pivotComboBox;
 	private PpmComboBox<AttributeEvaluator<HandballAttributes>> leftBackComboBox;
 	private PpmComboBox<AttributeEvaluator<HandballAttributes>> centerBackComboBox;
 	private PpmComboBox<AttributeEvaluator<HandballAttributes>> rightBackComboBox;
@@ -24,16 +24,16 @@ public class HandballFormationTemplatePanel
 	public HandballFormationTemplatePanel(
 			List<AttributeEvaluator<HandballAttributes>> attributeEvaluators)
 	{
+		pivotComboBox = new PpmComboBox<>(attributeEvaluators);
 		leftWingComboBox = new PpmComboBox<>(attributeEvaluators);
 		rightWingComboBox = new PpmComboBox<>(attributeEvaluators);
-		pivotComboBox = new PpmComboBox<>(attributeEvaluators);
 		leftBackComboBox = new PpmComboBox<>(attributeEvaluators);
 		centerBackComboBox = new PpmComboBox<>(attributeEvaluators);
 		rightBackComboBox = new PpmComboBox<>(attributeEvaluators);
 
+		addRow("Pivot:", pivotComboBox);
 		addRow("Left Wing:", leftWingComboBox);
 		addRow("Right Wing:", rightWingComboBox);
-		addRow("Pivot:", pivotComboBox);
 		addRow("Left Back:", leftBackComboBox);
 		addRow("Center Back:", centerBackComboBox);
 		addRow("Right Back:", rightBackComboBox);
