@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 import comparators.RatingComparator;
 import evaluators.AttributeEvaluator;
@@ -79,17 +78,25 @@ public abstract class PaulsFormationBuilder<
 		public int compareTo(PositionAssigner<A> other)
 		{
 			int bestPlayersComparison = Double.compare(
-				other.getBestPlayerRating(),
-				this.getBestPlayerRating());
+				other.getRatingOfPlayerWithRank(0),
+				this.getRatingOfPlayerWithRank(0));
 
 			if (bestPlayersComparison != 0)
 			{
 				return bestPlayersComparison;
 			}
 
-			return Double.compare(
-				this.getSecondBestPlayerRating(),
-				other.getSecondBestPlayerRating());
+			int rank = 1;
+
+			int comparison;
+			while ((comparison = Double.compare(
+				this.getRatingOfPlayerWithRank(rank),
+				other.getRatingOfPlayerWithRank(rank))) == 0)
+			{
+				rank++;
+			}
+
+			return comparison;
 		}
 
 		public void assignBestPlayerToPosition()
@@ -99,32 +106,27 @@ public abstract class PaulsFormationBuilder<
 			roster.remove(player);
 		}
 
-		private double getBestPlayerRating()
+		private double getRatingOfPlayerWithRank(int rank)
 		{
-			return evaluator.getRating(getBestPlayer().getAttributes());
-		}
+			Player<A> player = getPlayerAtRank(rank);
 
-		private double getSecondBestPlayerRating()
-		{
-			return evaluator.getRating(getSecondBestPlayer().getAttributes());
+			return evaluator.getRating(player.getAttributes());
 		}
 
 		private Player<A> getBestPlayer()
 		{
-			return getSortedPlayerStream().findFirst().get();
+			return getPlayerAtRank(0);
 		}
 
-		private Player<A> getSecondBestPlayer()
-		{
-			return getSortedPlayerStream().skip(1).findFirst().get();
-		}
-
-		private Stream<Player<A>> getSortedPlayerStream()
+		private Player<A> getPlayerAtRank(int rank)
 		{
 			return roster
 					.stream()
 					.filter(p -> p.getSide().equals(side))
-					.sorted(new RatingComparator<>(evaluator).reversed());
+					.sorted(new RatingComparator<>(evaluator).reversed())
+					.skip(rank)
+					.findFirst()
+					.get();
 		}
 	}
 }
