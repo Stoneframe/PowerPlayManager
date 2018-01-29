@@ -93,7 +93,7 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 
 						parseFrame.setContentPane(parsePanel);
 						parseFrame.pack();
-						parseFrame.setLocationRelativeTo(null);
+						parseFrame.setLocationRelativeTo(MainPanel.this);
 						parseFrame.setVisible(true);
 					}
 				});
