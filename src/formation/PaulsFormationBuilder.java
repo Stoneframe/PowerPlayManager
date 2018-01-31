@@ -77,9 +77,7 @@ public abstract class PaulsFormationBuilder<
 		@Override
 		public int compareTo(PositionAssigner<A> other)
 		{
-			int bestPlayersComparison = Double.compare(
-				other.getRatingOfPlayerWithRank(0),
-				this.getRatingOfPlayerWithRank(0));
+			int bestPlayersComparison = comparePlayersAtRank(other, this, 0);
 
 			if (bestPlayersComparison != 0)
 			{
@@ -89,9 +87,7 @@ public abstract class PaulsFormationBuilder<
 			int rank = 1;
 
 			int comparison;
-			while ((comparison = Double.compare(
-				this.getRatingOfPlayerWithRank(rank),
-				other.getRatingOfPlayerWithRank(rank))) == 0)
+			while ((comparison = comparePlayersAtRank(this, other, rank)) == 0)
 			{
 				rank++;
 			}
@@ -106,7 +102,17 @@ public abstract class PaulsFormationBuilder<
 			roster.remove(player);
 		}
 
-		private double getRatingOfPlayerWithRank(int rank)
+		private static int comparePlayersAtRank(
+				PositionAssigner<?> assigner1,
+				PositionAssigner<?> assigner2,
+				int rank)
+		{
+			return Double.compare(
+				assigner1.getRatingOfPlayerAtRank(rank),
+				assigner2.getRatingOfPlayerAtRank(rank));
+		}
+
+		private double getRatingOfPlayerAtRank(int rank)
 		{
 			Player<A> player = getPlayerAtRank(rank);
 
