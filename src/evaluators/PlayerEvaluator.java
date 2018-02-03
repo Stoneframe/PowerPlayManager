@@ -4,18 +4,17 @@ import java.util.List;
 
 import comparators.QualityEvaluatorComparator;
 import comparators.RatingEvaluatorComparator;
-
 import model.Attributes;
 import model.Player;
+import settings.Settings;
 
 public class PlayerEvaluator<A extends Attributes>
 {
 	private static final int DAYS_PER_SEASON = 112;
 
-	private int facilityLevel = 1;
-	private int staffEffectivness = 0;
-
 	private double a, b, c;
+
+	private Settings settings;
 
 	private List<AttributeEvaluator<A>> attributeEvaluators;
 	private FacilityEvaluator facilityEvaluator;
@@ -24,12 +23,14 @@ public class PlayerEvaluator<A extends Attributes>
 			double a,
 			double b,
 			double c,
+			Settings settings,
 			FacilityEvaluator facilityEvaluator,
 			List<AttributeEvaluator<A>> attributeEvaluators)
 	{
 		this.a = a;
 		this.b = b;
 		this.c = c;
+		this.settings = settings;
 		this.attributeEvaluators = attributeEvaluators;
 		this.facilityEvaluator = facilityEvaluator;
 	}
@@ -46,22 +47,22 @@ public class PlayerEvaluator<A extends Attributes>
 
 	public int getFacilityLevel()
 	{
-		return facilityLevel;
+		return settings.getFacilityLevel();
 	}
 
 	public void setFacilityLevel(int facilityLevel)
 	{
-		this.facilityLevel = facilityLevel;
+		settings.setFacilityLevel(facilityLevel);
 	}
 
 	public int getStaffEffectivness()
 	{
-		return staffEffectivness;
+		return settings.getStaffEffectivness();
 	}
 
 	public void setStaffEffectivness(int staffEffectivness)
 	{
-		this.staffEffectivness = staffEffectivness;
+		settings.setStaffEffectivness(staffEffectivness);
 	}
 
 	public AttributeEvaluator<A> getBestEvaluatorByRating(A attributes)
@@ -121,7 +122,7 @@ public class PlayerEvaluator<A extends Attributes>
 	private double getTrainingFacilityEffectivness()
 	{
 		double facilityEffectivness = facilityEvaluator
-				.getOverallEffectivness(facilityLevel, staffEffectivness);
+				.getOverallEffectivness(getFacilityLevel(), getStaffEffectivness());
 
 		return (40 + facilityEffectivness) / 145;
 	}

@@ -38,6 +38,8 @@ import parsers.players.icehockey.IceHockeyMarketPlayersParser;
 import parsers.players.icehockey.IceHockeyOverviewPlayersParser;
 import parsers.players.icehockey.IceHockeyPractiseProPlayersParser;
 import parsers.players.icehockey.IceHockeyProfilePlayersParser;
+import settings.SettingStorage;
+import settings.Settings;
 
 public class MainFrame
 	extends JFrame
@@ -61,6 +63,7 @@ public class MainFrame
 					new HandballPractisePlayersParser(),
 					new HandballPractiseProPlayersParser()),
 				new HandballPlayerEvaluator(
+						new Settings(new SettingStorage("handball")),
 						new FacilityEvaluator(),
 						Arrays.asList(
 							new HandballGoalieAttributeEvaluator(),
@@ -81,6 +84,7 @@ public class MainFrame
 					new IceHockeyOverviewPlayersParser(),
 					new IceHockeyPractiseProPlayersParser()),
 				new IceHockeyPlayerEvaluator(
+						new Settings(new SettingStorage("icehockey")),
 						new FacilityEvaluator(),
 						Arrays.asList(
 							new IceHockeyGoalieAttributeEvaluator(),
