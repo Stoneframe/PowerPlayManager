@@ -19,7 +19,18 @@ public abstract class AttributeEvaluator<A extends Attributes>
 		return name;
 	}
 
-	public abstract double getRating(A attributes);
+	public double getRating(A attributes)
+	{
+		List<Pair<String, Double>> pairs = createPairs(attributes);
+
+		double value = pairs
+				.stream()
+				.min((o1, o2) -> Double.compare(o1.getValue(), o2.getValue()))
+				.get()
+				.getValue();
+
+		return attributeSum() * value;
+	}
 
 	public abstract double getQuality(A attributes);
 
@@ -39,6 +50,8 @@ public abstract class AttributeEvaluator<A extends Attributes>
 	{
 		return getName();
 	}
+
+	protected abstract double attributeSum();
 
 	protected abstract List<Pair<String, Double>> createPairs(A attributes);
 

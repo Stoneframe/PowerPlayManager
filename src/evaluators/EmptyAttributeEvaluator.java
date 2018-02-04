@@ -15,12 +15,6 @@ public class EmptyAttributeEvaluator<A extends Attributes>
 	}
 
 	@Override
-	public double getRating(A attributes)
-	{
-		return 0;
-	}
-
-	@Override
 	public double getQuality(A attributes)
 	{
 		return 0;
@@ -30,5 +24,11 @@ public class EmptyAttributeEvaluator<A extends Attributes>
 	protected List<Pair<String, Double>> createPairs(A attributes)
 	{
 		return Collections.emptyList();
+	}
+
+	@Override
+	protected double attributeSum()
+	{
+		return 0;
 	}
 }

@@ -87,7 +87,8 @@ public abstract class PaulsFormationBuilder<
 			int rank = 1;
 
 			int comparison;
-			while ((comparison = comparePlayersAtRank(this, other, rank)) == 0)
+			while ((comparison = comparePlayersAtRank(this, other, rank)) == 0
+					&& rank < roster.size())
 			{
 				rank++;
 			}
@@ -116,6 +117,11 @@ public abstract class PaulsFormationBuilder<
 		{
 			Player<A> player = getPlayerAtRank(rank);
 
+			if (player == null)
+			{
+				return Double.MIN_VALUE;
+			}
+
 			return evaluator.getRating(player.getAttributes());
 		}
 
@@ -132,7 +138,7 @@ public abstract class PaulsFormationBuilder<
 					.sorted(new RatingComparator<>(evaluator).reversed())
 					.skip(rank)
 					.findFirst()
-					.get();
+					.orElse(null);
 		}
 	}
 }

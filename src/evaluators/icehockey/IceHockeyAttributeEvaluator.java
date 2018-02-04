@@ -39,21 +39,6 @@ public class IceHockeyAttributeEvaluator
 	}
 
 	@Override
-	public double getRating(IceHockeyAttributes attributes)
-	{
-		// @formatter:off
-		return (goa * attributes.getGoa() +
-				def * attributes.getDef() +
-				off * attributes.getOff() +
-				sho * attributes.getSho() +
-				pas * attributes.getPas() +
-				tec * attributes.getTec() +
-				agr * attributes.getAgr())
-				/ (goa + def + off + sho + pas + tec + agr);
-		// @formatter:on
-	}
-
-	@Override
 	public double getQuality(IceHockeyAttributes attributes)
 	{
 		// @formatter:off
@@ -79,5 +64,11 @@ public class IceHockeyAttributeEvaluator
 			createPair("Passing", attributes.getPas(), pas),
 			createPair("Technique", attributes.getTec(), tec),
 			createPair("Aggressivness", attributes.getAgr(), agr));
+	}
+
+	@Override
+	protected double attributeSum()
+	{
+		return goa + def + off + sho + pas + tec + agr;
 	}
 }

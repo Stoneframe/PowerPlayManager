@@ -42,22 +42,6 @@ public class HandballAttributeEvaluator
 	}
 
 	@Override
-	public double getRating(HandballAttributes attributes)
-	{
-		// @formatter:off
-		return (goa * attributes.getGoa() +
-				fip * attributes.getFip() +
-				sho * attributes.getSho() +
-				blk * attributes.getBlk() +
-				pas * attributes.getPas() +
-				tec * attributes.getTec() +
-				spe * attributes.getSpe() +
-				agr * attributes.getAgr())
-				/ (goa + fip + sho + blk + pas + tec + spe + agr);
-		// @formatter:on
-	}
-
-	@Override
 	public double getQuality(HandballAttributes attributes)
 	{
 		// @formatter:off
@@ -85,5 +69,11 @@ public class HandballAttributeEvaluator
 			createPair("Technique", attributes.getTec(), tec),
 			createPair("Speed", attributes.getSpe(), spe),
 			createPair("Aggressivness", attributes.getAgr(), agr));
+	}
+
+	@Override
+	protected double attributeSum()
+	{
+		return goa + fip + sho + blk + pas + tec + spe + agr;
 	}
 }

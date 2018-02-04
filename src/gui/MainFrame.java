@@ -10,7 +10,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import evaluators.FacilityEvaluator;
-import evaluators.handball.HandballBackAttributeEvaluator;
 import evaluators.handball.HandballDefBackAttributeEvaluator;
 import evaluators.handball.HandballDefPivotAttributeEvaluator;
 import evaluators.handball.HandballDefWingAttributeEvaluator;
@@ -18,9 +17,7 @@ import evaluators.handball.HandballGoalieAttributeEvaluator;
 import evaluators.handball.HandballOffBackAttributeEvaluator;
 import evaluators.handball.HandballOffPivotAttributeEvaluator;
 import evaluators.handball.HandballOffWingAttributeEvaluator;
-import evaluators.handball.HandballPivotAttributeEvaluator;
 import evaluators.handball.HandballPlayerEvaluator;
-import evaluators.handball.HandballWingAttributeEvaluator;
 import evaluators.icehockey.IceHockeyBackAttributeEvaluator;
 import evaluators.icehockey.IceHockeyCenterAttributeEvaluator;
 import evaluators.icehockey.IceHockeyGoalieAttributeEvaluator;
@@ -67,9 +64,9 @@ public class MainFrame
 						new FacilityEvaluator(),
 						Arrays.asList(
 							new HandballGoalieAttributeEvaluator(),
-							new HandballBackAttributeEvaluator(),
-							new HandballPivotAttributeEvaluator(),
-							new HandballWingAttributeEvaluator(),
+							// new HandballBackAttributeEvaluator(),
+							// new HandballPivotAttributeEvaluator(),
+							// new HandballWingAttributeEvaluator(),
 							new HandballDefBackAttributeEvaluator(),
 							new HandballDefPivotAttributeEvaluator(),
 							new HandballDefWingAttributeEvaluator(),
