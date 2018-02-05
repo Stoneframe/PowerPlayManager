@@ -10,6 +10,11 @@ import model.handball.HandballAttributes;
 public class HandballAttributeEvaluator
 	extends AttributeEvaluator<HandballAttributes>
 {
+	protected static final int PRIMARY = 100;
+	protected static final int HIGH = 70;
+	protected static final int MEDIUM = 50;
+	protected static final int LOW = 30;
+
 	private double goa;
 	private double fip;
 	private double sho;
