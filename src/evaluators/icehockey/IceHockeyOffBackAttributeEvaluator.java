@@ -3,7 +3,7 @@ package evaluators.icehockey;
 public class IceHockeyOffBackAttributeEvaluator
 	extends IceHockeyAttributeEvaluator
 {
-	private static final String NAME = "Off. Back";
+	private static final String NAME = "Back (Off)";
 
 	private static final int GOA = 0;
 	private static final int DEF = 100;
