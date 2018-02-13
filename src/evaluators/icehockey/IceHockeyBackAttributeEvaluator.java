@@ -1,48 +1,25 @@
 package evaluators.icehockey;
 
 import java.util.Arrays;
-import java.util.List;
 
-import comparators.QualityEvaluatorComparator;
-import comparators.RatingEvaluatorComparator;
+import evaluators.MacroAttributeEvaluator;
 import model.icehockey.IceHockeyAttributes;
 
 public class IceHockeyBackAttributeEvaluator
-	extends IceHockeyAttributeEvaluator
+	extends MacroAttributeEvaluator<IceHockeyAttributes>
 {
-	private List<IceHockeyAttributeEvaluator> attributeEvaluators =
-			Arrays.asList(
-				new IceHockeyDefBackAttributeEvaluator(),
-				new IceHockeyOffBackAttributeEvaluator());
-
 	public IceHockeyBackAttributeEvaluator()
 	{
-		super("Back", 0, 0, 0, 0, 0, 0, 0);
+		super(
+				"Back",
+				Arrays.asList(
+					new IceHockeyDefBackAttributeEvaluator(),
+					new IceHockeyOffBackAttributeEvaluator()));
 	}
-	
+
 	@Override
-	public boolean isMacroPosition()
+	public boolean isMacroEvaluator()
 	{
 		return true;
-	}
-
-	@Override
-	public double getRating(IceHockeyAttributes attributes)
-	{
-		return attributeEvaluators
-				.stream()
-				.max(new RatingEvaluatorComparator<IceHockeyAttributes>(attributes)::compare)
-				.get()
-				.getRating(attributes);
-	}
-
-	@Override
-	public double getQuality(IceHockeyAttributes attributes)
-	{
-		return attributeEvaluators
-				.stream()
-				.max(new QualityEvaluatorComparator<IceHockeyAttributes>(attributes)::compare)
-				.get()
-				.getQuality(attributes);
 	}
 }

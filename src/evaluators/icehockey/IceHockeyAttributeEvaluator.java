@@ -3,12 +3,12 @@ package evaluators.icehockey;
 import java.util.Arrays;
 import java.util.List;
 
-import evaluators.AttributeEvaluator;
+import evaluators.MicroAttributeEvaluator;
 import javafx.util.Pair;
 import model.icehockey.IceHockeyAttributes;
 
 public class IceHockeyAttributeEvaluator
-	extends AttributeEvaluator<IceHockeyAttributes>
+	extends MicroAttributeEvaluator<IceHockeyAttributes>
 {
 	private double goa;
 	private double def;

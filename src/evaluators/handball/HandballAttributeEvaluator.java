@@ -3,12 +3,12 @@ package evaluators.handball;
 import java.util.Arrays;
 import java.util.List;
 
-import evaluators.AttributeEvaluator;
+import evaluators.MicroAttributeEvaluator;
 import javafx.util.Pair;
 import model.handball.HandballAttributes;
 
 public class HandballAttributeEvaluator
-	extends AttributeEvaluator<HandballAttributes>
+	extends MicroAttributeEvaluator<HandballAttributes>
 {
 	protected static final int PRIMARY = 100;
 	protected static final int HIGH = 75;

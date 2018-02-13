@@ -40,7 +40,7 @@ public class PlayerEvaluator<A extends Attributes>
 	{
 		return attributeEvaluators
 				.stream()
-				.filter(ev -> !(ignoreMacroPosition && ev.isMacroPosition()))
+				.filter(ev -> !(ignoreMacroPosition && ev.isMacroEvaluator()))
 				.collect(Collectors.toList());
 	}
 

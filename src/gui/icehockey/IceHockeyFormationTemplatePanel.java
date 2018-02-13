@@ -2,7 +2,6 @@ package gui.icehockey;
 
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
-import evaluators.icehockey.IceHockeyAttributeEvaluator;
 import formation.icehockey.IceHockeyFormationTemplate;
 import gui.formation.FormationTemplatePanel;
 import gui.util.PpmComboBox;
@@ -40,11 +39,11 @@ public class IceHockeyFormationTemplatePanel
 	{
 		return new IceHockeyFormationTemplate(
 				nameTextField.getText(),
-				(IceHockeyAttributeEvaluator)leftWingComboBox.getSelectedItem(),
-				(IceHockeyAttributeEvaluator)centerComboBox.getSelectedItem(),
-				(IceHockeyAttributeEvaluator)rightWingComboBox.getSelectedItem(),
-				(IceHockeyAttributeEvaluator)leftBackComboBox.getSelectedItem(),
-				(IceHockeyAttributeEvaluator)rightBackComboBox.getSelectedItem());
+				leftWingComboBox.getSelection(),
+				centerComboBox.getSelection(),
+				rightWingComboBox.getSelection(),
+				leftBackComboBox.getSelection(),
+				rightBackComboBox.getSelection());
 	}
 
 	@Override

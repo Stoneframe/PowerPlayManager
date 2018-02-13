@@ -2,7 +2,6 @@ package gui.handball;
 
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
-import evaluators.handball.HandballAttributeEvaluator;
 import formation.handball.HandballFormationTemplate;
 import gui.formation.FormationTemplatePanel;
 import gui.util.PpmComboBox;
@@ -38,16 +37,17 @@ public class HandballFormationTemplatePanel
 		addRow("Right Back:", rightBackComboBox);
 	}
 
+	@Override
 	public HandballFormationTemplate getFormationTemplate()
 	{
 		return new HandballFormationTemplate(
 				nameTextField.getText(),
-				(HandballAttributeEvaluator)pivotComboBox.getSelectedItem(),
-				(HandballAttributeEvaluator)leftWingComboBox.getSelectedItem(),
-				(HandballAttributeEvaluator)rightWingComboBox.getSelectedItem(),
-				(HandballAttributeEvaluator)centerBackComboBox.getSelectedItem(),
-				(HandballAttributeEvaluator)leftBackComboBox.getSelectedItem(),
-				(HandballAttributeEvaluator)rightBackComboBox.getSelectedItem());
+				pivotComboBox.getSelection(),
+				leftWingComboBox.getSelection(),
+				rightWingComboBox.getSelection(),
+				centerBackComboBox.getSelection(),
+				leftBackComboBox.getSelection(),
+				rightBackComboBox.getSelection());
 	}
 
 	public void setFormationTemplate(HandballFormationTemplate template)
