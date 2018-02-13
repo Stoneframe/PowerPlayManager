@@ -20,6 +20,7 @@ import evaluators.handball.HandballOffWingAttributeEvaluator;
 import evaluators.handball.HandballPlayerEvaluator;
 import evaluators.icehockey.IceHockeyBackAttributeEvaluator;
 import evaluators.icehockey.IceHockeyDefBackAttributeEvaluator;
+import evaluators.icehockey.IceHockeyForwardAttributeEvaluator;
 import evaluators.icehockey.IceHockeyCenterAttributeEvaluator;
 import evaluators.icehockey.IceHockeyGoalieAttributeEvaluator;
 import evaluators.icehockey.IceHockeyOffBackAttributeEvaluator;
@@ -86,6 +87,7 @@ public class MainFrame
 						new FacilityEvaluator(),
 						Arrays.asList(
 							new IceHockeyGoalieAttributeEvaluator(),
+							new IceHockeyForwardAttributeEvaluator(),
 							new IceHockeyWingAttributeEvaluator(),
 							new IceHockeyCenterAttributeEvaluator(),
 							new IceHockeyBackAttributeEvaluator(),
