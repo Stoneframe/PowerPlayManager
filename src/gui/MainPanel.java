@@ -14,7 +14,7 @@ import javax.swing.SwingUtilities;
 import evaluators.PlayerEvaluator;
 import formation.FormationBuilder;
 import formation.FormationTemplate;
-import gui.formation.FormationBuilderFrame;
+import gui.formation.FormationBuilderPanel;
 import gui.formation.FormationPanelFactory;
 import gui.formation.FormationTemplatePanelFactory;
 import gui.player.AttributesPanel;
@@ -118,12 +118,18 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 				{
 					public void run()
 					{
-						new FormationBuilderFrame<A, F, FT>(
-								formationTemplatePanelFactory,
-								formationPanelFactory,
-								formationBuilder,
-								playerEvaluator,
-								roster.copy());
+						JFrame formationBuilderFrame = new JFrame("Formation Builder");
+
+						formationBuilderFrame.setContentPane(
+							new FormationBuilderPanel<A, F, FT>(
+									formationTemplatePanelFactory,
+									formationPanelFactory,
+									formationBuilder,
+									playerEvaluator,
+									roster.copy()));
+						formationBuilderFrame.pack();
+						formationBuilderFrame.setLocationRelativeTo(MainPanel.this);
+						formationBuilderFrame.setVisible(true);
 					}
 				});
 			}

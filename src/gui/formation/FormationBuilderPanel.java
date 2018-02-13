@@ -12,7 +12,6 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -29,11 +28,11 @@ import model.Roster;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public class FormationBuilderFrame<
+public class FormationBuilderPanel<
 		A extends Attributes,
 		F extends Formation,
 		FT extends FormationTemplate>
-	extends JFrame
+	extends JPanel
 {
 	private static final long serialVersionUID = -5043434553464317980L;
 
@@ -49,15 +48,13 @@ public class FormationBuilderFrame<
 
 	private JButton createFormationsButton;
 
-	public FormationBuilderFrame(
+	public FormationBuilderPanel(
 			FormationTemplatePanelFactory<FT, A> formationTemplatePanelFactory,
 			FormationPanelFactory<F> formationPanelFactory,
 			FormationBuilder<A, F, FT> formationBuilder,
 			PlayerEvaluator<A> playerEvaluator,
 			Roster<A> roster)
 	{
-		super("Formations Builder");
-
 		templateListModel = new DefaultListModel<FT>();
 
 		templateList = new JList<FT>(templateListModel);
@@ -160,10 +157,6 @@ public class FormationBuilderFrame<
 		add(topPanel, BorderLayout.NORTH);
 
 		add(createFormationsButton, BorderLayout.SOUTH);
-
-		pack();
-		setLocationRelativeTo(null);
-		setVisible(true);
 	}
 
 	private static String createPlayersRemainingText(Roster<?> roster)
