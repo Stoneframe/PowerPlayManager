@@ -31,7 +31,7 @@ public abstract class TrainingPlannerPanel<A extends Attributes>
 	{
 		this.playerEvaluator = playerEvaluator;
 
-		positionComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators());
+		positionComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(true));
 		positionComboBox.addActionListener(e -> onAttributeEvaluatorSelected());
 
 		nextAttributeTextField = new JTextField();

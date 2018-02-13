@@ -26,7 +26,6 @@ public class HandballMainPanel
 				new HandballFormationPanelFactory(),
 				new HandballPaulsFormationBuilder(),
 				parsers,
-				playerEvaluator,
-				playerEvaluator.getAttributeEvaluators());
+				playerEvaluator);
 	}
 }

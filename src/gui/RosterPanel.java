@@ -275,7 +275,7 @@ public class RosterPanel<A extends Attributes>
 
 	public void setAttributeEvaluators(List<AttributeEvaluator<A>> attributeEvaluators)
 	{
-		this.playerEvaluator.setAttributeEvaluators(attributeEvaluators);
+		playerEvaluator.setAttributeEvaluators(attributeEvaluators);
 
 		rosterTableModel.fireAllTableCellsUpdated();
 	}

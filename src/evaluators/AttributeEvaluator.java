@@ -19,6 +19,11 @@ public abstract class AttributeEvaluator<A extends Attributes>
 		return name;
 	}
 
+	public boolean isMacroPosition()
+	{
+		return false;
+	}
+
 	public double getRating(A attributes)
 	{
 		List<Pair<String, Double>> pairs = createPairs(attributes);

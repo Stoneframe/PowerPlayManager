@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import formation.FormationBuilder;
 import formation.FormationTemplate;
@@ -55,8 +54,7 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 			FormationPanelFactory<F> formationPanelFactory,
 			FormationBuilder<A, F, FT> formationBuilder,
 			List<PlayersParser<A>> parsers,
-			PlayerEvaluator<A> playerEvaluator,
-			List<AttributeEvaluator<A>> attributeEvaluators)
+			PlayerEvaluator<A> playerEvaluator)
 	{
 		parsePanel = new ParsePanel<A>(parsers);
 		parsePanel.setPlayersParseListener(new PlayersParsedListener<A>()
@@ -77,8 +75,7 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 			}
 		});
 
-		playerPanel = new PlayerPanel<A>(attributesPanel, trainingPanel);
-		playerPanel.setAttributeEvaluators(attributeEvaluators);
+		playerPanel = new PlayerPanel<A>(attributesPanel, trainingPanel, playerEvaluator);
 
 		addPlayersButton = new JButton("Add Players");
 		addPlayersButton.addActionListener(new ActionListener()
@@ -125,7 +122,7 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 								formationTemplatePanelFactory,
 								formationPanelFactory,
 								formationBuilder,
-								attributeEvaluators,
+								playerEvaluator,
 								roster.copy());
 					}
 				});

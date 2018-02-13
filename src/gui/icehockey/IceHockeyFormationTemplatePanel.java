@@ -1,8 +1,7 @@
 package gui.icehockey;
 
-import java.util.List;
-
 import evaluators.AttributeEvaluator;
+import evaluators.PlayerEvaluator;
 import evaluators.icehockey.IceHockeyAttributeEvaluator;
 import formation.icehockey.IceHockeyFormationTemplate;
 import gui.formation.FormationTemplatePanel;
@@ -21,13 +20,13 @@ public class IceHockeyFormationTemplatePanel
 	private PpmComboBox<AttributeEvaluator<IceHockeyAttributes>> rightBackComboBox;
 
 	public IceHockeyFormationTemplatePanel(
-			List<AttributeEvaluator<IceHockeyAttributes>> attributeEvaluators)
+			PlayerEvaluator<IceHockeyAttributes> playerEvaluator)
 	{
-		leftWingComboBox = new PpmComboBox<>(attributeEvaluators);
-		centerComboBox = new PpmComboBox<>(attributeEvaluators);
-		rightWingComboBox = new PpmComboBox<>(attributeEvaluators);
-		leftBackComboBox = new PpmComboBox<>(attributeEvaluators);
-		rightBackComboBox = new PpmComboBox<>(attributeEvaluators);
+		leftWingComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
+		centerComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
+		rightWingComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
+		leftBackComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
+		rightBackComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
 
 		addRow("Left Wing:", leftWingComboBox);
 		addRow("Center:", centerComboBox);

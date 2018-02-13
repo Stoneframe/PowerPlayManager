@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 
 import evaluators.AttributeEvaluator;
+import evaluators.PlayerEvaluator;
 import model.Attributes;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
@@ -24,10 +25,12 @@ public abstract class SuggestionPanel<A extends Attributes>
 	private static final int DISPLAYED_POSITIONS_LIMIT = 3;
 
 	private A attributes;
-	private List<AttributeEvaluator<A>> evaluators;
+	private PlayerEvaluator<A> playerEvaluator;
 
-	public SuggestionPanel(String title)
+	public SuggestionPanel(String title, PlayerEvaluator<A> playerEvaluator)
 	{
+		this.playerEvaluator = playerEvaluator;
+
 		setBorder(
 			new CompoundBorder(
 					BorderFactory.createTitledBorder(title + " Suggestions"),
@@ -49,13 +52,6 @@ public abstract class SuggestionPanel<A extends Attributes>
 		{
 			this.attributes.addPropertyChangedListener(this);
 		}
-
-		update();
-	}
-
-	public void setAttributeEvaluators(List<AttributeEvaluator<A>> evaluators)
-	{
-		this.evaluators = evaluators;
 
 		update();
 	}
@@ -87,7 +83,8 @@ public abstract class SuggestionPanel<A extends Attributes>
 
 	private List<AttributeEvaluator<A>> getSortedEvaluators()
 	{
-		return evaluators
+		return playerEvaluator
+				.getAttributeEvaluators(true)
 				.stream()
 				.sorted((a, b) -> compare(attributes, b, a))
 				.limit(DISPLAYED_POSITIONS_LIMIT)

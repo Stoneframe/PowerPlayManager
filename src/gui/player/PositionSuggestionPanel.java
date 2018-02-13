@@ -2,6 +2,7 @@ package gui.player;
 
 import comparators.RatingEvaluatorComparator;
 import evaluators.AttributeEvaluator;
+import evaluators.PlayerEvaluator;
 import model.Attributes;
 
 public class PositionSuggestionPanel<A extends Attributes>
@@ -9,9 +10,9 @@ public class PositionSuggestionPanel<A extends Attributes>
 {
 	private static final long serialVersionUID = -1128283837238130849L;
 
-	public PositionSuggestionPanel()
+	public PositionSuggestionPanel(PlayerEvaluator<A> playerEvaluator)
 	{
-		super("Position");
+		super("Position", playerEvaluator);
 	}
 
 	@Override

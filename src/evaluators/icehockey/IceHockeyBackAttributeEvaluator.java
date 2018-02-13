@@ -7,7 +7,7 @@ import comparators.QualityEvaluatorComparator;
 import comparators.RatingEvaluatorComparator;
 import model.icehockey.IceHockeyAttributes;
 
-public class IceHockeyBacksAttributeEvaluator
+public class IceHockeyBackAttributeEvaluator
 	extends IceHockeyAttributeEvaluator
 {
 	private List<IceHockeyAttributeEvaluator> attributeEvaluators =
@@ -15,9 +15,15 @@ public class IceHockeyBacksAttributeEvaluator
 				new IceHockeyDefBackAttributeEvaluator(),
 				new IceHockeyOffBackAttributeEvaluator());
 
-	public IceHockeyBacksAttributeEvaluator()
+	public IceHockeyBackAttributeEvaluator()
 	{
 		super("Back", 0, 0, 0, 0, 0, 0, 0);
+	}
+	
+	@Override
+	public boolean isMacroPosition()
+	{
+		return true;
 	}
 
 	@Override

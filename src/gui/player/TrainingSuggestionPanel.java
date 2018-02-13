@@ -2,6 +2,7 @@ package gui.player;
 
 import comparators.QualityEvaluatorComparator;
 import evaluators.AttributeEvaluator;
+import evaluators.PlayerEvaluator;
 import model.Attributes;
 
 public class TrainingSuggestionPanel<A extends Attributes>
@@ -9,9 +10,9 @@ public class TrainingSuggestionPanel<A extends Attributes>
 {
 	private static final long serialVersionUID = -9177249749398783715L;
 
-	public TrainingSuggestionPanel()
+	public TrainingSuggestionPanel(PlayerEvaluator<A> playerEvaluator)
 	{
-		super("Training");
+		super("Training", playerEvaluator);
 	}
 
 	@Override

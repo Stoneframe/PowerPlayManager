@@ -20,7 +20,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import evaluators.AttributeEvaluator;
+import evaluators.PlayerEvaluator;
 import formation.FormationBuilder;
 import formation.FormationTemplate;
 import model.Attributes;
@@ -53,7 +53,7 @@ public class FormationBuilderFrame<
 			FormationTemplatePanelFactory<FT, A> formationTemplatePanelFactory,
 			FormationPanelFactory<F> formationPanelFactory,
 			FormationBuilder<A, F, FT> formationBuilder,
-			List<AttributeEvaluator<A>> attributeEvaluators,
+			PlayerEvaluator<A> playerEvaluator,
 			Roster<A> roster)
 	{
 		super("Formations Builder");
@@ -73,7 +73,7 @@ public class FormationBuilderFrame<
 			}
 		});
 
-		templatePanel = formationTemplatePanelFactory.newInstance(attributeEvaluators);
+		templatePanel = formationTemplatePanelFactory.newInstance(playerEvaluator);
 		templatePanel.setNameTextPropertyChangedListener(new PropertyChangedListener()
 		{
 			public void propertyChanged(Object source, PropertyChangedEvent event)

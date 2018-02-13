@@ -1,8 +1,6 @@
 package gui.handball;
 
-import java.util.List;
-
-import evaluators.AttributeEvaluator;
+import evaluators.PlayerEvaluator;
 import formation.handball.HandballFormationTemplate;
 import gui.formation.FormationTemplatePanel;
 import gui.formation.FormationTemplatePanelFactory;
@@ -14,8 +12,8 @@ public class HandballFormationTemplatePanelFactory
 {
 	@Override
 	public FormationTemplatePanel<HandballFormationTemplate> newInstance(
-			List<AttributeEvaluator<HandballAttributes>> attributeEvaluators)
+			PlayerEvaluator<HandballAttributes> playerEvaluator)
 	{
-		return new HandballFormationTemplatePanel(attributeEvaluators);
+		return new HandballFormationTemplatePanel(playerEvaluator);
 	}
 }

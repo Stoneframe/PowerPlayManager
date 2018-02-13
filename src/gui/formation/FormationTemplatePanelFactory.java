@@ -1,12 +1,10 @@
 package gui.formation;
 
-import java.util.List;
-
-import evaluators.AttributeEvaluator;
+import evaluators.PlayerEvaluator;
 import formation.FormationTemplate;
 import model.Attributes;
 
 public interface FormationTemplatePanelFactory<FT extends FormationTemplate, A extends Attributes>
 {
-	public FormationTemplatePanel<FT> newInstance(List<AttributeEvaluator<A>> attributeEvaluators);
+	public FormationTemplatePanel<FT> newInstance(PlayerEvaluator<A> playerEvaluators);
 }

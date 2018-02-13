@@ -26,7 +26,6 @@ public class IceHockeyMainPanel
 				new IceHockeyFormationPanelFactory(),
 				new IceHockeyPaulsFormationBuilder(),
 				parsers,
-				playerEvaluator,
-				playerEvaluator.getAttributeEvaluators());
+				playerEvaluator);
 	}
 }

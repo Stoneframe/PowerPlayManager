@@ -1,6 +1,7 @@
 package evaluators;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import comparators.QualityEvaluatorComparator;
 import comparators.RatingEvaluatorComparator;
@@ -35,9 +36,12 @@ public class PlayerEvaluator<A extends Attributes>
 		this.facilityEvaluator = facilityEvaluator;
 	}
 
-	public List<AttributeEvaluator<A>> getAttributeEvaluators()
+	public List<AttributeEvaluator<A>> getAttributeEvaluators(boolean ignoreMacroPosition)
 	{
-		return attributeEvaluators;
+		return attributeEvaluators
+				.stream()
+				.filter(ev -> !(ignoreMacroPosition && ev.isMacroPosition()))
+				.collect(Collectors.toList());
 	}
 
 	public void setAttributeEvaluators(List<AttributeEvaluator<A>> attributeEvaluators)
@@ -67,7 +71,7 @@ public class PlayerEvaluator<A extends Attributes>
 
 	public AttributeEvaluator<A> getBestEvaluatorByRating(A attributes)
 	{
-		return attributeEvaluators
+		return getAttributeEvaluators(true)
 				.stream()
 				.max(new RatingEvaluatorComparator<A>(attributes)::compare)
 				.get();
@@ -75,7 +79,7 @@ public class PlayerEvaluator<A extends Attributes>
 
 	public AttributeEvaluator<A> getBestEvaluatorByQuality(A attributes)
 	{
-		return attributeEvaluators
+		return getAttributeEvaluators(true)
 				.stream()
 				.max(new QualityEvaluatorComparator<A>(attributes)::compare)
 				.get();

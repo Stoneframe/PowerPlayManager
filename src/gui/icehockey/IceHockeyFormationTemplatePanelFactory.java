@@ -1,8 +1,6 @@
 package gui.icehockey;
 
-import java.util.List;
-
-import evaluators.AttributeEvaluator;
+import evaluators.PlayerEvaluator;
 import formation.icehockey.IceHockeyFormationTemplate;
 import gui.formation.FormationTemplatePanel;
 import gui.formation.FormationTemplatePanelFactory;
@@ -14,8 +12,8 @@ public class IceHockeyFormationTemplatePanelFactory
 {
 	@Override
 	public FormationTemplatePanel<IceHockeyFormationTemplate> newInstance(
-			List<AttributeEvaluator<IceHockeyAttributes>> attributeEvaluators)
+			PlayerEvaluator<IceHockeyAttributes> playerEvaluator)
 	{
-		return new IceHockeyFormationTemplatePanel(attributeEvaluators);
+		return new IceHockeyFormationTemplatePanel(playerEvaluator);
 	}
 }

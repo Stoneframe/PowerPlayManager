@@ -7,14 +7,13 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import evaluators.AttributeEvaluator;
+import evaluators.PlayerEvaluator;
 import gui.util.SimpleFormPanel;
 import model.Attributes;
 import model.Player;
@@ -42,7 +41,10 @@ public class PlayerPanel<A extends Attributes>
 
 	private TrainingPlannerPanel<A> trainingPanel;
 
-	public PlayerPanel(AttributesPanel<A> attributePanel, TrainingPlannerPanel<A> trainingPanel)
+	public PlayerPanel(
+			AttributesPanel<A> attributePanel,
+			TrainingPlannerPanel<A> trainingPanel,
+			PlayerEvaluator<A> playerEvaluator)
 	{
 		this.attributePanel = attributePanel;
 		this.trainingPanel = trainingPanel;
@@ -82,8 +84,8 @@ public class PlayerPanel<A extends Attributes>
 		playerFormPanel.addRow("Side:", sideTextField);
 		playerFormPanel.addRow("Training:", trainingTextField);
 
-		positionSuggestionPanel = new PositionSuggestionPanel<A>();
-		trainingSuggestionPanel = new TrainingSuggestionPanel<A>();
+		positionSuggestionPanel = new PositionSuggestionPanel<A>(playerEvaluator);
+		trainingSuggestionPanel = new TrainingSuggestionPanel<A>(playerEvaluator);
 
 		setBorder(BorderFactory.createTitledBorder("Player"));
 
@@ -145,12 +147,6 @@ public class PlayerPanel<A extends Attributes>
 		}
 
 		update();
-	}
-
-	public void setAttributeEvaluators(List<AttributeEvaluator<A>> evaluators)
-	{
-		positionSuggestionPanel.setAttributeEvaluators(evaluators);
-		trainingSuggestionPanel.setAttributeEvaluators(evaluators);
 	}
 
 	private void update()
