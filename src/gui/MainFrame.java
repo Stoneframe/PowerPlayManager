@@ -24,6 +24,7 @@ import evaluators.icehockey.IceHockeyForwardAttributeEvaluator;
 import evaluators.icehockey.IceHockeyCenterAttributeEvaluator;
 import evaluators.icehockey.IceHockeyGoalieAttributeEvaluator;
 import evaluators.icehockey.IceHockeyOffBackAttributeEvaluator;
+import evaluators.icehockey.IceHockeyOffensiveAttributeEvaluator;
 import evaluators.icehockey.IceHockeyPlayerEvaluator;
 import evaluators.icehockey.IceHockeyWingAttributeEvaluator;
 import gui.handball.HandballMainPanel;
@@ -92,7 +93,8 @@ public class MainFrame
 							new IceHockeyCenterAttributeEvaluator(),
 							new IceHockeyBackAttributeEvaluator(),
 							new IceHockeyDefBackAttributeEvaluator(),
-							new IceHockeyOffBackAttributeEvaluator())));
+							new IceHockeyOffBackAttributeEvaluator(),
+							new IceHockeyOffensiveAttributeEvaluator())));
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Handball", handballPanel);
