@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -20,6 +21,7 @@ import model.Attributes;
 import model.Player;
 import parsers.ParseException;
 import parsers.players.PlayersParser;
+import parsers.players.SmartPlayersParser;
 
 public class ParsePanel<A extends Attributes>
 	extends JPanel
@@ -36,7 +38,12 @@ public class ParsePanel<A extends Attributes>
 	{
 		textArea = new JTextArea(30, 50);
 
-		parsersComboBox = new PpmComboBox<PlayersParser<A>>(parsers);
+		List<PlayersParser<A>> parsersList = new LinkedList<>();
+		
+		parsersList.add(new SmartPlayersParser<>(parsers));
+		parsersList.addAll(parsers);
+		
+		parsersComboBox = new PpmComboBox<PlayersParser<A>>(parsersList);
 
 		parseButton = new JButton("Parse");
 		parseButton.addActionListener(new ActionListener()

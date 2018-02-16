@@ -5,6 +5,10 @@ public class ParseException
 {
 	private static final long serialVersionUID = -723352291226812735L;
 
+	public ParseException()
+	{
+	}
+	
 	public ParseException(Exception e)
 	{
 		super(e);
