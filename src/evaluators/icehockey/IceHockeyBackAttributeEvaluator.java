@@ -16,10 +16,4 @@ public class IceHockeyBackAttributeEvaluator
 					new IceHockeyDefBackAttributeEvaluator(),
 					new IceHockeyOffBackAttributeEvaluator()));
 	}
-
-	@Override
-	public boolean isMacroEvaluator()
-	{
-		return true;
-	}
 }
