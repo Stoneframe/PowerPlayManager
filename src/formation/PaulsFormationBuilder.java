@@ -1,11 +1,11 @@
 package formation;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import comparators.RatingComparator;
 import evaluators.AttributeEvaluator;
 import model.Attributes;
 import model.Formation;
@@ -134,11 +134,34 @@ public abstract class PaulsFormationBuilder<
 		{
 			return roster
 					.stream()
-					.filter(p -> p.getSide().equals(side))
-					.sorted(new RatingComparator<>(evaluator).reversed())
+					.sorted(new PaulsComparator().reversed())
 					.skip(rank)
 					.findFirst()
 					.orElse(null);
+		}
+
+		private class PaulsComparator
+			implements
+				Comparator<Player<A>>
+		{
+			@Override
+			public int compare(Player<A> o1, Player<A> o2)
+			{
+				double rating1 = evaluator.getRating(o1.getAttributes());
+				double rating2 = evaluator.getRating(o2.getAttributes());
+
+				if (!o1.getSide().equals(side))
+				{
+					rating1 *= 0.5;
+				}
+				
+				if (!o2.getSide().equals(side))
+				{
+					rating2 *= 0.5;
+				}
+
+				return Double.compare(rating1, rating2);
+			}
 		}
 	}
 }
