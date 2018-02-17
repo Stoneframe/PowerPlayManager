@@ -150,14 +150,16 @@ public abstract class PaulsFormationBuilder<
 				double rating1 = evaluator.getRating(o1.getAttributes());
 				double rating2 = evaluator.getRating(o2.getAttributes());
 
+				final double wrongSidePenalty = 0.84;
+
 				if (!o1.getSide().equals(side))
 				{
-					rating1 *= 0.5;
+					rating1 *= wrongSidePenalty;
 				}
-				
+
 				if (!o2.getSide().equals(side))
 				{
-					rating2 *= 0.5;
+					rating2 *= wrongSidePenalty;
 				}
 
 				return Double.compare(rating1, rating2);
