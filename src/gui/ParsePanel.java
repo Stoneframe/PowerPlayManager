@@ -39,10 +39,10 @@ public class ParsePanel<A extends Attributes>
 		textArea = new JTextArea(30, 50);
 
 		List<PlayersParser<A>> parsersList = new LinkedList<>();
-		
+
 		parsersList.add(new SmartPlayersParser<>(parsers));
 		parsersList.addAll(parsers);
-		
+
 		parsersComboBox = new PpmComboBox<PlayersParser<A>>(parsersList);
 
 		parseButton = new JButton("Parse");

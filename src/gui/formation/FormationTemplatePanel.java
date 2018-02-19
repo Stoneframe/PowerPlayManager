@@ -9,7 +9,6 @@ import javax.swing.border.CompoundBorder;
 
 import formation.FormationTemplate;
 import gui.util.PpmComboBox;
-import gui.util.PpmTextField;
 import gui.util.SimpleFormPanel;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
@@ -21,34 +20,29 @@ public abstract class FormationTemplatePanel<FT extends FormationTemplate>
 
 	private PropertyChangedListener nameTextPropertyChangedListener;
 
-	private PpmComboBox<FT> templateCheckBox;
-
-	protected PpmTextField nameTextField;
+	protected PpmComboBox<FT> nameComboBox;
 
 	protected FormationTemplatePanel(List<FT> formationTemplates)
 	{
-		templateCheckBox = new PpmComboBox<>(formationTemplates);
-		templateCheckBox.setSelectedIndex(-1);
-		templateCheckBox.addActionListener(new ActionListener()
+		nameComboBox = new PpmComboBox<>(formationTemplates);
+		nameComboBox.setEditable(true);
+		nameComboBox.setSelectedIndex(-1);
+		nameComboBox.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				FT template = templateCheckBox.getSelection();
+				FT template = nameComboBox.getSelection();
 
-				setFormationTemplate(template);
-			}
-		});
+				if (template != null)
+				{
+					setFormationTemplate(template);
+				}
 
-		nameTextField = new PpmTextField(15);
-		nameTextField.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
 				if (nameTextPropertyChangedListener != null)
 				{
 					nameTextPropertyChangedListener.propertyChanged(
-						nameTextField,
-						new PropertyChangedEvent(nameTextField, "Name", nameTextField.getText()));
+						nameComboBox,
+						new PropertyChangedEvent(nameComboBox, "Name", nameComboBox.getText()));
 				}
 			}
 		});
@@ -58,8 +52,7 @@ public abstract class FormationTemplatePanel<FT extends FormationTemplate>
 					BorderFactory.createTitledBorder("Formation Template"),
 					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-		addRow("Templates:", templateCheckBox);
-		addRow("Name:", nameTextField);
+		addRow("Name:", nameComboBox);
 	}
 
 	public void setNameTextPropertyChangedListener(PropertyChangedListener listener)

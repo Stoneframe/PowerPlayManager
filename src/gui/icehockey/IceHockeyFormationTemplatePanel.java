@@ -53,7 +53,7 @@ public class IceHockeyFormationTemplatePanel
 	public IceHockeyFormationTemplate getFormationTemplate()
 	{
 		return new IceHockeyFormationTemplate(
-				nameTextField.getText(),
+				nameComboBox.getText(),
 				leftWingComboBox.getSelection(),
 				centerComboBox.getSelection(),
 				rightWingComboBox.getSelection(),
@@ -66,7 +66,7 @@ public class IceHockeyFormationTemplatePanel
 	{
 		if (template != null)
 		{
-			nameTextField.setText(template.getName());
+			nameComboBox.setText(template.getName());
 			leftWingComboBox.setSelectedItem(template.getLeftWingEvaluator());
 			centerComboBox.setSelectedItem(template.getCenterEvaluator());
 			rightWingComboBox.setSelectedItem(template.getRightWingEvaluator());
@@ -75,7 +75,7 @@ public class IceHockeyFormationTemplatePanel
 		}
 		else
 		{
-			nameTextField.setText("");
+			nameComboBox.setText("");
 			leftWingComboBox.setSelectedIndex(0);
 			centerComboBox.setSelectedIndex(0);
 			rightWingComboBox.setSelectedIndex(0);

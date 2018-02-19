@@ -231,7 +231,7 @@ public class FormationBuilderPanel<
 		add(topPanel, BorderLayout.NORTH);
 
 		add(createFormationsButton, BorderLayout.SOUTH);
-		
+
 		updatePlayersSelectedList(roster);
 	}
 

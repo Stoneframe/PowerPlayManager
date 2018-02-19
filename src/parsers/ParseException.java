@@ -8,7 +8,7 @@ public class ParseException
 	public ParseException()
 	{
 	}
-	
+
 	public ParseException(Exception e)
 	{
 		super(e);

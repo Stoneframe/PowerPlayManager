@@ -68,7 +68,7 @@ public class HandballFormationTemplatePanel
 	public HandballFormationTemplate getFormationTemplate()
 	{
 		return new HandballFormationTemplate(
-				nameTextField.getText(),
+				nameComboBox.getText(),
 				pivotComboBox.getSelection(),
 				leftWingComboBox.getSelection(),
 				rightWingComboBox.getSelection(),
@@ -81,7 +81,7 @@ public class HandballFormationTemplatePanel
 	{
 		if (template != null)
 		{
-			nameTextField.setText(template.getName());
+			nameComboBox.setText(template.getName());
 			pivotComboBox.setSelectedItem(template.getPivotEvaluator());
 			leftWingComboBox.setSelectedItem(template.getLeftWingEvaluator());
 			rightWingComboBox.setSelectedItem(template.getRightWingEvaluator());
@@ -91,7 +91,7 @@ public class HandballFormationTemplatePanel
 		}
 		else
 		{
-			nameTextField.setText("");
+			nameComboBox.setText("");
 			pivotComboBox.setSelectedIndex(0);
 			leftWingComboBox.setSelectedIndex(0);
 			rightWingComboBox.setSelectedIndex(0);

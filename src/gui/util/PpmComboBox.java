@@ -23,4 +23,14 @@ public class PpmComboBox<E>
 	{
 		return getItemAt(getSelectedIndex());
 	}
+
+	public String getText()
+	{
+		return getSelectedItem().toString();
+	}
+
+	public void setText(String text)
+	{
+		setSelectedItem(text);
+	}
 }
