@@ -22,15 +22,22 @@ public class IceHockeyProfilePlayersParser
 	@Override
 	public List<Player<IceHockeyAttributes>> parsePlayers(String textToParse) throws ParseException
 	{
-		IceHockeyPlayer player = new IceHockeyPlayer(
-				parseName(textToParse),
-				parseAge(textToParse),
-				parseCL(textToParse),
-				parseSide(textToParse),
-				parseAttributes(textToParse),
-				parseTraining(textToParse));
+		try
+		{
+			IceHockeyPlayer player = new IceHockeyPlayer(
+					parseName(textToParse),
+					parseAge(textToParse),
+					parseCL(textToParse),
+					parseSide(textToParse),
+					parseAttributes(textToParse),
+					parseTraining(textToParse));
 
-		return Arrays.asList(player);
+			return Arrays.asList(player);
+		}
+		catch (Exception e)
+		{
+			throw new ParseException(e);
+		}
 	}
 
 	private static String parseName(String text)
