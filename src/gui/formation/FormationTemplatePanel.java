@@ -1,13 +1,15 @@
 package gui.formation;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
 import formation.FormationTemplate;
+import gui.util.PpmComboBox;
+import gui.util.PpmTextField;
 import gui.util.SimpleFormPanel;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
@@ -19,14 +21,28 @@ public abstract class FormationTemplatePanel<FT extends FormationTemplate>
 
 	private PropertyChangedListener nameTextPropertyChangedListener;
 
-	protected JTextField nameTextField;
+	private PpmComboBox<FT> templateCheckBox;
 
-	protected FormationTemplatePanel()
+	protected PpmTextField nameTextField;
+
+	protected FormationTemplatePanel(List<FT> formationTemplates)
 	{
-		nameTextField = new JTextField(15);
-		nameTextField.addKeyListener(new KeyListener()
+		templateCheckBox = new PpmComboBox<>(formationTemplates);
+		templateCheckBox.setSelectedIndex(-1);
+		templateCheckBox.addActionListener(new ActionListener()
 		{
-			public void keyTyped(KeyEvent e)
+			public void actionPerformed(ActionEvent e)
+			{
+				FT template = templateCheckBox.getSelection();
+
+				setFormationTemplate(template);
+			}
+		});
+
+		nameTextField = new PpmTextField(15);
+		nameTextField.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
 			{
 				if (nameTextPropertyChangedListener != null)
 				{
@@ -35,14 +51,6 @@ public abstract class FormationTemplatePanel<FT extends FormationTemplate>
 						new PropertyChangedEvent(nameTextField, "Name", nameTextField.getText()));
 				}
 			}
-
-			public void keyReleased(KeyEvent e)
-			{
-			}
-
-			public void keyPressed(KeyEvent e)
-			{
-			}
 		});
 
 		setBorder(
@@ -50,6 +58,7 @@ public abstract class FormationTemplatePanel<FT extends FormationTemplate>
 					BorderFactory.createTitledBorder("Formation Template"),
 					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
+		addRow("Templates:", templateCheckBox);
 		addRow("Name:", nameTextField);
 	}
 

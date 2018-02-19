@@ -1,7 +1,12 @@
 package gui.icehockey;
 
+import java.util.Arrays;
+
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
+import evaluators.icehockey.IceHockeyBackAttributeEvaluator;
+import evaluators.icehockey.IceHockeyCenterAttributeEvaluator;
+import evaluators.icehockey.IceHockeyWingAttributeEvaluator;
 import formation.icehockey.IceHockeyFormationTemplate;
 import gui.formation.FormationTemplatePanel;
 import gui.util.PpmComboBox;
@@ -21,6 +26,16 @@ public class IceHockeyFormationTemplatePanel
 	public IceHockeyFormationTemplatePanel(
 			PlayerEvaluator<IceHockeyAttributes> playerEvaluator)
 	{
+		super(
+				Arrays.asList(
+					new IceHockeyFormationTemplate(
+							"Normal",
+							new IceHockeyWingAttributeEvaluator(),
+							new IceHockeyCenterAttributeEvaluator(),
+							new IceHockeyWingAttributeEvaluator(),
+							new IceHockeyBackAttributeEvaluator(),
+							new IceHockeyBackAttributeEvaluator())));
+
 		leftWingComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
 		centerComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
 		rightWingComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));

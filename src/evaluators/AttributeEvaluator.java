@@ -25,6 +25,19 @@ public abstract class AttributeEvaluator<A extends Attributes>
 	public abstract String getNextTraining(A attributes);
 
 	@Override
+	public boolean equals(Object obj)
+	{
+		if (!(obj instanceof AttributeEvaluator<?>))
+		{
+			return false;
+		}
+
+		AttributeEvaluator<?> other = (AttributeEvaluator<?>)obj;
+
+		return this.name.equals(other.name);
+	}
+
+	@Override
 	public String toString()
 	{
 		return getName();
