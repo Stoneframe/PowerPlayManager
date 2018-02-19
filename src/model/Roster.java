@@ -72,6 +72,11 @@ public class Roster<A extends Attributes>
 		fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
 	}
 
+	public boolean contains(Player<A> player)
+	{
+		return players.contains(player);
+	}
+
 	public Player<A> get(int index)
 	{
 		return players.get(index);

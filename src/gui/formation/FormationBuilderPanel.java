@@ -1,20 +1,26 @@
 package gui.formation;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -24,6 +30,7 @@ import formation.FormationBuilder;
 import formation.FormationTemplate;
 import model.Attributes;
 import model.Formation;
+import model.Player;
 import model.Roster;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
@@ -36,12 +43,15 @@ public class FormationBuilderPanel<
 {
 	private static final long serialVersionUID = -5043434553464317980L;
 
+	private DefaultListModel<Player<A>> playerListModel;
+	private JList<Player<A>> playerList;
+
 	private DefaultListModel<FT> templateListModel;
 	private JList<FT> templateList;
 
 	private FormationTemplatePanel<FT> templatePanel;
 
-	private JLabel nbrPlayersRemainingLabel;
+	private JLabel nbrPlayersSelectedLabel;
 
 	private JButton addTemplateButton;
 	private JButton removeTemplateButton;
@@ -55,6 +65,62 @@ public class FormationBuilderPanel<
 			PlayerEvaluator<A> playerEvaluator,
 			Roster<A> roster)
 	{
+		playerListModel = new DefaultListModel<>();
+		roster.forEach(playerListModel::addElement);
+
+		playerList = new JList<>(playerListModel);
+		playerList.setCellRenderer(new ListCellRenderer<Player<A>>()
+		{
+			public Component getListCellRendererComponent(
+					JList<? extends Player<A>> list,
+					Player<A> value,
+					int index,
+					boolean isSelected,
+					boolean cellHasFocus)
+			{
+				JCheckBox checkBox = new JCheckBox(value.getName());
+
+				checkBox.setBackground(Color.WHITE);
+				checkBox.setSelected(roster.contains(value));
+
+				return checkBox;
+			}
+		});
+		playerList.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				if (e.getClickCount() > 1)
+				{
+					return;
+				}
+
+				int index = playerList.locationToIndex(e.getPoint());
+
+				if (index == -1)
+				{
+					return;
+				}
+
+				Player<A> player = playerListModel.get(index);
+
+				if (roster.contains(player))
+				{
+					roster.remove(player);
+				}
+				else
+				{
+					roster.add(player);
+				}
+
+				playerListModel.set(index, player);
+
+				updatePlayersSelectedList(roster);
+				updateCreateFormationsButton(roster);
+			}
+		});
+
 		templateListModel = new DefaultListModel<FT>();
 
 		templateList = new JList<FT>(templateListModel);
@@ -79,8 +145,8 @@ public class FormationBuilderPanel<
 			}
 		});
 
-		nbrPlayersRemainingLabel = new JLabel(createPlayersRemainingText(roster));
-		nbrPlayersRemainingLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+		nbrPlayersSelectedLabel = new JLabel();
+		nbrPlayersSelectedLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
 
 		addTemplateButton = new JButton("Add");
 		addTemplateButton.setEnabled(false);
@@ -90,7 +156,7 @@ public class FormationBuilderPanel<
 			public void actionPerformed(ActionEvent e)
 			{
 				templateListModel.addElement(templatePanel.getFormationTemplate());
-				createFormationsButton.setEnabled(canCreateFormations(roster));
+				updateCreateFormationsButton(roster);
 			}
 		});
 
@@ -104,13 +170,13 @@ public class FormationBuilderPanel<
 				if (!templateList.isSelectionEmpty())
 				{
 					templateListModel.remove(templateList.getSelectedIndex());
-					createFormationsButton.setEnabled(canCreateFormations(roster));
+					updateCreateFormationsButton(roster);
 				}
 			}
 		});
 
 		createFormationsButton = new JButton("Create Formations");
-		createFormationsButton.setEnabled(canCreateFormations(roster));
+		updateCreateFormationsButton(roster);
 		createFormationsButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -119,8 +185,10 @@ public class FormationBuilderPanel<
 
 				List<F> formations = formationBuilder.createFormations(roster, formationTemplates);
 
-				nbrPlayersRemainingLabel.setText(createPlayersRemainingText(roster));
-				createFormationsButton.setEnabled(canCreateFormations(roster));
+				updatePlayersSelectedList(roster);
+				updateCreateFormationsButton(roster);
+
+				playerList.updateUI();
 
 				SwingUtilities.invokeLater(new Runnable()
 				{
@@ -134,34 +202,37 @@ public class FormationBuilderPanel<
 
 		setLayout(new BorderLayout());
 
-		JPanel templateListPanel = new JPanel();
+		JScrollPane playerListPanel = new JScrollPane(playerList);
+		playerListPanel.setBorder(
+			BorderFactory.createCompoundBorder(
+				BorderFactory.createTitledBorder("Players"),
+				BorderFactory.createEtchedBorder()));
+		playerListPanel.setPreferredSize(new Dimension(200, 1));
 
-		templateListPanel.setLayout(new GridLayout(1, 1));
+		add(playerListPanel, BorderLayout.WEST);
+
+		JPanel templateListPanel = new JPanel();
+		templateListPanel.setLayout(new BorderLayout());
 		templateListPanel.setBorder(BorderFactory.createTitledBorder("Formations"));
 		templateListPanel.add(templateList);
 
-		add(templateListPanel, BorderLayout.WEST);
+		add(templateListPanel, BorderLayout.CENTER);
 
-		add(templatePanel, BorderLayout.CENTER);
+		add(templatePanel, BorderLayout.EAST);
 
 		JPanel addRemoveButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-
 		addRemoveButtonPanel.add(addTemplateButton);
 		addRemoveButtonPanel.add(removeTemplateButton);
 
 		JPanel topPanel = new JPanel(new BorderLayout());
-
-		topPanel.add(nbrPlayersRemainingLabel, BorderLayout.WEST);
+		topPanel.add(nbrPlayersSelectedLabel, BorderLayout.WEST);
 		topPanel.add(addRemoveButtonPanel, BorderLayout.EAST);
 
 		add(topPanel, BorderLayout.NORTH);
 
 		add(createFormationsButton, BorderLayout.SOUTH);
-	}
-
-	private static String createPlayersRemainingText(Roster<?> roster)
-	{
-		return "Number of players remaining: " + roster.size();
+		
+		updatePlayersSelectedList(roster);
 	}
 
 	private boolean canCreateFormations(Roster<A> roster)
@@ -189,6 +260,17 @@ public class FormationBuilderPanel<
 
 			formationTemplates.add(formationTemplate);
 		}
+
 		return formationTemplates;
+	}
+
+	private void updatePlayersSelectedList(Roster<A> roster)
+	{
+		nbrPlayersSelectedLabel.setText("Number of players selected: " + roster.size());
+	}
+
+	private void updateCreateFormationsButton(Roster<A> roster)
+	{
+		createFormationsButton.setEnabled(canCreateFormations(roster));
 	}
 }
