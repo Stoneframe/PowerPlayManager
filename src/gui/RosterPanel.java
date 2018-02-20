@@ -154,6 +154,7 @@ public class RosterPanel<A extends Attributes>
 			});
 		rosterTable.setColumnModel(rosterTableColumnModel);
 		rosterTable.setModel(rosterTableModel);
+		rosterTable.getColumnModel().getColumn(0).setPreferredWidth(200);
 		rosterTable.registerKeyboardAction(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
