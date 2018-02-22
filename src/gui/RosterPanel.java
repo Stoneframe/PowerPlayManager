@@ -114,6 +114,8 @@ public class RosterPanel<A extends Attributes>
 
 	private JButton applyButton;
 
+	private JLabel statLabel;
+
 	private JTable rosterTable;
 
 	private JPanel controllerPanel;
@@ -150,6 +152,8 @@ public class RosterPanel<A extends Attributes>
 							RosterPanel.this,
 							new PlayerSelectedEvent<A>(RosterPanel.this, getSelectedPlayer()));
 					}
+
+					updateStatLabel();
 				}
 			});
 		rosterTable.setColumnModel(rosterTableColumnModel);
@@ -220,6 +224,8 @@ public class RosterPanel<A extends Attributes>
 			}
 		});
 
+		statLabel = new JLabel();
+
 		controllerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		controllerPanel.add(new JLabel("Facility Level:"));
 		controllerPanel.add(facilityLevelTextField);
@@ -230,6 +236,7 @@ public class RosterPanel<A extends Attributes>
 		controllerPanel.add(new JLabel("Low Quality:"));
 		controllerPanel.add(lowQualityLimitTextField);
 		controllerPanel.add(applyButton);
+		controllerPanel.add(statLabel);
 
 		setBorder(
 			new CompoundBorder(
@@ -312,6 +319,45 @@ public class RosterPanel<A extends Attributes>
 	private int getLowQualityLimit()
 	{
 		return parseInteger(lowQualityLimitTextField.getText(), 0);
+	}
+
+	private void updateStatLabel()
+	{
+		double max = Double.MIN_VALUE;
+		double min = Double.MAX_VALUE;
+		double sum = 0;
+		int count = 0;
+
+		if (rosterTable.getSelectedRowCount() > 1 && rosterTable.getSelectedColumn() != -1)
+		{
+			for (Player<A> player : getSelectedPlayers())
+			{
+				Object object = columnDatas
+						.get(rosterTable.getSelectedColumn())
+						.getValue(player);
+
+				if (object instanceof Integer || object instanceof Double)
+				{
+					double value = Double.parseDouble(object.toString());
+
+					sum += value;
+					count++;
+
+					if (value > max) max = value;
+					if (value < min) min = value;
+				}
+			}
+		}
+
+		String statText = count > 0
+				? String.format(
+					"Max: %.0f, Avg: %.0f, Min: %.0f",
+					max,
+					sum / count,
+					min)
+				: "";
+
+		statLabel.setText(statText);
 	}
 
 	private static int parseInteger(String text, int dfault)
