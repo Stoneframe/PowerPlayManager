@@ -27,14 +27,14 @@ public class IceHockeyFormationTemplatePanel
 			PlayerEvaluator<IceHockeyAttributes> playerEvaluator)
 	{
 		super(
-				Arrays.asList(
-					new IceHockeyFormationTemplate(
-							"Normal",
-							new IceHockeyWingAttributeEvaluator(),
-							new IceHockeyCenterAttributeEvaluator(),
-							new IceHockeyWingAttributeEvaluator(),
-							new IceHockeyBackAttributeEvaluator(),
-							new IceHockeyBackAttributeEvaluator())));
+			Arrays.asList(
+				new IceHockeyFormationTemplate(
+						"Normal",
+						new IceHockeyWingAttributeEvaluator(),
+						new IceHockeyCenterAttributeEvaluator(),
+						new IceHockeyWingAttributeEvaluator(),
+						new IceHockeyBackAttributeEvaluator(),
+						new IceHockeyBackAttributeEvaluator())));
 
 		leftWingComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
 		centerComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));

@@ -11,10 +11,10 @@ public class IceHockeyOffensiveAttributeEvaluator
 	public IceHockeyOffensiveAttributeEvaluator()
 	{
 		super(
-				"Offensive",
-				Arrays.asList(
-					new IceHockeyCenterAttributeEvaluator(),
-					new IceHockeyWingAttributeEvaluator(),
-					new IceHockeyOffBackAttributeEvaluator()));
+			"Offensive",
+			Arrays.asList(
+				new IceHockeyCenterAttributeEvaluator(),
+				new IceHockeyWingAttributeEvaluator(),
+				new IceHockeyOffBackAttributeEvaluator()));
 	}
 }

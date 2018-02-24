@@ -1,27 +1,65 @@
 package model;
 
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Stream;
 
 import util.AbstractModelObject;
 
 public abstract class Attributes
 	extends AbstractModelObject
+	implements
+		Iterable<Attribute>
 {
-	public abstract int getTotalRating();
+	protected List<Attribute> attributes;
 
-	public abstract double getAverageQuality();
-
-	public abstract void merge(Attributes attributes);
-
-	protected void mergeAttribute(
-			Supplier<Integer> thisGet,
-			Consumer<Integer> thisSet,
-			Supplier<Integer> otherGet)
+	protected Attributes(List<Attribute> attributes)
 	{
-		if (thisGet.get() == 0)
+		this.attributes = attributes;
+	}
+
+	public int getTotalRating()
+	{
+		int sum = 0;
+
+		for (Attribute attribute : attributes)
 		{
-			thisSet.accept(otherGet.get());
+			sum += attribute.getRating();
 		}
+
+		return sum;
+	}
+
+	public double getAverageQuality()
+	{
+		double sum = 0;
+
+		for (Attribute attribute : attributes)
+		{
+			sum += attribute.getQuality();
+		}
+
+		return sum / attributes.size();
+	}
+
+	public void merge(Attributes other)
+	{
+		for (int i = 0; i < this.attributes.size(); i++)
+		{
+			this.attributes.get(i).merge(other.attributes.get(i));
+		}
+		
+		firePropertyChanged("All", null);
+	}
+
+	public Stream<Attribute> stream()
+	{
+		return attributes.stream();
+	}
+
+	@Override
+	public Iterator<Attribute> iterator()
+	{
+		return attributes.iterator();
 	}
 }

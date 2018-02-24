@@ -77,7 +77,7 @@ public class HandballAttributeEvaluator
 	}
 
 	@Override
-	protected double attributeSum()
+	protected double weightSum()
 	{
 		return goa + fip + sho + blk + pas + tec + spe + agr;
 	}

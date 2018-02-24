@@ -29,7 +29,7 @@ public abstract class MicroAttributeEvaluator<A extends Attributes>
 				.get()
 				.getValue();
 
-		return attributeSum() * value;
+		return weightSum() * value;
 	}
 
 	public abstract double getQuality(A attributes);
@@ -45,7 +45,7 @@ public abstract class MicroAttributeEvaluator<A extends Attributes>
 				.getKey();
 	}
 
-	protected abstract double attributeSum();
+	protected abstract double weightSum();
 
 	protected abstract List<Pair<String, Double>> createPairs(A attributes);
 

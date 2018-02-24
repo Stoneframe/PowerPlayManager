@@ -12,10 +12,10 @@ public class IceHockeyForwardAttributeEvaluator
 	public IceHockeyForwardAttributeEvaluator()
 	{
 		super(
-				"Forward",
-				Arrays.asList(
-					new IceHockeyCenterAttributeEvaluator(),
-					new IceHockeyWingAttributeEvaluator()));
+			"Forward",
+			Arrays.asList(
+				new IceHockeyCenterAttributeEvaluator(),
+				new IceHockeyWingAttributeEvaluator()));
 	}
 
 }

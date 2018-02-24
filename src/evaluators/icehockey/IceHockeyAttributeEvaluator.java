@@ -67,7 +67,7 @@ public class IceHockeyAttributeEvaluator
 	}
 
 	@Override
-	protected double attributeSum()
+	protected double weightSum()
 	{
 		return goa + def + off + sho + pas + tec + agr;
 	}

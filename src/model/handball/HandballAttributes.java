@@ -1,269 +1,216 @@
 package model.handball;
 
+import java.util.Arrays;
+
+import model.Attribute;
 import model.Attributes;
 
 public class HandballAttributes
 	extends Attributes
 {
-	int goa;
-	int fip;
-	int sho;
-	int blk;
-	int pas;
-	int tec;
-	int spe;
-	int agr;
-
-	int qGoa;
-	int qFip;
-	int qSho;
-	int qBlk;
-	int qPas;
-	int qTec;
-	int qSpe;
-	int qAgr;
+	public HandballAttributes()
+	{
+		super(
+			Arrays.asList(
+				new Attribute("Goa"),
+				new Attribute("Fip"),
+				new Attribute("Sho"),
+				new Attribute("Blk"),
+				new Attribute("Pas"),
+				new Attribute("Tec"),
+				new Attribute("Spe"),
+				new Attribute("Agr")));
+	}
 
 	public int getGoa()
 	{
-		return goa;
+		return attributes.get(0).getRating();
 	}
 
 	public void setGoa(int goa)
 	{
-		this.goa = goa;
+		attributes.get(0).setRating(goa);
 		firePropertyChanged("Goa", goa);
+		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
 	public int getFip()
 	{
-		return fip;
+		return attributes.get(1).getRating();
 	}
 
 	public void setFip(int fip)
 	{
-		this.fip = fip;
+		attributes.get(1).setRating(fip);
 		firePropertyChanged("Fip", fip);
+		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
 	public int getSho()
 	{
-		return sho;
+		return attributes.get(2).getRating();
 	}
 
 	public void setSho(int sho)
 	{
-		this.sho = sho;
+		attributes.get(2).setRating(sho);
 		firePropertyChanged("Sho", sho);
+		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
 	public int getBlk()
 	{
-		return blk;
+		return attributes.get(3).getRating();
 	}
 
 	public void setBlk(int blk)
 	{
-		this.blk = blk;
+		attributes.get(3).setRating(blk);
 		firePropertyChanged("Blk", blk);
+		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
 	public int getPas()
 	{
-		return pas;
+		return attributes.get(4).getRating();
 	}
 
 	public void setPas(int pas)
 	{
-		this.pas = pas;
+		attributes.get(4).setRating(pas);
 		firePropertyChanged("Pas", pas);
+		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
 	public int getTec()
 	{
-		return tec;
+		return attributes.get(5).getRating();
 	}
 
 	public void setTec(int tec)
 	{
-		this.tec = tec;
+		attributes.get(5).setRating(tec);
 		firePropertyChanged("Tec", tec);
+		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
 	public int getSpe()
 	{
-		return spe;
+		return attributes.get(6).getRating();
 	}
 
 	public void setSpe(int spe)
 	{
-		this.spe = spe;
+		attributes.get(6).setRating(spe);
 		firePropertyChanged("Spe", spe);
+		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
 	public int getAgr()
 	{
-		return agr;
+		return attributes.get(7).getRating();
 	}
 
 	public void setAgr(int agr)
 	{
-		this.agr = agr;
+		attributes.get(7).setRating(agr);
 		firePropertyChanged("Agr", agr);
-	}
-
-	@Override
-	public int getTotalRating()
-	{
-		return goa + fip + sho + blk + pas + tec + spe + agr;
+		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
 	public int getQGoa()
 	{
-		return qGoa;
+		return attributes.get(0).getQuality();
 	}
 
 	public void setQGoa(int qGoa)
 	{
-		this.qGoa = qGoa;
+		attributes.get(0).setQuality(qGoa);
 		firePropertyChanged("QGoa", qGoa);
 		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	public int getQFip()
 	{
-		return qFip;
+		return attributes.get(1).getQuality();
 	}
 
 	public void setQFip(int qFip)
 	{
-		this.qFip = qFip;
+		attributes.get(1).setQuality(qFip);
 		firePropertyChanged("QFip", qFip);
 		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	public int getQSho()
 	{
-		return qSho;
+		return attributes.get(2).getQuality();
 	}
 
 	public void setQSho(int qSho)
 	{
-		this.qSho = qSho;
+		attributes.get(2).setQuality(qSho);
 		firePropertyChanged("QSho", qSho);
 		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	public int getQBlk()
 	{
-		return qBlk;
+		return attributes.get(3).getQuality();
 	}
 
 	public void setQBlk(int qBlk)
 	{
-		this.qBlk = qBlk;
+		attributes.get(3).setQuality(qBlk);
 		firePropertyChanged("QBlk", qBlk);
 		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	public int getQPas()
 	{
-		return qPas;
+		return attributes.get(4).getQuality();
 	}
 
 	public void setQPas(int qPas)
 	{
-		this.qPas = qPas;
+		attributes.get(4).setQuality(qPas);
 		firePropertyChanged("QPas", qPas);
 		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	public int getQTec()
 	{
-		return qTec;
+		return attributes.get(5).getQuality();
 	}
 
 	public void setQTec(int qTec)
 	{
-		this.qTec = qTec;
+		attributes.get(5).setQuality(qTec);
 		firePropertyChanged("QTec", qTec);
 		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	public int getQSpe()
 	{
-		return qSpe;
+		return attributes.get(6).getQuality();
 	}
 
 	public void setQSpe(int qSpe)
 	{
-		this.qSpe = qSpe;
+		attributes.get(6).setQuality(qSpe);
 		firePropertyChanged("QSpe", qSpe);
 		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	public int getQAgr()
 	{
-		return qAgr;
+		return attributes.get(7).getQuality();
 	}
 
 	public void setQAgr(int qAgr)
 	{
-		this.qAgr = qAgr;
+		attributes.get(7).setQuality(qAgr);
 		firePropertyChanged("QAgr", qAgr);
 		firePropertyChanged("AverageQuality", getAverageQuality());
-	}
-
-	@Override
-	public double getAverageQuality()
-	{
-		return (qGoa + qFip + qSho + qBlk + qPas + qTec + qSpe + qAgr) / 8d;
-	}
-
-	@Override
-	public void merge(Attributes attributes)
-	{
-		if (!(attributes instanceof HandballAttributes)) return;
-
-		HandballAttributes other = (HandballAttributes)attributes;
-
-		mergeAttribute(() -> this.getGoa(), (v) -> this.setGoa(v), () -> other.getGoa());
-		mergeAttribute(() -> this.getFip(), (v) -> this.setFip(v), () -> other.getFip());
-		mergeAttribute(() -> this.getSho(), (v) -> this.setSho(v), () -> other.getSho());
-		mergeAttribute(() -> this.getBlk(), (v) -> this.setBlk(v), () -> other.getBlk());
-		mergeAttribute(() -> this.getPas(), (v) -> this.setPas(v), () -> other.getPas());
-		mergeAttribute(() -> this.getTec(), (v) -> this.setTec(v), () -> other.getTec());
-		mergeAttribute(() -> this.getSpe(), (v) -> this.setSpe(v), () -> other.getSpe());
-		mergeAttribute(() -> this.getAgr(), (v) -> this.setAgr(v), () -> other.getAgr());
-		mergeAttribute(() -> this.getQGoa(), (v) -> this.setQGoa(v), () -> other.getQGoa());
-		mergeAttribute(() -> this.getQFip(), (v) -> this.setQFip(v), () -> other.getQFip());
-		mergeAttribute(() -> this.getQSho(), (v) -> this.setQSho(v), () -> other.getQSho());
-		mergeAttribute(() -> this.getQBlk(), (v) -> this.setQBlk(v), () -> other.getQBlk());
-		mergeAttribute(() -> this.getQPas(), (v) -> this.setQPas(v), () -> other.getQPas());
-		mergeAttribute(() -> this.getQTec(), (v) -> this.setQTec(v), () -> other.getQTec());
-		mergeAttribute(() -> this.getQSpe(), (v) -> this.setQSpe(v), () -> other.getQSpe());
-		mergeAttribute(() -> this.getQAgr(), (v) -> this.setQAgr(v), () -> other.getQAgr());
-	}
-
-	@Override
-	public String toString()
-	{
-		return String.format(
-			"\tGoa: %d(%d)\tFip: %d(%d)\tSho: %d(%d)\tBlk: %d(%d)\tPas: %d(%d)\tTec: %d(%d)\tSpe: %d(%d)\tAgr: %d(%d)\n",
-			goa,
-			qGoa,
-			fip,
-			qFip,
-			sho,
-			qSho,
-			blk,
-			qBlk,
-			pas,
-			qPas,
-			tec,
-			qTec,
-			spe,
-			qSpe,
-			agr,
-			qAgr);
 	}
 }

@@ -31,23 +31,23 @@ public class HandballFormationTemplatePanel
 			PlayerEvaluator<HandballAttributes> playerEvaluator)
 	{
 		super(
-				Arrays.asList(
-					new HandballFormationTemplate(
-							"Offensive",
-							new HandballOffPivotAttributeEvaluator(),
-							new HandballOffWingAttributeEvaluator(),
-							new HandballOffWingAttributeEvaluator(),
-							new HandballOffBackAttributeEvaluator(),
-							new HandballOffBackAttributeEvaluator(),
-							new HandballOffBackAttributeEvaluator()),
-					new HandballFormationTemplate(
-							"Defensive",
-							new HandballDefPivotAttributeEvaluator(),
-							new HandballDefWingAttributeEvaluator(),
-							new HandballDefWingAttributeEvaluator(),
-							new HandballDefBackAttributeEvaluator(),
-							new HandballDefBackAttributeEvaluator(),
-							new HandballDefBackAttributeEvaluator())));
+			Arrays.asList(
+				new HandballFormationTemplate(
+						"Offensive",
+						new HandballOffPivotAttributeEvaluator(),
+						new HandballOffWingAttributeEvaluator(),
+						new HandballOffWingAttributeEvaluator(),
+						new HandballOffBackAttributeEvaluator(),
+						new HandballOffBackAttributeEvaluator(),
+						new HandballOffBackAttributeEvaluator()),
+				new HandballFormationTemplate(
+						"Defensive",
+						new HandballDefPivotAttributeEvaluator(),
+						new HandballDefWingAttributeEvaluator(),
+						new HandballDefWingAttributeEvaluator(),
+						new HandballDefBackAttributeEvaluator(),
+						new HandballDefBackAttributeEvaluator(),
+						new HandballDefBackAttributeEvaluator())));
 
 		pivotComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
 		leftWingComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
