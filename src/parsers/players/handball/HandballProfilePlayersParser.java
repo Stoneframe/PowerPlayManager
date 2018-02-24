@@ -51,37 +51,38 @@ public class HandballProfilePlayersParser
 	{
 		String ageText = Arrays
 				.stream(text.split("\n"))
-				.filter(s -> s.startsWith("Ålder"))
+				.filter(s -> s.contains("Ålder"))
 				.findFirst()
 				.get();
 
-		return Integer.parseInt(ageText.split("\t")[1]);
+		String[] ageTextElements = ageText.split("\t");
+		return Integer.parseInt(ageTextElements[ageTextElements.length - 1]);
 	}
 
 	private static int parseCL(String text)
 	{
 		String clText = Arrays
 				.stream(text.split("\n"))
-				.filter(s -> s.startsWith("KL"))
+				.filter(s -> s.contains("KL"))
 				.findFirst()
 				.get();
 
-		String cl = clText
-				.replace("(", "")
-				.replace(")", "")
-				.split("\t")[1].split(" ")[1].split("/")[0];
+		String clText1 = clText.split("/")[0];
+		String cl = clText1.substring(clText1.length() - 1);
 
-		return Integer.parseInt(cl);
+		return Integer.parseUnsignedInt(cl);
 	}
 
 	private static Side parseSide(String text)
 	{
-		String side = Arrays
+		String sideText = Arrays
 				.stream(text.split("\n"))
-				.filter(s -> s.startsWith("FvS"))
+				.filter(s -> s.contains("FvS"))
 				.findFirst()
-				.get()
-				.split("\t")[1];
+				.get();
+		
+		String[] sideTextElements = sideText.split("\t");
+		String side = sideTextElements[sideTextElements.length - 1];
 
 		if (side.equals("Universal"))
 		{

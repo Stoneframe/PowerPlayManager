@@ -36,7 +36,7 @@ public class HandballOverviewPlayersParser
 
 				HandballPlayer player = new HandballPlayer(
 						parseName(columns[0]),
-						parseAge(columns[2]),
+						parseAge(columns[2].trim()),
 						parseCL(columns[5]),
 						parseSide(columns[16]),
 						parseAttributes(Arrays.copyOfRange(columns, 6, 14)),

@@ -41,8 +41,8 @@ public class HandballPractisePlayersParser
 			{
 				HandballPlayer player = new HandballPlayer(
 						parseName(lines[i]),
-						parseAge(lines[i + AGE_FIELD]),
-						parseCL(lines[i + CL_FIELD]),
+						parseAge(lines[i + AGE_FIELD].trim()),
+						parseCL(lines[i + CL_FIELD].trim()),
 						Side.UNKNOWN,
 						parseAttributes(
 							Arrays.copyOfRange(
@@ -111,7 +111,7 @@ public class HandballPractisePlayersParser
 		attributes.setSpe(spe[0]);
 		attributes.setQSpe(spe[1]);
 
-		int[] agr = parseAttribute(texts[7]);
+		int[] agr = parseAttribute(texts[7].trim());
 		attributes.setAgr(agr[0]);
 		attributes.setQAgr(agr[1]);
 

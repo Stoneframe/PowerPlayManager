@@ -33,9 +33,9 @@ public class HandballMarketPlayersParser
 			{
 				HandballPlayer player = new HandballPlayer(
 						parseName(lines[i]),
-						parseAge(lines[i + 3].split("\t")[0]),
-						parseCL(lines[i + 3].split("\t")[3]),
-						parseSide(lines[i + 3].split("\t")[14]),
+						parseAge(lines[i + 3].trim().split("\t")[0].trim()),
+						parseCL(lines[i + 3].trim().split("\t")[3]),
+						parseSide(lines[i + 3].trim().split("\t")[14]),
 						parseAttributes(
 							Arrays.copyOfRange(lines[i + 3].trim().split("\t"), 4, 12)),
 						0);
@@ -92,35 +92,35 @@ public class HandballMarketPlayersParser
 	{
 		HandballAttributes attributes = new HandballAttributes();
 
-		int[] goa = parseAttribute(texts[0]);
+		int[] goa = parseAttribute(texts[0].trim());
 		attributes.setGoa(goa[0]);
 		attributes.setQGoa(goa[1]);
 
-		int[] fip = parseAttribute(texts[1]);
+		int[] fip = parseAttribute(texts[1].trim());
 		attributes.setFip(fip[0]);
 		attributes.setQFip(fip[1]);
 
-		int[] sho = parseAttribute(texts[2]);
+		int[] sho = parseAttribute(texts[2].trim());
 		attributes.setSho(sho[0]);
 		attributes.setQSho(sho[1]);
 
-		int[] blk = parseAttribute(texts[3]);
+		int[] blk = parseAttribute(texts[3].trim());
 		attributes.setBlk(blk[0]);
 		attributes.setQBlk(blk[1]);
 
-		int[] pas = parseAttribute(texts[4]);
+		int[] pas = parseAttribute(texts[4].trim());
 		attributes.setPas(pas[0]);
 		attributes.setQPas(pas[1]);
 
-		int[] tec = parseAttribute(texts[5]);
+		int[] tec = parseAttribute(texts[5].trim());
 		attributes.setTec(tec[0]);
 		attributes.setQTec(tec[1]);
 
-		int[] spe = parseAttribute(texts[6]);
+		int[] spe = parseAttribute(texts[6].trim());
 		attributes.setSpe(spe[0]);
 		attributes.setQSpe(spe[1]);
 
-		int[] agr = parseAttribute(texts[7]);
+		int[] agr = parseAttribute(texts[7].trim());
 		attributes.setAgr(agr[0]);
 		attributes.setQAgr(agr[1]);
 
