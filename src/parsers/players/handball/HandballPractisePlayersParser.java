@@ -111,7 +111,7 @@ public class HandballPractisePlayersParser
 		attributes.setSpe(spe[0]);
 		attributes.setQSpe(spe[1]);
 
-		int[] agr = parseAttribute(texts[7]);
+		int[] agr = parseAttribute(texts[7].trim());
 		attributes.setAgr(agr[0]);
 		attributes.setQAgr(agr[1]);
 
