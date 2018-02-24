@@ -41,8 +41,8 @@ public class HandballPractisePlayersParser
 			{
 				HandballPlayer player = new HandballPlayer(
 						parseName(lines[i]),
-						parseAge(lines[i + AGE_FIELD]),
-						parseCL(lines[i + CL_FIELD]),
+						parseAge(lines[i + AGE_FIELD].trim()),
+						parseCL(lines[i + CL_FIELD].trim()),
 						Side.UNKNOWN,
 						parseAttributes(
 							Arrays.copyOfRange(
