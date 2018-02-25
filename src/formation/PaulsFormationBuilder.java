@@ -1,11 +1,11 @@
 package formation;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import comparators.RatingComparator;
 import evaluators.AttributeEvaluator;
 import model.Attributes;
 import model.Formation;
@@ -122,7 +122,14 @@ public abstract class PaulsFormationBuilder<
 				return Double.MIN_VALUE;
 			}
 
-			return evaluator.getRating(player.getAttributes());
+			double rating = evaluator.getRating(player.getAttributes());
+
+			if (!player.getSide().equals(side))
+			{
+				rating *= 0.84;
+			}
+
+			return rating;
 		}
 
 		private Player<A> getBestPlayer()
@@ -134,36 +141,10 @@ public abstract class PaulsFormationBuilder<
 		{
 			return roster
 					.stream()
-					.sorted(new PaulsComparator().reversed())
+					.sorted(new RatingComparator<A>(evaluator).reversed())
 					.skip(rank)
 					.findFirst()
 					.orElse(null);
-		}
-
-		private class PaulsComparator
-			implements
-				Comparator<Player<A>>
-		{
-			@Override
-			public int compare(Player<A> o1, Player<A> o2)
-			{
-				double rating1 = evaluator.getRating(o1.getAttributes());
-				double rating2 = evaluator.getRating(o2.getAttributes());
-
-				final double wrongSidePenalty = 0.84;
-
-				if (!o1.getSide().equals(side))
-				{
-					rating1 *= wrongSidePenalty;
-				}
-
-				if (!o2.getSide().equals(side))
-				{
-					rating2 *= wrongSidePenalty;
-				}
-
-				return Double.compare(rating1, rating2);
-			}
 		}
 	}
 }
