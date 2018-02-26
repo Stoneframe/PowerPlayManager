@@ -80,7 +80,7 @@ public class HandballProfilePlayersParser
 				.filter(s -> s.contains("FvS"))
 				.findFirst()
 				.get();
-		
+
 		String[] sideTextElements = sideText.split("\t");
 		String side = sideTextElements[sideTextElements.length - 1];
 

@@ -8,10 +8,10 @@ import model.icehockey.IceHockeyAttributes;
 
 public class IceHockeyFormationTemplatePanelFactory
 	implements
-		FormationTemplatePanelFactory<IceHockeyFormationTemplate, IceHockeyAttributes>
+		FormationTemplatePanelFactory<IceHockeyAttributes, IceHockeyFormationTemplate>
 {
 	@Override
-	public FormationTemplatePanel<IceHockeyFormationTemplate> newInstance(
+	public FormationTemplatePanel<IceHockeyAttributes, IceHockeyFormationTemplate> newInstance(
 			PlayerEvaluator<IceHockeyAttributes> playerEvaluator)
 	{
 		return new IceHockeyFormationTemplatePanel(playerEvaluator);

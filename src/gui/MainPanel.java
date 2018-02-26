@@ -30,7 +30,7 @@ import model.Player;
 import model.Roster;
 import parsers.players.PlayersParser;
 
-public class MainPanel<A extends Attributes, F extends Formation, FT extends FormationTemplate>
+public class MainPanel<A extends Attributes, F extends Formation, FT extends FormationTemplate<A>>
 	extends JPanel
 {
 	private static final long serialVersionUID = -8438576029794021570L;
@@ -50,7 +50,7 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 	public MainPanel(
 			AttributesPanel<A> attributesPanel,
 			TrainingPlannerPanel<A> trainingPanel,
-			FormationTemplatePanelFactory<FT, A> formationTemplatePanelFactory,
+			FormationTemplatePanelFactory<A, FT> formationTemplatePanelFactory,
 			FormationPanelFactory<F> formationPanelFactory,
 			FormationBuilder<A, F, FT> formationBuilder,
 			List<PlayersParser<A>> parsers,

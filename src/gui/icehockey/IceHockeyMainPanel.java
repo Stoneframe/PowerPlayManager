@@ -20,12 +20,12 @@ public class IceHockeyMainPanel
 			PlayerEvaluator<IceHockeyAttributes> playerEvaluator)
 	{
 		super(
-				new IceHockeyAttributesPanel(),
-				new IceHockeyTrainingPanel(playerEvaluator),
-				new IceHockeyFormationTemplatePanelFactory(),
-				new IceHockeyFormationPanelFactory(),
-				new IceHockeyPaulsFormationBuilder(),
-				parsers,
-				playerEvaluator);
+			new IceHockeyAttributesPanel(),
+			new IceHockeyTrainingPanel(playerEvaluator),
+			new IceHockeyFormationTemplatePanelFactory(),
+			new IceHockeyFormationPanelFactory(),
+			new IceHockeyPaulsFormationBuilder(),
+			parsers,
+			playerEvaluator);
 	}
 }

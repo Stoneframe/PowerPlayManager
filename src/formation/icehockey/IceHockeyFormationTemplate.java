@@ -1,81 +1,62 @@
 package formation.icehockey;
 
+import java.util.Arrays;
+import java.util.List;
+
 import evaluators.AttributeEvaluator;
+import evaluators.icehockey.IceHockeyBackAttributeEvaluator;
+import evaluators.icehockey.IceHockeyCenterAttributeEvaluator;
+import evaluators.icehockey.IceHockeyWingAttributeEvaluator;
 import formation.FormationTemplate;
+import formation.Position;
+import model.Side;
 import model.icehockey.IceHockeyAttributes;
 
 public class IceHockeyFormationTemplate
-	extends FormationTemplate
+	extends FormationTemplate<IceHockeyAttributes>
 {
-	private AttributeEvaluator<IceHockeyAttributes> leftWingEvaluator;
-	private AttributeEvaluator<IceHockeyAttributes> centerEvaluator;
-	private AttributeEvaluator<IceHockeyAttributes> rightWingEvaluator;
-	private AttributeEvaluator<IceHockeyAttributes> leftBackEvaluator;
-	private AttributeEvaluator<IceHockeyAttributes> rightBackEvaluator;
-
 	public IceHockeyFormationTemplate(
 			String name,
-			AttributeEvaluator<IceHockeyAttributes> leftWingEvaluator,
-			AttributeEvaluator<IceHockeyAttributes> centerBackEvaluator,
-			AttributeEvaluator<IceHockeyAttributes> rightWingEvaluator,
-			AttributeEvaluator<IceHockeyAttributes> leftBackEvaluator,
-			AttributeEvaluator<IceHockeyAttributes> rightBackEvaluator)
+			List<Position<IceHockeyAttributes>> positions)
 	{
-		super(name, 5);
-		this.leftWingEvaluator = leftWingEvaluator;
-		this.centerEvaluator = centerBackEvaluator;
-		this.rightWingEvaluator = rightWingEvaluator;
-		this.leftBackEvaluator = leftBackEvaluator;
-		this.rightBackEvaluator = rightBackEvaluator;
+		super(name, positions);
+	}
+
+	public static List<IceHockeyFormationTemplate> getStandardFormationTemplates()
+	{
+		return Arrays.asList(
+			new IceHockeyFormationTemplate(
+					"Normal",
+					Arrays.asList(
+						new Position<>(new IceHockeyWingAttributeEvaluator(), Side.LEFT),
+						new Position<>(new IceHockeyCenterAttributeEvaluator(), Side.UNIVERSAL),
+						new Position<>(new IceHockeyWingAttributeEvaluator(), Side.RIGHT),
+						new Position<>(new IceHockeyBackAttributeEvaluator(), Side.LEFT),
+						new Position<>(new IceHockeyBackAttributeEvaluator(), Side.RIGHT))));
 	}
 
 	public AttributeEvaluator<IceHockeyAttributes> getLeftWingEvaluator()
 	{
-		return leftWingEvaluator;
-	}
-
-	public void setLeftWingEvaluator(AttributeEvaluator<IceHockeyAttributes> leftWingEvaluator)
-	{
-		this.leftWingEvaluator = leftWingEvaluator;
+		return positions.get(0).getAttributeEvaluator();
 	}
 
 	public AttributeEvaluator<IceHockeyAttributes> getCenterEvaluator()
 	{
-		return centerEvaluator;
-	}
-
-	public void setCenterEvaluator(AttributeEvaluator<IceHockeyAttributes> centerEvaluator)
-	{
-		this.centerEvaluator = centerEvaluator;
+		return positions.get(1).getAttributeEvaluator();
 	}
 
 	public AttributeEvaluator<IceHockeyAttributes> getRightWingEvaluator()
 	{
-		return rightWingEvaluator;
-	}
-
-	public void setRightWingEvaluator(AttributeEvaluator<IceHockeyAttributes> rightWingEvaluator)
-	{
-		this.rightWingEvaluator = rightWingEvaluator;
+		return positions.get(2).getAttributeEvaluator();
 	}
 
 	public AttributeEvaluator<IceHockeyAttributes> getLeftBackEvaluator()
 	{
-		return leftBackEvaluator;
-	}
-
-	public void setLeftBackEvaluator(AttributeEvaluator<IceHockeyAttributes> leftBackEvaluator)
-	{
-		this.leftBackEvaluator = leftBackEvaluator;
+		return positions.get(3).getAttributeEvaluator();
 	}
 
 	public AttributeEvaluator<IceHockeyAttributes> getRightBackEvaluator()
 	{
-		return rightBackEvaluator;
-	}
-
-	public void setRightBackEvaluator(AttributeEvaluator<IceHockeyAttributes> rightBackEvaluator)
-	{
-		this.rightBackEvaluator = rightBackEvaluator;
+		return positions.get(4).getAttributeEvaluator();
 	}
 }

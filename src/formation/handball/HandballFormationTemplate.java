@@ -1,64 +1,80 @@
 package formation.handball;
 
+import java.util.Arrays;
+import java.util.List;
+
 import evaluators.AttributeEvaluator;
+import evaluators.handball.HandballDefBackAttributeEvaluator;
+import evaluators.handball.HandballDefPivotAttributeEvaluator;
+import evaluators.handball.HandballDefWingAttributeEvaluator;
+import evaluators.handball.HandballOffBackAttributeEvaluator;
+import evaluators.handball.HandballOffPivotAttributeEvaluator;
+import evaluators.handball.HandballOffWingAttributeEvaluator;
 import formation.FormationTemplate;
+import formation.Position;
+import model.Side;
 import model.handball.HandballAttributes;
 
 public class HandballFormationTemplate
-	extends FormationTemplate
+	extends FormationTemplate<HandballAttributes>
 {
-	private AttributeEvaluator<HandballAttributes> pivotEvaluator;
-	private AttributeEvaluator<HandballAttributes> leftWingEvaluator;
-	private AttributeEvaluator<HandballAttributes> rightWingEvaluator;
-	private AttributeEvaluator<HandballAttributes> centerBackEvaluator;
-	private AttributeEvaluator<HandballAttributes> leftBackEvaluator;
-	private AttributeEvaluator<HandballAttributes> rightBackEvaluator;
-
 	public HandballFormationTemplate(
 			String name,
-			AttributeEvaluator<HandballAttributes> pivotEvaluator,
-			AttributeEvaluator<HandballAttributes> leftWingEvaluator,
-			AttributeEvaluator<HandballAttributes> rightWingEvaluator,
-			AttributeEvaluator<HandballAttributes> centerBackEvaluator,
-			AttributeEvaluator<HandballAttributes> leftBackEvaluator,
-			AttributeEvaluator<HandballAttributes> rightBackEvaluator)
+			List<Position<HandballAttributes>> positions)
 	{
-		super(name, 6);
-		this.pivotEvaluator = pivotEvaluator;
-		this.leftWingEvaluator = leftWingEvaluator;
-		this.rightWingEvaluator = rightWingEvaluator;
-		this.centerBackEvaluator = centerBackEvaluator;
-		this.leftBackEvaluator = leftBackEvaluator;
-		this.rightBackEvaluator = rightBackEvaluator;
+		super(name, positions);
+	}
+
+	public static List<HandballFormationTemplate> getStandardFormationTemplates()
+	{
+		return Arrays.asList(
+			new HandballFormationTemplate(
+					"Offensive",
+					Arrays.asList(
+						new Position<>(new HandballOffPivotAttributeEvaluator(), Side.UNIVERSAL),
+						new Position<>(new HandballOffWingAttributeEvaluator(), Side.LEFT),
+						new Position<>(new HandballOffWingAttributeEvaluator(), Side.RIGHT),
+						new Position<>(new HandballOffBackAttributeEvaluator(), Side.LEFT),
+						new Position<>(new HandballOffBackAttributeEvaluator(), Side.UNIVERSAL),
+						new Position<>(new HandballOffBackAttributeEvaluator(), Side.RIGHT))),
+			new HandballFormationTemplate(
+					"Defensive",
+					Arrays.asList(
+						new Position<>(new HandballDefPivotAttributeEvaluator(), Side.UNIVERSAL),
+						new Position<>(new HandballDefWingAttributeEvaluator(), Side.LEFT),
+						new Position<>(new HandballDefWingAttributeEvaluator(), Side.RIGHT),
+						new Position<>(new HandballDefBackAttributeEvaluator(), Side.LEFT),
+						new Position<>(new HandballDefBackAttributeEvaluator(), Side.UNIVERSAL),
+						new Position<>(new HandballDefBackAttributeEvaluator(), Side.RIGHT))));
 	}
 
 	public AttributeEvaluator<HandballAttributes> getPivotEvaluator()
 	{
-		return pivotEvaluator;
+		return positions.get(0).getAttributeEvaluator();
 	}
 
 	public AttributeEvaluator<HandballAttributes> getLeftWingEvaluator()
 	{
-		return leftWingEvaluator;
+		return positions.get(1).getAttributeEvaluator();
 	}
 
 	public AttributeEvaluator<HandballAttributes> getRightWingEvaluator()
 	{
-		return rightWingEvaluator;
+		return positions.get(2).getAttributeEvaluator();
 	}
 
 	public AttributeEvaluator<HandballAttributes> getCenterBackEvaluator()
 	{
-		return centerBackEvaluator;
+		return positions.get(3).getAttributeEvaluator();
 	}
 
 	public AttributeEvaluator<HandballAttributes> getLeftBackEvaluator()
 	{
-		return leftBackEvaluator;
+		return positions.get(4).getAttributeEvaluator();
 	}
 
 	public AttributeEvaluator<HandballAttributes> getRightBackEvaluator()
 	{
-		return rightBackEvaluator;
+		return positions.get(5).getAttributeEvaluator();
 	}
 }

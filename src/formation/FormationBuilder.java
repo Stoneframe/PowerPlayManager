@@ -9,7 +9,7 @@ import model.Roster;
 public interface FormationBuilder<
 		A extends Attributes,
 		F extends Formation,
-		FT extends FormationTemplate>
+		FT extends FormationTemplate<A>>
 {
 	public List<F> createFormations(Roster<A> roster, List<FT> formationTemplates);
 }

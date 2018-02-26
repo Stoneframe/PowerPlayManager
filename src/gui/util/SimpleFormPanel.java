@@ -39,4 +39,17 @@ public class SimpleFormPanel
 
 		gbc.gridy++;
 	}
+
+	public void addRow(JComponent... components)
+	{
+		gbc.gridx = 0;
+
+		for (JComponent component : components)
+		{
+			add(component, gbc);
+			gbc.gridx++;
+		}
+
+		gbc.gridy++;
+	}
 }

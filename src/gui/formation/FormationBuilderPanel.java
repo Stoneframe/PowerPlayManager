@@ -38,7 +38,7 @@ import util.PropertyChangedListener;
 public class FormationBuilderPanel<
 		A extends Attributes,
 		F extends Formation,
-		FT extends FormationTemplate>
+		FT extends FormationTemplate<A>>
 	extends JPanel
 {
 	private static final long serialVersionUID = -5043434553464317980L;
@@ -49,7 +49,7 @@ public class FormationBuilderPanel<
 	private DefaultListModel<FT> templateListModel;
 	private JList<FT> templateList;
 
-	private FormationTemplatePanel<FT> templatePanel;
+	private FormationTemplatePanel<A, FT> templatePanel;
 
 	private JLabel nbrPlayersSelectedLabel;
 
@@ -59,7 +59,7 @@ public class FormationBuilderPanel<
 	private JButton createFormationsButton;
 
 	public FormationBuilderPanel(
-			FormationTemplatePanelFactory<FT, A> formationTemplatePanelFactory,
+			FormationTemplatePanelFactory<A, FT> formationTemplatePanelFactory,
 			FormationPanelFactory<F> formationPanelFactory,
 			FormationBuilder<A, F, FT> formationBuilder,
 			PlayerEvaluator<A> playerEvaluator,

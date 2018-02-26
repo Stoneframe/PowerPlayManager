@@ -11,9 +11,9 @@ public class IceHockeyBackAttributeEvaluator
 	public IceHockeyBackAttributeEvaluator()
 	{
 		super(
-				"Back",
-				Arrays.asList(
-					new IceHockeyDefBackAttributeEvaluator(),
-					new IceHockeyOffBackAttributeEvaluator()));
+			"Back",
+			Arrays.asList(
+				new IceHockeyDefBackAttributeEvaluator(),
+				new IceHockeyOffBackAttributeEvaluator()));
 	}
 }

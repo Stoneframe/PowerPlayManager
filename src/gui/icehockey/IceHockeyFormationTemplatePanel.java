@@ -4,16 +4,15 @@ import java.util.Arrays;
 
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
-import evaluators.icehockey.IceHockeyBackAttributeEvaluator;
-import evaluators.icehockey.IceHockeyCenterAttributeEvaluator;
-import evaluators.icehockey.IceHockeyWingAttributeEvaluator;
+import formation.Position;
 import formation.icehockey.IceHockeyFormationTemplate;
 import gui.formation.FormationTemplatePanel;
 import gui.util.PpmComboBox;
+import model.Side;
 import model.icehockey.IceHockeyAttributes;
 
 public class IceHockeyFormationTemplatePanel
-	extends FormationTemplatePanel<IceHockeyFormationTemplate>
+	extends FormationTemplatePanel<IceHockeyAttributes, IceHockeyFormationTemplate>
 {
 	private static final long serialVersionUID = 6358768840962999641L;
 
@@ -26,15 +25,7 @@ public class IceHockeyFormationTemplatePanel
 	public IceHockeyFormationTemplatePanel(
 			PlayerEvaluator<IceHockeyAttributes> playerEvaluator)
 	{
-		super(
-				Arrays.asList(
-					new IceHockeyFormationTemplate(
-							"Normal",
-							new IceHockeyWingAttributeEvaluator(),
-							new IceHockeyCenterAttributeEvaluator(),
-							new IceHockeyWingAttributeEvaluator(),
-							new IceHockeyBackAttributeEvaluator(),
-							new IceHockeyBackAttributeEvaluator())));
+		super(IceHockeyFormationTemplate.getStandardFormationTemplates());
 
 		leftWingComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
 		centerComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
@@ -54,11 +45,12 @@ public class IceHockeyFormationTemplatePanel
 	{
 		return new IceHockeyFormationTemplate(
 				nameComboBox.getText(),
-				leftWingComboBox.getSelection(),
-				centerComboBox.getSelection(),
-				rightWingComboBox.getSelection(),
-				leftBackComboBox.getSelection(),
-				rightBackComboBox.getSelection());
+				Arrays.asList(
+					new Position<>(leftWingComboBox.getSelection(), Side.LEFT),
+					new Position<>(centerComboBox.getSelection(), Side.UNIVERSAL),
+					new Position<>(rightWingComboBox.getSelection(), Side.RIGHT),
+					new Position<>(leftBackComboBox.getSelection(), Side.LEFT),
+					new Position<>(rightBackComboBox.getSelection(), Side.RIGHT)));
 	}
 
 	@Override

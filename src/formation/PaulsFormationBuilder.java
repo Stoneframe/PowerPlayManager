@@ -6,17 +6,15 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import comparators.RatingComparator;
-import evaluators.AttributeEvaluator;
 import model.Attributes;
 import model.Formation;
 import model.Player;
 import model.Roster;
-import model.Side;
 
 public abstract class PaulsFormationBuilder<
 		A extends Attributes,
 		F extends Formation,
-		FT extends FormationTemplate>
+		FT extends FormationTemplate<A>>
 	implements
 		FormationBuilder<A, F, FT>
 {
@@ -57,20 +55,17 @@ public abstract class PaulsFormationBuilder<
 		implements
 			Comparable<PositionAssigner<A>>
 	{
-		private AttributeEvaluator<A> evaluator;
-		private Side side;
 		private Roster<A> roster;
+		private Position<A> position;
 		private Consumer<Player<A>> assignAction;
 
 		public PositionAssigner(
 				Roster<A> roster,
-				AttributeEvaluator<A> evaluator,
-				Side side,
+				Position<A> position,
 				Consumer<Player<A>> assignAction)
 		{
-			this.evaluator = evaluator;
-			this.side = side;
 			this.roster = roster;
+			this.position = position;
 			this.assignAction = assignAction;
 		}
 
@@ -122,9 +117,9 @@ public abstract class PaulsFormationBuilder<
 				return Double.MIN_VALUE;
 			}
 
-			double rating = evaluator.getRating(player.getAttributes());
+			double rating = position.getAttributeEvaluator().getRating(player.getAttributes());
 
-			if (!player.getSide().equals(side))
+			if (!player.getSide().equals(position.getSide()))
 			{
 				rating *= 0.84;
 			}
@@ -141,7 +136,7 @@ public abstract class PaulsFormationBuilder<
 		{
 			return roster
 					.stream()
-					.sorted(new RatingComparator<A>(evaluator).reversed())
+					.sorted(new RatingComparator<A>(position.getAttributeEvaluator()).reversed())
 					.skip(rank)
 					.findFirst()
 					.orElse(null);

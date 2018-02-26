@@ -20,12 +20,12 @@ public class HandballMainPanel
 			PlayerEvaluator<HandballAttributes> playerEvaluator)
 	{
 		super(
-				new HandballAttributesPanel(),
-				new HandballTrainingPanel(playerEvaluator),
-				new HandballFormationTemplatePanelFactory(),
-				new HandballFormationPanelFactory(),
-				new HandballPaulsFormationBuilder(),
-				parsers,
-				playerEvaluator);
+			new HandballAttributesPanel(),
+			new HandballTrainingPanel(playerEvaluator),
+			new HandballFormationTemplatePanelFactory(),
+			new HandballFormationPanelFactory(),
+			new HandballPaulsFormationBuilder(),
+			parsers,
+			playerEvaluator);
 	}
 }

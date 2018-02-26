@@ -8,10 +8,10 @@ import model.handball.HandballAttributes;
 
 public class HandballFormationTemplatePanelFactory
 	implements
-		FormationTemplatePanelFactory<HandballFormationTemplate, HandballAttributes>
+		FormationTemplatePanelFactory<HandballAttributes, HandballFormationTemplate>
 {
 	@Override
-	public FormationTemplatePanel<HandballFormationTemplate> newInstance(
+	public FormationTemplatePanel<HandballAttributes, HandballFormationTemplate> newInstance(
 			PlayerEvaluator<HandballAttributes> playerEvaluator)
 	{
 		return new HandballFormationTemplatePanel(playerEvaluator);

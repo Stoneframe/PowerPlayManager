@@ -4,7 +4,9 @@ import evaluators.PlayerEvaluator;
 import formation.FormationTemplate;
 import model.Attributes;
 
-public interface FormationTemplatePanelFactory<FT extends FormationTemplate, A extends Attributes>
+public interface FormationTemplatePanelFactory<
+		A extends Attributes,
+		FT extends FormationTemplate<A>>
 {
-	public FormationTemplatePanel<FT> newInstance(PlayerEvaluator<A> playerEvaluators);
+	public FormationTemplatePanel<A, FT> newInstance(PlayerEvaluator<A> playerEvaluators);
 }

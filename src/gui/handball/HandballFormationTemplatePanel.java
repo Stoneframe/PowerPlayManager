@@ -4,19 +4,15 @@ import java.util.Arrays;
 
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
-import evaluators.handball.HandballDefBackAttributeEvaluator;
-import evaluators.handball.HandballDefPivotAttributeEvaluator;
-import evaluators.handball.HandballDefWingAttributeEvaluator;
-import evaluators.handball.HandballOffBackAttributeEvaluator;
-import evaluators.handball.HandballOffPivotAttributeEvaluator;
-import evaluators.handball.HandballOffWingAttributeEvaluator;
+import formation.Position;
 import formation.handball.HandballFormationTemplate;
 import gui.formation.FormationTemplatePanel;
 import gui.util.PpmComboBox;
+import model.Side;
 import model.handball.HandballAttributes;
 
 public class HandballFormationTemplatePanel
-	extends FormationTemplatePanel<HandballFormationTemplate>
+	extends FormationTemplatePanel<HandballAttributes, HandballFormationTemplate>
 {
 	private static final long serialVersionUID = -1572635059590322744L;
 
@@ -30,24 +26,7 @@ public class HandballFormationTemplatePanel
 	public HandballFormationTemplatePanel(
 			PlayerEvaluator<HandballAttributes> playerEvaluator)
 	{
-		super(
-				Arrays.asList(
-					new HandballFormationTemplate(
-							"Offensive",
-							new HandballOffPivotAttributeEvaluator(),
-							new HandballOffWingAttributeEvaluator(),
-							new HandballOffWingAttributeEvaluator(),
-							new HandballOffBackAttributeEvaluator(),
-							new HandballOffBackAttributeEvaluator(),
-							new HandballOffBackAttributeEvaluator()),
-					new HandballFormationTemplate(
-							"Defensive",
-							new HandballDefPivotAttributeEvaluator(),
-							new HandballDefWingAttributeEvaluator(),
-							new HandballDefWingAttributeEvaluator(),
-							new HandballDefBackAttributeEvaluator(),
-							new HandballDefBackAttributeEvaluator(),
-							new HandballDefBackAttributeEvaluator())));
+		super(HandballFormationTemplate.getStandardFormationTemplates());
 
 		pivotComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
 		leftWingComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
@@ -69,12 +48,13 @@ public class HandballFormationTemplatePanel
 	{
 		return new HandballFormationTemplate(
 				nameComboBox.getText(),
-				pivotComboBox.getSelection(),
-				leftWingComboBox.getSelection(),
-				rightWingComboBox.getSelection(),
-				centerBackComboBox.getSelection(),
-				leftBackComboBox.getSelection(),
-				rightBackComboBox.getSelection());
+				Arrays.asList(
+					new Position<>(pivotComboBox.getSelection(), Side.UNIVERSAL),
+					new Position<>(leftWingComboBox.getSelection(), Side.LEFT),
+					new Position<>(rightWingComboBox.getSelection(), Side.RIGHT),
+					new Position<>(leftBackComboBox.getSelection(), Side.LEFT),
+					new Position<>(centerBackComboBox.getSelection(), Side.UNIVERSAL),
+					new Position<>(rightBackComboBox.getSelection(), Side.RIGHT)));
 	}
 
 	public void setFormationTemplate(HandballFormationTemplate template)

@@ -10,10 +10,11 @@ import javax.swing.border.CompoundBorder;
 import formation.FormationTemplate;
 import gui.util.PpmComboBox;
 import gui.util.SimpleFormPanel;
+import model.Attributes;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public abstract class FormationTemplatePanel<FT extends FormationTemplate>
+public abstract class FormationTemplatePanel<A extends Attributes, FT extends FormationTemplate<A>>
 	extends SimpleFormPanel
 {
 	private static final long serialVersionUID = -1572635059590322744L;
