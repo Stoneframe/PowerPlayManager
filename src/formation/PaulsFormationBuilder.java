@@ -32,6 +32,7 @@ public abstract class PaulsFormationBuilder<
 			formations.add(formation);
 
 			positionAssigners.addAll(createPositionAssigners(roster, formationTemplate, formation));
+			positionAssigners.removeIf(pa -> pa.position.isIgnored());
 		}
 
 		while (!positionAssigners.isEmpty())
@@ -119,7 +120,7 @@ public abstract class PaulsFormationBuilder<
 
 			double rating = position.getAttributeEvaluator().getRating(player.getAttributes());
 
-			if (!player.getSide().equals(position.getSide()))
+			if (!player.getSide().matches(position.getSide()))
 			{
 				rating *= 0.84;
 			}

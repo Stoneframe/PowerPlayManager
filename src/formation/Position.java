@@ -10,10 +10,19 @@ public class Position<A extends Attributes>
 
 	private Side side;
 
+	private boolean isIgnored;
+
 	public Position(AttributeEvaluator<A> attributeEvaluator, Side side)
 	{
 		this.attributeEvaluator = attributeEvaluator;
 		this.side = side;
+	}
+
+	public Position(AttributeEvaluator<A> attributeEvaluator, Side side, boolean isIgnored)
+	{
+		this(attributeEvaluator, side);
+
+		this.isIgnored = isIgnored;
 	}
 
 	public AttributeEvaluator<A> getAttributeEvaluator()
@@ -24,5 +33,10 @@ public class Position<A extends Attributes>
 	public Side getSide()
 	{
 		return side;
+	}
+
+	public boolean isIgnored()
+	{
+		return isIgnored;
 	}
 }

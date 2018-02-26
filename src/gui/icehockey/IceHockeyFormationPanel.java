@@ -8,6 +8,8 @@ import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
 import gui.formation.FormationPanel;
+import model.Player;
+import model.icehockey.IceHockeyAttributes;
 import model.icehockey.IceHockeyFormation;
 
 public class IceHockeyFormationPanel
@@ -37,23 +39,23 @@ public class IceHockeyFormationPanel
 
 		leftWingTextField = new JTextField(15);
 		leftWingTextField.setEditable(false);
-		leftWingTextField.setText(formation.getLeftWing().getName());
+		leftWingTextField.setText(getPlayerName(formation.getLeftWing()));
 
 		centerTextField = new JTextField(15);
 		centerTextField.setEditable(false);
-		centerTextField.setText(formation.getCenter().getName());
+		centerTextField.setText(getPlayerName(formation.getCenter()));
 
 		rightWingTextField = new JTextField(15);
 		rightWingTextField.setEditable(false);
-		rightWingTextField.setText(formation.getRightWing().getName());
+		rightWingTextField.setText(getPlayerName(formation.getRightWing()));
 
 		leftBackTextField = new JTextField(15);
 		leftBackTextField.setEditable(false);
-		leftBackTextField.setText(formation.getLeftBack().getName());
+		leftBackTextField.setText(getPlayerName(formation.getLeftBack()));
 
 		rightBackTextField = new JTextField(15);
 		rightBackTextField.setEditable(false);
-		rightBackTextField.setText(formation.getRightBack().getName());
+		rightBackTextField.setText(getPlayerName(formation.getRightBack()));
 
 		setBorder(
 			new CompoundBorder(
@@ -76,5 +78,10 @@ public class IceHockeyFormationPanel
 
 		add(rightBackLabel);
 		add(rightBackTextField);
+	}
+
+	private static String getPlayerName(Player<IceHockeyAttributes> player)
+	{
+		return player != null ? player.getName() : "";
 	}
 }

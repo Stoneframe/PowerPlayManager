@@ -7,8 +7,7 @@ public abstract class Side
 	public static final Side UNIVERSAL = new Universal();
 	public static final Side RIGHT = new Right();
 
-	@Override
-	public abstract boolean equals(Object obj);
+	public abstract boolean matches(Side side);
 
 	@Override
 	public abstract String toString();
@@ -17,9 +16,9 @@ public abstract class Side
 		extends Side
 	{
 		@Override
-		public boolean equals(Object obj)
+		public boolean matches(Side side)
 		{
-			return obj == UNKNOWN;
+			return side == UNKNOWN;
 		}
 
 		@Override
@@ -33,9 +32,9 @@ public abstract class Side
 		extends Side
 	{
 		@Override
-		public boolean equals(Object obj)
+		public boolean matches(Side side)
 		{
-			return obj == LEFT || obj == UNIVERSAL;
+			return side == LEFT || side == UNIVERSAL;
 		}
 
 		@Override
@@ -49,9 +48,9 @@ public abstract class Side
 		extends Side
 	{
 		@Override
-		public boolean equals(Object obj)
+		public boolean matches(Side side)
 		{
-			return obj instanceof Side;
+			return true;
 		}
 
 		@Override
@@ -65,9 +64,9 @@ public abstract class Side
 		extends Side
 	{
 		@Override
-		public boolean equals(Object obj)
+		public boolean matches(Side side)
 		{
-			return obj == RIGHT || obj == UNIVERSAL;
+			return side == RIGHT || side == UNIVERSAL;
 		}
 
 		@Override
