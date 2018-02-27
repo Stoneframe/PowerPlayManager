@@ -106,34 +106,7 @@ public class IceHockeyFormationTemplatePanel
 	@Override
 	public FormationTemplate<IceHockeyAttributes> getFormationTemplate()
 	{
-		return new FormationTemplate<>(
-				nameComboBox.getText(),
-				Arrays.asList(
-					new PositionTemplate<>(
-							"Left Wing",
-							leftWingComboBox.getSelection(),
-							leftWingSideComboBox.getSelection(),
-							!leftWingCheckBox.isSelected()),
-					new PositionTemplate<>(
-							"Center",
-							centerComboBox.getSelection(),
-							centerSideComboBox.getSelection(),
-							!centerCheckBox.isSelected()),
-					new PositionTemplate<>(
-							"Right Wing",
-							rightWingComboBox.getSelection(),
-							rightWingSideComboBox.getSelection(),
-							!rightWingCheckBox.isSelected()),
-					new PositionTemplate<>(
-							"Left Back",
-							leftBackComboBox.getSelection(),
-							leftBackSideComboBox.getSelection(),
-							!leftBackCheckBox.isSelected()),
-					new PositionTemplate<>(
-							"Right Back",
-							rightBackComboBox.getSelection(),
-							rightBackSideComboBox.getSelection(),
-							!rightBackCheckBox.isSelected())));
+		return new FormationTemplate<>(nameComboBox.getText(), getPositionTemplates());
 	}
 
 	@Override
@@ -183,5 +156,35 @@ public class IceHockeyFormationTemplatePanel
 			leftBackCheckBox.setSelected(true);
 			rightBackCheckBox.setSelected(true);
 		}
+	}
+
+	private List<PositionTemplate<IceHockeyAttributes>> getPositionTemplates()
+	{
+		return Arrays.asList(
+			new PositionTemplate<>(
+					"Left Wing",
+					leftWingComboBox.getSelection(),
+					leftWingSideComboBox.getSelection(),
+					!leftWingCheckBox.isSelected()),
+			new PositionTemplate<>(
+					"Center",
+					centerComboBox.getSelection(),
+					centerSideComboBox.getSelection(),
+					!centerCheckBox.isSelected()),
+			new PositionTemplate<>(
+					"Right Wing",
+					rightWingComboBox.getSelection(),
+					rightWingSideComboBox.getSelection(),
+					!rightWingCheckBox.isSelected()),
+			new PositionTemplate<>(
+					"Left Back",
+					leftBackComboBox.getSelection(),
+					leftBackSideComboBox.getSelection(),
+					!leftBackCheckBox.isSelected()),
+			new PositionTemplate<>(
+					"Right Back",
+					rightBackComboBox.getSelection(),
+					rightBackSideComboBox.getSelection(),
+					!rightBackCheckBox.isSelected()));
 	}
 }

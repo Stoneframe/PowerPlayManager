@@ -116,33 +116,7 @@ public class HandballFormationTemplatePanel
 	@Override
 	public FormationTemplate<HandballAttributes> getFormationTemplate()
 	{
-		return new FormationTemplate<>(
-				nameComboBox.getText(),
-				Arrays.asList(
-					new PositionTemplate<>(
-							"Pivot",
-							pivotComboBox.getSelection(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Left Wing",
-							leftWingComboBox.getSelection(),
-							Side.LEFT),
-					new PositionTemplate<>(
-							"Right Wing",
-							rightWingComboBox.getSelection(),
-							Side.RIGHT),
-					new PositionTemplate<>(
-							"Left Back",
-							leftBackComboBox.getSelection(),
-							Side.LEFT),
-					new PositionTemplate<>(
-							"Center Back",
-							centerBackComboBox.getSelection(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Right Back",
-							rightBackComboBox.getSelection(),
-							Side.RIGHT)));
+		return new FormationTemplate<>(nameComboBox.getText(), getPositionTemplates());
 	}
 
 	public void setFormationTemplate(FormationTemplate<HandballAttributes> template)
@@ -169,5 +143,34 @@ public class HandballFormationTemplatePanel
 			leftBackComboBox.setSelectedIndex(0);
 			rightBackComboBox.setSelectedIndex(0);
 		}
+	}
+
+	private List<PositionTemplate<HandballAttributes>> getPositionTemplates()
+	{
+		return Arrays.asList(
+			new PositionTemplate<>(
+					"Pivot",
+					pivotComboBox.getSelection(),
+					Side.UNIVERSAL),
+			new PositionTemplate<>(
+					"Left Wing",
+					leftWingComboBox.getSelection(),
+					Side.LEFT),
+			new PositionTemplate<>(
+					"Right Wing",
+					rightWingComboBox.getSelection(),
+					Side.RIGHT),
+			new PositionTemplate<>(
+					"Left Back",
+					leftBackComboBox.getSelection(),
+					Side.LEFT),
+			new PositionTemplate<>(
+					"Center Back",
+					centerBackComboBox.getSelection(),
+					Side.UNIVERSAL),
+			new PositionTemplate<>(
+					"Right Back",
+					rightBackComboBox.getSelection(),
+					Side.RIGHT));
 	}
 }
