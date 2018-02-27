@@ -23,6 +23,13 @@ public class HandballFormationTemplatePanel
 {
 	private static final long serialVersionUID = -1572635059590322744L;
 
+	private static final int PIVOT = 0;
+	private static final int LEFT_WING = 1;
+	private static final int RIGHT_WING = 2;
+	private static final int LEFT_BACK = 3;
+	private static final int CENTER_BACK = 4;
+	private static final int RIGHT_BACK = 5;
+
 	private static List<FormationTemplate<HandballAttributes>> defaultTemplates = Arrays.asList(
 		new FormationTemplate<HandballAttributes>(
 				"Offensive",
@@ -144,18 +151,12 @@ public class HandballFormationTemplatePanel
 		{
 			nameComboBox.setText(template.getName());
 
-			pivotComboBox.setSelectedItem(
-				template.getPositions().get(0).getAttributeEvaluator());
-			leftWingComboBox.setSelectedItem(
-				template.getPositions().get(1).getAttributeEvaluator());
-			rightWingComboBox.setSelectedItem(
-				template.getPositions().get(2).getAttributeEvaluator());
-			centerBackComboBox.setSelectedItem(
-				template.getPositions().get(3).getAttributeEvaluator());
-			leftBackComboBox.setSelectedItem(
-				template.getPositions().get(4).getAttributeEvaluator());
-			rightBackComboBox.setSelectedItem(
-				template.getPositions().get(5).getAttributeEvaluator());
+			pivotComboBox.setSelectedItem(getAttributeEvaluator(template, PIVOT));
+			leftWingComboBox.setSelectedItem(getAttributeEvaluator(template, LEFT_WING));
+			rightWingComboBox.setSelectedItem(getAttributeEvaluator(template, RIGHT_WING));
+			leftBackComboBox.setSelectedItem(getAttributeEvaluator(template, LEFT_BACK));
+			centerBackComboBox.setSelectedItem(getAttributeEvaluator(template, CENTER_BACK));
+			rightBackComboBox.setSelectedItem(getAttributeEvaluator(template, RIGHT_BACK));
 		}
 		else
 		{

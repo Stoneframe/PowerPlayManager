@@ -22,6 +22,12 @@ public class IceHockeyFormationTemplatePanel
 {
 	private static final long serialVersionUID = 6358768840962999641L;
 
+	private static final int LEFT_WING = 0;
+	private static final int CENTER = 1;
+	private static final int RIGHT_WING = 2;
+	private static final int LEFT_BACK = 3;
+	private static final int RIGHT_BACK = 4;
+
 	private static List<FormationTemplate<IceHockeyAttributes>> defaultTemplates = Arrays.asList(
 		new FormationTemplate<IceHockeyAttributes>(
 				"Normal",
@@ -137,28 +143,23 @@ public class IceHockeyFormationTemplatePanel
 		{
 			nameComboBox.setText(template.getName());
 
-			leftWingComboBox.setSelectedItem(
-				template.getPositions().get(0).getAttributeEvaluator());
-			centerComboBox.setSelectedItem(
-				template.getPositions().get(1).getAttributeEvaluator());
-			rightWingComboBox.setSelectedItem(
-				template.getPositions().get(2).getAttributeEvaluator());
-			leftBackComboBox.setSelectedItem(
-				template.getPositions().get(3).getAttributeEvaluator());
-			rightBackComboBox.setSelectedItem(
-				template.getPositions().get(4).getAttributeEvaluator());
+			leftWingComboBox.setSelectedItem(getAttributeEvaluator(template, LEFT_WING));
+			centerComboBox.setSelectedItem(getAttributeEvaluator(template, CENTER));
+			rightWingComboBox.setSelectedItem(getAttributeEvaluator(template, RIGHT_WING));
+			leftBackComboBox.setSelectedItem(getAttributeEvaluator(template, LEFT_BACK));
+			rightBackComboBox.setSelectedItem(getAttributeEvaluator(template, RIGHT_BACK));
 
-			leftWingSideComboBox.setSelectedItem(template.getPositions().get(0).getSide());
-			centerSideComboBox.setSelectedItem(template.getPositions().get(1).getSide());
-			rightWingSideComboBox.setSelectedItem(template.getPositions().get(2).getSide());
-			leftBackSideComboBox.setSelectedItem(template.getPositions().get(3).getSide());
-			rightBackSideComboBox.setSelectedItem(template.getPositions().get(4).getSide());
+			leftWingSideComboBox.setSelectedItem(getSide(template, LEFT_WING));
+			centerSideComboBox.setSelectedItem(getSide(template, CENTER));
+			rightWingSideComboBox.setSelectedItem(getSide(template, RIGHT_WING));
+			leftBackSideComboBox.setSelectedItem(getSide(template, LEFT_BACK));
+			rightBackSideComboBox.setSelectedItem(getSide(template, RIGHT_BACK));
 
-			leftWingCheckBox.setSelected(!template.getPositions().get(0).isIgnored());
-			centerCheckBox.setSelected(!template.getPositions().get(1).isIgnored());
-			rightWingCheckBox.setSelected(!template.getPositions().get(2).isIgnored());
-			leftBackCheckBox.setSelected(!template.getPositions().get(3).isIgnored());
-			rightBackCheckBox.setSelected(!template.getPositions().get(4).isIgnored());
+			leftWingCheckBox.setSelected(!getIsIgnored(template, LEFT_WING));
+			centerCheckBox.setSelected(!getIsIgnored(template, CENTER));
+			rightWingCheckBox.setSelected(!getIsIgnored(template, RIGHT_WING));
+			leftBackCheckBox.setSelected(!getIsIgnored(template, LEFT_BACK));
+			rightBackCheckBox.setSelected(!getIsIgnored(template, RIGHT_BACK));
 		}
 		else
 		{
