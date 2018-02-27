@@ -3,36 +3,39 @@ package formation;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
 
 import comparators.RatingComparator;
 import model.Attributes;
-import model.Formation;
 import model.Player;
 import model.Roster;
 
-public abstract class PaulsFormationBuilder<
-		A extends Attributes,
-		F extends Formation,
-		FT extends FormationTemplate<A>>
+public class PaulsFormationBuilder<A extends Attributes>
 	implements
-		FormationBuilder<A, F, FT>
+		FormationBuilder<A>
 {
 	@Override
-	public List<F> createFormations(Roster<A> roster, List<FT> formationTemplates)
+	public List<Formation<A>> createFormations(
+			Roster<A> roster,
+			List<FormationTemplate<A>> formationTemplates)
 	{
-		List<F> formations = new LinkedList<>();
+		List<Formation<A>> formations = new LinkedList<>();
 
 		List<PositionAssigner<A>> positionAssigners = new LinkedList<>();
 
-		for (FT formationTemplate : formationTemplates)
+		for (FormationTemplate<A> formationTemplate : formationTemplates)
 		{
-			F formation = createFormation(formationTemplate.getName());
+			List<Position<A>> positions = new LinkedList<>();
 
-			formations.add(formation);
+			for (PositionTemplate<A> positionTemplate : formationTemplate.getPositions())
+			{
+				if (positionTemplate.isIgnored()) continue;
 
-			positionAssigners.addAll(createPositionAssigners(roster, formationTemplate, formation));
-			positionAssigners.removeIf(pa -> pa.position.isIgnored());
+				Position<A> position = new Position<>(positionTemplate.getName());
+				positions.add(position);
+				positionAssigners.add(new PositionAssigner<>(roster, positionTemplate, position));
+			}
+
+			formations.add(new Formation<>(formationTemplate.getName(), positions));
 		}
 
 		while (!positionAssigners.isEmpty())
@@ -45,29 +48,22 @@ public abstract class PaulsFormationBuilder<
 		return formations;
 	}
 
-	protected abstract F createFormation(String name);
-
-	protected abstract List<PositionAssigner<A>> createPositionAssigners(
-			Roster<A> roster,
-			FT formationTemplate,
-			F formation);
-
 	protected static class PositionAssigner<A extends Attributes>
 		implements
 			Comparable<PositionAssigner<A>>
 	{
 		private Roster<A> roster;
+		private PositionTemplate<A> positionTemplate;
 		private Position<A> position;
-		private Consumer<Player<A>> assignAction;
 
 		public PositionAssigner(
 				Roster<A> roster,
-				Position<A> position,
-				Consumer<Player<A>> assignAction)
+				PositionTemplate<A> positionTemplate,
+				Position<A> position)
 		{
 			this.roster = roster;
+			this.positionTemplate = positionTemplate;
 			this.position = position;
-			this.assignAction = assignAction;
 		}
 
 		@Override
@@ -95,7 +91,7 @@ public abstract class PaulsFormationBuilder<
 		public void assignBestPlayerToPosition()
 		{
 			Player<A> player = getBestPlayer();
-			assignAction.accept(player);
+			position.setPlayer(player);
 			roster.remove(player);
 		}
 
@@ -118,9 +114,10 @@ public abstract class PaulsFormationBuilder<
 				return Double.MIN_VALUE;
 			}
 
-			double rating = position.getAttributeEvaluator().getRating(player.getAttributes());
+			double rating =
+					positionTemplate.getAttributeEvaluator().getRating(player.getAttributes());
 
-			if (!player.getSide().matches(position.getSide()))
+			if (!player.getSide().matches(positionTemplate.getSide()))
 			{
 				rating *= 0.84;
 			}
@@ -137,7 +134,9 @@ public abstract class PaulsFormationBuilder<
 		{
 			return roster
 					.stream()
-					.sorted(new RatingComparator<A>(position.getAttributeEvaluator()).reversed())
+					.sorted(
+						new RatingComparator<A>(positionTemplate.getAttributeEvaluator())
+								.reversed())
 					.skip(rank)
 					.findFirst()
 					.orElse(null);

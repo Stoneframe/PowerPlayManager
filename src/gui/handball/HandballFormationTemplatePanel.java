@@ -1,20 +1,83 @@
 package gui.handball;
 
 import java.util.Arrays;
+import java.util.List;
 
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
-import formation.Position;
-import formation.handball.HandballFormationTemplate;
+import evaluators.handball.HandballDefBackAttributeEvaluator;
+import evaluators.handball.HandballDefPivotAttributeEvaluator;
+import evaluators.handball.HandballDefWingAttributeEvaluator;
+import evaluators.handball.HandballOffBackAttributeEvaluator;
+import evaluators.handball.HandballOffPivotAttributeEvaluator;
+import evaluators.handball.HandballOffWingAttributeEvaluator;
+import formation.FormationTemplate;
+import formation.PositionTemplate;
 import gui.formation.FormationTemplatePanel;
 import gui.util.PpmComboBox;
 import model.Side;
 import model.handball.HandballAttributes;
 
 public class HandballFormationTemplatePanel
-	extends FormationTemplatePanel<HandballAttributes, HandballFormationTemplate>
+	extends FormationTemplatePanel<HandballAttributes>
 {
 	private static final long serialVersionUID = -1572635059590322744L;
+
+	private static List<FormationTemplate<HandballAttributes>> defaultTemplates = Arrays.asList(
+		new FormationTemplate<HandballAttributes>(
+				"Offensive",
+				Arrays.asList(
+					new PositionTemplate<>(
+							"Pivot",
+							new HandballOffPivotAttributeEvaluator(),
+							Side.UNIVERSAL),
+					new PositionTemplate<>(
+							"Left Wing",
+							new HandballOffWingAttributeEvaluator(),
+							Side.LEFT),
+					new PositionTemplate<>(
+							"Right Wing",
+							new HandballOffWingAttributeEvaluator(),
+							Side.RIGHT),
+					new PositionTemplate<>(
+							"Left Back",
+							new HandballOffBackAttributeEvaluator(),
+							Side.LEFT),
+					new PositionTemplate<>(
+							"Center Back",
+							new HandballOffBackAttributeEvaluator(),
+							Side.UNIVERSAL),
+					new PositionTemplate<>(
+							"Right Back",
+							new HandballOffBackAttributeEvaluator(),
+							Side.RIGHT))),
+		new FormationTemplate<HandballAttributes>(
+				"Defensive",
+				Arrays.asList(
+					new PositionTemplate<>(
+							"Pivot",
+							new HandballDefPivotAttributeEvaluator(),
+							Side.UNIVERSAL),
+					new PositionTemplate<>(
+							"Left Wing",
+							new HandballDefWingAttributeEvaluator(),
+							Side.LEFT),
+					new PositionTemplate<>(
+							"Right Wing",
+							new HandballDefWingAttributeEvaluator(),
+							Side.RIGHT),
+					new PositionTemplate<>(
+							"Left Back",
+							new HandballDefBackAttributeEvaluator(),
+							Side.LEFT),
+					new PositionTemplate<>(
+							"Center Back",
+							new HandballDefBackAttributeEvaluator(),
+							Side.UNIVERSAL),
+					new PositionTemplate<>(
+							"Right Back",
+							new HandballDefBackAttributeEvaluator(),
+							Side.RIGHT))));
 
 	private PpmComboBox<AttributeEvaluator<HandballAttributes>> pivotComboBox;
 	private PpmComboBox<AttributeEvaluator<HandballAttributes>> leftWingComboBox;
@@ -26,7 +89,7 @@ public class HandballFormationTemplatePanel
 	public HandballFormationTemplatePanel(
 			PlayerEvaluator<HandballAttributes> playerEvaluator)
 	{
-		super(HandballFormationTemplate.getStandardFormationTemplates());
+		super(defaultTemplates);
 
 		pivotComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
 		leftWingComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
@@ -44,34 +107,60 @@ public class HandballFormationTemplatePanel
 	}
 
 	@Override
-	public HandballFormationTemplate getFormationTemplate()
+	public FormationTemplate<HandballAttributes> getFormationTemplate()
 	{
-		return new HandballFormationTemplate(
+		return new FormationTemplate<>(
 				nameComboBox.getText(),
 				Arrays.asList(
-					new Position<>(pivotComboBox.getSelection(), Side.UNIVERSAL),
-					new Position<>(leftWingComboBox.getSelection(), Side.LEFT),
-					new Position<>(rightWingComboBox.getSelection(), Side.RIGHT),
-					new Position<>(leftBackComboBox.getSelection(), Side.LEFT),
-					new Position<>(centerBackComboBox.getSelection(), Side.UNIVERSAL),
-					new Position<>(rightBackComboBox.getSelection(), Side.RIGHT)));
+					new PositionTemplate<>(
+							"Pivot",
+							pivotComboBox.getSelection(),
+							Side.UNIVERSAL),
+					new PositionTemplate<>(
+							"Left Wing",
+							leftWingComboBox.getSelection(),
+							Side.LEFT),
+					new PositionTemplate<>(
+							"Right Wing",
+							rightWingComboBox.getSelection(),
+							Side.RIGHT),
+					new PositionTemplate<>(
+							"Left Back",
+							leftBackComboBox.getSelection(),
+							Side.LEFT),
+					new PositionTemplate<>(
+							"Center Back",
+							centerBackComboBox.getSelection(),
+							Side.UNIVERSAL),
+					new PositionTemplate<>(
+							"Right Back",
+							rightBackComboBox.getSelection(),
+							Side.RIGHT)));
 	}
 
-	public void setFormationTemplate(HandballFormationTemplate template)
+	public void setFormationTemplate(FormationTemplate<HandballAttributes> template)
 	{
 		if (template != null)
 		{
 			nameComboBox.setText(template.getName());
-			pivotComboBox.setSelectedItem(template.getPivotEvaluator());
-			leftWingComboBox.setSelectedItem(template.getLeftWingEvaluator());
-			rightWingComboBox.setSelectedItem(template.getRightWingEvaluator());
-			centerBackComboBox.setSelectedItem(template.getCenterBackEvaluator());
-			leftBackComboBox.setSelectedItem(template.getLeftBackEvaluator());
-			rightBackComboBox.setSelectedItem(template.getRightBackEvaluator());
+
+			pivotComboBox.setSelectedItem(
+				template.getPositions().get(0).getAttributeEvaluator());
+			leftWingComboBox.setSelectedItem(
+				template.getPositions().get(1).getAttributeEvaluator());
+			rightWingComboBox.setSelectedItem(
+				template.getPositions().get(2).getAttributeEvaluator());
+			centerBackComboBox.setSelectedItem(
+				template.getPositions().get(3).getAttributeEvaluator());
+			leftBackComboBox.setSelectedItem(
+				template.getPositions().get(4).getAttributeEvaluator());
+			rightBackComboBox.setSelectedItem(
+				template.getPositions().get(5).getAttributeEvaluator());
 		}
 		else
 		{
 			nameComboBox.setText("");
+
 			pivotComboBox.setSelectedIndex(0);
 			leftWingComboBox.setSelectedIndex(0);
 			rightWingComboBox.setSelectedIndex(0);

@@ -1,42 +1,31 @@
 package formation;
 
-import evaluators.AttributeEvaluator;
 import model.Attributes;
-import model.Side;
+import model.Player;
 
 public class Position<A extends Attributes>
 {
-	private AttributeEvaluator<A> attributeEvaluator;
+	private String name;
 
-	private Side side;
+	private Player<A> player;
 
-	private boolean isIgnored;
-
-	public Position(AttributeEvaluator<A> attributeEvaluator, Side side)
+	public Position(String name)
 	{
-		this.attributeEvaluator = attributeEvaluator;
-		this.side = side;
+		this.name = name;
 	}
 
-	public Position(AttributeEvaluator<A> attributeEvaluator, Side side, boolean isIgnored)
+	public String getName()
 	{
-		this(attributeEvaluator, side);
-
-		this.isIgnored = isIgnored;
+		return name;
 	}
 
-	public AttributeEvaluator<A> getAttributeEvaluator()
+	public Player<A> getPlayer()
 	{
-		return attributeEvaluator;
+		return player;
 	}
 
-	public Side getSide()
+	public void setPlayer(Player<A> player)
 	{
-		return side;
-	}
-
-	public boolean isIgnored()
-	{
-		return isIgnored;
+		this.player = player;
 	}
 }

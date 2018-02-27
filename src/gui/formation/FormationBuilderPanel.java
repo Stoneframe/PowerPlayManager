@@ -26,19 +26,16 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import evaluators.PlayerEvaluator;
+import formation.Formation;
 import formation.FormationBuilder;
 import formation.FormationTemplate;
 import model.Attributes;
-import model.Formation;
 import model.Player;
 import model.Roster;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public class FormationBuilderPanel<
-		A extends Attributes,
-		F extends Formation,
-		FT extends FormationTemplate<A>>
+public class FormationBuilderPanel<A extends Attributes>
 	extends JPanel
 {
 	private static final long serialVersionUID = -5043434553464317980L;
@@ -46,10 +43,10 @@ public class FormationBuilderPanel<
 	private DefaultListModel<Player<A>> playerListModel;
 	private JList<Player<A>> playerList;
 
-	private DefaultListModel<FT> templateListModel;
-	private JList<FT> templateList;
+	private DefaultListModel<FormationTemplate<A>> templateListModel;
+	private JList<FormationTemplate<A>> templateList;
 
-	private FormationTemplatePanel<A, FT> templatePanel;
+	private FormationTemplatePanel<A> templatePanel;
 
 	private JLabel nbrPlayersSelectedLabel;
 
@@ -59,9 +56,8 @@ public class FormationBuilderPanel<
 	private JButton createFormationsButton;
 
 	public FormationBuilderPanel(
-			FormationTemplatePanelFactory<A, FT> formationTemplatePanelFactory,
-			FormationPanelFactory<F> formationPanelFactory,
-			FormationBuilder<A, F, FT> formationBuilder,
+			FormationTemplatePanelFactory<A> formationTemplatePanelFactory,
+			FormationBuilder<A> formationBuilder,
 			PlayerEvaluator<A> playerEvaluator,
 			Roster<A> roster)
 	{
@@ -121,9 +117,9 @@ public class FormationBuilderPanel<
 			}
 		});
 
-		templateListModel = new DefaultListModel<FT>();
+		templateListModel = new DefaultListModel<>();
 
-		templateList = new JList<FT>(templateListModel);
+		templateList = new JList<>(templateListModel);
 		templateList.setPreferredSize(new Dimension(200, 1));
 		templateList.setBorder(BorderFactory.createEtchedBorder());
 		templateList.addListSelectionListener(new ListSelectionListener()
@@ -181,9 +177,10 @@ public class FormationBuilderPanel<
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				List<FT> formationTemplates = getFormationTemplates();
+				List<FormationTemplate<A>> formationTemplates = getFormationTemplates();
 
-				List<F> formations = formationBuilder.createFormations(roster, formationTemplates);
+				List<Formation<A>> formations =
+						formationBuilder.createFormations(roster, formationTemplates);
 
 				updatePlayersSelectedList(roster);
 				updateCreateFormationsButton(roster);
@@ -194,7 +191,7 @@ public class FormationBuilderPanel<
 				{
 					public void run()
 					{
-						new FormationDisplayFrame<F>(formationPanelFactory, formations);
+						new FormationDisplayFrame<A>(formations);
 					}
 				});
 			}
@@ -250,13 +247,13 @@ public class FormationBuilderPanel<
 		return totalNbrOfRequiredPlayers <= roster.size();
 	}
 
-	private List<FT> getFormationTemplates()
+	private List<FormationTemplate<A>> getFormationTemplates()
 	{
-		List<FT> formationTemplates = new LinkedList<>();
+		List<FormationTemplate<A>> formationTemplates = new LinkedList<>();
 
 		for (int i = 0; i < templateListModel.size(); i++)
 		{
-			FT formationTemplate = templateListModel.getElementAt(i);
+			FormationTemplate<A> formationTemplate = templateListModel.getElementAt(i);
 
 			formationTemplates.add(formationTemplate);
 		}

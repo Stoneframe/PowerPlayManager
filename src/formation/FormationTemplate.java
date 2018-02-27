@@ -7,9 +7,10 @@ import model.Attributes;
 public class FormationTemplate<A extends Attributes>
 {
 	private String name;
-	protected List<Position<A>> positions;
 
-	public FormationTemplate(String name, List<Position<A>> positions)
+	protected List<PositionTemplate<A>> positions;
+
+	public FormationTemplate(String name, List<PositionTemplate<A>> positions)
 	{
 		this.name = name;
 		this.positions = positions;
@@ -20,7 +21,7 @@ public class FormationTemplate<A extends Attributes>
 		return name;
 	}
 
-	public List<Position<A>> getPositions()
+	public List<PositionTemplate<A>> getPositions()
 	{
 		return positions;
 	}

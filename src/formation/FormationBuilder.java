@@ -3,13 +3,11 @@ package formation;
 import java.util.List;
 
 import model.Attributes;
-import model.Formation;
 import model.Roster;
 
-public interface FormationBuilder<
-		A extends Attributes,
-		F extends Formation,
-		FT extends FormationTemplate<A>>
+public interface FormationBuilder<A extends Attributes>
 {
-	public List<F> createFormations(Roster<A> roster, List<FT> formationTemplates);
+	public List<Formation<A>> createFormations(
+			Roster<A> roster,
+			List<FormationTemplate<A>> formationTemplates);
 }

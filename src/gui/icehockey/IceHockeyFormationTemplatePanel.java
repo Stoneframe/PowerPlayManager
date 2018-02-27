@@ -7,17 +7,45 @@ import javax.swing.JCheckBox;
 
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
-import formation.Position;
-import formation.icehockey.IceHockeyFormationTemplate;
+import evaluators.icehockey.IceHockeyBackAttributeEvaluator;
+import evaluators.icehockey.IceHockeyCenterAttributeEvaluator;
+import evaluators.icehockey.IceHockeyWingAttributeEvaluator;
+import formation.FormationTemplate;
+import formation.PositionTemplate;
 import gui.formation.FormationTemplatePanel;
 import gui.util.PpmComboBox;
 import model.Side;
 import model.icehockey.IceHockeyAttributes;
 
 public class IceHockeyFormationTemplatePanel
-	extends FormationTemplatePanel<IceHockeyAttributes, IceHockeyFormationTemplate>
+	extends FormationTemplatePanel<IceHockeyAttributes>
 {
 	private static final long serialVersionUID = 6358768840962999641L;
+
+	private static List<FormationTemplate<IceHockeyAttributes>> defaultTemplates = Arrays.asList(
+		new FormationTemplate<IceHockeyAttributes>(
+				"Normal",
+				Arrays.asList(
+					new PositionTemplate<>(
+							"Left Wing",
+							new IceHockeyWingAttributeEvaluator(),
+							Side.LEFT),
+					new PositionTemplate<>(
+							"Center",
+							new IceHockeyCenterAttributeEvaluator(),
+							Side.UNIVERSAL),
+					new PositionTemplate<>(
+							"Right Wing",
+							new IceHockeyWingAttributeEvaluator(),
+							Side.RIGHT),
+					new PositionTemplate<>(
+							"Left Back",
+							new IceHockeyBackAttributeEvaluator(),
+							Side.LEFT),
+					new PositionTemplate<>(
+							"Right Back",
+							new IceHockeyBackAttributeEvaluator(),
+							Side.RIGHT))));
 
 	private JCheckBox leftWingCheckBox;
 	private JCheckBox centerCheckBox;
@@ -40,7 +68,7 @@ public class IceHockeyFormationTemplatePanel
 	public IceHockeyFormationTemplatePanel(
 			PlayerEvaluator<IceHockeyAttributes> playerEvaluator)
 	{
-		super(IceHockeyFormationTemplate.getStandardFormationTemplates());
+		super(defaultTemplates);
 
 		leftWingCheckBox = new JCheckBox("Left Wing:", true);
 		centerCheckBox = new JCheckBox("Center:", true);
@@ -70,54 +98,72 @@ public class IceHockeyFormationTemplatePanel
 	}
 
 	@Override
-	public IceHockeyFormationTemplate getFormationTemplate()
+	public FormationTemplate<IceHockeyAttributes> getFormationTemplate()
 	{
-		return new IceHockeyFormationTemplate(
+		return new FormationTemplate<>(
 				nameComboBox.getText(),
 				Arrays.asList(
-					new Position<>(
+					new PositionTemplate<>(
+							"Left Wing",
 							leftWingComboBox.getSelection(),
 							leftWingSideComboBox.getSelection(),
 							!leftWingCheckBox.isSelected()),
-					new Position<>(
+					new PositionTemplate<>(
+							"Center",
 							centerComboBox.getSelection(),
 							centerSideComboBox.getSelection(),
 							!centerCheckBox.isSelected()),
-					new Position<>(
+					new PositionTemplate<>(
+							"Right Wing",
 							rightWingComboBox.getSelection(),
 							rightWingSideComboBox.getSelection(),
 							!rightWingCheckBox.isSelected()),
-					new Position<>(
+					new PositionTemplate<>(
+							"Left Back",
 							leftBackComboBox.getSelection(),
 							leftBackSideComboBox.getSelection(),
 							!leftBackCheckBox.isSelected()),
-					new Position<>(
+					new PositionTemplate<>(
+							"Right Back",
 							rightBackComboBox.getSelection(),
 							rightBackSideComboBox.getSelection(),
 							!rightBackCheckBox.isSelected())));
 	}
 
 	@Override
-	public void setFormationTemplate(IceHockeyFormationTemplate template)
+	public void setFormationTemplate(FormationTemplate<IceHockeyAttributes> template)
 	{
 		if (template != null)
 		{
 			nameComboBox.setText(template.getName());
-			leftWingComboBox.setSelectedItem(template.getLeftWingEvaluator());
-			centerComboBox.setSelectedItem(template.getCenterEvaluator());
-			rightWingComboBox.setSelectedItem(template.getRightWingEvaluator());
-			leftBackComboBox.setSelectedItem(template.getLeftBackEvaluator());
-			rightBackComboBox.setSelectedItem(template.getRightBackEvaluator());
+
+			leftWingComboBox.setSelectedItem(
+				template.getPositions().get(0).getAttributeEvaluator());
+			centerComboBox.setSelectedItem(
+				template.getPositions().get(1).getAttributeEvaluator());
+			rightWingComboBox.setSelectedItem(
+				template.getPositions().get(2).getAttributeEvaluator());
+			leftBackComboBox.setSelectedItem(
+				template.getPositions().get(3).getAttributeEvaluator());
+			rightBackComboBox.setSelectedItem(
+				template.getPositions().get(4).getAttributeEvaluator());
 
 			leftWingSideComboBox.setSelectedItem(template.getPositions().get(0).getSide());
 			centerSideComboBox.setSelectedItem(template.getPositions().get(1).getSide());
 			rightWingSideComboBox.setSelectedItem(template.getPositions().get(2).getSide());
 			leftBackSideComboBox.setSelectedItem(template.getPositions().get(3).getSide());
 			rightBackSideComboBox.setSelectedItem(template.getPositions().get(4).getSide());
+
+			leftWingCheckBox.setSelected(!template.getPositions().get(0).isIgnored());
+			centerCheckBox.setSelected(!template.getPositions().get(1).isIgnored());
+			rightWingCheckBox.setSelected(!template.getPositions().get(2).isIgnored());
+			leftBackCheckBox.setSelected(!template.getPositions().get(3).isIgnored());
+			rightBackCheckBox.setSelected(!template.getPositions().get(4).isIgnored());
 		}
 		else
 		{
 			nameComboBox.setText("");
+
 			leftWingComboBox.setSelectedIndex(0);
 			centerComboBox.setSelectedIndex(0);
 			rightWingComboBox.setSelectedIndex(0);
@@ -129,6 +175,12 @@ public class IceHockeyFormationTemplatePanel
 			rightWingSideComboBox.setSelectedItem(Side.RIGHT);
 			leftBackSideComboBox.setSelectedItem(Side.LEFT);
 			rightBackSideComboBox.setSelectedItem(Side.RIGHT);
+
+			leftWingCheckBox.setSelected(true);
+			centerCheckBox.setSelected(true);
+			rightWingCheckBox.setSelected(true);
+			leftBackCheckBox.setSelected(true);
+			rightBackCheckBox.setSelected(true);
 		}
 	}
 }

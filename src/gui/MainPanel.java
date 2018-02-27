@@ -13,9 +13,7 @@ import javax.swing.SwingUtilities;
 
 import evaluators.PlayerEvaluator;
 import formation.FormationBuilder;
-import formation.FormationTemplate;
 import gui.formation.FormationBuilderPanel;
-import gui.formation.FormationPanelFactory;
 import gui.formation.FormationTemplatePanelFactory;
 import gui.player.AttributesPanel;
 import gui.player.PlayerPanel;
@@ -25,12 +23,11 @@ import gui.player.PlayersParsedEvent;
 import gui.player.PlayersParsedListener;
 import gui.player.TrainingPlannerPanel;
 import model.Attributes;
-import model.Formation;
 import model.Player;
 import model.Roster;
 import parsers.players.PlayersParser;
 
-public class MainPanel<A extends Attributes, F extends Formation, FT extends FormationTemplate<A>>
+public class MainPanel<A extends Attributes>
 	extends JPanel
 {
 	private static final long serialVersionUID = -8438576029794021570L;
@@ -50,9 +47,8 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 	public MainPanel(
 			AttributesPanel<A> attributesPanel,
 			TrainingPlannerPanel<A> trainingPanel,
-			FormationTemplatePanelFactory<A, FT> formationTemplatePanelFactory,
-			FormationPanelFactory<F> formationPanelFactory,
-			FormationBuilder<A, F, FT> formationBuilder,
+			FormationTemplatePanelFactory<A> formationTemplatePanelFactory,
+			FormationBuilder<A> formationBuilder,
 			List<PlayersParser<A>> parsers,
 			PlayerEvaluator<A> playerEvaluator)
 	{
@@ -121,9 +117,8 @@ public class MainPanel<A extends Attributes, F extends Formation, FT extends For
 						JFrame formationBuilderFrame = new JFrame("Formation Builder");
 
 						formationBuilderFrame.setContentPane(
-							new FormationBuilderPanel<A, F, FT>(
+							new FormationBuilderPanel<A>(
 									formationTemplatePanelFactory,
-									formationPanelFactory,
 									formationBuilder,
 									playerEvaluator,
 									roster.copy()));

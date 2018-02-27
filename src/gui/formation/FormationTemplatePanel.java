@@ -14,16 +14,16 @@ import model.Attributes;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public abstract class FormationTemplatePanel<A extends Attributes, FT extends FormationTemplate<A>>
+public abstract class FormationTemplatePanel<A extends Attributes>
 	extends SimpleFormPanel
 {
 	private static final long serialVersionUID = -1572635059590322744L;
 
 	private PropertyChangedListener nameTextPropertyChangedListener;
 
-	protected PpmComboBox<FT> nameComboBox;
+	protected PpmComboBox<FormationTemplate<A>> nameComboBox;
 
-	protected FormationTemplatePanel(List<FT> formationTemplates)
+	protected FormationTemplatePanel(List<FormationTemplate<A>> formationTemplates)
 	{
 		nameComboBox = new PpmComboBox<>(formationTemplates);
 		nameComboBox.setEditable(true);
@@ -32,7 +32,7 @@ public abstract class FormationTemplatePanel<A extends Attributes, FT extends Fo
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				FT template = nameComboBox.getSelection();
+				FormationTemplate<A> template = nameComboBox.getSelection();
 
 				if (template != null)
 				{
@@ -61,7 +61,7 @@ public abstract class FormationTemplatePanel<A extends Attributes, FT extends Fo
 		nameTextPropertyChangedListener = listener;
 	}
 
-	public abstract FT getFormationTemplate();
+	public abstract FormationTemplate<A> getFormationTemplate();
 
-	public abstract void setFormationTemplate(FT template);
+	public abstract void setFormationTemplate(FormationTemplate<A> template);
 }

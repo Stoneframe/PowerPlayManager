@@ -1,12 +1,9 @@
 package gui.formation;
 
 import evaluators.PlayerEvaluator;
-import formation.FormationTemplate;
 import model.Attributes;
 
-public interface FormationTemplatePanelFactory<
-		A extends Attributes,
-		FT extends FormationTemplate<A>>
+public interface FormationTemplatePanelFactory<A extends Attributes>
 {
-	public FormationTemplatePanel<A, FT> newInstance(PlayerEvaluator<A> playerEvaluators);
+	public FormationTemplatePanel<A> newInstance(PlayerEvaluator<A> playerEvaluators);
 }

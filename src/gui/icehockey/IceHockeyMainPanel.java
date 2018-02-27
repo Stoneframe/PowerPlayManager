@@ -3,15 +3,13 @@ package gui.icehockey;
 import java.util.List;
 
 import evaluators.PlayerEvaluator;
-import formation.icehockey.IceHockeyFormationTemplate;
-import formation.icehockey.IceHockeyPaulsFormationBuilder;
+import formation.PaulsFormationBuilder;
 import gui.MainPanel;
 import model.icehockey.IceHockeyAttributes;
-import model.icehockey.IceHockeyFormation;
 import parsers.players.PlayersParser;
 
 public class IceHockeyMainPanel
-	extends MainPanel<IceHockeyAttributes, IceHockeyFormation, IceHockeyFormationTemplate>
+	extends MainPanel<IceHockeyAttributes>
 {
 	private static final long serialVersionUID = -9170227741926378853L;
 
@@ -23,8 +21,7 @@ public class IceHockeyMainPanel
 			new IceHockeyAttributesPanel(),
 			new IceHockeyTrainingPanel(playerEvaluator),
 			new IceHockeyFormationTemplatePanelFactory(),
-			new IceHockeyFormationPanelFactory(),
-			new IceHockeyPaulsFormationBuilder(),
+			new PaulsFormationBuilder<>(),
 			parsers,
 			playerEvaluator);
 	}
