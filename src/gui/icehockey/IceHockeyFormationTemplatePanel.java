@@ -9,6 +9,10 @@ import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import evaluators.icehockey.IceHockeyBackAttributeEvaluator;
 import evaluators.icehockey.IceHockeyCenterAttributeEvaluator;
+import evaluators.icehockey.IceHockeyDefBackAttributeEvaluator;
+import evaluators.icehockey.IceHockeyForwardAttributeEvaluator;
+import evaluators.icehockey.IceHockeyOffBackAttributeEvaluator;
+import evaluators.icehockey.IceHockeyOffensiveAttributeEvaluator;
 import evaluators.icehockey.IceHockeyWingAttributeEvaluator;
 import formation.FormationTemplate;
 import formation.PositionTemplate;
@@ -51,7 +55,54 @@ public class IceHockeyFormationTemplatePanel
 					new PositionTemplate<>(
 							"Right Back",
 							new IceHockeyBackAttributeEvaluator(),
-							Side.RIGHT))));
+							Side.RIGHT))),
+		new FormationTemplate<>(
+				"Power Play",
+				Arrays.asList(
+					new PositionTemplate<>(
+							"Left Wing",
+							new IceHockeyWingAttributeEvaluator(),
+							Side.LEFT),
+					new PositionTemplate<>(
+							"Center",
+							new IceHockeyCenterAttributeEvaluator(),
+							Side.UNIVERSAL),
+					new PositionTemplate<>(
+							"Right Wing",
+							new IceHockeyWingAttributeEvaluator(),
+							Side.RIGHT),
+					new PositionTemplate<>(
+							"Left Back",
+							new IceHockeyOffensiveAttributeEvaluator(),
+							Side.LEFT),
+					new PositionTemplate<>(
+							"Right Back",
+							new IceHockeyOffensiveAttributeEvaluator(),
+							Side.RIGHT))),
+		new FormationTemplate<>(
+				"Box Play",
+				Arrays.asList(
+					new PositionTemplate<>(
+							"Left Wing",
+							new IceHockeyWingAttributeEvaluator(),
+							Side.LEFT,
+							true),
+					new PositionTemplate<>(
+							"Center",
+							new IceHockeyOffBackAttributeEvaluator(),
+							Side.UNIVERSAL),
+					new PositionTemplate<>(
+							"Right Wing",
+							new IceHockeyForwardAttributeEvaluator(),
+							Side.UNIVERSAL),
+					new PositionTemplate<>(
+							"Left Back",
+							new IceHockeyDefBackAttributeEvaluator(),
+							Side.UNIVERSAL),
+					new PositionTemplate<>(
+							"Right Back",
+							new IceHockeyDefBackAttributeEvaluator(),
+							Side.UNIVERSAL))));
 
 	private JCheckBox leftWingCheckBox;
 	private JCheckBox centerCheckBox;
