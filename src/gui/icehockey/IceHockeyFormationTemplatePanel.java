@@ -62,7 +62,7 @@ public class IceHockeyFormationTemplatePanel
 					new PositionTemplate<>(
 							"Left Wing",
 							new IceHockeyWingAttributeEvaluator(),
-							Side.LEFT),
+							Side.UNIVERSAL),
 					new PositionTemplate<>(
 							"Center",
 							new IceHockeyCenterAttributeEvaluator(),
@@ -70,15 +70,15 @@ public class IceHockeyFormationTemplatePanel
 					new PositionTemplate<>(
 							"Right Wing",
 							new IceHockeyWingAttributeEvaluator(),
-							Side.RIGHT),
+							Side.UNIVERSAL),
 					new PositionTemplate<>(
 							"Left Back",
-							new IceHockeyOffensiveAttributeEvaluator(),
-							Side.LEFT),
+							new IceHockeyOffBackAttributeEvaluator(),
+							Side.UNIVERSAL),
 					new PositionTemplate<>(
 							"Right Back",
 							new IceHockeyOffensiveAttributeEvaluator(),
-							Side.RIGHT))),
+							Side.UNIVERSAL))),
 		new FormationTemplate<>(
 				"Box Play",
 				Arrays.asList(
@@ -89,7 +89,7 @@ public class IceHockeyFormationTemplatePanel
 							true),
 					new PositionTemplate<>(
 							"Center",
-							new IceHockeyOffBackAttributeEvaluator(),
+							new IceHockeyForwardAttributeEvaluator(),
 							Side.UNIVERSAL),
 					new PositionTemplate<>(
 							"Right Wing",
