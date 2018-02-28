@@ -22,6 +22,7 @@ import gui.player.PlayerSelectedListener;
 import gui.player.PlayersParsedEvent;
 import gui.player.PlayersParsedListener;
 import gui.player.TrainingPlannerPanel;
+import gui.plot.PlotFrame;
 import model.Attributes;
 import model.Player;
 import model.Roster;
@@ -40,6 +41,7 @@ public class MainPanel<A extends Attributes>
 	private JButton addPlayersButton;
 	private JButton removePlayersButton;
 	private JButton createFormationsButton;
+	private JButton plotButton;
 	private JButton clearRosterButton;
 
 	private Roster<A> roster = new Roster<A>();
@@ -130,6 +132,21 @@ public class MainPanel<A extends Attributes>
 			}
 		});
 
+		plotButton = new JButton("Plot");
+		plotButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				SwingUtilities.invokeLater(new Runnable()
+				{
+					public void run()
+					{
+						new PlotFrame<A>(playerEvaluator, rosterPanel.getSelectedPlayers());
+					}
+				});
+			}
+		});
+
 		clearRosterButton = new JButton("Clear Roster");
 		clearRosterButton.addActionListener(new ActionListener()
 		{
@@ -143,6 +160,7 @@ public class MainPanel<A extends Attributes>
 		buttonPanel.add(addPlayersButton);
 		buttonPanel.add(removePlayersButton);
 		buttonPanel.add(createFormationsButton);
+		buttonPanel.add(plotButton);
 		buttonPanel.add(clearRosterButton);
 
 		setLayout(new BorderLayout());
