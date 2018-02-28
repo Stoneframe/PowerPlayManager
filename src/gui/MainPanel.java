@@ -132,7 +132,7 @@ public class MainPanel<A extends Attributes>
 			}
 		});
 
-		plotButton = new JButton("Plot");
+		plotButton = new JButton("Plot Growth");
 		plotButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
