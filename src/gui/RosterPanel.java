@@ -126,14 +126,13 @@ public class RosterPanel<A extends Attributes>
 
 	private Roster<A> roster;
 
-	public RosterPanel(PlayerEvaluator<A> playerEvaluator)
+	public RosterPanel(Roster<A> roster, PlayerEvaluator<A> playerEvaluator)
 	{
-		this.playerEvaluator = playerEvaluator;
-
-		roster = new Roster<A>();
-
 		rosterTableColumnModel = new RosterTableColumnModel();
 		rosterTableModel = new RosterTableModel();
+
+		this.roster = roster;
+		this.playerEvaluator = playerEvaluator;
 
 		KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK, false);
 
@@ -247,33 +246,6 @@ public class RosterPanel<A extends Attributes>
 
 		add(tablePanel, BorderLayout.CENTER);
 		add(controllerPanel, BorderLayout.SOUTH);
-	}
-
-	public void bind(Roster<A> roster)
-	{
-		if (this.roster != null)
-		{
-			for (Player<A> player : this.roster)
-			{
-				player.removePropertyChangedListener(rosterTableModel);
-			}
-
-			this.roster.removeCollectionChangedListener(rosterTableModel);
-		}
-
-		this.roster = roster;
-
-		if (this.roster != null)
-		{
-			for (Player<A> player : this.roster)
-			{
-				player.addPropertyChangedListener(rosterTableModel);
-			}
-
-			this.roster.addCollectionChangedListener(rosterTableModel);
-		}
-
-		rosterTableModel.fireTableDataChanged();
 	}
 
 	public void setPlayerSelectedListener(PlayerSelectedListener<A> listener)
