@@ -37,8 +37,9 @@ public class GroupPanel<A extends Attributes>
 		groupListModel = new DefaultListModel<>();
 
 		groupList = new JList<>(groupListModel);
-		groupList.setPreferredSize(new Dimension(300, 200));
+		groupList.setPreferredSize(new Dimension(250, 350));
 		groupList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		groupList.setBorder(BorderFactory.createEtchedBorder());
 		groupList.setCellRenderer(new DefaultListCellRenderer()
 		{
 			private static final long serialVersionUID = -7350967499676451807L;
@@ -74,7 +75,7 @@ public class GroupPanel<A extends Attributes>
 
 		add(groupList, BorderLayout.CENTER);
 
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
 		buttonPanel.add(addButton);
 		buttonPanel.add(removeButton);
