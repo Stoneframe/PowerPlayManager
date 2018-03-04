@@ -30,7 +30,7 @@ public class Roster<A extends Attributes>
 
 	public void add(Player<A> player)
 	{
-		for (Player<A> addedPlayer : getFilteredPlayersList())
+		for (Player<A> addedPlayer : players)
 		{
 			if (addedPlayer.equals(player))
 			{
@@ -42,10 +42,12 @@ public class Roster<A extends Attributes>
 
 		players.add(player);
 
-		fireCollectionChanged(
-			CollectionChangedEvent.ADDED,
-			getFilteredPlayersList().indexOf(player),
-			player);
+		int index = getFilteredPlayersList().indexOf(player);
+
+		if (index != -1)
+		{
+			fireCollectionChanged(CollectionChangedEvent.ADDED, index, player);
+		}
 	}
 
 	public void addAll(List<Player<A>> players)
@@ -62,7 +64,10 @@ public class Roster<A extends Attributes>
 
 		players.remove(player);
 
-		fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
+		if (index != -1)
+		{
+			fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
+		}
 	}
 
 	public boolean contains(Player<A> player)
@@ -126,25 +131,18 @@ public class Roster<A extends Attributes>
 
 	public void removeGroup(String name)
 	{
-		Group group = getGroup(name);
-
-		groups.remove(group);
-	}
-
-	public void setGroupEnabled(String name, boolean isEnabled)
-	{
-		Group group = getGroup(name);
-
-		group.isEnabled = isEnabled;
-	}
-
-	private Group getGroup(String name)
-	{
-		return groups
+		Group group = groups
 				.stream()
 				.filter(g -> g.name.equals(name))
 				.findFirst()
 				.orElse(null);
+
+		groups.remove(group);
+	}
+
+	public List<Group> getGroups()
+	{
+		return Collections.unmodifiableList(groups);
 	}
 
 	private List<Player<A>> getFilteredPlayersList()
@@ -185,6 +183,16 @@ public class Roster<A extends Attributes>
 		public void setEnabled(boolean isEnabled)
 		{
 			this.isEnabled = isEnabled;
+
+			for (Player<A> player : players)
+			{
+				int index = players.indexOf(player);
+
+				fireCollectionChanged(
+					isEnabled ? CollectionChangedEvent.ADDED : CollectionChangedEvent.REMOVED,
+					index,
+					player);
+			}
 		}
 	}
 }
