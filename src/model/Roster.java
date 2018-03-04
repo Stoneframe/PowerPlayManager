@@ -205,19 +205,13 @@ public class Roster<A extends Attributes>
 			{
 				if (isEnabled && ignored.contains(player))
 				{
-					ignored.remove(player);
-
-					int index = getFilteredPlayersList().indexOf(player);
-
-					fireCollectionChanged(CollectionChangedEvent.ADDED, index, player);
+					enablePlayer(player);
 				}
-				else if (!isEnabled && !ignored.contains(player))
+				else if (!isEnabled
+						&& !ignored.contains(player)
+						&& !isInEnabledGroup(player))
 				{
-					int index = getFilteredPlayersList().indexOf(player);
-
-					ignored.add(player);
-
-					fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
+					disablePlayer(player);
 				}
 			}
 		}
@@ -226,6 +220,29 @@ public class Roster<A extends Attributes>
 		public String toString()
 		{
 			return getName();
+		}
+
+		private boolean isInEnabledGroup(Player<A> player)
+		{
+			return groups.stream().anyMatch(g -> g.isEnabled && g.players.contains(player));
+		}
+
+		private void enablePlayer(Player<A> player)
+		{
+			ignored.remove(player);
+
+			int index = getFilteredPlayersList().indexOf(player);
+
+			fireCollectionChanged(CollectionChangedEvent.ADDED, index, player);
+		}
+
+		private void disablePlayer(Player<A> player)
+		{
+			int index = getFilteredPlayersList().indexOf(player);
+
+			ignored.add(player);
+
+			fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
 		}
 	}
 }
