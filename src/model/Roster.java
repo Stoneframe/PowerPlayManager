@@ -17,6 +17,7 @@ public class Roster<A extends Attributes>
 		Iterable<Player<A>>
 {
 	private List<Player<A>> players = new LinkedList<>();
+	private List<Player<A>> ignored = new LinkedList<>();
 	private List<Group> groups = new LinkedList<>();
 
 	public Roster()
@@ -124,9 +125,13 @@ public class Roster<A extends Attributes>
 		return getFilteredPlayersList().iterator();
 	}
 
-	public void addGroup(String name, List<Player<A>> players)
+	public Group addGroup(String name, List<Player<A>> players)
 	{
-		groups.add(new Group(name, players));
+		Group group = new Group(name, players);
+
+		groups.add(group);
+
+		return group;
 	}
 
 	public void removeGroup(String name)
@@ -138,6 +143,16 @@ public class Roster<A extends Attributes>
 				.orElse(null);
 
 		groups.remove(group);
+
+		if (group != null && !group.isEnabled)
+		{
+			for (Player<A> player : group.getPlayers())
+			{
+				int index = getFilteredPlayersList().indexOf(player);
+
+				fireCollectionChanged(CollectionChangedEvent.ADDED, index, player);
+			}
+		}
 	}
 
 	public List<Group> getGroups()
@@ -149,7 +164,7 @@ public class Roster<A extends Attributes>
 	{
 		return players
 				.stream()
-				.filter(p -> groups.stream().allMatch(g -> g.isEnabled || !g.players.contains(p)))
+				.filter(p -> !ignored.contains(p))
 				.collect(Collectors.toList());
 	}
 
@@ -182,17 +197,35 @@ public class Roster<A extends Attributes>
 
 		public void setEnabled(boolean isEnabled)
 		{
+			if (this.isEnabled == isEnabled) return;
+
 			this.isEnabled = isEnabled;
 
 			for (Player<A> player : players)
 			{
-				int index = players.indexOf(player);
+				if (isEnabled && ignored.contains(player))
+				{
+					ignored.remove(player);
 
-				fireCollectionChanged(
-					isEnabled ? CollectionChangedEvent.ADDED : CollectionChangedEvent.REMOVED,
-					index,
-					player);
+					int index = getFilteredPlayersList().indexOf(player);
+
+					fireCollectionChanged(CollectionChangedEvent.ADDED, index, player);
+				}
+				else if (!isEnabled && !ignored.contains(player))
+				{
+					int index = getFilteredPlayersList().indexOf(player);
+
+					ignored.add(player);
+
+					fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
+				}
 			}
+		}
+
+		@Override
+		public String toString()
+		{
+			return getName();
 		}
 	}
 }

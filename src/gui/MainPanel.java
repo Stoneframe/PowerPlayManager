@@ -8,8 +8,11 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import evaluators.PlayerEvaluator;
 import formation.FormationBuilder;
@@ -36,11 +39,13 @@ public class MainPanel<A extends Attributes>
 	private ParsePanel<A> parsePanel;
 	private RosterPanel<A> rosterPanel;
 	private PlayerPanel<A> playerPanel;
+	private GroupPanel<A> groupPanel;
 
 	private JPanel buttonPanel;
 	private JButton addPlayersButton;
 	private JButton removePlayersButton;
 	private JButton createFormationsButton;
+	private JButton groupsButton;
 	private JButton plotButton;
 	private JButton clearRosterButton;
 
@@ -69,10 +74,59 @@ public class MainPanel<A extends Attributes>
 			public void playerSelected(Object source, PlayerSelectedEvent<A> event)
 			{
 				playerPanel.bind(event.getPlayer());
+
+				groupPanel.setAddButtonEnabled(!rosterPanel.getSelectedPlayers().isEmpty());
 			}
 		});
 
 		playerPanel = new PlayerPanel<A>(attributesPanel, trainingPanel, playerEvaluator);
+
+		groupPanel = new GroupPanel<>();
+		groupPanel.addGroupListSelectionListener(new ListSelectionListener()
+		{
+			public void valueChanged(ListSelectionEvent e)
+			{
+				if (e.getValueIsAdjusting()) return;
+
+				for (Roster<A>.Group group : groupPanel.getGroups())
+				{
+					boolean isSelected = groupPanel.getSelectedGroups().contains(group);
+
+					group.setEnabled(isSelected);
+				}
+
+				groupPanel.setRemoveButtonEnabled(!groupPanel.getSelectedGroups().isEmpty());
+			}
+		});
+		groupPanel.addAddButtonActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				String name = JOptionPane.showInputDialog(groupPanel, "Name:");
+
+				if (name != null)
+				{
+					List<Player<A>> players = rosterPanel.getSelectedPlayers();
+
+					Roster<A>.Group group = roster.addGroup(name, players);
+
+					groupPanel.addGroup(group);
+				}
+			}
+		});
+		groupPanel.addRemoveButtonActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				List<Roster<A>.Group> selectedGroups = groupPanel.getSelectedGroups();
+
+				for (Roster<A>.Group group : selectedGroups)
+				{
+					roster.removeGroup(group.getName());
+					groupPanel.removeGroup(group);
+				}
+			}
+		});
 
 		addPlayersButton = new JButton("Add Players");
 		addPlayersButton.addActionListener(new ActionListener()
@@ -131,6 +185,26 @@ public class MainPanel<A extends Attributes>
 			}
 		});
 
+		groupsButton = new JButton("Groups");
+		groupsButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				SwingUtilities.invokeLater(new Runnable()
+				{
+					public void run()
+					{
+						JFrame groupFrame = new JFrame("Groups");
+
+						groupFrame.setContentPane(groupPanel);
+						groupFrame.pack();
+						groupFrame.setLocationRelativeTo(MainPanel.this);
+						groupFrame.setVisible(true);
+					}
+				});
+			}
+		});
+
 		plotButton = new JButton("Plot Growth");
 		plotButton.addActionListener(new ActionListener()
 		{
@@ -159,6 +233,7 @@ public class MainPanel<A extends Attributes>
 		buttonPanel.add(addPlayersButton);
 		buttonPanel.add(removePlayersButton);
 		buttonPanel.add(createFormationsButton);
+		buttonPanel.add(groupsButton);
 		buttonPanel.add(plotButton);
 		buttonPanel.add(clearRosterButton);
 

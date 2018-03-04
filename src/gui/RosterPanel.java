@@ -132,6 +132,9 @@ public class RosterPanel<A extends Attributes>
 		rosterTableModel = new RosterTableModel();
 
 		this.roster = roster;
+		this.roster.addCollectionChangedListener(rosterTableModel);
+		this.roster.forEach(p -> p.addPropertyChangedListener(rosterTableModel));
+
 		this.playerEvaluator = playerEvaluator;
 
 		KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK, false);
