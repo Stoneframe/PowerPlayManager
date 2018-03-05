@@ -64,14 +64,15 @@ public class PlotFrame<A extends Attributes>
 
 			int index = groups.indexOf(
 				groups
-						.stream()
-						.filter(g -> g.getPlayers().contains(player))
-						.findFirst()
-						.orElse(null));
+					.stream()
+					.filter(g -> g.getPlayers().contains(player))
+					.findFirst()
+					.orElse(null));
 
-			Color color = colors[index];
-
-			renderer.setSeriesPaint(i, color);
+			if (index != -1)
+			{
+				renderer.setSeriesPaint(i, colors[index]);
+			}
 		}
 
 		XYPlot plot = chart.getXYPlot();
