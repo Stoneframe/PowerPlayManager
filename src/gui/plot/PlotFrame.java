@@ -1,5 +1,6 @@
 package gui.plot;
 
+import java.awt.Color;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -19,15 +20,24 @@ import org.jfree.data.xy.XYSeriesCollection;
 import evaluators.PlayerEvaluator;
 import model.Attributes;
 import model.Player;
+import model.Roster;
 
 public class PlotFrame<A extends Attributes>
 	extends JFrame
 {
 	private static final long serialVersionUID = 8016338235547425768L;
 
+	private Color[] colors = new Color[]
+	{
+			Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE
+	};
+
 	private PlayerEvaluator<A> playerEvaluator;
 
-	public PlotFrame(PlayerEvaluator<A> playerEvaluator, List<Player<A>> players)
+	public PlotFrame(
+			PlayerEvaluator<A> playerEvaluator,
+			List<Player<A>> players,
+			List<Roster<A>.Group> groups)
 	{
 		super("Plot");
 
@@ -47,6 +57,22 @@ public class PlotFrame<A extends Attributes>
 
 		XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
 		renderer.setToolTipGenerator(new StandardXYToolTipGenerator());
+
+		for (int i = 0; i < players.size(); i++)
+		{
+			Player<A> player = players.get(i);
+
+			int index = groups.indexOf(
+				groups
+						.stream()
+						.filter(g -> g.getPlayers().contains(player))
+						.findFirst()
+						.orElse(null));
+
+			Color color = colors[index];
+
+			renderer.setSeriesPaint(i, color);
+		}
 
 		XYPlot plot = chart.getXYPlot();
 		plot.getDomainAxis().setStandardTickUnits(NumberAxis.createIntegerTickUnits());

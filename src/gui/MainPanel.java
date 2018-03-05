@@ -214,7 +214,10 @@ public class MainPanel<A extends Attributes>
 				{
 					public void run()
 					{
-						new PlotFrame<A>(playerEvaluator, rosterPanel.getSelectedPlayers());
+						new PlotFrame<A>(
+								playerEvaluator,
+								rosterPanel.getSelectedPlayers(),
+								groupPanel.getSelectedGroups());
 					}
 				});
 			}
