@@ -160,7 +160,6 @@ public class RosterPanel<A extends Attributes>
 			});
 		rosterTable.setColumnModel(rosterTableColumnModel);
 		rosterTable.setModel(rosterTableModel);
-		rosterTable.getColumnModel().getColumn(0).setPreferredWidth(200);
 		rosterTable.registerKeyboardAction(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -177,8 +176,8 @@ public class RosterPanel<A extends Attributes>
 							player.getName()));
 
 					Object value = columnDatas
-							.get(rosterTable.getSelectedColumn())
-							.getValue(player);
+						.get(rosterTable.getSelectedColumn())
+						.getValue(player);
 
 					if (value instanceof Double)
 					{
@@ -191,9 +190,9 @@ public class RosterPanel<A extends Attributes>
 				StringSelection selection = new StringSelection(builder.toString());
 
 				Toolkit
-						.getDefaultToolkit()
-						.getSystemClipboard()
-						.setContents(selection, selection);
+					.getDefaultToolkit()
+					.getSystemClipboard()
+					.setContents(selection, selection);
 			}
 		}, "Copy", copy, JComponent.WHEN_FOCUSED);
 
@@ -308,8 +307,8 @@ public class RosterPanel<A extends Attributes>
 			for (Player<A> player : getSelectedPlayers())
 			{
 				Object object = columnDatas
-						.get(rosterTable.getSelectedColumn())
-						.getValue(player);
+					.get(rosterTable.getSelectedColumn())
+					.getValue(player);
 
 				if (object instanceof Integer || object instanceof Double)
 				{
@@ -551,8 +550,8 @@ public class RosterPanel<A extends Attributes>
 				private boolean isHighQualityPlayer(Player<A> player)
 				{
 					double bestPositionQuality = playerEvaluator
-							.getBestPositionQuality(player)
-							.getValue();
+						.getBestPositionQuality(player)
+						.getValue();
 
 					return bestPositionQuality > getHighQualityLimit();
 				}
@@ -560,8 +559,8 @@ public class RosterPanel<A extends Attributes>
 				private boolean isLowQualityPlayer(Player<A> player)
 				{
 					double bestPositionQuality = playerEvaluator
-							.getBestPositionQuality(player)
-							.getValue();
+						.getBestPositionQuality(player)
+						.getValue();
 
 					return bestPositionQuality < getLowQualityLimit();
 				}
@@ -569,16 +568,21 @@ public class RosterPanel<A extends Attributes>
 				private boolean isSymmetricPlayer(Player<A> player)
 				{
 					String bestRatingPosition = playerEvaluator
-							.getBestPositionRating(player)
-							.getName();
+						.getBestPositionRating(player)
+						.getName();
 
 					String bestQualityPosition = playerEvaluator
-							.getBestPositionQuality(player)
-							.getName();
+						.getBestPositionQuality(player)
+						.getName();
 
 					return bestRatingPosition.equals(bestQualityPosition);
 				}
 			});
+
+			if (columnIndex == 0)
+			{
+				column.setPreferredWidth(200);
+			}
 
 			return column;
 		}

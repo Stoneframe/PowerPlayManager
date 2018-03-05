@@ -26,7 +26,7 @@ public class Roster<A extends Attributes>
 
 	private Roster(List<Player<A>> players)
 	{
-		this.getFilteredPlayersList().addAll(players);
+		this.players.addAll(players);
 	}
 
 	public void add(Player<A> player)
@@ -64,6 +64,7 @@ public class Roster<A extends Attributes>
 		int index = getFilteredPlayersList().indexOf(player);
 
 		players.remove(player);
+		groups.forEach(g -> g.players.remove(player));
 
 		if (index != -1)
 		{
@@ -137,10 +138,10 @@ public class Roster<A extends Attributes>
 	public void removeGroup(String name)
 	{
 		Group group = groups
-				.stream()
-				.filter(g -> g.name.equals(name))
-				.findFirst()
-				.orElse(null);
+			.stream()
+			.filter(g -> g.name.equals(name))
+			.findFirst()
+			.orElse(null);
 
 		groups.remove(group);
 
@@ -163,9 +164,9 @@ public class Roster<A extends Attributes>
 	private List<Player<A>> getFilteredPlayersList()
 	{
 		return players
-				.stream()
-				.filter(p -> !ignored.contains(p))
-				.collect(Collectors.toList());
+			.stream()
+			.filter(p -> !ignored.contains(p))
+			.collect(Collectors.toList());
 	}
 
 	public class Group
