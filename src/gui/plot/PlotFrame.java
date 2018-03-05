@@ -1,6 +1,7 @@
 package gui.plot;
 
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -10,6 +11,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import org.jfree.chart.plot.DefaultDrawingSupplier;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -29,7 +31,16 @@ public class PlotFrame<A extends Attributes>
 
 	private Color[] colors = new Color[]
 	{
-			Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE
+			Color.RED,
+			Color.BLUE,
+			Color.GREEN,
+			Color.ORANGE,
+			Color.BLACK,
+			Color.MAGENTA,
+			Color.PINK,
+			Color.GRAY,
+			Color.YELLOW,
+			Color.CYAN,
 	};
 
 	private PlayerEvaluator<A> playerEvaluator;
@@ -58,6 +69,9 @@ public class PlotFrame<A extends Attributes>
 		XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
 		renderer.setToolTipGenerator(new StandardXYToolTipGenerator());
 
+		Color[] groupColors = Arrays.copyOfRange(colors, 0, groups.size());
+		Color[] individualColors = Arrays.copyOfRange(colors, groups.size(), colors.length);
+
 		for (int i = 0; i < players.size(); i++)
 		{
 			Player<A> player = players.get(i);
@@ -71,7 +85,7 @@ public class PlotFrame<A extends Attributes>
 
 			if (index != -1)
 			{
-				renderer.setSeriesPaint(i, colors[index]);
+				renderer.setSeriesPaint(i, groupColors[index]);
 			}
 		}
 
@@ -80,6 +94,13 @@ public class PlotFrame<A extends Attributes>
 		plot.getDomainAxis().setUpperBound(15);
 		plot.getRangeAxis().setLowerBound(0);
 		plot.setRenderer(renderer);
+		plot.setDrawingSupplier(
+			new DefaultDrawingSupplier(
+					individualColors,
+					DefaultDrawingSupplier.DEFAULT_OUTLINE_PAINT_SEQUENCE,
+					DefaultDrawingSupplier.DEFAULT_STROKE_SEQUENCE,
+					DefaultDrawingSupplier.DEFAULT_OUTLINE_STROKE_SEQUENCE,
+					DefaultDrawingSupplier.DEFAULT_SHAPE_SEQUENCE));
 
 		ChartPanel chartPanel = new ChartPanel(chart);
 
