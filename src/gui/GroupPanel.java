@@ -38,7 +38,7 @@ public class GroupPanel<A extends Attributes>
 
 		groupList = new JList<>(groupListModel);
 		groupList.setPreferredSize(new Dimension(250, 350));
-		groupList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		groupList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		groupList.setBorder(BorderFactory.createEtchedBorder());
 		groupList.setCellRenderer(new DefaultListCellRenderer()
 		{
