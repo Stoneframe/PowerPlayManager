@@ -1,15 +1,14 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -40,28 +39,6 @@ public class GroupPanel<A extends Attributes>
 		groupList.setPreferredSize(new Dimension(250, 350));
 		groupList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		groupList.setBorder(BorderFactory.createEtchedBorder());
-		groupList.setCellRenderer(new DefaultListCellRenderer()
-		{
-			private static final long serialVersionUID = -7350967499676451807L;
-
-			@Override
-			public Component getListCellRendererComponent(
-					JList<?> list,
-					Object value,
-					int index,
-					boolean isSelected,
-					boolean cellHasFocus)
-			{
-				Roster<?>.Group group = (Roster<?>.Group)value;
-
-				return super.getListCellRendererComponent(
-					list,
-					value,
-					index,
-					group.isEnabled(),
-					cellHasFocus);
-			}
-		});
 
 		addButton = new JButton("Add...");
 		addButton.setEnabled(false);
@@ -86,6 +63,17 @@ public class GroupPanel<A extends Attributes>
 	public void addGroup(Roster<A>.Group group)
 	{
 		groupListModel.addElement(group);
+
+		if (group.isEnabled())
+		{
+			final int N = groupList.getSelectedIndices().length;
+
+			int[] indices = Arrays.copyOf(groupList.getSelectedIndices(), N + 1);
+
+			indices[N] = groupListModel.indexOf(group);
+
+			groupList.setSelectedIndices(indices);
+		}
 	}
 
 	public void removeGroup(Roster<A>.Group group)
