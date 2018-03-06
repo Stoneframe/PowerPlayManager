@@ -145,13 +145,15 @@ public class Roster<A extends Attributes>
 
 		groups.remove(group);
 
-		if (group != null && !group.isEnabled)
+		for (Player<A> player : group.players)
 		{
-			for (Player<A> player : group.getPlayers())
+			if (shouldBeEnabled(player) && isDisabled(player))
 			{
-				int index = getFilteredPlayersList().indexOf(player);
-
-				fireCollectionChanged(CollectionChangedEvent.ADDED, index, player);
+				enablePlayer(player);
+			}
+			else if (shouldBeDisabled(player) && isEnabled(player))
+			{
+				disablePlayer(player);
 			}
 		}
 	}
@@ -165,8 +167,56 @@ public class Roster<A extends Attributes>
 	{
 		return players
 			.stream()
-			.filter(p -> !ignored.contains(p))
+			.filter(p -> isEnabled(p))
 			.collect(Collectors.toList());
+	}
+
+	private boolean shouldBeEnabled(Player<A> player)
+	{
+		return !isInGroup(player) || isInEnabledGroup(player);
+	}
+
+	private boolean shouldBeDisabled(Player<A> player)
+	{
+		return isInGroup(player) && !isInEnabledGroup(player);
+	}
+
+	private boolean isInGroup(Player<A> player)
+	{
+		return groups.stream().anyMatch(g -> g.players.contains(player));
+	}
+
+	private boolean isInEnabledGroup(Player<A> player)
+	{
+		return groups.stream().anyMatch(g -> g.isEnabled && g.players.contains(player));
+	}
+
+	private boolean isEnabled(Player<A> player)
+	{
+		return !ignored.contains(player);
+	}
+
+	private boolean isDisabled(Player<A> player)
+	{
+		return ignored.contains(player);
+	}
+
+	private void enablePlayer(Player<A> player)
+	{
+		ignored.remove(player);
+
+		int index = getFilteredPlayersList().indexOf(player);
+
+		fireCollectionChanged(CollectionChangedEvent.ADDED, index, player);
+	}
+
+	private void disablePlayer(Player<A> player)
+	{
+		int index = getFilteredPlayersList().indexOf(player);
+
+		ignored.add(player);
+
+		fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
 	}
 
 	public class Group
@@ -221,29 +271,6 @@ public class Roster<A extends Attributes>
 		public String toString()
 		{
 			return getName();
-		}
-
-		private boolean isInEnabledGroup(Player<A> player)
-		{
-			return groups.stream().anyMatch(g -> g.isEnabled && g.players.contains(player));
-		}
-
-		private void enablePlayer(Player<A> player)
-		{
-			ignored.remove(player);
-
-			int index = getFilteredPlayersList().indexOf(player);
-
-			fireCollectionChanged(CollectionChangedEvent.ADDED, index, player);
-		}
-
-		private void disablePlayer(Player<A> player)
-		{
-			int index = getFilteredPlayersList().indexOf(player);
-
-			ignored.add(player);
-
-			fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
 		}
 	}
 }
