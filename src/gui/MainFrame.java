@@ -34,6 +34,7 @@ import parsers.players.handball.HandballOverviewPlayersParser;
 import parsers.players.handball.HandballPractisePlayersParser;
 import parsers.players.handball.HandballPractiseProPlayersParser;
 import parsers.players.handball.HandballProfilePlayersParser;
+import parsers.players.icehockey.IceHockeyFormationPlayersParser;
 import parsers.players.icehockey.IceHockeyMarketPlayersParser;
 import parsers.players.icehockey.IceHockeyOverviewPlayersParser;
 import parsers.players.icehockey.IceHockeyPractiseProPlayersParser;
@@ -82,7 +83,8 @@ public class MainFrame
 					new IceHockeyProfilePlayersParser(),
 					new IceHockeyMarketPlayersParser(),
 					new IceHockeyOverviewPlayersParser(),
-					new IceHockeyPractiseProPlayersParser()),
+					new IceHockeyPractiseProPlayersParser(),
+					new IceHockeyFormationPlayersParser()),
 				new IceHockeyPlayerEvaluator(
 						new Settings(new SettingStorage("icehockey")),
 						new FacilityEvaluator(),
