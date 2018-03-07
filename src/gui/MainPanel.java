@@ -25,7 +25,7 @@ import gui.player.PlayerSelectedListener;
 import gui.player.PlayersParsedEvent;
 import gui.player.PlayersParsedListener;
 import gui.player.TrainingPlannerPanel;
-import gui.plot.PlotFrame;
+import gui.plot.PlotPanel;
 import model.Attributes;
 import model.Player;
 import model.Roster;
@@ -214,10 +214,16 @@ public class MainPanel<A extends Attributes>
 				{
 					public void run()
 					{
-						new PlotFrame<A>(
-								playerEvaluator,
-								rosterPanel.getSelectedPlayers(),
-								groupPanel.getSelectedGroups());
+						JFrame plotFrame = new JFrame("Plot");
+
+						plotFrame.setContentPane(
+							new PlotPanel<A>(
+									playerEvaluator,
+									rosterPanel.getSelectedPlayers(),
+									groupPanel.getSelectedGroups()));
+						plotFrame.pack();
+						plotFrame.setLocationRelativeTo(MainPanel.this);
+						plotFrame.setVisible(true);
 					}
 				});
 			}

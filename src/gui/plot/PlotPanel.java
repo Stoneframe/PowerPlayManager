@@ -1,10 +1,11 @@
 package gui.plot;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -24,8 +25,8 @@ import model.Attributes;
 import model.Player;
 import model.Roster;
 
-public class PlotFrame<A extends Attributes>
-	extends JFrame
+public class PlotPanel<A extends Attributes>
+	extends JPanel
 {
 	private static final long serialVersionUID = 8016338235547425768L;
 
@@ -45,13 +46,11 @@ public class PlotFrame<A extends Attributes>
 
 	private PlayerEvaluator<A> playerEvaluator;
 
-	public PlotFrame(
+	public PlotPanel(
 			PlayerEvaluator<A> playerEvaluator,
 			List<Player<A>> players,
 			List<Roster<A>.Group> groups)
 	{
-		super("Plot");
-
 		this.playerEvaluator = playerEvaluator;
 
 		XYDataset dataset = createDataset(players);
@@ -104,9 +103,9 @@ public class PlotFrame<A extends Attributes>
 
 		ChartPanel chartPanel = new ChartPanel(chart);
 
-		setContentPane(chartPanel);
-		pack();
-		setVisible(true);
+		setLayout(new BorderLayout());
+
+		add(chartPanel, BorderLayout.CENTER);
 	}
 
 	private XYDataset createDataset(List<Player<A>> players)
