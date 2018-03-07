@@ -198,7 +198,7 @@ public class IceHockeyAttributes
 	@Override
 	public double getAverageQuality()
 	{
-		return (qGoa + qDef + qOff + qSho + qPas + qTec + qAgr) / 8d;
+		return (qGoa + qDef + qOff + qSho + qPas + qTec + qAgr) / 7d;
 	}
 
 	@Override
