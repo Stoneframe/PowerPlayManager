@@ -39,9 +39,9 @@ public class PlayerEvaluator<A extends Attributes>
 	public List<AttributeEvaluator<A>> getAttributeEvaluators(boolean ignoreMacroPosition)
 	{
 		return attributeEvaluators
-				.stream()
-				.filter(ev -> !(ignoreMacroPosition && ev.isMacroEvaluator()))
-				.collect(Collectors.toList());
+			.stream()
+			.filter(ev -> !(ignoreMacroPosition && ev.isMacroEvaluator()))
+			.collect(Collectors.toList());
 	}
 
 	public void setAttributeEvaluators(List<AttributeEvaluator<A>> attributeEvaluators)
@@ -72,17 +72,17 @@ public class PlayerEvaluator<A extends Attributes>
 	public AttributeEvaluator<A> getBestEvaluatorByRating(A attributes)
 	{
 		return getAttributeEvaluators(true)
-				.stream()
-				.max(new RatingEvaluatorComparator<A>(attributes)::compare)
-				.get();
+			.stream()
+			.max(new RatingEvaluatorComparator<A>(attributes)::compare)
+			.get();
 	}
 
 	public AttributeEvaluator<A> getBestEvaluatorByQuality(A attributes)
 	{
 		return getAttributeEvaluators(true)
-				.stream()
-				.max(new QualityEvaluatorComparator<A>(attributes)::compare)
-				.get();
+			.stream()
+			.max(new QualityEvaluatorComparator<A>(attributes)::compare)
+			.get();
 	}
 
 	public PositionNameValue getBestPositionRating(Player<A> player)
@@ -126,17 +126,16 @@ public class PlayerEvaluator<A extends Attributes>
 	private double getTrainingFacilityEffectivness()
 	{
 		double facilityEffectivness = facilityEvaluator
-				.getOverallEffectivness(getFacilityLevel(), getStaffEffectivness());
+			.getOverallEffectivness(getFacilityLevel(), getStaffEffectivness());
 
 		return (40 + facilityEffectivness) / 145;
 	}
 
 	private double getEstimatedPlayerTraining(Player<A> player)
 	{
-		return -0.02278 * player.getAge()
-				+ 0.1291 * player.getCL()
-				- 0.0003325 * player.getAttributes().getAverageQuality()
-				+ 0.009671 * getBestPositionQuality(player).getValue();
+		return -0.0228285 * player.getAge()
+				+ 0.1290817 * player.getCL()
+				+ 0.0093809 * getBestPositionQuality(player).getValue();
 	}
 
 	private double F(int a, int b)
