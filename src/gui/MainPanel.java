@@ -36,10 +36,13 @@ public class MainPanel<A extends Attributes>
 {
 	private static final long serialVersionUID = -8438576029794021570L;
 
-	private ParsePanel<A> parsePanel;
 	private RosterPanel<A> rosterPanel;
 	private PlayerPanel<A> playerPanel;
+	private ParsePanel<A> parsePanel;
 	private GroupPanel<A> groupPanel;
+
+	private JFrame parseFrame;
+	private JFrame groupFrame;
 
 	private JPanel buttonPanel;
 	private JButton addPlayersButton;
@@ -59,15 +62,6 @@ public class MainPanel<A extends Attributes>
 			List<PlayersParser<A>> parsers,
 			PlayerEvaluator<A> playerEvaluator)
 	{
-		parsePanel = new ParsePanel<A>(parsers);
-		parsePanel.setPlayersParseListener(new PlayersParsedListener<A>()
-		{
-			public void playersParsed(Object source, PlayersParsedEvent<A> event)
-			{
-				roster.addAll(event.getPlayers());
-			}
-		});
-
 		rosterPanel = new RosterPanel<A>(roster, playerEvaluator);
 		rosterPanel.setPlayerSelectedListener(new PlayerSelectedListener<A>()
 		{
@@ -80,6 +74,15 @@ public class MainPanel<A extends Attributes>
 		});
 
 		playerPanel = new PlayerPanel<A>(attributesPanel, trainingPanel, playerEvaluator);
+
+		parsePanel = new ParsePanel<A>(parsers);
+		parsePanel.setPlayersParseListener(new PlayersParsedListener<A>()
+		{
+			public void playersParsed(Object source, PlayersParsedEvent<A> event)
+			{
+				roster.addAll(event.getPlayers());
+			}
+		});
 
 		groupPanel = new GroupPanel<>();
 		groupPanel.addGroupListSelectionListener(new ListSelectionListener()
@@ -128,6 +131,16 @@ public class MainPanel<A extends Attributes>
 			}
 		});
 
+		parseFrame = new JFrame("Add Players");
+		parseFrame.setContentPane(parsePanel);
+		parseFrame.pack();
+		parseFrame.setLocationRelativeTo(this);
+
+		groupFrame = new JFrame("Groups");
+		groupFrame.setContentPane(groupPanel);
+		groupFrame.pack();
+		groupFrame.setLocationRelativeTo(this);
+
 		addPlayersButton = new JButton("Add Players");
 		addPlayersButton.addActionListener(new ActionListener()
 		{
@@ -137,12 +150,8 @@ public class MainPanel<A extends Attributes>
 				{
 					public void run()
 					{
-						JFrame parseFrame = new JFrame("Add Players");
-
-						parseFrame.setContentPane(parsePanel);
-						parseFrame.pack();
-						parseFrame.setLocationRelativeTo(MainPanel.this);
 						parseFrame.setVisible(true);
+						parseFrame.toFront();
 					}
 				});
 			}
@@ -194,12 +203,8 @@ public class MainPanel<A extends Attributes>
 				{
 					public void run()
 					{
-						JFrame groupFrame = new JFrame("Groups");
-
-						groupFrame.setContentPane(groupPanel);
-						groupFrame.pack();
-						groupFrame.setLocationRelativeTo(MainPanel.this);
 						groupFrame.setVisible(true);
+						groupFrame.toFront();
 					}
 				});
 			}
