@@ -104,6 +104,10 @@ public class RosterPanel<A extends Attributes>
 		new ColumnData(
 				"Age 30",
 				p -> playerEvaluator.calculateRatingForAge(p, 30),
+				v -> String.format("%.0f", v)),
+		new ColumnData(
+				"Max",
+				p -> playerEvaluator.calculateHighestPossibleRating(p),
 				v -> String.format("%.0f", v)));
 
 	private JTextField facilityLevelTextField;

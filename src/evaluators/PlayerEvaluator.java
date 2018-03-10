@@ -109,6 +109,27 @@ public class PlayerEvaluator<A extends Attributes>
 				+ player.getAttributes().getTotalRating();
 	}
 
+	public double calculateHighestPossibleRating(Player<A> player)
+	{
+		double max = Double.MIN_VALUE;
+
+		for (int i = player.getAge(); i < 40; i++)
+		{
+			double next = calculateRatingForAge(player, i);
+
+			if (next > max)
+			{
+				max = next;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		return max;
+	}
+
 	private double getTrainingValue(Player<A> player)
 	{
 		double training = player.getTraining() != 0
