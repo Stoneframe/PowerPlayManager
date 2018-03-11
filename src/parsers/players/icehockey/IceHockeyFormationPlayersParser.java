@@ -40,7 +40,6 @@ public class IceHockeyFormationPlayersParser
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
 			throw new ParseException(e);
 		}
 	}
@@ -50,17 +49,17 @@ public class IceHockeyFormationPlayersParser
 		String[] columns = textToParse.split("\t");
 
 		return new IceHockeyPlayer(
-				parseName(columns[1]),
-				parseAge(columns[2]),
+				parseName(columns[1].trim()),
+				parseAge(columns[2].trim()),
 				0,
-				parseSide(columns[3]),
+				parseSide(columns[3].trim()),
 				parseAttributes(Arrays.copyOfRange(columns, 4, 12)),
 				0);
 	}
 
 	private static String parseName(String textToParse)
 	{
-		String[] split = textToParse.trim().split(" ");
+		String[] split = textToParse.split(" ");
 
 		return String.format("%s %s", split[1], split[2]);
 	}

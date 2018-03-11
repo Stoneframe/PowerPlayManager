@@ -134,12 +134,10 @@ public class MainPanel<A extends Attributes>
 		parseFrame = new JFrame("Add Players");
 		parseFrame.setContentPane(parsePanel);
 		parseFrame.pack();
-		parseFrame.setLocationRelativeTo(this);
 
 		groupFrame = new JFrame("Groups");
 		groupFrame.setContentPane(groupPanel);
 		groupFrame.pack();
-		groupFrame.setLocationRelativeTo(this);
 
 		addPlayersButton = new JButton("Add Players");
 		addPlayersButton.addActionListener(new ActionListener()
@@ -150,8 +148,15 @@ public class MainPanel<A extends Attributes>
 				{
 					public void run()
 					{
-						parseFrame.setVisible(true);
-						parseFrame.toFront();
+						if (parseFrame.isVisible())
+						{
+							parseFrame.toFront();
+						}
+						else
+						{
+							parseFrame.setLocationRelativeTo(MainPanel.this);
+							parseFrame.setVisible(true);
+						}
 					}
 				});
 			}
@@ -203,8 +208,15 @@ public class MainPanel<A extends Attributes>
 				{
 					public void run()
 					{
-						groupFrame.setVisible(true);
-						groupFrame.toFront();
+						if (groupFrame.isVisible())
+						{
+							groupFrame.toFront();
+						}
+						else
+						{
+							groupFrame.setLocationRelativeTo(MainPanel.this);
+							groupFrame.setVisible(true);
+						}
 					}
 				});
 			}
