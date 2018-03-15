@@ -110,7 +110,7 @@ public class PlayerEvaluator<A extends Attributes>
 
 		return F(player.getAge(), age, x -> f(x * modifier))
 				* DAYS_PER_SEASON
-				* getTrainingValue(player)
+				* getTrainingValue(player, modifier)
 				+ player.getAttributes().getTotalRating();
 	}
 
@@ -135,13 +135,13 @@ public class PlayerEvaluator<A extends Attributes>
 		return max;
 	}
 
-	private double getTrainingValue(Player<A> player)
+	private double getTrainingValue(Player<A> player, double modifier)
 	{
 		double training = player.getTraining() != 0
 				? player.getTraining()
 				: calculatePlayerTraining(player);
 
-		return training / f(player.getAge());
+		return training / f(player.getAge() * modifier);
 	}
 
 	private double calculatePlayerTraining(Player<A> player)
