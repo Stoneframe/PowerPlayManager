@@ -1,6 +1,7 @@
 package evaluators;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import comparators.QualityEvaluatorComparator;
@@ -105,7 +106,11 @@ public class PlayerEvaluator<A extends Attributes>
 
 	public double calculateRatingForAge(Player<A> player, int age)
 	{
-		return F(player.getAge(), age) * DAYS_PER_SEASON * getTrainingValue(player)
+		double modifier = getCLModifier(player.getCL(), player.getAge());
+
+		return F(player.getAge(), age, x -> f(x * modifier))
+				* DAYS_PER_SEASON
+				* getTrainingValue(player)
 				+ player.getAttributes().getTotalRating();
 	}
 
@@ -159,7 +164,30 @@ public class PlayerEvaluator<A extends Attributes>
 				+ 0.0093809 * getBestPositionQuality(player).getValue();
 	}
 
-	private double F(int a, int b)
+	private static double getCLModifier(int cl, int age)
+	{
+		Function<Double, Double> calc = x -> 1.145 + (0.915 - 1.145) * x;
+
+		switch (cl)
+		{
+			case 6:
+				return calc.apply((age - 12d) / 6d);
+			case 5:
+				return calc.apply((age - 15d) / 7d);
+			case 4:
+				return calc.apply((age - 17d) / 9d);
+			case 3:
+				return calc.apply((age - 21d) / 9d);
+			case 2:
+				return calc.apply((age - 23d) / 10d);
+			case 1:
+				return calc.apply((age - 25d) / 10d);
+			default:
+				return 0;
+		}
+	}
+
+	private double F(int a, int b, Function<Double, Double> f)
 	{
 		boolean invert = false;
 
@@ -179,15 +207,15 @@ public class PlayerEvaluator<A extends Attributes>
 
 		double sum = 0.5 * f(a) + 0.5 * f(b);
 
-		for (int x = a + 1; x < b; x++)
+		for (double x = a + 1; x < b; x++)
 		{
-			sum += f(x);
+			sum += f.apply(x);
 		}
 
 		return invert ? -sum : sum;
 	}
 
-	private double f(int x)
+	private double f(double x)
 	{
 		return a * Math.pow(x, 2) + b * Math.pow(x, 1) + c;
 	}
