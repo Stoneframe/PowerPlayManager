@@ -39,7 +39,6 @@ public class PlotPanel<A extends Attributes>
 			Color.BLACK,
 			Color.MAGENTA,
 			Color.PINK,
-			Color.GRAY,
 			Color.YELLOW,
 			Color.CYAN,
 	};
