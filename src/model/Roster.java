@@ -135,13 +135,9 @@ public class Roster<A extends Attributes>
 		return group;
 	}
 
-	public void removeGroup(String name)
+	public void removeGroup(Group group)
 	{
-		Group group = groups
-			.stream()
-			.filter(g -> g.name.equals(name))
-			.findFirst()
-			.orElse(null);
+		if (!groups.contains(group)) return;
 
 		groups.remove(group);
 

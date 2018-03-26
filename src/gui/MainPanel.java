@@ -125,7 +125,7 @@ public class MainPanel<A extends Attributes>
 
 				for (Roster<A>.Group group : selectedGroups)
 				{
-					roster.removeGroup(group.getName());
+					roster.removeGroup(group);
 					groupPanel.removeGroup(group);
 				}
 			}
