@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
@@ -39,6 +42,26 @@ public class GroupPanel<A extends Attributes>
 		groupList.setPreferredSize(new Dimension(250, 350));
 		groupList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		groupList.setBorder(BorderFactory.createEtchedBorder());
+		groupList.addMouseListener(new MouseAdapter()
+		{
+			public void mouseClicked(MouseEvent evt)
+			{
+				if (evt.getClickCount() == 2)
+				{
+					Roster<A>.Group group = groupList.getSelectedValue();
+
+					String newName = JOptionPane
+						.showInputDialog(GroupPanel.this, "New Name:", group.getName());
+
+					if (newName != null)
+					{
+						group.setName(newName);
+						
+						groupList.updateUI();
+					}
+				}
+			}
+		});
 
 		addButton = new JButton("Add...");
 		addButton.setEnabled(false);

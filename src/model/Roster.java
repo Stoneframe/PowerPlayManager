@@ -232,6 +232,11 @@ public class Roster<A extends Attributes>
 			return name;
 		}
 
+		public void setName(String name)
+		{
+			this.name = name;
+		}
+
 		public List<Player<A>> getPlayers()
 		{
 			return players;
