@@ -88,7 +88,7 @@ public class GroupPanel<A extends Attributes>
 		removeButton = new JButton("Remove");
 		removeButton.setEnabled(false);
 
-		moveUpButton = new JButton("▲");
+		moveUpButton = new JButton("\u2191");
 		moveUpButton.setEnabled(false);
 		moveUpButton.addActionListener(new ActionListener()
 		{
@@ -103,7 +103,7 @@ public class GroupPanel<A extends Attributes>
 			}
 		});
 
-		moveDownButton = new JButton("▼");
+		moveDownButton = new JButton("\u2193");
 		moveDownButton.setEnabled(false);
 		moveDownButton.addActionListener(new ActionListener()
 		{
