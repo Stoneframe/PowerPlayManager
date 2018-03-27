@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -29,6 +30,9 @@ public class GroupPanel<A extends Attributes>
 	extends JPanel
 {
 	private static final long serialVersionUID = 2369854244820039552L;
+
+	private static final Function<Integer, Integer> UP = index -> index + 1;
+	private static final Function<Integer, Integer> DOWN = index -> index - 1;
 
 	private DefaultListModel<Roster<A>.Group> groupListModel;
 
@@ -94,12 +98,7 @@ public class GroupPanel<A extends Attributes>
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				int index = groupList.getSelectedIndex();
-
-				Roster<A>.Group group = groupListModel.remove(index);
-				groupListModel.add(index - 1, group);
-
-				addGroupToSelectedGroups(group);
+				moveSelectedGroup(UP);
 			}
 		});
 
@@ -109,12 +108,7 @@ public class GroupPanel<A extends Attributes>
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				int index = groupList.getSelectedIndex();
-
-				Roster<A>.Group group = groupListModel.remove(index);
-				groupListModel.add(index + 1, group);
-
-				addGroupToSelectedGroups(group);
+				moveSelectedGroup(DOWN);
 			}
 		});
 
@@ -185,6 +179,16 @@ public class GroupPanel<A extends Attributes>
 	public void setRemoveButtonEnabled(boolean isEnabled)
 	{
 		removeButton.setEnabled(isEnabled);
+	}
+
+	private void moveSelectedGroup(Function<Integer, Integer> direction)
+	{
+		int index = groupList.getSelectedIndex();
+
+		Roster<A>.Group group = groupListModel.remove(index);
+		groupListModel.add(direction.apply(index), group);
+
+		addGroupToSelectedGroups(group);
 	}
 
 	private void addGroupToSelectedGroups(Roster<A>.Group group)
