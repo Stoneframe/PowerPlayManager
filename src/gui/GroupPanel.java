@@ -31,8 +31,8 @@ public class GroupPanel<A extends Attributes>
 {
 	private static final long serialVersionUID = 2369854244820039552L;
 
-	private static final Function<Integer, Integer> UP = index -> index + 1;
-	private static final Function<Integer, Integer> DOWN = index -> index - 1;
+	private static final Function<Integer, Integer> UP = index -> index - 1;
+	private static final Function<Integer, Integer> DOWN = index -> index + 1;
 
 	private DefaultListModel<Roster<A>.Group> groupListModel;
 
