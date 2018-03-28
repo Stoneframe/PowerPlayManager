@@ -70,20 +70,23 @@ public class PlotPanel<A extends Attributes>
 		Color[] groupColors = Arrays.copyOfRange(colors, 0, groups.size());
 		Color[] individualColors = Arrays.copyOfRange(colors, groups.size(), colors.length);
 
-		for (int i = 0; i < players.size(); i++)
+		if (nbrOfGroupsContainingAnyPlayersToPlot(groups, players) > 1)
 		{
-			Player<A> player = players.get(i);
-
-			int index = groups.indexOf(
-				groups
-					.stream()
-					.filter(g -> g.getPlayers().contains(player))
-					.findFirst()
-					.orElse(null));
-
-			if (index != -1)
+			for (int i = 0; i < players.size(); i++)
 			{
-				renderer.setSeriesPaint(i, groupColors[index]);
+				Player<A> player = players.get(i);
+
+				int index = groups.indexOf(
+					groups
+						.stream()
+						.filter(g -> g.getPlayers().contains(player))
+						.findFirst()
+						.orElse(null));
+
+				if (index != -1)
+				{
+					renderer.setSeriesPaint(i, groupColors[index]);
+				}
 			}
 		}
 
@@ -129,5 +132,15 @@ public class PlotPanel<A extends Attributes>
 		}
 
 		return series;
+	}
+
+	private long nbrOfGroupsContainingAnyPlayersToPlot(
+			List<Roster<A>.Group> groups,
+			List<Player<A>> players)
+	{
+		return groups
+			.stream()
+			.filter(g -> players.stream().anyMatch(p -> g.getPlayers().contains(p)))
+			.count();
 	}
 }
