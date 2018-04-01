@@ -16,8 +16,8 @@ public abstract class Attributes
 
 	protected void mergeAttribute(
 			Supplier<Integer> thisGet,
-			Consumer<Integer> thisSet,
-			Supplier<Integer> otherGet)
+			Supplier<Integer> otherGet,
+			Consumer<Integer> thisSet)
 	{
 		if (thisGet.get() == 0)
 		{

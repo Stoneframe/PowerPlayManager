@@ -1,25 +1,29 @@
-package model.icehockey;
+package model.football;
 
 import model.Attributes;
 
-public class IceHockeyAttributes
+public class FootballAttributes
 	extends Attributes
 {
 	private int goa;
 	private int def;
+	private int mid;
 	private int off;
 	private int sho;
 	private int pas;
 	private int tec;
-	private int agr;
+	private int spe;
+	private int hea;
 
 	private int qGoa;
 	private int qDef;
+	private int qMid;
 	private int qOff;
 	private int qSho;
 	private int qPas;
 	private int qTec;
-	private int qAgr;
+	private int qSpe;
+	private int qHea;
 
 	public int getGoa()
 	{
@@ -42,6 +46,18 @@ public class IceHockeyAttributes
 	{
 		this.def = def;
 		firePropertyChanged("Def", def);
+		firePropertyChanged("TotalRating", getTotalRating());
+	}
+
+	public int getMid()
+	{
+		return mid;
+	}
+
+	public void setMid(int mid)
+	{
+		this.mid = mid;
+		firePropertyChanged("Mid", mid);
 		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
@@ -93,22 +109,34 @@ public class IceHockeyAttributes
 		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
-	public int getAgr()
+	public int getSpe()
 	{
-		return agr;
+		return spe;
 	}
 
-	public void setAgr(int agr)
+	public void setSpe(int spe)
 	{
-		this.agr = agr;
-		firePropertyChanged("Agr", agr);
+		this.spe = spe;
+		firePropertyChanged("Spe", spe);
+		firePropertyChanged("TotalRating", getTotalRating());
+	}
+
+	public int getHea()
+	{
+		return hea;
+	}
+
+	public void setHea(int hea)
+	{
+		this.hea = hea;
+		firePropertyChanged("Hea", hea);
 		firePropertyChanged("TotalRating", getTotalRating());
 	}
 
 	@Override
 	public int getTotalRating()
 	{
-		return goa + def + off + sho + pas + tec + agr;
+		return goa + def + mid + off + sho + pas + tec + spe + hea;
 	}
 
 	public int getQGoa()
@@ -132,6 +160,18 @@ public class IceHockeyAttributes
 	{
 		this.qDef = qDef;
 		firePropertyChanged("QDef", qDef);
+		firePropertyChanged("AverageQuality", getAverageQuality());
+	}
+
+	public int getQMid()
+	{
+		return qMid;
+	}
+
+	public void setQMid(int qMid)
+	{
+		this.qMid = qMid;
+		firePropertyChanged("QMid", qMid);
 		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
@@ -183,99 +223,60 @@ public class IceHockeyAttributes
 		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
-	public int getQAgr()
+	public int getQSpe()
 	{
-		return qAgr;
+		return qSpe;
 	}
 
-	public void setQAgr(int qAgr)
+	public void setQSpe(int qSpe)
 	{
-		this.qAgr = qAgr;
-		firePropertyChanged("QAgr", qAgr);
+		this.qSpe = qSpe;
+		firePropertyChanged("QSpe", qSpe);
+		firePropertyChanged("AverageQuality", getAverageQuality());
+	}
+
+	public int getQHea()
+	{
+		return qHea;
+	}
+
+	public void setQHea(int qHea)
+	{
+		this.qHea = qHea;
+		firePropertyChanged("QHea", qHea);
 		firePropertyChanged("AverageQuality", getAverageQuality());
 	}
 
 	@Override
 	public double getAverageQuality()
 	{
-		return (qGoa + qDef + qOff + qSho + qPas + qTec + qAgr) / 7d;
+		return (qGoa + qDef + qMid + qOff + qSho + qPas + qTec + qSpe + qHea) / 9d;
 	}
 
 	@Override
 	public void merge(Attributes attributes)
 	{
-		if (!(attributes instanceof IceHockeyAttributes)) return;
+		if (!(attributes instanceof FootballAttributes)) return;
 
-		IceHockeyAttributes other = (IceHockeyAttributes)attributes;
+		FootballAttributes other = (FootballAttributes)attributes;
 
-		mergeAttribute(
-			() -> this.getGoa(),
-			() -> other.getGoa(),
-			(v) -> this.setGoa(v));
-
-		mergeAttribute(
-			() -> this.getDef(),
-			() -> other.getDef(),
-			(v) -> this.setDef(v));
-
-		mergeAttribute(
-			() -> this.getOff(),
-			() -> other.getOff(),
-			(v) -> this.setOff(v));
-
-		mergeAttribute(
-			() -> this.getSho(),
-			() -> other.getSho(),
-			(v) -> this.setSho(v));
-
-		mergeAttribute(
-			() -> this.getPas(),
-			() -> other.getPas(),
-			(v) -> this.setPas(v));
-
-		mergeAttribute(
-			() -> this.getTec(),
-			() -> other.getTec(),
-			(v) -> this.setTec(v));
-
-		mergeAttribute(
-			() -> this.getAgr(),
-			() -> other.getAgr(),
-			(v) -> this.setAgr(v));
-
-		mergeAttribute(
-			() -> this.getQGoa(),
-			() -> other.getQGoa(),
-			(v) -> this.setQGoa(v));
-
-		mergeAttribute(
-			() -> this.getQDef(),
-			() -> other.getQDef(),
-			(v) -> this.setQDef(v));
-
-		mergeAttribute(
-			() -> this.getQOff(),
-			() -> other.getQOff(),
-			(v) -> this.setQOff(v));
-
-		mergeAttribute(
-			() -> this.getQSho(),
-			() -> other.getQSho(),
-			(v) -> this.setQSho(v));
-
-		mergeAttribute(
-			() -> this.getQPas(),
-			() -> other.getQPas(),
-			(v) -> this.setQPas(v));
-
-		mergeAttribute(
-			() -> this.getQTec(),
-			() -> other.getQTec(),
-			(v) -> this.setQTec(v));
-
-		mergeAttribute(
-			() -> this.getQAgr(),
-			() -> other.getQAgr(),
-			(v) -> this.setQAgr(v));
+		mergeAttribute(this::getGoa, other::getGoa, this::setGoa);
+		mergeAttribute(this::getDef, other::getDef, this::setDef);
+		mergeAttribute(this::getMid, other::getMid, this::setMid);
+		mergeAttribute(this::getOff, other::getOff, this::setOff);
+		mergeAttribute(this::getSho, other::getSho, this::setSho);
+		mergeAttribute(this::getPas, other::getPas, this::setPas);
+		mergeAttribute(this::getTec, other::getTec, this::setTec);
+		mergeAttribute(this::getSpe, other::getSpe, this::setSpe);
+		mergeAttribute(this::getHea, other::getHea, this::setHea);
+		mergeAttribute(this::getQGoa, other::getQGoa, this::setQGoa);
+		mergeAttribute(this::getQDef, other::getQDef, this::setQDef);
+		mergeAttribute(this::getQMid, other::getQMid, this::setQMid);
+		mergeAttribute(this::getQOff, other::getQOff, this::setQOff);
+		mergeAttribute(this::getQSho, other::getQSho, this::setQSho);
+		mergeAttribute(this::getQPas, other::getQPas, this::setQPas);
+		mergeAttribute(this::getQTec, other::getQTec, this::setQTec);
+		mergeAttribute(this::getQSpe, other::getQSpe, this::setQSpe);
+		mergeAttribute(this::getQHea, other::getQHea, this::setQHea);
 	}
 }
