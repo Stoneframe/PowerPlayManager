@@ -1,5 +1,6 @@
 package evaluators.football;
 
+import java.util.Arrays;
 import java.util.List;
 
 import evaluators.MicroAttributeEvaluator;
@@ -66,17 +67,22 @@ public class FootballAttributeEvaluator
 	}
 
 	@Override
-	protected double attributeSum()
+	protected List<Pair<String, Double>> createPairs(FootballAttributes attributes)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return Arrays.asList(
+			createPair("Goalkeeping", attributes.getGoa(), goa),
+			createPair("Defence", attributes.getDef(), def),
+			createPair("Offence", attributes.getOff(), off),
+			createPair("Shooting", attributes.getSho(), sho),
+			createPair("Passing", attributes.getPas(), pas),
+			createPair("Technique", attributes.getTec(), tec),
+			createPair("Speed", attributes.getSpe(), spe),
+			createPair("Heading", attributes.getHea(), hea));
 	}
 
 	@Override
-	protected List<Pair<String, Double>> createPairs(FootballAttributes attributes)
+	protected double attributeSum()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return goa + def + mid + off + sho + pas + tec + spe + hea;
 	}
-
 }
