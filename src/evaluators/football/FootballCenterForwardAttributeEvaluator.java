@@ -1,6 +1,6 @@
 package evaluators.football;
 
-public class FootballCentreForwardAttributeEvaluator
+public class FootballCenterForwardAttributeEvaluator
 	extends FootballAttributeEvaluator
 {
 	private static final String NAME = "Center Forward";
@@ -15,7 +15,7 @@ public class FootballCentreForwardAttributeEvaluator
 	private static final int SPE = HIGH;
 	private static final int HEA = LOW;
 	
-	public FootballCentreForwardAttributeEvaluator()
+	public FootballCenterForwardAttributeEvaluator()
 	{
 		super(NAME, GOA, DEF, MID, OFF, SHO, PAS, TEC, SPE, HEA);
 	}

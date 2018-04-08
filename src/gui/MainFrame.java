@@ -12,7 +12,7 @@ import javax.swing.UIManager;
 import evaluators.FacilityEvaluator;
 import evaluators.football.FootballCenterBackAttributeEvaluator;
 import evaluators.football.FootballCenterMidfielderAttributeEvaluator;
-import evaluators.football.FootballCentreForwardAttributeEvaluator;
+import evaluators.football.FootballCenterForwardAttributeEvaluator;
 import evaluators.football.FootballFullBackAttributeEvaluator;
 import evaluators.football.FootballGoalkeeperAttributeEvaluator;
 import evaluators.football.FootballPlayerEvaluator;
@@ -124,7 +124,7 @@ public class MainFrame
 							new FootballWideMidfielderAttributeEvaluator(),
 							new FootballCenterMidfielderAttributeEvaluator(),
 							new FootballWideForwardAttributeEvaluator(),
-							new FootballCentreForwardAttributeEvaluator())));
+							new FootballCenterForwardAttributeEvaluator())));
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Handball", handballPanel);
