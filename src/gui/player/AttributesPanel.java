@@ -17,7 +17,7 @@ public abstract class AttributesPanel<A extends Attributes>
 {
 	private static final long serialVersionUID = -7993333522332535462L;
 
-	protected static final int TEXTFIELD_COLUMNS = 4;
+	protected static final int TEXTFIELD_COLUMNS = 6;
 
 	protected A attributes;
 
