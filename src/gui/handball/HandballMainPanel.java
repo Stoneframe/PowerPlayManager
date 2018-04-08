@@ -19,7 +19,6 @@ public class HandballMainPanel
 	{
 		super(
 			new HandballAttributesPanel(),
-			new HandballTrainingPanel(playerEvaluator),
 			new HandballFormationTemplatePanelFactory(),
 			new PaulsFormationBuilder<>(),
 			parsers,

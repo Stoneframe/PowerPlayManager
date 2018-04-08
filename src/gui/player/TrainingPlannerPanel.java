@@ -14,7 +14,7 @@ import model.Attributes;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public abstract class TrainingPlannerPanel<A extends Attributes>
+public class TrainingPlannerPanel<A extends Attributes>
 	extends JPanel
 	implements
 		PropertyChangedListener

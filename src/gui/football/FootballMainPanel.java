@@ -18,7 +18,6 @@ public class FootballMainPanel extends MainPanel<FootballAttributes>
 	{
 		super(
 			new FootballAttributesPanel(),
-			new FootballTrainingPanel(playerEvaluator),
 			new FootballFormationTemplatePanelFactory(),
 			new PaulsFormationBuilder<>(),
 			parsers,

@@ -43,13 +43,11 @@ public class PlayerPanel<A extends Attributes>
 
 	public PlayerPanel(
 			AttributesPanel<A> attributePanel,
-			TrainingPlannerPanel<A> trainingPanel,
 			PlayerEvaluator<A> playerEvaluator)
 	{
 		this.attributePanel = attributePanel;
-		this.trainingPanel = trainingPanel;
 
-		setPreferredSize(new Dimension(275, 0));
+		this.trainingPanel = new TrainingPlannerPanel<>(playerEvaluator);
 
 		nameTextField = new JTextField(15);
 		nameTextField.setEditable(false);
@@ -122,6 +120,8 @@ public class PlayerPanel<A extends Attributes>
 		setLayout(new BorderLayout());
 
 		add(scrollPane, BorderLayout.CENTER);
+
+		setPreferredSize(new Dimension(275, 0));
 	}
 
 	public void bind(Player<A> player)

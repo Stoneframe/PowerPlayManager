@@ -24,7 +24,6 @@ import gui.player.PlayerSelectedEvent;
 import gui.player.PlayerSelectedListener;
 import gui.player.PlayersParsedEvent;
 import gui.player.PlayersParsedListener;
-import gui.player.TrainingPlannerPanel;
 import gui.plot.PlotPanel;
 import model.Attributes;
 import model.Player;
@@ -56,7 +55,6 @@ public class MainPanel<A extends Attributes>
 
 	public MainPanel(
 			AttributesPanel<A> attributesPanel,
-			TrainingPlannerPanel<A> trainingPanel,
 			FormationTemplatePanelFactory<A> formationTemplatePanelFactory,
 			FormationBuilder<A> formationBuilder,
 			List<PlayersParser<A>> parsers,
@@ -73,7 +71,7 @@ public class MainPanel<A extends Attributes>
 			}
 		});
 
-		playerPanel = new PlayerPanel<A>(attributesPanel, trainingPanel, playerEvaluator);
+		playerPanel = new PlayerPanel<A>(attributesPanel, playerEvaluator);
 
 		parsePanel = new ParsePanel<A>(parsers);
 		parsePanel.setPlayersParseListener(new PlayersParsedListener<A>()
