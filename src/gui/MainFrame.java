@@ -10,8 +10,14 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import evaluators.FacilityEvaluator;
-import evaluators.football.FootballEmptyAttributeEvaluator;
+import evaluators.football.FootballCenterBackAttributeEvaluator;
+import evaluators.football.FootballCenterMidfielderAttributeEvaluator;
+import evaluators.football.FootballCentreForwardAttributeEvaluator;
+import evaluators.football.FootballFullBackAttributeEvaluator;
+import evaluators.football.FootballGoalkeeperAttributeEvaluator;
 import evaluators.football.FootballPlayerEvaluator;
+import evaluators.football.FootballWideForwardAttributeEvaluator;
+import evaluators.football.FootballWideMidfielderAttributeEvaluator;
 import evaluators.handball.HandballDefBackAttributeEvaluator;
 import evaluators.handball.HandballDefPivotAttributeEvaluator;
 import evaluators.handball.HandballDefWingAttributeEvaluator;
@@ -33,6 +39,7 @@ import gui.football.FootballMainPanel;
 import gui.handball.HandballMainPanel;
 import gui.icehockey.IceHockeyMainPanel;
 import parsers.players.football.FootballOverviewPlayersParser;
+import parsers.players.football.FootballPractisePlayersParser;
 import parsers.players.handball.HandballMarketPlayersParser;
 import parsers.players.handball.HandballOverviewPlayersParser;
 import parsers.players.handball.HandballPractisePlayersParser;
@@ -105,12 +112,19 @@ public class MainFrame
 
 		footballPanel = new FootballMainPanel(
 				Arrays.asList(
-					new FootballOverviewPlayersParser()),
+					new FootballOverviewPlayersParser(),
+					new FootballPractisePlayersParser()),
 				new FootballPlayerEvaluator(
 						new Settings(new SettingStorage("football")),
 						new FacilityEvaluator(),
 						Arrays.asList(
-							new FootballEmptyAttributeEvaluator())));
+							new FootballGoalkeeperAttributeEvaluator(),
+							new FootballFullBackAttributeEvaluator(),
+							new FootballCenterBackAttributeEvaluator(),
+							new FootballWideMidfielderAttributeEvaluator(),
+							new FootballCenterMidfielderAttributeEvaluator(),
+							new FootballWideForwardAttributeEvaluator(),
+							new FootballCentreForwardAttributeEvaluator())));
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Handball", handballPanel);
