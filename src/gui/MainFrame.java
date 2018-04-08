@@ -10,6 +10,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import evaluators.FacilityEvaluator;
+import evaluators.football.FootballPlayerEvaluator;
 import evaluators.handball.HandballDefBackAttributeEvaluator;
 import evaluators.handball.HandballDefPivotAttributeEvaluator;
 import evaluators.handball.HandballDefWingAttributeEvaluator;
@@ -19,14 +20,15 @@ import evaluators.handball.HandballOffPivotAttributeEvaluator;
 import evaluators.handball.HandballOffWingAttributeEvaluator;
 import evaluators.handball.HandballPlayerEvaluator;
 import evaluators.icehockey.IceHockeyBackAttributeEvaluator;
+import evaluators.icehockey.IceHockeyCenterAttributeEvaluator;
 import evaluators.icehockey.IceHockeyDefBackAttributeEvaluator;
 import evaluators.icehockey.IceHockeyForwardAttributeEvaluator;
-import evaluators.icehockey.IceHockeyCenterAttributeEvaluator;
 import evaluators.icehockey.IceHockeyGoalieAttributeEvaluator;
 import evaluators.icehockey.IceHockeyOffBackAttributeEvaluator;
 import evaluators.icehockey.IceHockeyOffensiveAttributeEvaluator;
 import evaluators.icehockey.IceHockeyPlayerEvaluator;
 import evaluators.icehockey.IceHockeyWingAttributeEvaluator;
+import gui.football.FootballMainPanel;
 import gui.handball.HandballMainPanel;
 import gui.icehockey.IceHockeyMainPanel;
 import parsers.players.handball.HandballMarketPlayersParser;
@@ -51,6 +53,7 @@ public class MainFrame
 
 	private HandballMainPanel handballPanel;
 	private IceHockeyMainPanel iceHockeyPanel;
+	private FootballMainPanel footballPanel;
 
 	public MainFrame()
 	{
@@ -98,9 +101,17 @@ public class MainFrame
 							new IceHockeyOffBackAttributeEvaluator(),
 							new IceHockeyOffensiveAttributeEvaluator())));
 
+		footballPanel = new FootballMainPanel(
+				Arrays.asList(),
+				new FootballPlayerEvaluator(
+						new Settings(new SettingStorage("football")),
+						new FacilityEvaluator(),
+						Arrays.asList()));
+
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Handball", handballPanel);
 		tabbedPane.addTab("Ice Hockey", iceHockeyPanel);
+		tabbedPane.addTab("Football", footballPanel);
 
 		setLayout(new BorderLayout());
 
