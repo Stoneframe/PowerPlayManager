@@ -269,4 +269,8 @@ public class MainPanel<A extends Attributes>
 		add(playerPanel, BorderLayout.EAST);
 		add(buttonPanel, BorderLayout.SOUTH);
 	}
+	
+	public Roster<A> getRoster() {
+		return roster;
+	}
 }
