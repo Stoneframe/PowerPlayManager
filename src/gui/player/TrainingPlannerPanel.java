@@ -1,6 +1,8 @@
 package gui.player;
 
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -34,7 +36,7 @@ public class TrainingPlannerPanel<A extends Attributes>
 		positionComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(true));
 		positionComboBox.addActionListener(e -> onAttributeEvaluatorSelected());
 
-		nextAttributeTextField = new JTextField();
+		nextAttributeTextField = new JTextField(7);
 		nextAttributeTextField.setEditable(false);
 
 		setBorder(
@@ -42,9 +44,19 @@ public class TrainingPlannerPanel<A extends Attributes>
 					BorderFactory.createTitledBorder("Training Planner"),
 					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-		setLayout(new GridLayout(1, 2, 10, 10));
+		setLayout(new GridBagLayout());
 
-		add(positionComboBox);
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.insets = new Insets(5, 5, 5, 5);
+
+		gbc.gridx = 0;
+		gbc.weightx = 2;
+		add(positionComboBox, gbc);
+
+		gbc.gridx = 1;
+		gbc.weightx = 1;
 		add(nextAttributeTextField);
 	}
 

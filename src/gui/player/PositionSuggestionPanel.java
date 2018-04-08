@@ -21,8 +21,7 @@ public class PositionSuggestionPanel<A extends Attributes>
 			AttributeEvaluator<A> evaluator1,
 			AttributeEvaluator<A> evaluator2)
 	{
-		return new RatingEvaluatorComparator<A>(attributes)
-				.compare(evaluator1, evaluator2);
+		return new RatingEvaluatorComparator<A>(attributes).compare(evaluator1, evaluator2);
 	}
 
 	@Override
