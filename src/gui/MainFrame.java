@@ -41,6 +41,7 @@ import parsers.players.football.FootballMarketPlayersParser;
 import parsers.players.football.FootballOverviewPlayersParser;
 import parsers.players.football.FootballPractisePlayersParser;
 import parsers.players.football.FootballPractiseProPlayersParser;
+import gui.menu.MenuBar;
 import parsers.players.handball.HandballMarketPlayersParser;
 import parsers.players.handball.HandballOverviewPlayersParser;
 import parsers.players.handball.HandballPractisePlayersParser;
@@ -134,6 +135,7 @@ public class MainFrame
 		setLayout(new BorderLayout());
 
 		add(tabbedPane, BorderLayout.CENTER);
+		setJMenuBar(new MenuBar(this, tabbedPane));
 
 		pack();
 		setLocationRelativeTo(null);

@@ -16,4 +16,10 @@ public class HandballPlayer
 	{
 		super(name, age, cl, side, attributes, training);
 	}
+
+	@Override
+	public String toJson()
+	{
+		return "{" + "\"name\":\"" + name + "\",\"age\":" + age + "}";
+	}
 }

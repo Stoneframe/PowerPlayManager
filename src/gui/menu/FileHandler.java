@@ -2,6 +2,7 @@ package gui.menu;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,22 +22,35 @@ public class FileHandler
 			File file,
 			Roster<A> roster)
 	{
-		GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(Side.class, new SideAdapter());
-		Gson gson = builder.create();
+		System.out.println(roster.toJson());
+		
+//		GsonBuilder builder = new GsonBuilder();
+//		builder.registerTypeAdapter(Side.class, new SideAdapter());
+//		Gson gson = builder.create();
+//		
+//		String json = gson.toJson(roster);
+//		System.out.println(json);
+		
+//		Gson gson = new Gson();
+//        String json = gson.toJson(roster);
+//        System.out.println(json);
+		
 
-		try
-		{
+//		try
+//		{
 			// FIXME use JsonWriter?
-			FileWriter writer = new FileWriter(file);
-			writer.write(gson.toJson(roster));
-			writer.close();
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//			FileWriter writer = new FileWriter(file);
+//			FileOutputStream writer = new FileOutputStream(System.out);
+//			String gsonString = gson.toJson(roster);
+//			System.out.println(gsonString);
+			//writer.write(gson.toJson(roster));
+//			writer.close();
+//		}
+//		catch (IOException e)
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	public static <A extends Attributes> Roster<A> loadRosterFromFile(File file)
