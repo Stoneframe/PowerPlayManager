@@ -14,11 +14,12 @@ import parsers.players.PlayersParser;
 public class FootballPractiseProPlayersParser
 	extends PlayersParser<FootballAttributes>
 {
-	private static final int FIELDS_PER_PLAYER = 24;
+	private static final int FIELDS_PER_PLAYER = 25;
 	private static final int AGE_FIELD = 2;
 	private static final int CL_FIELD = 4;
-	private static final int ATTRIBUTE_FIELDS_PER_PLAYER = 16;
+	private static final int ATTRIBUTE_FIELDS_PER_PLAYER = 18;
 	private static final int ATTRIBUTES_START_FIELD = 5;
+	private static final int LAST_TRAINING_VALUE = 23;
 
 	@Override
 	public String getName()
@@ -47,7 +48,7 @@ public class FootballPractiseProPlayersParser
 								lines,
 								i + ATTRIBUTES_START_FIELD,
 								i + ATTRIBUTES_START_FIELD + ATTRIBUTE_FIELDS_PER_PLAYER)),
-						parseTraining(lines[i + 21]));
+						parseTraining(lines[i + LAST_TRAINING_VALUE]));
 
 				players.add(player);
 			}
@@ -88,11 +89,11 @@ public class FootballPractiseProPlayersParser
 		int[] def = parseAttribute(texts[2]);
 		attributes.setDef(def[0]);
 		attributes.setQDef(def[1]);
-		
+
 		int[] mid = parseAttribute(texts[4]);
 		attributes.setMid(mid[0]);
 		attributes.setQMid(mid[1]);
-		
+
 		int[] off = parseAttribute(texts[6]);
 		attributes.setOff(off[0]);
 		attributes.setQOff(off[1]);

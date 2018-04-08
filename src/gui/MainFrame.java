@@ -40,6 +40,7 @@ import gui.handball.HandballMainPanel;
 import gui.icehockey.IceHockeyMainPanel;
 import parsers.players.football.FootballOverviewPlayersParser;
 import parsers.players.football.FootballPractisePlayersParser;
+import parsers.players.football.FootballPractiseProPlayersParser;
 import parsers.players.handball.HandballMarketPlayersParser;
 import parsers.players.handball.HandballOverviewPlayersParser;
 import parsers.players.handball.HandballPractisePlayersParser;
@@ -113,7 +114,8 @@ public class MainFrame
 		footballPanel = new FootballMainPanel(
 				Arrays.asList(
 					new FootballOverviewPlayersParser(),
-					new FootballPractisePlayersParser()),
+					new FootballPractisePlayersParser(),
+					new FootballPractiseProPlayersParser()),
 				new FootballPlayerEvaluator(
 						new Settings(new SettingStorage("football")),
 						new FacilityEvaluator(),

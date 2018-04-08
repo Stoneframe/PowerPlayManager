@@ -57,7 +57,6 @@ public class FootballPractisePlayersParser
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
 			throw new ParseException(e);
 		}
 	}
