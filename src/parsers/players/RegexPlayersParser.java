@@ -246,13 +246,13 @@ public abstract class RegexPlayersParser<A extends Attributes>
 
 	private final Pattern regexPattern;
 
-	private final boolean includeCL;
-	private final boolean includeSide;
-	private final boolean includeQualities;
-	private final boolean includeExperience;
-	private final boolean includeChemistry;
-	private final boolean includeEnergy;
-	private final boolean includeTraining;
+	protected final boolean includeCL;
+	protected final boolean includeSide;
+	protected final boolean includeQualities;
+	protected final boolean includeExperience;
+	protected final boolean includeChemistry;
+	protected final boolean includeEnergy;
+	protected final boolean includeTraining;
 
 	protected RegexPlayersParser(
 			Pattern regexPattern,
@@ -305,21 +305,7 @@ public abstract class RegexPlayersParser<A extends Attributes>
 
 	protected abstract List<String> toSinglePlayerPerLine(String textToParse);
 
-	protected Player<A> createPlayer(Matcher matcher)
-	{
-		A attributes = createAttributes(matcher, includeQualities);
-
-		return new Player<A>(
-				matcher.group("name"),
-				Integer.parseInt(matcher.group("age")),
-				includeCL ? Integer.parseInt(matcher.group("cl")) : 0,
-				includeSide ? SideParser.parseSide(matcher.group("side")) : Side.UNKNOWN,
-				attributes,
-				includeExperience ? Integer.parseInt(matcher.group("experience")) : 0,
-				includeChemistry ? Integer.parseInt(matcher.group("chemistry")) : 0,
-				includeEnergy ? Integer.parseInt(matcher.group("energy")) : 100,
-				includeTraining ? Double.parseDouble(matcher.group("training")) : 0);
-	}
+	protected abstract Player<A> createPlayer(Matcher matcher);
 
 	protected abstract A createAttributes(Matcher matcher, boolean includeQuality);
 

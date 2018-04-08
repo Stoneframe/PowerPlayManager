@@ -39,6 +39,7 @@ import evaluators.icehockey.IceHockeyWingAttributeEvaluator;
 import gui.football.FootballMainPanel;
 import gui.handball.HandballMainPanel;
 import gui.icehockey.IceHockeyMainPanel;
+import gui.menu.MenuBar;
 import parsers.players.football.FootballFormationPlayersProParser;
 import parsers.players.football.FootballMarketPlayersParser;
 import parsers.players.football.FootballOverviewPlayersParser;
@@ -63,6 +64,10 @@ import settings.SportSettings;
 public class MainFrame
 	extends JFrame
 {
+	public static final String HANDBALL_TITLE = "Handball";
+	public static final String ICE_HOCKEY_TITLE = "Ice Hockey";
+	public static final String FOOTBALL_TITLE = "Football";
+
 	private static final long serialVersionUID = -8026416994513756565L;
 
 	private AppSettings appSettings = new AppSettings(new SettingStorage("app"));
@@ -135,9 +140,9 @@ public class MainFrame
 							new HandballOffWingAttributeEvaluator())));
 
 		tabbedPane = new JTabbedPane();
-		tabbedPane.addTab("Ice Hockey", iceHockeyPanel);
-		tabbedPane.addTab("Football", footballPanel);
-		tabbedPane.addTab("Handball", handballPanel);
+		tabbedPane.addTab(ICE_HOCKEY_TITLE, iceHockeyPanel);
+		tabbedPane.addTab(FOOTBALL_TITLE, footballPanel);
+		tabbedPane.addTab(HANDBALL_TITLE, handballPanel);
 
 		tabbedPane.setSelectedIndex(appSettings.getPreviousTabIndex());
 		tabbedPane.addChangeListener(new ChangeListener()
@@ -151,6 +156,7 @@ public class MainFrame
 		setLayout(new BorderLayout());
 
 		add(tabbedPane, BorderLayout.CENTER);
+		setJMenuBar(new MenuBar(this, tabbedPane));
 
 		pack();
 		setLocationRelativeTo(null);

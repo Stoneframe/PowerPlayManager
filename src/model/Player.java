@@ -2,7 +2,7 @@ package model;
 
 import util.AbstractModelObject;
 
-public class Player<A extends Attributes>
+public abstract class Player<A extends Attributes>
 	extends AbstractModelObject
 {
 	protected String name;
@@ -185,4 +185,6 @@ public class Player<A extends Attributes>
 	{
 		return String.format("%s (%s)\n%s", name, side, attributes);
 	}
+	
+	public abstract String toJson();
 }

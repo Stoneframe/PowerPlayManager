@@ -159,6 +159,29 @@ public class Roster<A extends Attributes>
 		return Collections.unmodifiableList(groups);
 	}
 
+	public String toJson(String sport)
+	{
+		StringBuilder sb = new StringBuilder();
+		//Begin Roster object
+		sb.append("{");
+		sb.append("sport:" + sport + ",");
+		//Begin players list
+		sb.append("\"players\":[");
+		for (Player<?> p : players) {
+			sb.append(p.toJson());
+			sb.append(",");
+		}
+		//Remove the last comma
+		if (!players.isEmpty()) {
+			sb.deleteCharAt(sb.length()-1);
+		}
+		//End players list
+		sb.append("]");
+		//End Roster object
+		sb.append("}");
+		return sb.toString();
+	}
+
 	private List<Player<A>> getFilteredPlayersList()
 	{
 		return players

@@ -1,5 +1,7 @@
 package gui.menu;
 
+import gui.MainPanel;
+
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +12,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JTabbedPane;
 
 import model.Roster;
 
@@ -19,11 +22,12 @@ public class MenuBar
 	private static final long serialVersionUID = -5511353684955783810L;
 
 	final JFileChooser fc = new JFileChooser();
-
-	public MenuBar(Component parentComponent, Roster<?> roster)
+	
+	public MenuBar(Component parentComponent, JTabbedPane tabbedPane)
 	{
 		JMenu menu;
 		JMenuItem menuItemOpen, menuItemSave;
+		JTabbedPane tabs = tabbedPane;
 
 		// Build the menu
 		menu = new JMenu("File");
@@ -41,8 +45,9 @@ public class MenuBar
 				if (returnVal == JFileChooser.APPROVE_OPTION)
 				{
 					File file = fc.getSelectedFile();
-					// Roster roster =
-					FileHandler.loadRosterFromFile(file);
+					MainPanel selectedTab = (MainPanel) tabs.getSelectedComponent();
+					Roster<?> roster = selectedTab.getRoster();
+					FileHandler.loadRosterFromFile(file, roster);
 				}
 			}
 		});
@@ -58,8 +63,14 @@ public class MenuBar
 				int returnVal = fc.showSaveDialog(parentComponent);
 				if (returnVal == JFileChooser.APPROVE_OPTION)
 				{
+					
+					MainPanel selectedTab = (MainPanel) tabs.getSelectedComponent();
+					int index = tabs.getSelectedIndex();
+					String sport = tabs.getTitleAt(index);
+					System.out.println("Saving " + sport);
+					Roster<?> roster = selectedTab.getRoster();
 					File file = fc.getSelectedFile();
-					FileHandler.saveRosterToFile(file, roster);
+					FileHandler.saveRosterToFile(file, roster, sport);
 				}
 			}
 		});

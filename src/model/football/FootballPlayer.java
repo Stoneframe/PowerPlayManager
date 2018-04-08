@@ -19,4 +19,11 @@ public class FootballPlayer
 	{
 		super(name, age, cl, side, attributes, experience, chemistry, energy, training);
 	}
+	
+	@Override
+	public String toJson()
+	{
+		// TODO Auto-generated method stub
+		return "not implemented";
+	}
 }
