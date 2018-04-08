@@ -1,19 +1,12 @@
 package gui.football;
 
-import java.awt.GridLayout;
-
-import javax.swing.BorderFactory;
 import javax.swing.JTextField;
-import javax.swing.border.CompoundBorder;
 
 import gui.player.AttributesPanel;
 import model.football.FootballAttributes;
-import util.PropertyChangedListener;
 
 public class FootballAttributesPanel
 	extends AttributesPanel<FootballAttributes>
-	implements
-		PropertyChangedListener
 {
 	private static final long serialVersionUID = -4623262476204460582L;
 
@@ -99,13 +92,6 @@ public class FootballAttributesPanel
 
 		avgQTextField = new JTextField(TEXTFIELD_COLUMNS);
 		avgQTextField.setEditable(false);
-
-		setBorder(
-			new CompoundBorder(
-					BorderFactory.createTitledBorder("Attributes"),
-					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-
-		setLayout(new GridLayout(10, 3, 5, 5));
 
 		addRow("Goa:", goaTextField, goaQTextField);
 		addRow("Def:", defTextField, defQTextField);

@@ -1,10 +1,6 @@
 package gui.icehockey;
 
-import java.awt.GridLayout;
-
-import javax.swing.BorderFactory;
 import javax.swing.JTextField;
-import javax.swing.border.CompoundBorder;
 
 import gui.player.AttributesPanel;
 import model.icehockey.IceHockeyAttributes;
@@ -80,13 +76,6 @@ public class IceHockeyAttributesPanel
 
 		avgQTextField = new JTextField(TEXTFIELD_COLUMNS);
 		avgQTextField.setEditable(false);
-
-		setBorder(
-			new CompoundBorder(
-					BorderFactory.createTitledBorder("Attributes"),
-					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-
-		setLayout(new GridLayout(8, 3, 5, 5));
 
 		addRow("Goa:", goaTextField, goaQTextField);
 		addRow("Def:", defTextField, defQTextField);

@@ -1,19 +1,12 @@
 package gui.handball;
 
-import java.awt.GridLayout;
-
-import javax.swing.BorderFactory;
 import javax.swing.JTextField;
-import javax.swing.border.CompoundBorder;
 
 import gui.player.AttributesPanel;
 import model.handball.HandballAttributes;
-import util.PropertyChangedListener;
 
 public class HandballAttributesPanel
 	extends AttributesPanel<HandballAttributes>
-	implements
-		PropertyChangedListener
 {
 	private static final long serialVersionUID = -550607296797083079L;
 
@@ -91,13 +84,6 @@ public class HandballAttributesPanel
 
 		avgQTextField = new JTextField(TEXTFIELD_COLUMNS);
 		avgQTextField.setEditable(false);
-
-		setBorder(
-			new CompoundBorder(
-					BorderFactory.createTitledBorder("Attributes"),
-					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-
-		setLayout(new GridLayout(9, 3, 5, 5));
 
 		addRow("Goa:", goaTextField, goaQTextField);
 		addRow("Fip:", fipTextField, fipQTextField);
