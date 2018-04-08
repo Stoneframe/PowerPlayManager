@@ -6,6 +6,7 @@ import java.util.List;
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import formation.FormationTemplate;
+import formation.PositionTemplate;
 import gui.formation.FormationTemplatePanel;
 import gui.util.PpmComboBox;
 import model.Side;
@@ -87,14 +88,122 @@ public class FootballFormationTemplatePanel
 	@Override
 	public FormationTemplate<FootballAttributes> getFormationTemplate()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		List<PositionTemplate<FootballAttributes>> positionTemplates = Arrays.asList(
+			new PositionTemplate<>(
+					"Goalkeeper",
+					goalkeeperComboBox.getSelection(),
+					Side.UNIVERSAL),
+			getFieldPlayerPositionTemplate(
+				fieldPlayer1SideComboBox.getSelection(),
+				fieldPlayer1ComboBox.getSelection()),
+			getFieldPlayerPositionTemplate(
+				fieldPlayer2SideComboBox.getSelection(),
+				fieldPlayer2ComboBox.getSelection()),
+			getFieldPlayerPositionTemplate(
+				fieldPlayer3SideComboBox.getSelection(),
+				fieldPlayer3ComboBox.getSelection()),
+			getFieldPlayerPositionTemplate(
+				fieldPlayer4SideComboBox.getSelection(),
+				fieldPlayer4ComboBox.getSelection()),
+			getFieldPlayerPositionTemplate(
+				fieldPlayer5SideComboBox.getSelection(),
+				fieldPlayer5ComboBox.getSelection()),
+			getFieldPlayerPositionTemplate(
+				fieldPlayer6SideComboBox.getSelection(),
+				fieldPlayer6ComboBox.getSelection()),
+			getFieldPlayerPositionTemplate(
+				fieldPlayer7SideComboBox.getSelection(),
+				fieldPlayer7ComboBox.getSelection()),
+			getFieldPlayerPositionTemplate(
+				fieldPlayer8SideComboBox.getSelection(),
+				fieldPlayer8ComboBox.getSelection()),
+			getFieldPlayerPositionTemplate(
+				fieldPlayer9SideComboBox.getSelection(),
+				fieldPlayer9ComboBox.getSelection()),
+			getFieldPlayerPositionTemplate(
+				fieldPlayer10SideComboBox.getSelection(),
+				fieldPlayer10ComboBox.getSelection()));
+
+		return new FormationTemplate<>(nameComboBox.getText(), positionTemplates);
 	}
 
 	@Override
 	public void setFormationTemplate(FormationTemplate<FootballAttributes> template)
 	{
-		// TODO Auto-generated method stub
+		if (template != null)
+		{
+			nameComboBox.setText(template.getName());
 
+			goalkeeperComboBox.setSelectedItem(getAttributeEvaluator(template, 0));
+
+			fieldPlayer1ComboBox.setSelectedItem(getAttributeEvaluator(template, 1));
+			fieldPlayer2ComboBox.setSelectedItem(getAttributeEvaluator(template, 2));
+			fieldPlayer3ComboBox.setSelectedItem(getAttributeEvaluator(template, 3));
+			fieldPlayer4ComboBox.setSelectedItem(getAttributeEvaluator(template, 4));
+			fieldPlayer5ComboBox.setSelectedItem(getAttributeEvaluator(template, 5));
+			fieldPlayer6ComboBox.setSelectedItem(getAttributeEvaluator(template, 6));
+			fieldPlayer7ComboBox.setSelectedItem(getAttributeEvaluator(template, 7));
+			fieldPlayer8ComboBox.setSelectedItem(getAttributeEvaluator(template, 8));
+			fieldPlayer9ComboBox.setSelectedItem(getAttributeEvaluator(template, 9));
+			fieldPlayer10ComboBox.setSelectedItem(getAttributeEvaluator(template, 10));
+
+			fieldPlayer1SideComboBox.setSelectedItem(getSide(template, 1));
+			fieldPlayer2SideComboBox.setSelectedItem(getSide(template, 2));
+			fieldPlayer3SideComboBox.setSelectedItem(getSide(template, 3));
+			fieldPlayer4SideComboBox.setSelectedItem(getSide(template, 4));
+			fieldPlayer5SideComboBox.setSelectedItem(getSide(template, 5));
+			fieldPlayer6SideComboBox.setSelectedItem(getSide(template, 6));
+			fieldPlayer7SideComboBox.setSelectedItem(getSide(template, 7));
+			fieldPlayer8SideComboBox.setSelectedItem(getSide(template, 8));
+			fieldPlayer9SideComboBox.setSelectedItem(getSide(template, 9));
+			fieldPlayer10SideComboBox.setSelectedItem(getSide(template, 10));
+		}
+		else
+		{
+			nameComboBox.setText("");
+
+			goalkeeperComboBox.setSelectedIndex(0);
+
+			fieldPlayer1ComboBox.setSelectedIndex(0);
+			fieldPlayer2ComboBox.setSelectedIndex(0);
+			fieldPlayer3ComboBox.setSelectedIndex(0);
+			fieldPlayer4ComboBox.setSelectedIndex(0);
+			fieldPlayer5ComboBox.setSelectedIndex(0);
+			fieldPlayer6ComboBox.setSelectedIndex(0);
+			fieldPlayer7ComboBox.setSelectedIndex(0);
+			fieldPlayer8ComboBox.setSelectedIndex(0);
+			fieldPlayer9ComboBox.setSelectedIndex(0);
+			fieldPlayer10ComboBox.setSelectedIndex(0);
+
+			fieldPlayer1SideComboBox.setSelectedItem(Side.UNIVERSAL);
+			fieldPlayer2SideComboBox.setSelectedItem(Side.UNIVERSAL);
+			fieldPlayer3SideComboBox.setSelectedItem(Side.UNIVERSAL);
+			fieldPlayer4SideComboBox.setSelectedItem(Side.UNIVERSAL);
+			fieldPlayer5SideComboBox.setSelectedItem(Side.UNIVERSAL);
+			fieldPlayer6SideComboBox.setSelectedItem(Side.UNIVERSAL);
+			fieldPlayer7SideComboBox.setSelectedItem(Side.UNIVERSAL);
+			fieldPlayer8SideComboBox.setSelectedItem(Side.UNIVERSAL);
+			fieldPlayer9SideComboBox.setSelectedItem(Side.UNIVERSAL);
+			fieldPlayer10SideComboBox.setSelectedItem(Side.UNIVERSAL);
+		}
+	}
+
+	private PositionTemplate<FootballAttributes> getFieldPlayerPositionTemplate(
+			Side side,
+			AttributeEvaluator<FootballAttributes> attributeEvaluator)
+	{
+		return new PositionTemplate<>(
+				getPositionName(side, attributeEvaluator),
+				attributeEvaluator,
+				side);
+	}
+
+	private String getPositionName(
+			Side side,
+			AttributeEvaluator<FootballAttributes> attributeEvaluator)
+	{
+		String sideString = side.equals(Side.UNIVERSAL) ? "Center" : side.toString();
+
+		return String.format("%s %s", sideString, attributeEvaluator.getName());
 	}
 }
