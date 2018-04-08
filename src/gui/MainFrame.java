@@ -38,6 +38,7 @@ import evaluators.icehockey.IceHockeyWingAttributeEvaluator;
 import gui.football.FootballMainPanel;
 import gui.handball.HandballMainPanel;
 import gui.icehockey.IceHockeyMainPanel;
+import parsers.players.football.FootballMarketPlayersParser;
 import parsers.players.football.FootballOverviewPlayersParser;
 import parsers.players.football.FootballPractisePlayersParser;
 import parsers.players.football.FootballPractiseProPlayersParser;
@@ -113,6 +114,7 @@ public class MainFrame
 
 		footballPanel = new FootballMainPanel(
 				Arrays.asList(
+					new FootballMarketPlayersParser(),
 					new FootballOverviewPlayersParser(),
 					new FootballPractisePlayersParser(),
 					new FootballPractiseProPlayersParser()),
