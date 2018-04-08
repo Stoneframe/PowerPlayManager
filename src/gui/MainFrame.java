@@ -32,6 +32,7 @@ import evaluators.icehockey.IceHockeyWingAttributeEvaluator;
 import gui.football.FootballMainPanel;
 import gui.handball.HandballMainPanel;
 import gui.icehockey.IceHockeyMainPanel;
+import parsers.players.football.FootballOverviewPlayersParser;
 import parsers.players.handball.HandballMarketPlayersParser;
 import parsers.players.handball.HandballOverviewPlayersParser;
 import parsers.players.handball.HandballPractisePlayersParser;
@@ -103,7 +104,8 @@ public class MainFrame
 							new IceHockeyOffensiveAttributeEvaluator())));
 
 		footballPanel = new FootballMainPanel(
-				Arrays.asList(),
+				Arrays.asList(
+					new FootballOverviewPlayersParser()),
 				new FootballPlayerEvaluator(
 						new Settings(new SettingStorage("football")),
 						new FacilityEvaluator(),

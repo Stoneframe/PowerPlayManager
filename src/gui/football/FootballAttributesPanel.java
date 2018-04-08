@@ -21,6 +21,8 @@ public class FootballAttributesPanel
 	private JTextField goaQTextField;
 	private JTextField defTextField;
 	private JTextField defQTextField;
+	private JTextField midTextField;
+	private JTextField midQTextField;
 	private JTextField offTextField;
 	private JTextField offQTextField;
 	private JTextField shoTextField;
@@ -49,6 +51,12 @@ public class FootballAttributesPanel
 
 		defQTextField = new JTextField(TEXTFIELD_COLUMNS);
 		defQTextField.setEditable(false);
+
+		midTextField = new JTextField(TEXTFIELD_COLUMNS);
+		midTextField.setEditable(false);
+
+		midQTextField = new JTextField(TEXTFIELD_COLUMNS);
+		midQTextField.setEditable(false);
 
 		offTextField = new JTextField(TEXTFIELD_COLUMNS);
 		offTextField.setEditable(false);
@@ -97,10 +105,11 @@ public class FootballAttributesPanel
 					BorderFactory.createTitledBorder("Attributes"),
 					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-		setLayout(new GridLayout(9, 3, 5, 5));
+		setLayout(new GridLayout(10, 3, 5, 5));
 
 		addRow("Goa:", goaTextField, goaQTextField);
 		addRow("Def:", defTextField, defQTextField);
+		addRow("Mid:", midTextField, midQTextField);
 		addRow("Off:", offTextField, offQTextField);
 		addRow("Sho:", shoTextField, shoQTextField);
 		addRow("Pas:", pasTextField, pasQTextField);
@@ -117,6 +126,8 @@ public class FootballAttributesPanel
 		goaQTextField.setText(intToString(attributes::getQGoa));
 		defTextField.setText(intToString(attributes::getDef));
 		defQTextField.setText(intToString(attributes::getQDef));
+		midTextField.setText(intToString(attributes::getOff));
+		midQTextField.setText(intToString(attributes::getQOff));
 		offTextField.setText(intToString(attributes::getOff));
 		offQTextField.setText(intToString(attributes::getQOff));
 		shoTextField.setText(intToString(attributes::getSho));

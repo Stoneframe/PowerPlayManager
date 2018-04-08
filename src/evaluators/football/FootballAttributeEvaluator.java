@@ -15,27 +15,27 @@ public class FootballAttributeEvaluator
 	protected static final int MEDIUM = 50;
 	protected static final int LOW = 25;
 
-	private int goa;
-	private int def;
-	private int mid;
-	private int off;
-	private int sho;
-	private int pas;
-	private int tec;
-	private int spe;
-	private int hea;
+	private double goa;
+	private double def;
+	private double mid;
+	private double off;
+	private double sho;
+	private double pas;
+	private double tec;
+	private double spe;
+	private double hea;
 
 	public FootballAttributeEvaluator(
 			String name,
-			int goa,
-			int def,
-			int mid,
-			int off,
-			int sho,
-			int pas,
-			int tec,
-			int spe,
-			int hea)
+			double goa,
+			double def,
+			double mid,
+			double off,
+			double sho,
+			double pas,
+			double tec,
+			double spe,
+			double hea)
 	{
 		super(name);
 		this.goa = goa;

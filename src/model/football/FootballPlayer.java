@@ -6,8 +6,7 @@ import model.Side;
 public class FootballPlayer
 	extends Player<FootballAttributes>
 {
-
-	protected FootballPlayer(
+	public FootballPlayer(
 			String name,
 			int age,
 			int cl,
