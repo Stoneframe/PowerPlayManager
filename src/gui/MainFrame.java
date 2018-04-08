@@ -10,6 +10,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import evaluators.FacilityEvaluator;
+import evaluators.football.FootballEmptyAttributeEvaluator;
 import evaluators.football.FootballPlayerEvaluator;
 import evaluators.handball.HandballDefBackAttributeEvaluator;
 import evaluators.handball.HandballDefPivotAttributeEvaluator;
@@ -106,7 +107,8 @@ public class MainFrame
 				new FootballPlayerEvaluator(
 						new Settings(new SettingStorage("football")),
 						new FacilityEvaluator(),
-						Arrays.asList()));
+						Arrays.asList(
+							new FootballEmptyAttributeEvaluator())));
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Handball", handballPanel);
