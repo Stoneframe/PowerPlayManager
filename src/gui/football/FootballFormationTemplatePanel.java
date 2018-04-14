@@ -3,11 +3,13 @@ package gui.football;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JCheckBox;
+
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import evaluators.football.FootballCenterBackAttributeEvaluator;
-import evaluators.football.FootballCenterMidfielderAttributeEvaluator;
 import evaluators.football.FootballCenterForwardAttributeEvaluator;
+import evaluators.football.FootballCenterMidfielderAttributeEvaluator;
 import evaluators.football.FootballFullBackAttributeEvaluator;
 import evaluators.football.FootballGoalkeeperAttributeEvaluator;
 import evaluators.football.FootballWideMidfielderAttributeEvaluator;
@@ -72,6 +74,18 @@ public class FootballFormationTemplatePanel
 							new FootballCenterForwardAttributeEvaluator(),
 							Side.UNIVERSAL))));
 
+	private JCheckBox goalkeeperCheckBox;
+	private JCheckBox fieldPlayer1CheckBox;
+	private JCheckBox fieldPlayer2CheckBox;
+	private JCheckBox fieldPlayer3CheckBox;
+	private JCheckBox fieldPlayer4CheckBox;
+	private JCheckBox fieldPlayer5CheckBox;
+	private JCheckBox fieldPlayer6CheckBox;
+	private JCheckBox fieldPlayer7CheckBox;
+	private JCheckBox fieldPlayer8CheckBox;
+	private JCheckBox fieldPlayer9CheckBox;
+	private JCheckBox fieldPlayer10CheckBox;
+
 	private PpmComboBox<AttributeEvaluator<FootballAttributes>> goalkeeperComboBox;
 	private PpmComboBox<AttributeEvaluator<FootballAttributes>> fieldPlayer1ComboBox;
 	private PpmComboBox<AttributeEvaluator<FootballAttributes>> fieldPlayer2ComboBox;
@@ -100,6 +114,18 @@ public class FootballFormationTemplatePanel
 	{
 		super(defaultTemplates);
 
+		goalkeeperCheckBox = new JCheckBox("Goalkeeper", true);
+		fieldPlayer1CheckBox = new JCheckBox("Field Player 1", true);
+		fieldPlayer2CheckBox = new JCheckBox("Field Player 2", true);
+		fieldPlayer3CheckBox = new JCheckBox("Field Player 3", true);
+		fieldPlayer4CheckBox = new JCheckBox("Field Player 4", true);
+		fieldPlayer5CheckBox = new JCheckBox("Field Player 5", true);
+		fieldPlayer6CheckBox = new JCheckBox("Field Player 6", true);
+		fieldPlayer7CheckBox = new JCheckBox("Field Player 7", true);
+		fieldPlayer8CheckBox = new JCheckBox("Field Player 8", true);
+		fieldPlayer9CheckBox = new JCheckBox("Field Player 9", true);
+		fieldPlayer10CheckBox = new JCheckBox("Field Player 10", true);
+
 		goalkeeperComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
 		fieldPlayer1ComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
 		fieldPlayer2ComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(false));
@@ -125,17 +151,17 @@ public class FootballFormationTemplatePanel
 		fieldPlayer9SideComboBox = new PpmComboBox<>(sides);
 		fieldPlayer10SideComboBox = new PpmComboBox<>(sides);
 
-		addRow("Goalkeeper", goalkeeperComboBox);
-		addRow("Field player 1", fieldPlayer1ComboBox, fieldPlayer1SideComboBox);
-		addRow("Field player 2", fieldPlayer2ComboBox, fieldPlayer2SideComboBox);
-		addRow("Field player 3", fieldPlayer3ComboBox, fieldPlayer3SideComboBox);
-		addRow("Field player 4", fieldPlayer4ComboBox, fieldPlayer4SideComboBox);
-		addRow("Field player 5", fieldPlayer5ComboBox, fieldPlayer5SideComboBox);
-		addRow("Field player 6", fieldPlayer6ComboBox, fieldPlayer6SideComboBox);
-		addRow("Field player 7", fieldPlayer7ComboBox, fieldPlayer7SideComboBox);
-		addRow("Field player 8", fieldPlayer8ComboBox, fieldPlayer8SideComboBox);
-		addRow("Field player 9", fieldPlayer9ComboBox, fieldPlayer9SideComboBox);
-		addRow("Field player 10", fieldPlayer10ComboBox, fieldPlayer10SideComboBox);
+		addRow(goalkeeperCheckBox, goalkeeperComboBox);
+		addRow(fieldPlayer1CheckBox, fieldPlayer1ComboBox, fieldPlayer1SideComboBox);
+		addRow(fieldPlayer2CheckBox, fieldPlayer2ComboBox, fieldPlayer2SideComboBox);
+		addRow(fieldPlayer3CheckBox, fieldPlayer3ComboBox, fieldPlayer3SideComboBox);
+		addRow(fieldPlayer4CheckBox, fieldPlayer4ComboBox, fieldPlayer4SideComboBox);
+		addRow(fieldPlayer5CheckBox, fieldPlayer5ComboBox, fieldPlayer5SideComboBox);
+		addRow(fieldPlayer6CheckBox, fieldPlayer6ComboBox, fieldPlayer6SideComboBox);
+		addRow(fieldPlayer7CheckBox, fieldPlayer7ComboBox, fieldPlayer7SideComboBox);
+		addRow(fieldPlayer8CheckBox, fieldPlayer8ComboBox, fieldPlayer8SideComboBox);
+		addRow(fieldPlayer9CheckBox, fieldPlayer9ComboBox, fieldPlayer9SideComboBox);
+		addRow(fieldPlayer10CheckBox, fieldPlayer10ComboBox, fieldPlayer10SideComboBox);
 	}
 
 	@Override
@@ -145,37 +171,48 @@ public class FootballFormationTemplatePanel
 			new PositionTemplate<>(
 					"Goalkeeper",
 					goalkeeperComboBox.getSelection(),
-					Side.UNIVERSAL),
+					Side.UNIVERSAL,
+					!goalkeeperCheckBox.isSelected()),
 			getFieldPlayerPositionTemplate(
 				fieldPlayer1SideComboBox.getSelection(),
-				fieldPlayer1ComboBox.getSelection()),
+				fieldPlayer1ComboBox.getSelection(),
+				!fieldPlayer1CheckBox.isSelected()),
 			getFieldPlayerPositionTemplate(
 				fieldPlayer2SideComboBox.getSelection(),
-				fieldPlayer2ComboBox.getSelection()),
+				fieldPlayer2ComboBox.getSelection(),
+				!fieldPlayer2CheckBox.isSelected()),
 			getFieldPlayerPositionTemplate(
 				fieldPlayer3SideComboBox.getSelection(),
-				fieldPlayer3ComboBox.getSelection()),
+				fieldPlayer3ComboBox.getSelection(),
+				!fieldPlayer3CheckBox.isSelected()),
 			getFieldPlayerPositionTemplate(
 				fieldPlayer4SideComboBox.getSelection(),
-				fieldPlayer4ComboBox.getSelection()),
+				fieldPlayer4ComboBox.getSelection(),
+				!fieldPlayer4CheckBox.isSelected()),
 			getFieldPlayerPositionTemplate(
 				fieldPlayer5SideComboBox.getSelection(),
-				fieldPlayer5ComboBox.getSelection()),
+				fieldPlayer5ComboBox.getSelection(),
+				!fieldPlayer5CheckBox.isSelected()),
 			getFieldPlayerPositionTemplate(
 				fieldPlayer6SideComboBox.getSelection(),
-				fieldPlayer6ComboBox.getSelection()),
+				fieldPlayer6ComboBox.getSelection(),
+				!fieldPlayer6CheckBox.isSelected()),
 			getFieldPlayerPositionTemplate(
 				fieldPlayer7SideComboBox.getSelection(),
-				fieldPlayer7ComboBox.getSelection()),
+				fieldPlayer7ComboBox.getSelection(),
+				!fieldPlayer7CheckBox.isSelected()),
 			getFieldPlayerPositionTemplate(
 				fieldPlayer8SideComboBox.getSelection(),
-				fieldPlayer8ComboBox.getSelection()),
+				fieldPlayer8ComboBox.getSelection(),
+				!fieldPlayer8CheckBox.isSelected()),
 			getFieldPlayerPositionTemplate(
 				fieldPlayer9SideComboBox.getSelection(),
-				fieldPlayer9ComboBox.getSelection()),
+				fieldPlayer9ComboBox.getSelection(),
+				!fieldPlayer9CheckBox.isSelected()),
 			getFieldPlayerPositionTemplate(
 				fieldPlayer10SideComboBox.getSelection(),
-				fieldPlayer10ComboBox.getSelection()));
+				fieldPlayer10ComboBox.getSelection(),
+				!fieldPlayer10CheckBox.isSelected()));
 
 		return new FormationTemplate<>(nameComboBox.getText(), positionTemplates);
 	}
@@ -187,8 +224,19 @@ public class FootballFormationTemplatePanel
 		{
 			nameComboBox.setText(template.getName());
 
-			goalkeeperComboBox.setSelectedItem(getAttributeEvaluator(template, 0));
+			goalkeeperCheckBox.setSelected(!getIsIgnored(template, 0));
+			fieldPlayer1CheckBox.setSelected(!getIsIgnored(template, 1));
+			fieldPlayer2CheckBox.setSelected(!getIsIgnored(template, 2));
+			fieldPlayer3CheckBox.setSelected(!getIsIgnored(template, 3));
+			fieldPlayer4CheckBox.setSelected(!getIsIgnored(template, 4));
+			fieldPlayer5CheckBox.setSelected(!getIsIgnored(template, 5));
+			fieldPlayer6CheckBox.setSelected(!getIsIgnored(template, 6));
+			fieldPlayer7CheckBox.setSelected(!getIsIgnored(template, 7));
+			fieldPlayer8CheckBox.setSelected(!getIsIgnored(template, 8));
+			fieldPlayer9CheckBox.setSelected(!getIsIgnored(template, 9));
+			fieldPlayer10CheckBox.setSelected(!getIsIgnored(template, 10));
 
+			goalkeeperComboBox.setSelectedItem(getAttributeEvaluator(template, 0));
 			fieldPlayer1ComboBox.setSelectedItem(getAttributeEvaluator(template, 1));
 			fieldPlayer2ComboBox.setSelectedItem(getAttributeEvaluator(template, 2));
 			fieldPlayer3ComboBox.setSelectedItem(getAttributeEvaluator(template, 3));
@@ -215,8 +263,19 @@ public class FootballFormationTemplatePanel
 		{
 			nameComboBox.setText("");
 
-			goalkeeperComboBox.setSelectedIndex(0);
+			goalkeeperCheckBox.setSelected(true);
+			fieldPlayer1CheckBox.setSelected(true);
+			fieldPlayer2CheckBox.setSelected(true);
+			fieldPlayer3CheckBox.setSelected(true);
+			fieldPlayer4CheckBox.setSelected(true);
+			fieldPlayer5CheckBox.setSelected(true);
+			fieldPlayer6CheckBox.setSelected(true);
+			fieldPlayer7CheckBox.setSelected(true);
+			fieldPlayer8CheckBox.setSelected(true);
+			fieldPlayer9CheckBox.setSelected(true);
+			fieldPlayer10CheckBox.setSelected(true);
 
+			goalkeeperComboBox.setSelectedIndex(0);
 			fieldPlayer1ComboBox.setSelectedIndex(0);
 			fieldPlayer2ComboBox.setSelectedIndex(0);
 			fieldPlayer3ComboBox.setSelectedIndex(0);
@@ -243,12 +302,14 @@ public class FootballFormationTemplatePanel
 
 	private PositionTemplate<FootballAttributes> getFieldPlayerPositionTemplate(
 			Side side,
-			AttributeEvaluator<FootballAttributes> attributeEvaluator)
+			AttributeEvaluator<FootballAttributes> attributeEvaluator,
+			boolean isIgnored)
 	{
 		return new PositionTemplate<>(
 				getPositionName(side, attributeEvaluator),
 				attributeEvaluator,
-				side);
+				side,
+				isIgnored);
 	}
 
 	private String getPositionName(
