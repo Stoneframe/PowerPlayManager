@@ -16,6 +16,7 @@ import javax.swing.event.ListSelectionListener;
 
 import evaluators.PlayerEvaluator;
 import formation.FormationBuilder;
+import gui.calculators.ImprovementCalculatorPanel;
 import gui.formation.FormationBuilderPanel;
 import gui.formation.FormationTemplatePanelFactory;
 import gui.player.AttributesPanel;
@@ -50,6 +51,7 @@ public class MainPanel<A extends Attributes>
 	private JButton groupsButton;
 	private JButton plotButton;
 	private JButton clearRosterButton;
+	private JButton calculatorsButton;
 
 	private Roster<A> roster = new Roster<A>();
 
@@ -253,6 +255,20 @@ public class MainPanel<A extends Attributes>
 			}
 		});
 
+		calculatorsButton = new JButton("Calculators");
+		calculatorsButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				JFrame calculatorFrame = new JFrame("Calculator");
+
+				calculatorFrame.setContentPane(new ImprovementCalculatorPanel());
+				calculatorFrame.pack();
+				calculatorFrame.setLocationRelativeTo(MainPanel.this);
+				calculatorFrame.setVisible(true);
+			}
+		});
+
 		buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		buttonPanel.add(addPlayersButton);
 		buttonPanel.add(removePlayersButton);
@@ -260,6 +276,7 @@ public class MainPanel<A extends Attributes>
 		buttonPanel.add(groupsButton);
 		buttonPanel.add(plotButton);
 		buttonPanel.add(clearRosterButton);
+		buttonPanel.add(calculatorsButton);
 
 		setLayout(new BorderLayout());
 
