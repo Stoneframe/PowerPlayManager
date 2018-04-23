@@ -31,6 +31,11 @@ public abstract class ImprovementCalculator
 
 			for (int i = 0; i < numberOfAttributes; i++)
 			{
+				if (columns[i] == null)
+				{
+					return "Unable to calculate";
+				}
+
 				Matcher matcher = pattern.matcher(columns[i]);
 
 				if (matcher.matches())
