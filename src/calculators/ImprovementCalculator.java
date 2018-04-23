@@ -4,26 +4,22 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ImprovementCalculator
+public abstract class ImprovementCalculator
 {
-	private final String[] ATTRIBUTES = new String[]
+	private final String[] attributes;
+
+	protected ImprovementCalculator(String[] attributes)
 	{
-			"Goa",
-			"Fip",
-			"Sho",
-			"Blk",
-			"Pas",
-			"Tec",
-			"Spe",
-			"Agr",
-	};
-	private final int NUMBER_OF_ATTRIBUTES = ATTRIBUTES.length;
+		this.attributes = attributes;
+	}
 
 	public String calculate(String input)
 	{
-		double[] sums = new double[NUMBER_OF_ATTRIBUTES];
-		int[] counts = new int[NUMBER_OF_ATTRIBUTES];
-		double[] averages = new double[NUMBER_OF_ATTRIBUTES];
+		int numberOfAttributes = attributes.length;
+
+		double[] sums = new double[numberOfAttributes];
+		int[] counts = new int[numberOfAttributes];
+		double[] averages = new double[numberOfAttributes];
 
 		String[] rows = input.split("\n");
 
@@ -31,9 +27,9 @@ public class ImprovementCalculator
 
 		for (String row : rows)
 		{
-			String[] columns = Arrays.copyOfRange(row.split("\t"), 2, 2 + NUMBER_OF_ATTRIBUTES);
+			String[] columns = Arrays.copyOfRange(row.split("\t"), 2, 2 + numberOfAttributes);
 
-			for (int i = 0; i < NUMBER_OF_ATTRIBUTES; i++)
+			for (int i = 0; i < numberOfAttributes; i++)
 			{
 				Matcher matcher = pattern.matcher(columns[i]);
 
@@ -45,7 +41,7 @@ public class ImprovementCalculator
 			}
 		}
 
-		for (int i = 0; i < NUMBER_OF_ATTRIBUTES; i++)
+		for (int i = 0; i < numberOfAttributes; i++)
 		{
 			if (counts[i] != 0)
 			{
@@ -55,9 +51,9 @@ public class ImprovementCalculator
 
 		StringBuilder builder = new StringBuilder();
 
-		for (int i = 0; i < NUMBER_OF_ATTRIBUTES; i++)
+		for (int i = 0; i < numberOfAttributes; i++)
 		{
-			builder.append(String.format("%s:\t%.2f\n", ATTRIBUTES[i], averages[i]));
+			builder.append(String.format("%s:\t%.2f\n", attributes[i], averages[i]));
 		}
 
 		return builder.toString();

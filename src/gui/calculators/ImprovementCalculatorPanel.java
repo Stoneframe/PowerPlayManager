@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import calculators.ImprovementCalculator;
+import gui.calculators.handball.HandballImprovementCalculator;
 
 public class ImprovementCalculatorPanel
 	extends JPanel
@@ -27,7 +28,7 @@ public class ImprovementCalculatorPanel
 
 	public ImprovementCalculatorPanel()
 	{
-		calculator = new ImprovementCalculator();
+		calculator = new HandballImprovementCalculator();
 
 		inputTextArea = new JTextArea();
 		inputTextArea.setBorder(BorderFactory.createEtchedBorder());
