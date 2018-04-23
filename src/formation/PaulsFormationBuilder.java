@@ -133,13 +133,13 @@ public class PaulsFormationBuilder<A extends Attributes>
 		private Player<A> getPlayerAtRank(int rank)
 		{
 			return roster
-					.stream()
-					.sorted(
-						new RatingComparator<A>(positionTemplate.getAttributeEvaluator())
-								.reversed())
-					.skip(rank)
-					.findFirst()
-					.orElse(null);
+				.stream()
+				.sorted(
+					new RatingComparator<A>(positionTemplate.getAttributeEvaluator())
+						.reversed())
+				.skip(rank)
+				.findFirst()
+				.orElse(null);
 		}
 	}
 }

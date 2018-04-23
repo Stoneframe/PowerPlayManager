@@ -2,6 +2,7 @@ package gui.icehockey;
 
 import java.util.List;
 
+import calculators.icehockey.IceHockeyImprovementCalculator;
 import evaluators.PlayerEvaluator;
 import formation.PaulsFormationBuilder;
 import gui.MainPanel;
@@ -20,6 +21,7 @@ public class IceHockeyMainPanel
 		super(
 			new IceHockeyAttributesPanel(),
 			new IceHockeyFormationTemplatePanelFactory(),
+			new IceHockeyImprovementCalculator(),
 			new PaulsFormationBuilder<>(),
 			parsers,
 			playerEvaluator);

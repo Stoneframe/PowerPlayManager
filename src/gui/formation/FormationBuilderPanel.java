@@ -240,9 +240,9 @@ public class FormationBuilderPanel<A extends Attributes>
 	private boolean isEnoughPlayers(Roster<?> roster)
 	{
 		int totalNbrOfRequiredPlayers = getFormationTemplates()
-				.stream()
-				.mapToInt(ft -> ft.getNumberOfRequiredPlayers())
-				.sum();
+			.stream()
+			.mapToInt(ft -> ft.getNumberOfRequiredPlayers())
+			.sum();
 
 		return totalNbrOfRequiredPlayers <= roster.size();
 	}

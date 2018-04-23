@@ -2,6 +2,7 @@ package gui.handball;
 
 import java.util.List;
 
+import calculators.handball.HandballImprovementCalculator;
 import evaluators.PlayerEvaluator;
 import formation.PaulsFormationBuilder;
 import gui.MainPanel;
@@ -20,6 +21,7 @@ public class HandballMainPanel
 		super(
 			new HandballAttributesPanel(),
 			new HandballFormationTemplatePanelFactory(),
+			new HandballImprovementCalculator(),
 			new PaulsFormationBuilder<>(),
 			parsers,
 			playerEvaluator);

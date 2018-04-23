@@ -2,13 +2,15 @@ package gui.football;
 
 import java.util.List;
 
+import calculators.football.FootballImprovementCalculator;
 import evaluators.PlayerEvaluator;
 import formation.PaulsFormationBuilder;
 import gui.MainPanel;
 import model.football.FootballAttributes;
 import parsers.players.PlayersParser;
 
-public class FootballMainPanel extends MainPanel<FootballAttributes>
+public class FootballMainPanel
+	extends MainPanel<FootballAttributes>
 {
 	private static final long serialVersionUID = -4461292547199081549L;
 
@@ -19,6 +21,7 @@ public class FootballMainPanel extends MainPanel<FootballAttributes>
 		super(
 			new FootballAttributesPanel(),
 			new FootballFormationTemplatePanelFactory(),
+			new FootballImprovementCalculator(),
 			new PaulsFormationBuilder<>(),
 			parsers,
 			playerEvaluator);

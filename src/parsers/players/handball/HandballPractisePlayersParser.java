@@ -123,7 +123,7 @@ public class HandballPractisePlayersParser
 		int rating = Integer.parseInt(text.substring(0, text.length() - 2));
 
 		int quality = Integer
-				.parseInt(text.substring(text.length() - 2, text.length()));
+			.parseInt(text.substring(text.length() - 2, text.length()));
 
 		return new int[]
 		{

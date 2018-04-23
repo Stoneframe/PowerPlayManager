@@ -14,6 +14,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import calculators.ImprovementCalculator;
 import evaluators.PlayerEvaluator;
 import formation.FormationBuilder;
 import gui.calculators.ImprovementCalculatorPanel;
@@ -58,6 +59,7 @@ public class MainPanel<A extends Attributes>
 	public MainPanel(
 			AttributesPanel<A> attributesPanel,
 			FormationTemplatePanelFactory<A> formationTemplatePanelFactory,
+			ImprovementCalculator improvementCalculator,
 			FormationBuilder<A> formationBuilder,
 			List<PlayersParser<A>> parsers,
 			PlayerEvaluator<A> playerEvaluator)
@@ -262,7 +264,8 @@ public class MainPanel<A extends Attributes>
 			{
 				JFrame calculatorFrame = new JFrame("Calculator");
 
-				calculatorFrame.setContentPane(new ImprovementCalculatorPanel());
+				calculatorFrame.setContentPane(
+					new ImprovementCalculatorPanel(improvementCalculator));
 				calculatorFrame.pack();
 				calculatorFrame.setLocationRelativeTo(MainPanel.this);
 				calculatorFrame.setVisible(true);

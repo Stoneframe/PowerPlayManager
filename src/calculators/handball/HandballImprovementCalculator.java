@@ -1,4 +1,4 @@
-package gui.calculators.handball;
+package calculators.handball;
 
 import calculators.ImprovementCalculator;
 

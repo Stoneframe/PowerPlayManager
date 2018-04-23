@@ -14,7 +14,7 @@ public class FootballGoalkeeperAttributeEvaluator
 	private static final int TEC = HIGH;
 	private static final int SPE = HIGH;
 	private static final int HEA = LOW;
-	
+
 	public FootballGoalkeeperAttributeEvaluator()
 	{
 		super(NAME, GOA, DEF, MID, OFF, SHO, PAS, TEC, SPE, HEA);

@@ -14,7 +14,7 @@ public class FootballCenterBackAttributeEvaluator
 	private static final int TEC = MEDIUM;
 	private static final int SPE = MEDIUM;
 	private static final int HEA = MEDIUM;
-	
+
 	public FootballCenterBackAttributeEvaluator()
 	{
 		super(NAME, GOA, DEF, MID, OFF, SHO, PAS, TEC, SPE, HEA);

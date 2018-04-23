@@ -95,7 +95,7 @@ public class FootballOverviewPlayersParser
 	private static FootballAttributes parseAttributes(String[] texts)
 	{
 		FootballAttributes attributes = new FootballAttributes();
-		
+
 		attributes.setGoa(Integer.parseInt(texts[0].trim()));
 		attributes.setDef(Integer.parseInt(texts[1].trim()));
 		attributes.setMid(Integer.parseInt(texts[2].trim()));
@@ -105,7 +105,7 @@ public class FootballOverviewPlayersParser
 		attributes.setTec(Integer.parseInt(texts[6].trim()));
 		attributes.setSpe(Integer.parseInt(texts[7].trim()));
 		attributes.setHea(Integer.parseInt(texts[8].trim()));
-		
+
 		return attributes;
 	}
 }
