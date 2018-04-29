@@ -20,6 +20,6 @@ public class HandballPlayer
 	@Override
 	public String toJson()
 	{
-		return "{" + "\"name\":\"" + name + "\",\"age\":" + age + "}";
+		return "{" + "\"name\":\"" + name + "\",\"age\":" + age + ",\"cl\":" + cl + ",\"side\":\"" + side + "\"}";
 	}
 }

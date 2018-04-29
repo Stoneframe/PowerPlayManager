@@ -19,6 +19,8 @@ import gui.gson.SideAdapter;
 import model.Attributes;
 import model.Roster;
 import model.Side;
+import model.handball.HandballAttributes;
+import model.handball.HandballPlayer;
 
 public class FileHandler
 {
@@ -73,18 +75,25 @@ public class FileHandler
 	{
 		try
 		{
+			Roster<HandballAttributes> roster = new Roster<>();
 			JsonReader reader = new JsonReader(new FileReader(file));
-			JsonElement jelement = new JsonParser().parse("{\"players\":[{\"name\":\"Sebastian Lilja\",\"age\":23}]}");
-			jelement = new JsonParser().parse("{\"players\":[{\"name\":\"Sebastian Lilja\",\"age\":23},{\"name\":\"Oliver Gustavsson\",\"age\":23},{\"name\":\"Martin Kristiansson\",\"age\":22},{\"name\":\"Jim Söderqvist\",\"age\":23}]}");
-			jelement = new JsonParser().parse(reader);
+//			JsonElement jelement = new JsonParser().parse("{\"players\":[{\"name\":\"Sebastian Lilja\",\"age\":23}]}");
+//			jelement = new JsonParser().parse("{\"players\":[{\"name\":\"Sebastian Lilja\",\"age\":23},{\"name\":\"Oliver Gustavsson\",\"age\":23},{\"name\":\"Martin Kristiansson\",\"age\":22},{\"name\":\"Jim Söderqvist\",\"age\":23}]}");
+			JsonElement jelement = new JsonParser().parse(reader);
 			JsonObject  jobject = jelement.getAsJsonObject();
 			JsonArray jarray = jobject.getAsJsonArray("players");
 			for (int i=0; i<jarray.size(); i++) {
 				JsonObject player = jarray.get(i).getAsJsonObject();
 				String name = player.get("name").getAsString();
 				int age = player.get("age").getAsInt();
-				System.out.println("name: " + name + " age: " + age);
+				int cl = player.get("cl").getAsInt();
+				String side = player.get("side").getAsString();
+				System.out.println("name: " + name + " age: " + age + " " + cl + " " + side);
+				roster.add(new HandballPlayer(name, age, cl, Side.UNKNOWN, new HandballAttributes(), 0.01));
 			}
+			
+			System.out.println("loaded roster:");
+			System.out.println(roster.toJson());
 		}
 		catch (FileNotFoundException e)
 		{
