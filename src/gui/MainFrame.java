@@ -9,10 +9,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import evaluators.FacilityEvaluator;
 import evaluators.football.FootballCenterBackAttributeEvaluator;
-import evaluators.football.FootballCenterMidfielderAttributeEvaluator;
 import evaluators.football.FootballCenterForwardAttributeEvaluator;
+import evaluators.football.FootballCenterMidfielderAttributeEvaluator;
 import evaluators.football.FootballFullBackAttributeEvaluator;
 import evaluators.football.FootballGoalkeeperAttributeEvaluator;
 import evaluators.football.FootballPlayerEvaluator;
@@ -79,7 +78,6 @@ public class MainFrame
 					new HandballPractiseProPlayersParser()),
 				new HandballPlayerEvaluator(
 						new Settings(new SettingStorage("handball")),
-						new FacilityEvaluator(),
 						Arrays.asList(
 							new HandballGoalieAttributeEvaluator(),
 							// new HandballBackAttributeEvaluator(),
@@ -101,7 +99,6 @@ public class MainFrame
 					new IceHockeyFormationPlayersParser()),
 				new IceHockeyPlayerEvaluator(
 						new Settings(new SettingStorage("icehockey")),
-						new FacilityEvaluator(),
 						Arrays.asList(
 							new IceHockeyGoalieAttributeEvaluator(),
 							new IceHockeyForwardAttributeEvaluator(),
@@ -120,7 +117,6 @@ public class MainFrame
 					new FootballPractiseProPlayersParser()),
 				new FootballPlayerEvaluator(
 						new Settings(new SettingStorage("football")),
-						new FacilityEvaluator(),
 						Arrays.asList(
 							new FootballGoalkeeperAttributeEvaluator(),
 							new FootballFullBackAttributeEvaluator(),

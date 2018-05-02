@@ -19,14 +19,12 @@ public class PlayerEvaluator<A extends Attributes>
 	private Settings settings;
 
 	private List<AttributeEvaluator<A>> attributeEvaluators;
-	private FacilityEvaluator facilityEvaluator;
 
 	public PlayerEvaluator(
 			double a,
 			double b,
 			double c,
 			Settings settings,
-			FacilityEvaluator facilityEvaluator,
 			List<AttributeEvaluator<A>> attributeEvaluators)
 	{
 		this.a = a;
@@ -34,7 +32,6 @@ public class PlayerEvaluator<A extends Attributes>
 		this.c = c;
 		this.settings = settings;
 		this.attributeEvaluators = attributeEvaluators;
-		this.facilityEvaluator = facilityEvaluator;
 	}
 
 	public List<AttributeEvaluator<A>> getAttributeEvaluators(boolean ignoreMacroPosition)
@@ -146,22 +143,29 @@ public class PlayerEvaluator<A extends Attributes>
 
 	private double calculatePlayerTraining(Player<A> player)
 	{
-		return getTrainingFacilityEffectivness() * getEstimatedPlayerTraining(player);
+		double weightedQuality = getBestPositionQuality(player).getValue();
+
+		return ((getFacilityEffectiveness() * 0.08 + 0.04) * weightedQuality / 100)
+				* getAgeClModifier(player);
 	}
 
-	private double getTrainingFacilityEffectivness()
+	private double getFacilityEffectiveness()
 	{
-		double facilityEffectivness = facilityEvaluator
-			.getOverallEffectivness(getFacilityLevel(), getStaffEffectivness());
-
-		return (40 + facilityEffectivness) / 145;
+		return (double)getFacilityLevel() * (1 + (double)getStaffEffectivness() / 200);
 	}
 
-	private double getEstimatedPlayerTraining(Player<A> player)
+	private static double getAgeClModifier(Player<?> player)
 	{
-		return -0.0228285 * player.getAge()
-				+ 0.1290817 * player.getCL()
-				+ 0.0093809 * getBestPositionQuality(player).getValue();
+		int age = player.getAge() - 15;
+		int cl = player.getCL();
+
+		return 0.15882
+				+ 0.000012542 * Math.pow(age, 3)
+				- 0.000068085 * Math.pow(age, 2)
+				- 0.025609 * Math.pow(age, 1)
+				- 0.0040358 * Math.pow(cl, 3)
+				+ 0.0075319 * Math.pow(cl, 2)
+				+ 0.24262 * Math.pow(cl, 1);
 	}
 
 	private static double getCLModifier(int cl, int age)

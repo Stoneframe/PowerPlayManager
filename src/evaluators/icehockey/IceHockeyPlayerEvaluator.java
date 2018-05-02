@@ -3,7 +3,6 @@ package evaluators.icehockey;
 import java.util.List;
 
 import evaluators.AttributeEvaluator;
-import evaluators.FacilityEvaluator;
 import evaluators.PlayerEvaluator;
 import model.icehockey.IceHockeyAttributes;
 import settings.Settings;
@@ -15,9 +14,8 @@ public class IceHockeyPlayerEvaluator
 
 	public IceHockeyPlayerEvaluator(
 			Settings settings,
-			FacilityEvaluator facilityEvaluator,
 			List<AttributeEvaluator<IceHockeyAttributes>> attributeEvaluators)
 	{
-		super(A, B, C, settings, facilityEvaluator, attributeEvaluators);
+		super(A, B, C, settings, attributeEvaluators);
 	}
 }

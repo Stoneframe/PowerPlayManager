@@ -3,7 +3,6 @@ package evaluators.football;
 import java.util.List;
 
 import evaluators.AttributeEvaluator;
-import evaluators.FacilityEvaluator;
 import evaluators.PlayerEvaluator;
 import model.football.FootballAttributes;
 import settings.Settings;
@@ -15,9 +14,8 @@ public class FootballPlayerEvaluator
 
 	public FootballPlayerEvaluator(
 			Settings settings,
-			FacilityEvaluator facilityEvaluator,
 			List<AttributeEvaluator<FootballAttributes>> attributeEvaluators)
 	{
-		super(A, B, C, settings, facilityEvaluator, attributeEvaluators);
+		super(A, B, C, settings, attributeEvaluators);
 	}
 }

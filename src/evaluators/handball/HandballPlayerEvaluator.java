@@ -3,7 +3,6 @@ package evaluators.handball;
 import java.util.List;
 
 import evaluators.AttributeEvaluator;
-import evaluators.FacilityEvaluator;
 import evaluators.PlayerEvaluator;
 import model.handball.HandballAttributes;
 import settings.Settings;
@@ -15,9 +14,8 @@ public class HandballPlayerEvaluator
 
 	public HandballPlayerEvaluator(
 			Settings settings,
-			FacilityEvaluator facilityEvaluator,
 			List<AttributeEvaluator<HandballAttributes>> attributeEvaluators)
 	{
-		super(A, B, C, settings, facilityEvaluator, attributeEvaluators);
+		super(A, B, C, settings, attributeEvaluators);
 	}
 }
