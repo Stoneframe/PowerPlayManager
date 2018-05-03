@@ -112,8 +112,8 @@ public class FootballAttributesPanel
 		goaQTextField.setText(intToString(attributes::getQGoa));
 		defTextField.setText(intToString(attributes::getDef));
 		defQTextField.setText(intToString(attributes::getQDef));
-		midTextField.setText(intToString(attributes::getOff));
-		midQTextField.setText(intToString(attributes::getQOff));
+		midTextField.setText(intToString(attributes::getMid));
+		midQTextField.setText(intToString(attributes::getQMid));
 		offTextField.setText(intToString(attributes::getOff));
 		offQTextField.setText(intToString(attributes::getQOff));
 		shoTextField.setText(intToString(attributes::getSho));
