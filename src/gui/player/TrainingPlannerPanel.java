@@ -36,7 +36,7 @@ public class TrainingPlannerPanel<A extends Attributes>
 		positionComboBox = new PpmComboBox<>(playerEvaluator.getAttributeEvaluators(true));
 		positionComboBox.addActionListener(e -> onAttributeEvaluatorSelected());
 
-		nextAttributeTextField = new JTextField(7);
+		nextAttributeTextField = new JTextField();
 		nextAttributeTextField.setEditable(false);
 
 		setBorder(
@@ -48,16 +48,15 @@ public class TrainingPlannerPanel<A extends Attributes>
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
-		gbc.fill = GridBagConstraints.BOTH;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.weightx = 1;
 
-		gbc.gridx = 0;
-		gbc.weightx = 2;
+		gbc.gridy = 0;
 		add(positionComboBox, gbc);
 
-		gbc.gridx = 1;
-		gbc.weightx = 1;
-		add(nextAttributeTextField);
+		gbc.gridy = 1;
+		add(nextAttributeTextField, gbc);
 	}
 
 	public void bind(A attributes)
