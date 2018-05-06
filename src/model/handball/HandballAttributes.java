@@ -1,5 +1,7 @@
 package model.handball;
 
+import com.google.gson.Gson;
+
 import model.Attributes;
 
 public class HandballAttributes
@@ -270,6 +272,9 @@ public class HandballAttributes
 	@Override
 	public String toJson()
 	{
+//		Gson gson = new Gson(); 
+//		String att = gson.toJson(this);
+//		System.out.println("Json attributes (this): " + att);
 		return "{" +
 				"goa:" + goa +
 				",fip:" + fip +

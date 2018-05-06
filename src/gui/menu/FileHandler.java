@@ -76,17 +76,24 @@ public class FileHandler
 		}
 		return null;
 	}
+	
+//	private static Side parseSide(String side) {
+//		
+//	}
 
 	private static HandballAttributes parseHandballAttributes(JsonObject attr)
 	{
 		HandballAttributes attributes = new HandballAttributes();
 		attributes.setGoa(attr.get("goa").getAsInt());
+		attributes.setQGoa(attr.get("qGoa").getAsInt());
+		attributes.setGoa(attr.get("fip").getAsInt());
+		attributes.setQGoa(attr.get("qFip").getAsInt());
+		attributes.setGoa(attr.get("sho").getAsInt());
+		attributes.setQGoa(attr.get("qSho").getAsInt());
+		attributes.setGoa(attr.get("blk").getAsInt());
+		attributes.setQGoa(attr.get("qBlk").getAsInt());
 		//XXX
 //		int age = player.get("age").getAsInt();
-		int goa;
-		int fip;
-		int sho;
-		int blk;
 		int pas;
 		int tec;
 		int spe;
