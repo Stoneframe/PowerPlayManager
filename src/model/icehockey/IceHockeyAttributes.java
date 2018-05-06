@@ -278,4 +278,11 @@ public class IceHockeyAttributes
 			() -> other.getQAgr(),
 			(v) -> this.setQAgr(v));
 	}
+
+	@Override
+	public String toJson()
+	{
+		// TODO Auto-generated method stub
+		return "not implemented";
+	}
 }

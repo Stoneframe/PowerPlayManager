@@ -20,6 +20,12 @@ public class HandballPlayer
 	@Override
 	public String toJson()
 	{
-		return "{" + "\"name\":\"" + name + "\",\"age\":" + age + ",\"cl\":" + cl + ",\"side\":\"" + side + "\"}";
+		return "{" + 
+				"name:\"" + name + 
+				"\",\"age\":" + age + 
+				",\"cl\":" + cl + 
+				",\"side\":\"" + side + 
+				"\",attributes:" + attributes.toJson() +
+				"}";
 	}
 }

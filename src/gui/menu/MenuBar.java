@@ -47,7 +47,9 @@ public class MenuBar
 				{
 					File file = fc.getSelectedFile();
 					// Roster roster =
-					FileHandler.loadRosterFromFile(file);
+					MainPanel selectedTab = (MainPanel) tabs.getSelectedComponent();
+					Roster<?> roster = selectedTab.getRoster();
+					FileHandler.loadRosterFromFile(file, roster);
 				}
 			}
 		});
