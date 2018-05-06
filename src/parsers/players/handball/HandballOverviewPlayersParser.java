@@ -5,10 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Player;
-import model.Side;
 import model.handball.HandballAttributes;
 import model.handball.HandballPlayer;
 import parsers.ParseException;
+import parsers.SideParser;
 import parsers.players.PlayersParser;
 
 public class HandballOverviewPlayersParser
@@ -38,7 +38,7 @@ public class HandballOverviewPlayersParser
 						parseName(columns[0]),
 						parseAge(columns[2].trim()),
 						parseCL(columns[5]),
-						parseSide(columns[16]),
+						SideParser.parseSide(columns[16]),
 						parseAttributes(Arrays.copyOfRange(columns, 6, 14)),
 						0);
 
@@ -68,28 +68,6 @@ public class HandballOverviewPlayersParser
 	private static int parseCL(String text)
 	{
 		return Integer.parseInt(text.split("/")[0]);
-	}
-
-	private static Side parseSide(String text)
-	{
-		text = text.trim();
-
-		if (text.equals("U"))
-		{
-			return Side.UNIVERSAL;
-		}
-		else if (text.equals("L"))
-		{
-			return Side.LEFT;
-		}
-		else if (text.equals("R"))
-		{
-			return Side.RIGHT;
-		}
-		else
-		{
-			return Side.UNKNOWN;
-		}
 	}
 
 	private static HandballAttributes parseAttributes(String[] texts)

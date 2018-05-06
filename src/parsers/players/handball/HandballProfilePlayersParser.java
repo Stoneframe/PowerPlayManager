@@ -8,6 +8,7 @@ import model.Side;
 import model.handball.HandballAttributes;
 import model.handball.HandballPlayer;
 import parsers.ParseException;
+import parsers.SideParser;
 import parsers.players.PlayersParser;
 
 public class HandballProfilePlayersParser
@@ -84,22 +85,7 @@ public class HandballProfilePlayersParser
 		String[] sideTextElements = sideText.split("\t");
 		String side = sideTextElements[sideTextElements.length - 1];
 
-		if (side.equals("Universal"))
-		{
-			return Side.UNIVERSAL;
-		}
-		else if (side.equals("Vänster"))
-		{
-			return Side.LEFT;
-		}
-		else if (side.equals("Höger"))
-		{
-			return Side.RIGHT;
-		}
-		else
-		{
-			return Side.UNKNOWN;
-		}
+		return SideParser.parseSide(side);
 	}
 
 	private static HandballAttributes parseAttributes(String text)

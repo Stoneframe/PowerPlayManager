@@ -8,6 +8,7 @@ import model.Side;
 import model.icehockey.IceHockeyAttributes;
 import model.icehockey.IceHockeyPlayer;
 import parsers.ParseException;
+import parsers.SideParser;
 import parsers.players.PlayersParser;
 
 public class IceHockeyProfilePlayersParser
@@ -83,22 +84,7 @@ public class IceHockeyProfilePlayersParser
 				.get()
 				.split("\t")[1];
 
-		if (side.equals("Universal"))
-		{
-			return Side.UNIVERSAL;
-		}
-		else if (side.equals("Vänster"))
-		{
-			return Side.LEFT;
-		}
-		else if (side.equals("Höger"))
-		{
-			return Side.RIGHT;
-		}
-		else
-		{
-			return Side.UNKNOWN;
-		}
+		return SideParser.parseSide(side);
 	}
 
 	private static IceHockeyAttributes parseAttributes(String text)

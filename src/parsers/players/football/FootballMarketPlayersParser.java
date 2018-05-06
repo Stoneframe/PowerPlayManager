@@ -5,10 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Player;
-import model.Side;
 import model.football.FootballAttributes;
 import model.football.FootballPlayer;
 import parsers.ParseException;
+import parsers.SideParser;
 import parsers.players.PlayersParser;
 
 public class FootballMarketPlayersParser
@@ -36,7 +36,7 @@ public class FootballMarketPlayersParser
 						parseName(lines[i]),
 						parseAge(lines[i + 3].trim().split("\t")[0].trim()),
 						parseCL(lines[i + 3].trim().split("\t")[2]),
-						parseSide(lines[i + 3].trim().split("\t")[14]),
+						SideParser.parseSide(lines[i + 3].trim().split("\t")[14]),
 						parseAttributes(Arrays.copyOfRange(lines[i + 3].trim().split("\t"), 3, 12)),
 						0);
 
@@ -66,26 +66,6 @@ public class FootballMarketPlayersParser
 	private static int parseCL(String text)
 	{
 		return Integer.parseInt(text.split("/")[0]);
-	}
-
-	private static Side parseSide(String text)
-	{
-		if (text.equals("U"))
-		{
-			return Side.UNIVERSAL;
-		}
-		else if (text.equals("L"))
-		{
-			return Side.LEFT;
-		}
-		else if (text.equals("R"))
-		{
-			return Side.RIGHT;
-		}
-		else
-		{
-			return Side.UNKNOWN;
-		}
 	}
 
 	private static FootballAttributes parseAttributes(String[] texts)

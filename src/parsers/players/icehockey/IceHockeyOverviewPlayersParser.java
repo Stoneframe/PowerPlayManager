@@ -5,10 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Player;
-import model.Side;
 import model.icehockey.IceHockeyAttributes;
 import model.icehockey.IceHockeyPlayer;
 import parsers.ParseException;
+import parsers.SideParser;
 import parsers.players.PlayersParser;
 
 public class IceHockeyOverviewPlayersParser
@@ -53,7 +53,7 @@ public class IceHockeyOverviewPlayersParser
 				parseName(columns[0]),
 				parseAge(columns[2]),
 				parseCL(columns[5]),
-				parseSide(columns[15]),
+				SideParser.parseSide(columns[15]),
 				parseAttributes(Arrays.copyOfRange(columns, 6, 14)),
 				0);
 	}
@@ -73,26 +73,6 @@ public class IceHockeyOverviewPlayersParser
 	private static int parseCL(String text)
 	{
 		return Integer.parseInt(text.split("/")[0]);
-	}
-
-	private static Side parseSide(String text)
-	{
-		if (text.equals("U"))
-		{
-			return Side.UNIVERSAL;
-		}
-		else if (text.equals("L"))
-		{
-			return Side.LEFT;
-		}
-		else if (text.equals("R"))
-		{
-			return Side.RIGHT;
-		}
-		else
-		{
-			return Side.UNKNOWN;
-		}
 	}
 
 	private static IceHockeyAttributes parseAttributes(String[] texts)

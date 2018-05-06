@@ -9,6 +9,7 @@ import model.Side;
 import model.icehockey.IceHockeyAttributes;
 import model.icehockey.IceHockeyPlayer;
 import parsers.ParseException;
+import parsers.SideParser;
 import parsers.players.PlayersParser;
 
 public class IceHockeyMarketPlayersParser
@@ -77,22 +78,7 @@ public class IceHockeyMarketPlayersParser
 	{
 		text = text.split("\t")[13];
 
-		if (text.equals("U"))
-		{
-			return Side.UNIVERSAL;
-		}
-		else if (text.equals("L"))
-		{
-			return Side.LEFT;
-		}
-		else if (text.equals("R"))
-		{
-			return Side.RIGHT;
-		}
-		else
-		{
-			return Side.UNKNOWN;
-		}
+		return SideParser.parseSide(text);
 	}
 
 	private static IceHockeyAttributes parseAttributes(String text)
