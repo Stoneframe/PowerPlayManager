@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import evaluators.football.FootballCenterBackAttributeEvaluator;
 import evaluators.football.FootballCenterForwardAttributeEvaluator;
@@ -64,6 +66,8 @@ public class MainFrame
 	private IceHockeyMainPanel iceHockeyPanel;
 	private FootballMainPanel footballPanel;
 	private HandballMainPanel handballPanel;
+
+	private SettingStorage settingStorage = new SettingStorage("main");
 
 	public MainFrame()
 	{
@@ -130,6 +134,15 @@ public class MainFrame
 		tabbedPane.addTab("Ice Hockey", iceHockeyPanel);
 		tabbedPane.addTab("Football", footballPanel);
 		tabbedPane.addTab("Handball", handballPanel);
+
+		tabbedPane.setSelectedIndex(settingStorage.getIntSetting("previousTabIndex", 0));
+		tabbedPane.addChangeListener(new ChangeListener()
+		{
+			public void stateChanged(ChangeEvent e)
+			{
+				settingStorage.setIntSetting("previousTabIndex", tabbedPane.getSelectedIndex());
+			}
+		});
 
 		setLayout(new BorderLayout());
 
