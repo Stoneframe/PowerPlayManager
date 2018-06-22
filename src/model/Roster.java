@@ -159,11 +159,12 @@ public class Roster<A extends Attributes>
 		return Collections.unmodifiableList(groups);
 	}
 
-	public String toJson()
+	public String toJson(String sport)
 	{
 		StringBuilder sb = new StringBuilder();
 		//Begin Roster object
 		sb.append("{");
+		sb.append("sport:" + sport + ",");//xxxx
 		//Begin players list
 		sb.append("\"players\":[");
 		for (Player<?> p : players) {

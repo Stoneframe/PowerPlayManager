@@ -58,6 +58,10 @@ import settings.Settings;
 public class MainFrame
 	extends JFrame
 {
+	public static final String HANDBALL_TITLE = "Handball";
+	public static final String ICE_HOCKEY_TITLE = "Ice Hockey";
+	public static final String FOOTBALL_TITLE = "Football";
+
 	private static final long serialVersionUID = -8026416994513756565L;
 
 	private JTabbedPane tabbedPane;
@@ -128,9 +132,9 @@ public class MainFrame
 							new FootballCenterForwardAttributeEvaluator())));
 
 		tabbedPane = new JTabbedPane();
-		tabbedPane.addTab("Handball", handballPanel);
-		tabbedPane.addTab("Ice Hockey", iceHockeyPanel);
-		tabbedPane.addTab("Football", footballPanel);
+		tabbedPane.addTab(HANDBALL_TITLE, handballPanel);
+		tabbedPane.addTab(ICE_HOCKEY_TITLE, iceHockeyPanel);
+		tabbedPane.addTab(FOOTBALL_TITLE, footballPanel);
 
 		setLayout(new BorderLayout());
 

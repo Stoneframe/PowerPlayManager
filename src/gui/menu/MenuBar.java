@@ -65,10 +65,14 @@ public class MenuBar
 				int returnVal = fc.showSaveDialog(parentComponent);
 				if (returnVal == JFileChooser.APPROVE_OPTION)
 				{
+					
 					MainPanel selectedTab = (MainPanel) tabs.getSelectedComponent();
+					int index = tabs.getSelectedIndex();
+					String sport = tabs.getTitleAt(index);
+					System.out.println("Saving " + sport);
 					Roster<?> roster = selectedTab.getRoster();
 					File file = fc.getSelectedFile();
-					FileHandler.saveRosterToFile(file, roster);
+					FileHandler.saveRosterToFile(file, roster, sport);
 				}
 			}
 		});

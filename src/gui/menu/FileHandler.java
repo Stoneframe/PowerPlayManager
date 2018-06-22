@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import parsers.SideParser;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -17,7 +19,6 @@ import com.google.gson.stream.JsonReader;
 import model.Attributes;
 import model.Player;
 import model.Roster;
-import model.Side;
 import model.handball.HandballAttributes;
 import model.handball.HandballPlayer;
 
@@ -25,14 +26,15 @@ public class FileHandler
 {
 	public static <A extends Attributes> void saveRosterToFile(
 			File file,
-			Roster<A> roster)
+			Roster<A> roster,
+			String sport)
 	{
-		System.out.println(roster.toJson());
+		System.out.println(roster.toJson(sport));
 		FileWriter writer;
 		try
 		{
 			writer = new FileWriter(file);
-			writer.write(roster.toJson());
+			writer.write(roster.toJson(sport));
 			writer.close();
 		}
 		catch (IOException e)
@@ -62,7 +64,14 @@ public class FileHandler
 				//XXX
 				JsonObject attr = player.get("attributes").getAsJsonObject();
 				HandballAttributes attributes = parseHandballAttributes(attr);
-				fileRoster.add((Player<A>) new HandballPlayer(name, age, cl, Side.UNKNOWN, new HandballAttributes(), 0.01));
+				double training = player.get("training").getAsDouble();
+				Player newPlayer = new HandballPlayer(name,
+													  age, 
+													  cl, 
+													  SideParser.parseSide(side), 
+													  attributes, 
+													  training);
+				fileRoster.add(newPlayer); 
 			}
 			
 //			System.out.println("loaded roster:");
@@ -77,37 +86,27 @@ public class FileHandler
 		return null;
 	}
 	
-//	private static Side parseSide(String side) {
-//		
-//	}
-
 	private static HandballAttributes parseHandballAttributes(JsonObject attr)
 	{
 		HandballAttributes attributes = new HandballAttributes();
 		attributes.setGoa(attr.get("goa").getAsInt());
 		attributes.setQGoa(attr.get("qGoa").getAsInt());
-		attributes.setGoa(attr.get("fip").getAsInt());
-		attributes.setQGoa(attr.get("qFip").getAsInt());
-		attributes.setGoa(attr.get("sho").getAsInt());
-		attributes.setQGoa(attr.get("qSho").getAsInt());
-		attributes.setGoa(attr.get("blk").getAsInt());
-		attributes.setQGoa(attr.get("qBlk").getAsInt());
-		//XXX
-//		int age = player.get("age").getAsInt();
-		int pas;
-		int tec;
-		int spe;
-		int agr;
-
-		int qGoa;
-		int qFip;
-		int qSho;
-		int qBlk;
-		int qPas;
-		int qTec;
-		int qSpe;
-		int qAgr;
-		return null;
+		attributes.setFip(attr.get("fip").getAsInt());
+		attributes.setQFip(attr.get("qFip").getAsInt());
+		attributes.setSho(attr.get("sho").getAsInt());
+		attributes.setQSho(attr.get("qSho").getAsInt());
+		attributes.setBlk(attr.get("blk").getAsInt());
+		attributes.setQBlk(attr.get("qBlk").getAsInt());
+		attributes.setPas(attr.get("pas").getAsInt());
+		attributes.setQPas(attr.get("qPas").getAsInt());
+		attributes.setTec(attr.get("tec").getAsInt());
+		attributes.setQTec(attr.get("qTec").getAsInt());
+		attributes.setSpe(attr.get("spe").getAsInt());
+		attributes.setQSpe(attr.get("qSpe").getAsInt());
+		attributes.setAgr(attr.get("agr").getAsInt());
+		attributes.setQAgr(attr.get("qAgr").getAsInt());
+		
+		return attributes;
 	}
 
 }
