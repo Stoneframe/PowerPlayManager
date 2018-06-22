@@ -61,34 +61,13 @@ public class MainFrame
 
 	private JTabbedPane tabbedPane;
 
-	private HandballMainPanel handballPanel;
 	private IceHockeyMainPanel iceHockeyPanel;
 	private FootballMainPanel footballPanel;
+	private HandballMainPanel handballPanel;
 
 	public MainFrame()
 	{
 		super("PPM Assistant");
-
-		handballPanel = new HandballMainPanel(
-				Arrays.asList(
-					new HandballProfilePlayersParser(),
-					new HandballMarketPlayersParser(),
-					new HandballOverviewPlayersParser(),
-					new HandballPractisePlayersParser(),
-					new HandballPractiseProPlayersParser()),
-				new HandballPlayerEvaluator(
-						new Settings(new SettingStorage("handball")),
-						Arrays.asList(
-							new HandballGoalieAttributeEvaluator(),
-							// new HandballBackAttributeEvaluator(),
-							// new HandballPivotAttributeEvaluator(),
-							// new HandballWingAttributeEvaluator(),
-							new HandballDefBackAttributeEvaluator(),
-							new HandballDefPivotAttributeEvaluator(),
-							new HandballDefWingAttributeEvaluator(),
-							new HandballOffBackAttributeEvaluator(),
-							new HandballOffPivotAttributeEvaluator(),
-							new HandballOffWingAttributeEvaluator())));
 
 		iceHockeyPanel = new IceHockeyMainPanel(
 				Arrays.asList(
@@ -126,10 +105,31 @@ public class MainFrame
 							new FootballWideForwardAttributeEvaluator(),
 							new FootballCenterForwardAttributeEvaluator())));
 
+		handballPanel = new HandballMainPanel(
+				Arrays.asList(
+					new HandballProfilePlayersParser(),
+					new HandballMarketPlayersParser(),
+					new HandballOverviewPlayersParser(),
+					new HandballPractisePlayersParser(),
+					new HandballPractiseProPlayersParser()),
+				new HandballPlayerEvaluator(
+						new Settings(new SettingStorage("handball")),
+						Arrays.asList(
+							new HandballGoalieAttributeEvaluator(),
+							// new HandballBackAttributeEvaluator(),
+							// new HandballPivotAttributeEvaluator(),
+							// new HandballWingAttributeEvaluator(),
+							new HandballDefBackAttributeEvaluator(),
+							new HandballDefPivotAttributeEvaluator(),
+							new HandballDefWingAttributeEvaluator(),
+							new HandballOffBackAttributeEvaluator(),
+							new HandballOffPivotAttributeEvaluator(),
+							new HandballOffWingAttributeEvaluator())));
+
 		tabbedPane = new JTabbedPane();
-		tabbedPane.addTab("Handball", handballPanel);
 		tabbedPane.addTab("Ice Hockey", iceHockeyPanel);
 		tabbedPane.addTab("Football", footballPanel);
+		tabbedPane.addTab("Handball", handballPanel);
 
 		setLayout(new BorderLayout());
 
