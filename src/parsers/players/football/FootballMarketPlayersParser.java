@@ -38,6 +38,9 @@ public class FootballMarketPlayersParser
 						parseCL(lines[i + 3].trim().split("\t")[2]),
 						SideParser.parseSide(lines[i + 3].trim().split("\t")[14]),
 						parseAttributes(Arrays.copyOfRange(lines[i + 3].trim().split("\t"), 3, 12)),
+						0,
+						0,
+						0,
 						0);
 
 				players.add(player);

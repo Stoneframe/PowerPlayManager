@@ -31,6 +31,9 @@ public class IceHockeyProfilePlayersParser
 					parseCL(textToParse),
 					parseSide(textToParse),
 					parseAttributes(textToParse),
+					0,
+					0,
+					0,
 					parseTraining(textToParse));
 
 			return Arrays.asList(player);

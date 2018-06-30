@@ -54,6 +54,9 @@ public class IceHockeyFormationPlayersParser
 				0,
 				SideParser.parseSide(columns[3].trim()),
 				parseAttributes(Arrays.copyOfRange(columns, 4, 12)),
+				0,
+				0,
+				0,
 				0);
 	}
 

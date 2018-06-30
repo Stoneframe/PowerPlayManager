@@ -40,6 +40,9 @@ public class HandballOverviewPlayersParser
 						parseCL(columns[5]),
 						SideParser.parseSide(columns[16]),
 						parseAttributes(Arrays.copyOfRange(columns, 6, 14)),
+						0,
+						0,
+						0,
 						0);
 
 				players.add(player);

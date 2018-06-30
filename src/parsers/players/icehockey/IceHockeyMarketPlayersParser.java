@@ -54,6 +54,9 @@ public class IceHockeyMarketPlayersParser
 				parseCL(lines[3].split("\t")[3]),
 				parseSide(lines[3]),
 				parseAttributes(lines[3]),
+				0,
+				0,
+				0,
 				0);
 	}
 

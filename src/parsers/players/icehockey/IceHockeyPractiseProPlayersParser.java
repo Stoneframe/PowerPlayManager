@@ -54,6 +54,9 @@ public class IceHockeyPractiseProPlayersParser
 				parseCL(lines[4]),
 				Side.UNKNOWN,
 				parseAttributes(Arrays.copyOfRange(lines, 5, 18)),
+				0,
+				0,
+				0,
 				parseTraining(lines[19]));
 	}
 

@@ -12,8 +12,11 @@ public class HandballPlayer
 			int cl,
 			Side side,
 			HandballAttributes attributes,
+			int experience,
+			int chemistry,
+			int energy,
 			double training)
 	{
-		super(name, age, cl, side, attributes, training);
+		super(name, age, cl, side, attributes, experience, chemistry, energy, training);
 	}
 }

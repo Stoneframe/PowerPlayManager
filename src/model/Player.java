@@ -10,9 +10,21 @@ public class Player<A extends Attributes>
 	protected int cl;
 	protected Side side;
 	protected A attributes;
+	protected int experience;
+	protected int chemistry;
+	protected int energy;
 	protected double training;
 
-	protected Player(String name, int age, int cl, Side side, A attributes, double training)
+	protected Player(
+			String name,
+			int age,
+			int cl,
+			Side side,
+			A attributes,
+			int experience,
+			int chemistry,
+			int energy,
+			double training)
 	{
 		this.name = name;
 		this.age = age;
@@ -20,6 +32,9 @@ public class Player<A extends Attributes>
 		this.side = side;
 		this.attributes = attributes;
 		this.attributes.addPropertyChangedListener((s, e) -> firePropertyChanged(e));
+		this.experience = experience;
+		this.chemistry = chemistry;
+		this.energy = energy;
 		this.training = training;
 	}
 
@@ -72,6 +87,36 @@ public class Player<A extends Attributes>
 		return attributes;
 	}
 
+	public int getExperience()
+	{
+		return experience;
+	}
+
+	public void setExperience(int experience)
+	{
+		this.experience = experience;
+	}
+
+	public int getChemistry()
+	{
+		return chemistry;
+	}
+
+	public void setChemistry(int chemistry)
+	{
+		this.chemistry = chemistry;
+	}
+
+	public int getEnergy()
+	{
+		return energy;
+	}
+
+	public void setEnergy(int energy)
+	{
+		this.energy = energy;
+	}
+
 	public double getTraining()
 	{
 		return training;
@@ -102,17 +147,30 @@ public class Player<A extends Attributes>
 			this.setSide(other.getSide());
 		}
 
+		if (this.experience == 0)
+		{
+			this.setExperience(other.getExperience());
+		}
+
+		if (this.chemistry == 0)
+		{
+			this.setChemistry(other.getChemistry());
+		}
+
+		if (this.energy == 0)
+		{
+			this.setEnergy(other.getEnergy());
+		}
+
 		this.attributes.merge(other.attributes);
 	}
 
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this)
-			return true;
+		if (obj == this) return true;
 
-		if (!(obj instanceof Player<?>))
-			return false;
+		if (!(obj instanceof Player<?>)) return false;
 
 		Player<?> other = (Player<?>)obj;
 

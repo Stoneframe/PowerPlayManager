@@ -49,6 +49,9 @@ public class HandballPractisePlayersParser
 								lines,
 								i + ATTRIBUTES_START_FIELD,
 								i + ATTRIBUTES_START_FIELD + ATTRIBUTE_FIELDS_PER_PLAYER)),
+						0,
+						0,
+						0,
 						parseTraining(lines[i + TRAINING_FIELD]));
 
 				players.add(player);

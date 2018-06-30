@@ -12,8 +12,11 @@ public class FootballPlayer
 			int cl,
 			Side side,
 			FootballAttributes attributes,
+			int experience,
+			int chemistry,
+			int energy,
 			double training)
 	{
-		super(name, age, cl, side, attributes, training);
+		super(name, age, cl, side, attributes, experience, chemistry, energy, training);
 	}
 }
