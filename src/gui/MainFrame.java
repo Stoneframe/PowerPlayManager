@@ -41,6 +41,7 @@ import parsers.players.football.FootballMarketPlayersParser;
 import parsers.players.football.FootballOverviewPlayersParser;
 import parsers.players.football.FootballPractisePlayersParser;
 import parsers.players.football.FootballPractiseProPlayersParser;
+import parsers.players.handball.HandballFormationPlayersParser;
 import parsers.players.handball.HandballMarketPlayersParser;
 import parsers.players.handball.HandballOverviewPlayersParser;
 import parsers.players.handball.HandballPractisePlayersParser;
@@ -75,7 +76,8 @@ public class MainFrame
 					new HandballMarketPlayersParser(),
 					new HandballOverviewPlayersParser(),
 					new HandballPractisePlayersParser(),
-					new HandballPractiseProPlayersParser()),
+					new HandballPractiseProPlayersParser(),
+					new HandballFormationPlayersParser()),
 				new HandballPlayerEvaluator(
 						new Settings(new SettingStorage("handball")),
 						Arrays.asList(
