@@ -12,8 +12,7 @@ import parsers.SideParser;
 import parsers.players.PlayersParser;
 
 public class HandballProfilePlayersParser
-	implements
-		PlayersParser<HandballAttributes>
+	extends PlayersParser<HandballAttributes>
 {
 	@Override
 	public String getName()

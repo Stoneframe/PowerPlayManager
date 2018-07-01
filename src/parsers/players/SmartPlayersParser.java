@@ -7,7 +7,7 @@ import model.Player;
 import parsers.ParseException;
 
 public class SmartPlayersParser<A extends Attributes>
-	extends AbstractPlayersParser<A>
+	extends PlayersParser<A>
 {
 	private List<PlayersParser<A>> playersParsers;
 

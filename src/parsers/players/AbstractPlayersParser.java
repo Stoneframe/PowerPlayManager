@@ -1,17 +1,20 @@
 package parsers.players;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import model.Attributes;
 import model.Player;
+import model.Side;
 import parsers.ParseException;
+import parsers.SideParser;
 
 public abstract class AbstractPlayersParser<A extends Attributes>
-	implements
-		PlayersParser<A>
+	extends PlayersParser<A>
 {
 	private static String[] countries =
 	{
@@ -241,17 +244,75 @@ public abstract class AbstractPlayersParser<A extends Attributes>
 			"Zimbabwe"
 	};
 
+	private final Pattern regexPattern;
+
+	private final boolean includeSide;
+	private final boolean includeQualities;
+	private final boolean includeExperience;
+	private final boolean includeTraining;
+
+	protected AbstractPlayersParser(
+			Pattern regexPattern,
+			boolean includeSide,
+			boolean includeQualities,
+			boolean includeExperience,
+			boolean includeTraining)
+	{
+		this.regexPattern = regexPattern;
+
+		this.includeSide = includeSide;
+		this.includeQualities = includeQualities;
+		this.includeExperience = includeExperience;
+		this.includeTraining = includeTraining;
+	}
+
 	@Override
 	public abstract String getName();
 
 	@Override
-	public abstract List<Player<A>> parsePlayers(String textToParse) throws ParseException;
-
-	@Override
-	public String toString()
+	public List<Player<A>> parsePlayers(String textToParse)
+			throws ParseException
 	{
-		return getName();
+		List<Player<A>> players = new LinkedList<>();
+
+		for (String line : toSinglePlayerPerLine(textToParse))
+		{
+			Matcher matcher = regexPattern.matcher(line);
+
+			if (matcher.find())
+			{
+				Player<A> player = createPlayer(matcher);
+
+				players.add(player);
+			}
+			else
+			{
+				throw new ParseException();
+			}
+		}
+
+		return players;
 	}
+
+	protected abstract List<String> toSinglePlayerPerLine(String textToParse);
+
+	protected Player<A> createPlayer(Matcher matcher)
+	{
+		A attributes = createAttributes(matcher, includeQualities);
+
+		return new Player<A>(
+				matcher.group("name"),
+				Integer.parseInt(matcher.group("age")),
+				Integer.parseInt(matcher.group("cl")),
+				includeSide ? SideParser.parseSide(matcher.group("side")) : Side.UNKNOWN,
+				attributes,
+				includeExperience ? Integer.parseInt(matcher.group("experience")) : 0,
+				0,
+				0,
+				includeTraining ? Double.parseDouble(matcher.group("training")) : 0);
+	}
+
+	protected abstract A createAttributes(Matcher matcher, boolean includeQuality);
 
 	protected static String ignore()
 	{

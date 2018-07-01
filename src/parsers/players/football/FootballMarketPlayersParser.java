@@ -9,12 +9,11 @@ import model.football.FootballAttributes;
 import model.football.FootballPlayer;
 import parsers.ParseException;
 import parsers.SideParser;
-import parsers.players.AbstractPlayersParser;
+import parsers.players.PlayersParser;
 
 public class FootballMarketPlayersParser
-	extends AbstractPlayersParser<FootballAttributes>
+	extends PlayersParser<FootballAttributes>
 {
-
 	@Override
 	public String getName()
 	{

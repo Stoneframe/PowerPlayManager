@@ -1,28 +1,14 @@
 package parsers.players.handball;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import model.Player;
-import model.Side;
 import model.handball.HandballAttributes;
-import model.handball.HandballPlayer;
-import parsers.ParseException;
-import parsers.SideParser;
 import parsers.players.AbstractPlayersParser;
 
 public abstract class HandballPlayersParser
 	extends AbstractPlayersParser<HandballAttributes>
 {
-	private final Pattern regexPattern;
-
-	private final boolean includeSide;
-	private final boolean includeQualities;
-	private final boolean includeExperience;
-	private final boolean includeTraining;
-
 	protected HandballPlayersParser(
 			Pattern regexPattern,
 			boolean includeSide,
@@ -30,56 +16,11 @@ public abstract class HandballPlayersParser
 			boolean includeExperience,
 			boolean includeTraining)
 	{
-		this.regexPattern = regexPattern;
-
-		this.includeSide = includeSide;
-		this.includeQualities = includeQualities;
-		this.includeExperience = includeExperience;
-		this.includeTraining = includeTraining;
+		super(regexPattern, includeSide, includeQualities, includeExperience, includeTraining);
 	}
 
 	@Override
-	public List<Player<HandballAttributes>> parsePlayers(String textToParse)
-			throws ParseException
-	{
-		List<Player<HandballAttributes>> players = new LinkedList<>();
-
-		for (String line : toSinglePlayerPerLine(textToParse))
-		{
-			Matcher matcher = regexPattern.matcher(line);
-
-			if (matcher.find())
-			{
-				HandballPlayer player = createPlayer(matcher);
-
-				players.add(player);
-			}
-			else
-			{
-				throw new ParseException();
-			}
-		}
-
-		return players;
-	}
-
-	private HandballPlayer createPlayer(Matcher matcher)
-	{
-		HandballAttributes attributes = createAttributes(matcher, includeQualities);
-
-		return new HandballPlayer(
-				matcher.group("name"),
-				Integer.parseInt(matcher.group("age")),
-				Integer.parseInt(matcher.group("cl")),
-				includeSide ? SideParser.parseSide(matcher.group("side")) : Side.UNKNOWN,
-				attributes,
-				includeExperience ? Integer.parseInt(matcher.group("experience")) : 0,
-				0,
-				0,
-				includeTraining ? Double.parseDouble(matcher.group("training")) : 0);
-	}
-
-	private HandballAttributes createAttributes(Matcher matcher, boolean includeQuality)
+	protected HandballAttributes createAttributes(Matcher matcher, boolean includeQuality)
 	{
 		HandballAttributes attributes = new HandballAttributes();
 
@@ -116,6 +57,4 @@ public abstract class HandballPlayersParser
 	{
 		return attributesWithQualities("goa", "fip", "sho", "blk", "pas", "tec", "spe", "agr");
 	}
-
-	protected abstract List<String> toSinglePlayerPerLine(String textToParse);
 }

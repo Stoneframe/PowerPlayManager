@@ -15,7 +15,7 @@ public class Player<A extends Attributes>
 	protected int energy;
 	protected double training;
 
-	protected Player(
+	public Player(
 			String name,
 			int age,
 			int cl,

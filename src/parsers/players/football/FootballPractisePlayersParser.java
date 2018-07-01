@@ -9,10 +9,10 @@ import model.Side;
 import model.football.FootballAttributes;
 import model.football.FootballPlayer;
 import parsers.ParseException;
-import parsers.players.AbstractPlayersParser;
+import parsers.players.PlayersParser;
 
 public class FootballPractisePlayersParser
-	extends AbstractPlayersParser<FootballAttributes>
+	extends PlayersParser<FootballAttributes>
 {
 	private static final int FIELDS_PER_PLAYER = 16;
 	private static final int AGE_FIELD = 2;
