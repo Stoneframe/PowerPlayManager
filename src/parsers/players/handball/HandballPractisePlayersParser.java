@@ -3,10 +3,6 @@ package parsers.players.handball;
 import java.util.Arrays;
 import java.util.List;
 
-import model.Player;
-import model.handball.HandballAttributes;
-import parsers.ParseException;
-
 public class HandballPractisePlayersParser
 	extends HandballPlayersParser
 {
@@ -20,7 +16,11 @@ public class HandballPractisePlayersParser
 				ignore(), // Scouting status
 				cl(),
 				attributesWithQualities(),
-				training()));
+				training()),
+			false,
+			true,
+			false,
+			true);
 	}
 
 	@Override
@@ -30,11 +30,8 @@ public class HandballPractisePlayersParser
 	}
 
 	@Override
-	public List<Player<HandballAttributes>> parsePlayers(String textToParse)
-			throws ParseException
+	protected List<String> toSinglePlayerPerLine(String textToParse)
 	{
-		List<String> lines = Arrays.asList(textToParse.split("\n"));
-
-		return parsePlayers(lines, false, true, false, true);
+		return Arrays.asList(textToParse.split("\n"));
 	}
 }

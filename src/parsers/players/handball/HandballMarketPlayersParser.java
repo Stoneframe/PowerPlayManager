@@ -4,10 +4,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.Player;
-import model.handball.HandballAttributes;
-import parsers.ParseException;
-
 public class HandballMarketPlayersParser
 	extends HandballPlayersParser
 {
@@ -25,7 +21,11 @@ public class HandballMarketPlayersParser
 				attributesWithQualities(),
 				experience(),
 				ignore(), // Total rating
-				side()));
+				side()),
+			true,
+			true,
+			true,
+			false);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class HandballMarketPlayersParser
 	}
 
 	@Override
-	public List<Player<HandballAttributes>> parsePlayers(String textToParse) throws ParseException
+	protected List<String> toSinglePlayerPerLine(String textToParse)
 	{
 		List<String> lines = new LinkedList<>();
 
@@ -46,6 +46,6 @@ public class HandballMarketPlayersParser
 			lines.add(String.join("\t", Arrays.copyOfRange(split, i, i + 4)));
 		}
 
-		return parsePlayers(lines, true, true, true, false);
+		return lines;
 	}
 }

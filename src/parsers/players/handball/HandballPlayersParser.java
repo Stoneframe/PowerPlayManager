@@ -18,43 +18,39 @@ public abstract class HandballPlayersParser
 {
 	private final Pattern regexPattern;
 
-	protected HandballPlayersParser(Pattern regexPattern)
-	{
-		this.regexPattern = regexPattern;
-	}
+	private final boolean includeSide;
+	private final boolean includeQualities;
+	private final boolean includeExperience;
+	private final boolean includeTraining;
 
-	protected static String attributes()
-	{
-		return attributes("goa", "fip", "sho", "blk", "pas", "tec", "spe", "agr");
-	}
-
-	protected static String attributesWithQualities()
-	{
-		return attributesWithQualities("goa", "fip", "sho", "blk", "pas", "tec", "spe", "agr");
-	}
-
-	protected List<Player<HandballAttributes>> parsePlayers(
-			List<String> lines,
+	protected HandballPlayersParser(
+			Pattern regexPattern,
 			boolean includeSide,
 			boolean includeQualities,
 			boolean includeExperience,
 			boolean includeTraining)
+	{
+		this.regexPattern = regexPattern;
+
+		this.includeSide = includeSide;
+		this.includeQualities = includeQualities;
+		this.includeExperience = includeExperience;
+		this.includeTraining = includeTraining;
+	}
+
+	@Override
+	public List<Player<HandballAttributes>> parsePlayers(String textToParse)
 			throws ParseException
 	{
 		List<Player<HandballAttributes>> players = new LinkedList<Player<HandballAttributes>>();
 
-		for (String line : lines)
+		for (String line : toSinglePlayerPerLine(textToParse))
 		{
 			Matcher matcher = regexPattern.matcher(line);
 
 			if (matcher.find())
 			{
-				HandballPlayer player = createPlayer(
-					matcher,
-					includeSide,
-					includeQualities,
-					includeExperience,
-					includeTraining);
+				HandballPlayer player = createPlayer(matcher);
 
 				players.add(player);
 			}
@@ -67,12 +63,7 @@ public abstract class HandballPlayersParser
 		return players;
 	}
 
-	private HandballPlayer createPlayer(
-			Matcher matcher,
-			boolean includeSide,
-			boolean includeQualities,
-			boolean includeExperience,
-			boolean includeTraining)
+	private HandballPlayer createPlayer(Matcher matcher)
 	{
 		HandballAttributes attributes = createAttributes(matcher, includeQualities);
 
@@ -115,4 +106,16 @@ public abstract class HandballPlayersParser
 
 		return attributes;
 	}
+
+	protected static String attributes()
+	{
+		return attributes("goa", "fip", "sho", "blk", "pas", "tec", "spe", "agr");
+	}
+
+	protected static String attributesWithQualities()
+	{
+		return attributesWithQualities("goa", "fip", "sho", "blk", "pas", "tec", "spe", "agr");
+	}
+
+	protected abstract List<String> toSinglePlayerPerLine(String textToParse);
 }

@@ -4,10 +4,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.Player;
-import model.handball.HandballAttributes;
-import parsers.ParseException;
-
 public class HandballPractiseProPlayersParser
 	extends HandballPlayersParser
 {
@@ -36,7 +32,11 @@ public class HandballPractiseProPlayersParser
 				ignore(), // Spe training
 				attributeWithQuality("agr"),
 				ignore(), // Agr training
-				training()));
+				training()),
+			false,
+			true,
+			false,
+			true);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class HandballPractiseProPlayersParser
 	}
 
 	@Override
-	public List<Player<HandballAttributes>> parsePlayers(String textToParse) throws ParseException
+	protected List<String> toSinglePlayerPerLine(String textToParse)
 	{
 		List<String> lines = new LinkedList<>();
 
@@ -54,13 +54,9 @@ public class HandballPractiseProPlayersParser
 
 		for (int i = 0; i < split.length; i += 17)
 		{
-			String line = String.join("\t", Arrays.copyOfRange(split, i, i + 17));
-
-			System.out.println(line);
-
-			lines.add(line);
+			lines.add(String.join("\t", Arrays.copyOfRange(split, i, i + 17)));
 		}
 
-		return parsePlayers(lines, false, true, false, true);
+		return lines;
 	}
 }
