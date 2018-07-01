@@ -251,14 +251,14 @@ public abstract class PlayersParser<A extends Attributes>
 
 	protected static String ignore()
 	{
-		return "[^\\t]+";
+		return "[^\\t]*";
 	}
 
 	protected static String name()
 	{
 		return "(?<country>("
 				+ String.join("|", countries).replace("-", "\\-")
-				+ ")+) (?<name>\\S+( \\S+)+)";
+				+ ")+) (?<name>\\S+(((?! Dagar)( \\S+))+)).*";
 	}
 
 	protected static String age()
@@ -271,6 +271,18 @@ public abstract class PlayersParser<A extends Attributes>
 		return "(?<cl>\\d)/6";
 	}
 
+	protected static String attributes(String... names)
+	{
+		return String.join(
+			"\t",
+			Arrays.stream(names).map(n -> attribute(n)).collect(Collectors.toList()));
+	}
+
+	protected static String attribute(String name)
+	{
+		return String.format("((?<%s>\\d+))", name, name);
+	}
+
 	protected static String attributesWithQualities(String... names)
 	{
 		return String.join(
@@ -280,7 +292,7 @@ public abstract class PlayersParser<A extends Attributes>
 
 	protected static String attributeWithQuality(String name)
 	{
-		return String.format("((?<%s>\\d{2,3})(?<q%s>(\\d{2})))", name, name);
+		return String.format("((?<%s>\\d+)(?<q%s>(\\d{2})))", name, name);
 	}
 
 	protected static String experience()
@@ -293,8 +305,13 @@ public abstract class PlayersParser<A extends Attributes>
 		return "(?<side>(U|L|R))";
 	}
 
+	protected static String training()
+	{
+		return "(?<training>\\d+\\.\\d{2})";
+	}
+
 	protected static Pattern createPattern(String... regexes)
 	{
-		return Pattern.compile(String.join("\t", regexes));
+		return Pattern.compile("^" + String.join("\t", regexes));
 	}
 }
