@@ -1,15 +1,19 @@
 package parsers.players.handball;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class HandballFormationPlayersParser
+public class HandballFormationPlayersProParser
 	extends HandballPlayersParser
 {
 	private static final Pattern REGEX_PATTERN = createPattern(
 		ignore(), // Checkbox
 		name(),
+		ignore(), // Empty
+		ignore(), // Position
+		ignore(), // Empty
 		age(),
 		attributes(),
 		experience(),
@@ -26,7 +30,7 @@ public class HandballFormationPlayersParser
 	private static final boolean INCLUDE_ENERGY = true;
 	private static final boolean INCLUDE_TRAINING = false;
 
-	public HandballFormationPlayersParser()
+	public HandballFormationPlayersProParser()
 	{
 		super(
 			REGEX_PATTERN,
@@ -42,12 +46,21 @@ public class HandballFormationPlayersParser
 	@Override
 	public String getName()
 	{
-		return "Formation";
+		return "Formation (Pro)";
 	}
 
 	@Override
 	protected List<String> toSinglePlayerPerLine(String textToParse)
 	{
-		return Arrays.asList(textToParse.split("\n"));
+		List<String> lines = new LinkedList<>();
+
+		String[] split = textToParse.split("\n");
+
+		for (int i = 0; i < split.length; i += 4)
+		{
+			lines.add(String.join("\t", Arrays.copyOfRange(split, i, i + 4)));
+		}
+
+		return lines;
 	}
 }
