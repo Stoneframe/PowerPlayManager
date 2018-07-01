@@ -21,6 +21,7 @@ public class HandballOverviewPlayersParser
 				ignore(), // Total rating
 				side()),
 			true,
+			true,
 			false,
 			true,
 			false);

@@ -25,6 +25,7 @@ public class HandballMarketPlayersParser
 			true,
 			true,
 			true,
+			true,
 			false);
 	}
 

@@ -21,6 +21,7 @@ public class IceHockeyOverviewPlayersParser
 				ignore(), // Total rating
 				side()),
 			true,
+			true,
 			false,
 			true,
 			false);

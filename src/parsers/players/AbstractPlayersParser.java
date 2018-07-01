@@ -246,6 +246,7 @@ public abstract class AbstractPlayersParser<A extends Attributes>
 
 	private final Pattern regexPattern;
 
+	private final boolean includeCL;
 	private final boolean includeSide;
 	private final boolean includeQualities;
 	private final boolean includeExperience;
@@ -253,6 +254,7 @@ public abstract class AbstractPlayersParser<A extends Attributes>
 
 	protected AbstractPlayersParser(
 			Pattern regexPattern,
+			boolean includeCL,
 			boolean includeSide,
 			boolean includeQualities,
 			boolean includeExperience,
@@ -260,6 +262,7 @@ public abstract class AbstractPlayersParser<A extends Attributes>
 	{
 		this.regexPattern = regexPattern;
 
+		this.includeCL = includeCL;
 		this.includeSide = includeSide;
 		this.includeQualities = includeQualities;
 		this.includeExperience = includeExperience;
@@ -303,7 +306,7 @@ public abstract class AbstractPlayersParser<A extends Attributes>
 		return new Player<A>(
 				matcher.group("name"),
 				Integer.parseInt(matcher.group("age")),
-				Integer.parseInt(matcher.group("cl")),
+				includeCL ? Integer.parseInt(matcher.group("cl")) : 0,
 				includeSide ? SideParser.parseSide(matcher.group("side")) : Side.UNKNOWN,
 				attributes,
 				includeExperience ? Integer.parseInt(matcher.group("experience")) : 0,
@@ -313,6 +316,11 @@ public abstract class AbstractPlayersParser<A extends Attributes>
 	}
 
 	protected abstract A createAttributes(Matcher matcher, boolean includeQuality);
+
+	protected static Pattern createPattern(String... regexes)
+	{
+		return Pattern.compile("^" + String.join("\t", regexes));
+	}
 
 	protected static String ignore()
 	{
@@ -328,12 +336,12 @@ public abstract class AbstractPlayersParser<A extends Attributes>
 
 	protected static String age()
 	{
-		return "(?<age>\\d+)";
+		return "[ ]*(?<age>\\d+)[ ]*";
 	}
 
 	protected static String cl()
 	{
-		return "(?<cl>\\d)/6";
+		return "[ ]*(?<cl>\\d)/6[ ]*";
 	}
 
 	protected static String attributes(String... names)
@@ -345,7 +353,7 @@ public abstract class AbstractPlayersParser<A extends Attributes>
 
 	protected static String attribute(String name)
 	{
-		return String.format("((?<%s>\\d+))", name, name);
+		return String.format("[ ]*((?<%s>\\d+))[ ]*", name, name);
 	}
 
 	protected static String attributesWithQualities(String... names)
@@ -357,26 +365,21 @@ public abstract class AbstractPlayersParser<A extends Attributes>
 
 	protected static String attributeWithQuality(String name)
 	{
-		return String.format("((?<%s>\\d+)(?<q%s>(\\d{2})))", name, name);
+		return String.format("[ ]*((?<%s>\\d+)(?<q%s>(\\d{2})))[ ]*", name, name);
 	}
 
 	protected static String experience()
 	{
-		return "(?<experience>\\d+)";
+		return "[ ]*(?<experience>\\d+)[ ]*";
 	}
 
 	protected static String side()
 	{
-		return "(?<side>(U|L|R))";
+		return "[ ]*(?<side>(U|L|R))[ ]*";
 	}
 
 	protected static String training()
 	{
 		return "(?<training>\\d+\\.\\d{2})";
-	}
-
-	protected static Pattern createPattern(String... regexes)
-	{
-		return Pattern.compile("^" + String.join("\t", regexes));
 	}
 }

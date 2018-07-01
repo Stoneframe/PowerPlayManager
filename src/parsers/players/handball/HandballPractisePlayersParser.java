@@ -17,6 +17,7 @@ public class HandballPractisePlayersParser
 				cl(),
 				attributesWithQualities(),
 				training()),
+			true,
 			false,
 			true,
 			false,

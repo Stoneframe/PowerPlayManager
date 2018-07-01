@@ -31,6 +31,7 @@ public class IceHockeyPractiseProPlayersParser
 				attributeWithQuality("agr"),
 				ignore(), // Agr training
 				training()),
+			true,
 			false,
 			true,
 			false,

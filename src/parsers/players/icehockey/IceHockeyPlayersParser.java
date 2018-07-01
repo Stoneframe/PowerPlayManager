@@ -12,12 +12,19 @@ public abstract class IceHockeyPlayersParser
 
 	protected IceHockeyPlayersParser(
 			Pattern regexPattern,
+			boolean includeCL,
 			boolean includeSide,
 			boolean includeQualities,
 			boolean includeExperience,
 			boolean includeTraining)
 	{
-		super(regexPattern, includeSide, includeQualities, includeExperience, includeTraining);
+		super(
+			regexPattern,
+			includeCL,
+			includeSide,
+			includeQualities,
+			includeExperience,
+			includeTraining);
 	}
 
 	@Override

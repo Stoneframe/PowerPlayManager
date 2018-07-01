@@ -33,6 +33,7 @@ public class HandballPractiseProPlayersParser
 				attributeWithQuality("agr"),
 				ignore(), // Agr training
 				training()),
+			true,
 			false,
 			true,
 			false,
