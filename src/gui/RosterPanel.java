@@ -67,6 +67,10 @@ public class RosterPanel<A extends Attributes>
 				p -> playerEvaluator.getBestPositionRating(p).getValue(),
 				v -> String.format("%.1f", v)),
 		new ColumnData(
+				"Form",
+				p -> playerEvaluator.getBestPositionForm(p).getValue(),
+				v -> String.format("%.1f", v)),
+		new ColumnData(
 				"Training",
 				p -> playerEvaluator.getBestPositionQuality(p).getName()),
 		new ColumnData(

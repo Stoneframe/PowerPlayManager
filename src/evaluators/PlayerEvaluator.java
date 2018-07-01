@@ -92,6 +92,19 @@ public class PlayerEvaluator<A extends Attributes>
 				evaluator.getRating(player.getAttributes()));
 	}
 
+	public PositionNameValue getBestPositionForm(Player<A> player)
+	{
+		PositionNameValue bestPositionRating = getBestPositionRating(player);
+
+		double rating = bestPositionRating.getValue();
+
+		double form = rating
+				* (player.getEnergy() / 100d)
+				* (1 + 0.25 * player.getChemistry() / 100d + 0.2 * player.getExperience() / 100d);
+
+		return new PositionNameValue(bestPositionRating.getName(), form);
+	}
+
 	public PositionNameValue getBestPositionQuality(Player<A> player)
 	{
 		AttributeEvaluator<A> evaluator = getBestEvaluatorByQuality(player.getAttributes());
