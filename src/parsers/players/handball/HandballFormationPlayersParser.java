@@ -21,11 +21,13 @@ public class HandballFormationPlayersParser
 				experience(),
 				ignore(), // Total rating
 				side(),
-				ignore(), // Chemistry
-				ignore()), // Energy
+				chemistry(),
+				energy()),
 			false,
 			true,
 			false,
+			true,
+			true,
 			true,
 			false);
 	}

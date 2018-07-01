@@ -10,17 +10,19 @@ public class IceHockeyFormationPlayersParser
 	{
 		super(
 			createPattern(
-				ignore(),
+				ignore(), // Checkbox
 				name(),
 				age(),
 				side(),
 				attributes(),
 				experience(),
-				ignore(),
-				ignore()),
+				energy(),
+				chemistry()),
 			false,
 			true,
 			false,
+			true,
+			true,
 			true,
 			false);
 	}

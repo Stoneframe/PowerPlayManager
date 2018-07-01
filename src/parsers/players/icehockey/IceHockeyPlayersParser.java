@@ -4,18 +4,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import model.icehockey.IceHockeyAttributes;
-import parsers.players.AbstractPlayersParser;
+import parsers.players.RegexPlayersParser;
 
 public abstract class IceHockeyPlayersParser
-	extends AbstractPlayersParser<IceHockeyAttributes>
+	extends RegexPlayersParser<IceHockeyAttributes>
 {
-
 	protected IceHockeyPlayersParser(
 			Pattern regexPattern,
 			boolean includeCL,
 			boolean includeSide,
 			boolean includeQualities,
 			boolean includeExperience,
+			boolean includeChemistry,
+			boolean includeEnergy,
 			boolean includeTraining)
 	{
 		super(
@@ -24,6 +25,8 @@ public abstract class IceHockeyPlayersParser
 			includeSide,
 			includeQualities,
 			includeExperience,
+			includeChemistry,
+			includeEnergy,
 			includeTraining);
 	}
 

@@ -21,6 +21,8 @@ public class HandballPractisePlayersParser
 			false,
 			true,
 			false,
+			false,
+			false,
 			true);
 	}
 

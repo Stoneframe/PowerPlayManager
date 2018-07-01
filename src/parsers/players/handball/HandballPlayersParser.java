@@ -4,10 +4,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import model.handball.HandballAttributes;
-import parsers.players.AbstractPlayersParser;
+import parsers.players.RegexPlayersParser;
 
 public abstract class HandballPlayersParser
-	extends AbstractPlayersParser<HandballAttributes>
+	extends RegexPlayersParser<HandballAttributes>
 {
 	protected HandballPlayersParser(
 			Pattern regexPattern,
@@ -15,6 +15,8 @@ public abstract class HandballPlayersParser
 			boolean includeSide,
 			boolean includeQualities,
 			boolean includeExperience,
+			boolean includeChemistry,
+			boolean includeEnergy,
 			boolean includeTraining)
 	{
 		super(
@@ -23,6 +25,8 @@ public abstract class HandballPlayersParser
 			includeSide,
 			includeQualities,
 			includeExperience,
+			includeChemistry,
+			includeEnergy,
 			includeTraining);
 	}
 

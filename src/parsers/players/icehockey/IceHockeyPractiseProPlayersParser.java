@@ -35,6 +35,8 @@ public class IceHockeyPractiseProPlayersParser
 			false,
 			true,
 			false,
+			false,
+			false,
 			true);
 	}
 

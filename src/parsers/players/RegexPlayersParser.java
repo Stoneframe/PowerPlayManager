@@ -13,7 +13,7 @@ import model.Side;
 import parsers.ParseException;
 import parsers.SideParser;
 
-public abstract class AbstractPlayersParser<A extends Attributes>
+public abstract class RegexPlayersParser<A extends Attributes>
 	extends PlayersParser<A>
 {
 	private static String[] countries =
@@ -250,14 +250,18 @@ public abstract class AbstractPlayersParser<A extends Attributes>
 	private final boolean includeSide;
 	private final boolean includeQualities;
 	private final boolean includeExperience;
+	private final boolean includeChemistry;
+	private final boolean includeEnergy;
 	private final boolean includeTraining;
 
-	protected AbstractPlayersParser(
+	protected RegexPlayersParser(
 			Pattern regexPattern,
 			boolean includeCL,
 			boolean includeSide,
 			boolean includeQualities,
 			boolean includeExperience,
+			boolean includeChemistry,
+			boolean includeEnergy,
 			boolean includeTraining)
 	{
 		this.regexPattern = regexPattern;
@@ -266,6 +270,8 @@ public abstract class AbstractPlayersParser<A extends Attributes>
 		this.includeSide = includeSide;
 		this.includeQualities = includeQualities;
 		this.includeExperience = includeExperience;
+		this.includeChemistry = includeChemistry;
+		this.includeEnergy = includeEnergy;
 		this.includeTraining = includeTraining;
 	}
 
@@ -310,8 +316,8 @@ public abstract class AbstractPlayersParser<A extends Attributes>
 				includeSide ? SideParser.parseSide(matcher.group("side")) : Side.UNKNOWN,
 				attributes,
 				includeExperience ? Integer.parseInt(matcher.group("experience")) : 0,
-				0,
-				0,
+				includeChemistry ? Integer.parseInt(matcher.group("chemistry")) : 0,
+				includeEnergy ? Integer.parseInt(matcher.group("energy")) : 0,
 				includeTraining ? Double.parseDouble(matcher.group("training")) : 0);
 	}
 
@@ -341,7 +347,7 @@ public abstract class AbstractPlayersParser<A extends Attributes>
 
 	protected static String cl()
 	{
-		return "[ ]*(?<cl>\\d)/6[ ]*";
+		return "[ ]*(?<cl>\\d)\\/6[ ]*";
 	}
 
 	protected static String attributes(String... names)
@@ -371,6 +377,16 @@ public abstract class AbstractPlayersParser<A extends Attributes>
 	protected static String experience()
 	{
 		return "[ ]*(?<experience>\\d+)[ ]*";
+	}
+
+	protected static String energy()
+	{
+		return "[ ]*(?<energy>\\d+)(\\/\\d+)?[ ]*";
+	}
+
+	protected static String chemistry()
+	{
+		return "[ ]*(?<chemistry>\\d+)[ ]*";
 	}
 
 	protected static String side()

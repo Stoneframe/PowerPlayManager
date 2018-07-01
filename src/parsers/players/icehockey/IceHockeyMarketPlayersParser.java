@@ -26,6 +26,8 @@ public class IceHockeyMarketPlayersParser
 			true,
 			true,
 			true,
+			false,
+			false,
 			false);
 	}
 

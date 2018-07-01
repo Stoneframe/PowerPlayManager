@@ -24,6 +24,8 @@ public class IceHockeyOverviewPlayersParser
 			true,
 			false,
 			true,
+			false,
+			false,
 			false);
 	}
 

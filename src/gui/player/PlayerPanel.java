@@ -36,6 +36,8 @@ public class PlayerPanel<A extends Attributes>
 
 	private AttributesPanel<A> attributePanel;
 
+	private PlayerFormPanel<A> playerFormPanel;
+
 	private PositionSuggestionPanel<A> positionSuggestionPanel;
 	private TrainingSuggestionPanel<A> trainingSuggestionPanel;
 
@@ -75,43 +77,48 @@ public class PlayerPanel<A extends Attributes>
 			}
 		});
 
-		SimpleFormPanel playerFormPanel = new SimpleFormPanel();
+		SimpleFormPanel playerInformationPanel = new SimpleFormPanel();
 
-		playerFormPanel.addRow("Name: ", nameTextField);
-		playerFormPanel.addRow("Age:", ageTextField);
-		playerFormPanel.addRow("Side:", sideTextField);
-		playerFormPanel.addRow("Training:", trainingTextField);
+		playerInformationPanel.addRow("Name: ", nameTextField);
+		playerInformationPanel.addRow("Age:", ageTextField);
+		playerInformationPanel.addRow("Side:", sideTextField);
+		playerInformationPanel.addRow("Training:", trainingTextField);
 
-		positionSuggestionPanel = new PositionSuggestionPanel<A>(playerEvaluator);
-		trainingSuggestionPanel = new TrainingSuggestionPanel<A>(playerEvaluator);
+		playerFormPanel = new PlayerFormPanel<>();
+
+		positionSuggestionPanel = new PositionSuggestionPanel<>(playerEvaluator);
+		trainingSuggestionPanel = new TrainingSuggestionPanel<>(playerEvaluator);
 
 		setBorder(BorderFactory.createTitledBorder("Player"));
 
-		GridBagConstraints c = new GridBagConstraints();
+		GridBagConstraints gbc = new GridBagConstraints();
 
-		c.anchor = GridBagConstraints.NORTHWEST;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 5, 5, 5);
-		c.weighty = 1;
-		c.gridx = 0;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.weighty = 1;
+		gbc.gridx = 0;
 
 		JPanel panel = new JPanel(new GridBagLayout());
 
-		c.gridy = 0;
-		panel.add(playerFormPanel, c);
+		gbc.gridy = 0;
+		panel.add(playerInformationPanel, gbc);
 
-		c.gridy = 1;
-		panel.add(attributePanel, c);
+		gbc.gridy = 1;
+		panel.add(attributePanel, gbc);
 
-		c.gridy = 2;
-		panel.add(positionSuggestionPanel, c);
+		gbc.gridy = 2;
+		panel.add(playerFormPanel, gbc);
 
-		c.gridy = 3;
-		panel.add(trainingSuggestionPanel, c);
+		gbc.gridy = 3;
+		panel.add(positionSuggestionPanel, gbc);
 
-		c.gridy = 4;
-		c.weighty = 100;
-		panel.add(trainingPanel, c);
+		gbc.gridy = 4;
+		panel.add(trainingSuggestionPanel, gbc);
+
+		gbc.gridy = 5;
+		gbc.weighty = 100;
+		panel.add(trainingPanel, gbc);
 
 		JScrollPane scrollPane = new JScrollPane(panel);
 
@@ -129,6 +136,7 @@ public class PlayerPanel<A extends Attributes>
 		if (this.player != null)
 		{
 			attributePanel.bind(null);
+			playerFormPanel.bind(null);
 			positionSuggestionPanel.bind(null);
 			trainingSuggestionPanel.bind(null);
 			trainingPanel.bind(null);
@@ -140,6 +148,7 @@ public class PlayerPanel<A extends Attributes>
 		if (player != null)
 		{
 			attributePanel.bind(player.getAttributes());
+			playerFormPanel.bind(player);
 			positionSuggestionPanel.bind(player.getAttributes());
 			trainingSuggestionPanel.bind(player.getAttributes());
 			trainingPanel.bind(player.getAttributes());

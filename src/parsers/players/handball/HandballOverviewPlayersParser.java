@@ -24,6 +24,8 @@ public class HandballOverviewPlayersParser
 			true,
 			false,
 			true,
+			false,
+			false,
 			false);
 	}
 

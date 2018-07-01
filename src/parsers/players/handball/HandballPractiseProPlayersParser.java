@@ -37,6 +37,8 @@ public class HandballPractiseProPlayersParser
 			false,
 			true,
 			false,
+			false,
+			false,
 			true);
 	}
 
