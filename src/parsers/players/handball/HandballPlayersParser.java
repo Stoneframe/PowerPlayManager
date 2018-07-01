@@ -11,10 +11,10 @@ import model.handball.HandballAttributes;
 import model.handball.HandballPlayer;
 import parsers.ParseException;
 import parsers.SideParser;
-import parsers.players.PlayersParser;
+import parsers.players.AbstractPlayersParser;
 
 public abstract class HandballPlayersParser
-	extends PlayersParser<HandballAttributes>
+	extends AbstractPlayersParser<HandballAttributes>
 {
 	private final Pattern regexPattern;
 
@@ -42,7 +42,7 @@ public abstract class HandballPlayersParser
 	public List<Player<HandballAttributes>> parsePlayers(String textToParse)
 			throws ParseException
 	{
-		List<Player<HandballAttributes>> players = new LinkedList<Player<HandballAttributes>>();
+		List<Player<HandballAttributes>> players = new LinkedList<>();
 
 		for (String line : toSinglePlayerPerLine(textToParse))
 		{

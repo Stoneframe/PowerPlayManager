@@ -29,20 +29,20 @@ public class MacroAttributeEvaluator<A extends Attributes>
 	public double getRating(A attributes)
 	{
 		return attributeEvaluators
-				.stream()
-				.max(new RatingEvaluatorComparator<A>(attributes)::compare)
-				.get()
-				.getRating(attributes);
+			.stream()
+			.max(new RatingEvaluatorComparator<A>(attributes)::compare)
+			.get()
+			.getRating(attributes);
 	}
 
 	@Override
 	public double getQuality(A attributes)
 	{
 		return attributeEvaluators
-				.stream()
-				.max(new QualityEvaluatorComparator<A>(attributes)::compare)
-				.get()
-				.getQuality(attributes);
+			.stream()
+			.max(new QualityEvaluatorComparator<A>(attributes)::compare)
+			.get()
+			.getQuality(attributes);
 	}
 
 	@Override

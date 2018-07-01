@@ -10,10 +10,10 @@ import model.icehockey.IceHockeyAttributes;
 import model.icehockey.IceHockeyPlayer;
 import parsers.ParseException;
 import parsers.SideParser;
-import parsers.players.PlayersParser;
+import parsers.players.AbstractPlayersParser;
 
 public class IceHockeyMarketPlayersParser
-	extends PlayersParser<IceHockeyAttributes>
+	extends AbstractPlayersParser<IceHockeyAttributes>
 {
 	@Override
 	public String getName()

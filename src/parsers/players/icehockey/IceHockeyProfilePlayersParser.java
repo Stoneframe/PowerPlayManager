@@ -9,10 +9,10 @@ import model.icehockey.IceHockeyAttributes;
 import model.icehockey.IceHockeyPlayer;
 import parsers.ParseException;
 import parsers.SideParser;
-import parsers.players.PlayersParser;
+import parsers.players.AbstractPlayersParser;
 
 public class IceHockeyProfilePlayersParser
-	extends PlayersParser<IceHockeyAttributes>
+	extends AbstractPlayersParser<IceHockeyAttributes>
 {
 	@Override
 	public String getName()
@@ -54,10 +54,10 @@ public class IceHockeyProfilePlayersParser
 	private static int parseAge(String text)
 	{
 		String ageText = Arrays
-				.stream(text.split("\n"))
-				.filter(s -> s.startsWith("Ålder"))
-				.findFirst()
-				.get();
+			.stream(text.split("\n"))
+			.filter(s -> s.startsWith("Ålder"))
+			.findFirst()
+			.get();
 
 		return Integer.parseInt(ageText.split("\t")[1]);
 	}
@@ -65,15 +65,15 @@ public class IceHockeyProfilePlayersParser
 	private static int parseCL(String text)
 	{
 		String clText = Arrays
-				.stream(text.split("\n"))
-				.filter(s -> s.startsWith("KL"))
-				.findFirst()
-				.get();
+			.stream(text.split("\n"))
+			.filter(s -> s.startsWith("KL"))
+			.findFirst()
+			.get();
 
 		String cl = clText
-				.replace("(", "")
-				.replace(")", "")
-				.split("\t")[1].split(" ")[1].split("/")[0];
+			.replace("(", "")
+			.replace(")", "")
+			.split("\t")[1].split(" ")[1].split("/")[0];
 
 		return Integer.parseInt(cl);
 	}
@@ -81,11 +81,11 @@ public class IceHockeyProfilePlayersParser
 	private static Side parseSide(String text)
 	{
 		String side = Arrays
-				.stream(text.split("\n"))
-				.filter(s -> s.startsWith("FvS"))
-				.findFirst()
-				.get()
-				.split("\t")[1];
+			.stream(text.split("\n"))
+			.filter(s -> s.startsWith("FvS"))
+			.findFirst()
+			.get()
+			.split("\t")[1];
 
 		return SideParser.parseSide(side);
 	}
@@ -128,11 +128,11 @@ public class IceHockeyProfilePlayersParser
 	private static int[] parseAttribute(String text, String attrName)
 	{
 		String[] split = Arrays
-				.stream(text.split("\n"))
-				.filter(s -> s.startsWith(attrName))
-				.findFirst()
-				.get()
-				.split("\t");
+			.stream(text.split("\n"))
+			.filter(s -> s.startsWith(attrName))
+			.findFirst()
+			.get()
+			.split("\t");
 
 		int rating = Integer.parseInt(split[1]);
 		int quality = Integer.parseInt(split[split.length - 1]);

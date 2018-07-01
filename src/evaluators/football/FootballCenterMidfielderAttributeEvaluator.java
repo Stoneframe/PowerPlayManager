@@ -14,7 +14,7 @@ public class FootballCenterMidfielderAttributeEvaluator
 	private static final int TEC = HIGH;
 	private static final int SPE = LOW;
 	private static final int HEA = LOW;
-	
+
 	public FootballCenterMidfielderAttributeEvaluator()
 	{
 		super(NAME, GOA, DEF, MID, OFF, SHO, PAS, TEC, SPE, HEA);

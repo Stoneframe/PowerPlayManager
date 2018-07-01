@@ -9,10 +9,10 @@ import model.football.FootballAttributes;
 import model.football.FootballPlayer;
 import parsers.ParseException;
 import parsers.SideParser;
-import parsers.players.PlayersParser;
+import parsers.players.AbstractPlayersParser;
 
 public class FootballMarketPlayersParser
-	extends PlayersParser<FootballAttributes>
+	extends AbstractPlayersParser<FootballAttributes>
 {
 
 	@Override
