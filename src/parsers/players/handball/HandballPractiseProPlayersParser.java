@@ -5,20 +5,39 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Player;
-import model.Side;
 import model.handball.HandballAttributes;
-import model.handball.HandballPlayer;
 import parsers.ParseException;
-import parsers.players.PlayersParser;
 
 public class HandballPractiseProPlayersParser
-	extends PlayersParser<HandballAttributes>
+	extends HandballPlayersParser
 {
-	private static final int FIELDS_PER_PLAYER = 23;
-	private static final int AGE_FIELD = 2;
-	private static final int CL_FIELD = 4;
-	private static final int ATTRIBUTE_FIELDS_PER_PLAYER = 15;
-	private static final int ATTRIBUTES_START_FIELD = 5;
+	public HandballPractiseProPlayersParser()
+	{
+		super(
+			createPattern(
+				name(),
+				ignore(), // Position
+				age(),
+				ignore(), // Scouting status
+				cl(),
+				attributeWithQuality("goa"),
+				ignore(), // Goa training
+				attributeWithQuality("fip"),
+				ignore(), // Fip training
+				attributeWithQuality("sho"),
+				ignore(), // Sho training
+				attributeWithQuality("blk"),
+				ignore(), // Blk training
+				attributeWithQuality("pas"),
+				ignore(), // Pas training
+				attributeWithQuality("tec"),
+				ignore(), // Tec training
+				attributeWithQuality("spe"),
+				ignore(), // Spe training
+				attributeWithQuality("agr"),
+				ignore(), // Agr training
+				training()));
+	}
 
 	@Override
 	public String getName()
@@ -29,110 +48,19 @@ public class HandballPractiseProPlayersParser
 	@Override
 	public List<Player<HandballAttributes>> parsePlayers(String textToParse) throws ParseException
 	{
-		try
+		List<String> lines = new LinkedList<>();
+
+		String[] split = textToParse.split("\n");
+
+		for (int i = 0; i < split.length; i += 17)
 		{
-			String[] lines = textToParse.replace("\n", "\t").split("\t");
+			String line = String.join("\t", Arrays.copyOfRange(split, i, i + 17));
 
-			List<Player<HandballAttributes>> players = new LinkedList<Player<HandballAttributes>>();
+			System.out.println(line);
 
-			for (int i = 0; i < lines.length; i += FIELDS_PER_PLAYER)
-			{
-				HandballPlayer player = new HandballPlayer(
-						parseName(lines[i]),
-						parseAge(lines[i + AGE_FIELD]),
-						parseCL(lines[i + CL_FIELD]),
-						Side.UNKNOWN,
-						parseAttributes(
-							Arrays.copyOfRange(
-								lines,
-								i + ATTRIBUTES_START_FIELD,
-								i + ATTRIBUTES_START_FIELD + ATTRIBUTE_FIELDS_PER_PLAYER)),
-						0,
-						0,
-						0,
-						parseTraining(lines[i + 21]));
-
-				players.add(player);
-			}
-
-			return players;
+			lines.add(line);
 		}
-		catch (Exception e)
-		{
-			throw new ParseException(e);
-		}
-	}
 
-	private static String parseName(String text)
-	{
-		String[] split = text.split(" ");
-
-		return String.format("%s %s", split[1], split[2]);
-	}
-
-	private static int parseAge(String text)
-	{
-		return Integer.parseInt(text);
-	}
-
-	private static int parseCL(String text)
-	{
-		return Integer.parseInt(text.split("/")[0]);
-	}
-
-	private static HandballAttributes parseAttributes(String[] texts)
-	{
-		HandballAttributes attributes = new HandballAttributes();
-
-		int[] goa = parseAttribute(texts[0]);
-		attributes.setGoa(goa[0]);
-		attributes.setQGoa(goa[1]);
-
-		int[] fip = parseAttribute(texts[2]);
-		attributes.setFip(fip[0]);
-		attributes.setQFip(fip[1]);
-
-		int[] sho = parseAttribute(texts[4]);
-		attributes.setSho(sho[0]);
-		attributes.setQSho(sho[1]);
-
-		int[] blk = parseAttribute(texts[6]);
-		attributes.setBlk(blk[0]);
-		attributes.setQBlk(blk[1]);
-
-		int[] pas = parseAttribute(texts[8]);
-		attributes.setPas(pas[0]);
-		attributes.setQPas(pas[1]);
-
-		int[] tec = parseAttribute(texts[10]);
-		attributes.setTec(tec[0]);
-		attributes.setQTec(tec[1]);
-
-		int[] spe = parseAttribute(texts[12]);
-		attributes.setSpe(spe[0]);
-		attributes.setQSpe(spe[1]);
-
-		int[] agr = parseAttribute(texts[14]);
-		attributes.setAgr(agr[0]);
-		attributes.setQAgr(agr[1]);
-
-		return attributes;
-	}
-
-	private static int[] parseAttribute(String text)
-	{
-		int rating = Integer.parseInt(text.substring(0, text.length() - 2));
-		int quality = Integer.parseInt(text.substring(text.length() - 2, text.length()));
-
-		return new int[]
-		{
-				rating,
-				quality
-		};
-	}
-
-	private static double parseTraining(String text)
-	{
-		return Double.parseDouble(text);
+		return parsePlayers(lines, false, true, false, true);
 	}
 }
