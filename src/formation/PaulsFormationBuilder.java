@@ -1,10 +1,11 @@
 package formation;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import comparators.RatingComparator;
+import evaluators.PlayerEvaluator;
 import model.Attributes;
 import model.Player;
 import model.Roster;
@@ -13,6 +14,13 @@ public class PaulsFormationBuilder<A extends Attributes>
 	implements
 		FormationBuilder<A>
 {
+	private PlayerEvaluator<A> playerEvaluator;
+
+	public PaulsFormationBuilder(PlayerEvaluator<A> playerEvaluator)
+	{
+		this.playerEvaluator = playerEvaluator;
+	}
+
 	@Override
 	public List<Formation<A>> createFormations(
 			Roster<A> roster,
@@ -20,7 +28,7 @@ public class PaulsFormationBuilder<A extends Attributes>
 	{
 		List<Formation<A>> formations = new LinkedList<>();
 
-		List<PositionAssigner<A>> positionAssigners = new LinkedList<>();
+		List<PositionAssigner> positionAssigners = new LinkedList<>();
 
 		for (FormationTemplate<A> formationTemplate : formationTemplates)
 		{
@@ -32,7 +40,7 @@ public class PaulsFormationBuilder<A extends Attributes>
 
 				Position<A> position = new Position<>(positionTemplate.getName());
 				positions.add(position);
-				positionAssigners.add(new PositionAssigner<>(roster, positionTemplate, position));
+				positionAssigners.add(new PositionAssigner(roster, positionTemplate, position));
 			}
 
 			formations.add(new Formation<>(formationTemplate.getName(), positions));
@@ -41,16 +49,16 @@ public class PaulsFormationBuilder<A extends Attributes>
 		while (!positionAssigners.isEmpty())
 		{
 			Collections.sort(positionAssigners);
-			PositionAssigner<A> assigner = positionAssigners.remove(0);
+			PositionAssigner assigner = positionAssigners.remove(0);
 			assigner.assignBestPlayerToPosition();
 		}
 
 		return formations;
 	}
 
-	protected static class PositionAssigner<A extends Attributes>
+	protected class PositionAssigner
 		implements
-			Comparable<PositionAssigner<A>>
+			Comparable<PositionAssigner>
 	{
 		private Roster<A> roster;
 		private PositionTemplate<A> positionTemplate;
@@ -67,7 +75,7 @@ public class PaulsFormationBuilder<A extends Attributes>
 		}
 
 		@Override
-		public int compareTo(PositionAssigner<A> other)
+		public int compareTo(PositionAssigner other)
 		{
 			int bestPlayersComparison = comparePlayersAtRank(other, this, 0);
 
@@ -95,9 +103,9 @@ public class PaulsFormationBuilder<A extends Attributes>
 			roster.remove(player);
 		}
 
-		private static int comparePlayersAtRank(
-				PositionAssigner<?> assigner1,
-				PositionAssigner<?> assigner2,
+		private int comparePlayersAtRank(
+				PositionAssigner assigner1,
+				PositionAssigner assigner2,
 				int rank)
 		{
 			return Double.compare(
@@ -114,8 +122,7 @@ public class PaulsFormationBuilder<A extends Attributes>
 				return Double.MIN_VALUE;
 			}
 
-			double rating =
-					positionTemplate.getAttributeEvaluator().getRating(player.getAttributes());
+			double rating = getPlayerRating(player);
 
 			if (!player.getSide().matches(positionTemplate.getSide()))
 			{
@@ -135,11 +142,23 @@ public class PaulsFormationBuilder<A extends Attributes>
 			return roster
 				.stream()
 				.sorted(
-					new RatingComparator<A>(positionTemplate.getAttributeEvaluator())
+					Comparator
+						.comparingDouble((Player<A> p) -> getPlayerRating(p))
 						.reversed())
 				.skip(rank)
 				.findFirst()
 				.orElse(null);
+		}
+
+		private double getPlayerRating(Player<A> player)
+		{
+			double rating = positionTemplate
+				.getAttributeEvaluator()
+				.getRating(player.getAttributes());
+
+			rating = playerEvaluator.calculateFormForRating(player, rating);
+
+			return rating;
 		}
 	}
 }

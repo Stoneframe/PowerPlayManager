@@ -98,11 +98,9 @@ public class PlayerEvaluator<A extends Attributes>
 
 		double rating = bestPositionRating.getValue();
 
-		double form = rating
-				* (player.getEnergy() / 100d)
-				* (1 + 0.25 * player.getChemistry() / 100d + 0.2 * player.getExperience() / 100d);
-
-		return new PositionNameValue(bestPositionRating.getName(), form);
+		return new PositionNameValue(
+				bestPositionRating.getName(),
+				calculateFormForRating(player, rating));
 	}
 
 	public PositionNameValue getBestPositionQuality(Player<A> player)
@@ -112,6 +110,13 @@ public class PlayerEvaluator<A extends Attributes>
 		return new PositionNameValue(
 				evaluator.getName(),
 				evaluator.getQuality(player.getAttributes()));
+	}
+
+	public double calculateFormForRating(Player<A> player, double rating)
+	{
+		return rating
+				* (player.getEnergy() / 100d)
+				* (1 + 0.25 * player.getChemistry() / 100d + 0.2 * player.getExperience() / 100d);
 	}
 
 	public double calculateRatingForAge(Player<A> player, int age)

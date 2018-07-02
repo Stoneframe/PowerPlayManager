@@ -20,7 +20,7 @@ public class FootballMainPanel
 		super(
 			new FootballAttributesPanel(),
 			new FootballFormationTemplatePanelFactory(),
-			new PaulsFormationBuilder<>(),
+			new PaulsFormationBuilder<>(playerEvaluator),
 			parsers,
 			playerEvaluator);
 	}

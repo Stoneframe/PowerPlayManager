@@ -31,9 +31,9 @@ public class IceHockeyProfilePlayersParser
 					parseCL(textToParse),
 					parseSide(textToParse),
 					parseAttributes(textToParse),
-					0,
-					0,
-					0,
+					parseExperience(textToParse),
+					parseChemistry(textToParse),
+					parseEnergy(textToParse),
 					parseTraining(textToParse));
 
 			return Arrays.asList(player);
@@ -142,6 +142,39 @@ public class IceHockeyProfilePlayersParser
 				rating,
 				quality,
 		};
+	}
+
+	private static int parseExperience(String text)
+	{
+		String expText = Arrays
+			.stream(text.split("\n"))
+			.filter(s -> s.contains("Erf"))
+			.findFirst()
+			.get();
+
+		return Integer.parseInt(expText.split("\t")[1]);
+	}
+
+	private static int parseChemistry(String text)
+	{
+		String chemText = Arrays
+			.stream(text.split("\n"))
+			.filter(s -> s.contains("Kem"))
+			.findFirst()
+			.get();
+
+		return Integer.parseInt(chemText.split("\t")[1].replace("%", ""));
+	}
+
+	private static int parseEnergy(String text)
+	{
+		String eneText = Arrays
+			.stream(text.split("\n"))
+			.filter(s -> s.contains("Ene"))
+			.findFirst()
+			.get();
+
+		return Integer.parseInt(eneText.split("\t")[1].split("/")[1]);
 	}
 
 	private static double parseTraining(String text)

@@ -317,7 +317,7 @@ public abstract class RegexPlayersParser<A extends Attributes>
 				attributes,
 				includeExperience ? Integer.parseInt(matcher.group("experience")) : 0,
 				includeChemistry ? Integer.parseInt(matcher.group("chemistry")) : 0,
-				includeEnergy ? Integer.parseInt(matcher.group("energy")) : 0,
+				includeEnergy ? Integer.parseInt(matcher.group("energy")) : 100,
 				includeTraining ? Double.parseDouble(matcher.group("training")) : 0);
 	}
 
@@ -381,7 +381,7 @@ public abstract class RegexPlayersParser<A extends Attributes>
 
 	protected static String energy()
 	{
-		return "[ ]*(?<energy>\\d+)(\\/\\d+)?[ ]*";
+		return "[ ]*(\\d{1,3}\\/)?(?<energy>\\d{1,3})[ ]*";
 	}
 
 	protected static String chemistry()

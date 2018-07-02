@@ -95,6 +95,7 @@ public class Player<A extends Attributes>
 	public void setExperience(int experience)
 	{
 		this.experience = experience;
+		firePropertyChanged("Experience", experience);
 	}
 
 	public int getChemistry()
@@ -105,6 +106,7 @@ public class Player<A extends Attributes>
 	public void setChemistry(int chemistry)
 	{
 		this.chemistry = chemistry;
+		firePropertyChanged("Chemistry", chemistry);
 	}
 
 	public int getEnergy()
@@ -115,6 +117,7 @@ public class Player<A extends Attributes>
 	public void setEnergy(int energy)
 	{
 		this.energy = energy;
+		firePropertyChanged("Energy", energy);
 	}
 
 	public double getTraining()
@@ -157,7 +160,7 @@ public class Player<A extends Attributes>
 			this.setChemistry(other.getChemistry());
 		}
 
-		if (this.energy == 0)
+		if (this.energy == 100)
 		{
 			this.setEnergy(other.getEnergy());
 		}

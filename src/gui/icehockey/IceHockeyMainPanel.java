@@ -20,7 +20,7 @@ public class IceHockeyMainPanel
 		super(
 			new IceHockeyAttributesPanel(),
 			new IceHockeyFormationTemplatePanelFactory(),
-			new PaulsFormationBuilder<>(),
+			new PaulsFormationBuilder<>(playerEvaluator),
 			parsers,
 			playerEvaluator);
 	}
