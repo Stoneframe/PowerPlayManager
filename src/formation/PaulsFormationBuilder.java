@@ -24,7 +24,8 @@ public class PaulsFormationBuilder<A extends Attributes>
 	@Override
 	public List<Formation<A>> createFormations(
 			Roster<A> roster,
-			List<FormationTemplate<A>> formationTemplates)
+			List<FormationTemplate<A>> formationTemplates,
+			boolean considerForm)
 	{
 		List<Formation<A>> formations = new LinkedList<>();
 
@@ -39,8 +40,13 @@ public class PaulsFormationBuilder<A extends Attributes>
 				if (positionTemplate.isIgnored()) continue;
 
 				Position<A> position = new Position<>(positionTemplate.getName());
+
 				positions.add(position);
-				positionAssigners.add(new PositionAssigner(roster, positionTemplate, position));
+
+				PositionAssigner positionAssigner =
+						new PositionAssigner(roster, positionTemplate, position, considerForm);
+
+				positionAssigners.add(positionAssigner);
 			}
 
 			formations.add(new Formation<>(formationTemplate.getName(), positions));
@@ -64,14 +70,18 @@ public class PaulsFormationBuilder<A extends Attributes>
 		private PositionTemplate<A> positionTemplate;
 		private Position<A> position;
 
+		private boolean considerForm;
+
 		public PositionAssigner(
 				Roster<A> roster,
 				PositionTemplate<A> positionTemplate,
-				Position<A> position)
+				Position<A> position,
+				boolean considerForm)
 		{
 			this.roster = roster;
 			this.positionTemplate = positionTemplate;
 			this.position = position;
+			this.considerForm = considerForm;
 		}
 
 		@Override
@@ -156,7 +166,10 @@ public class PaulsFormationBuilder<A extends Attributes>
 				.getAttributeEvaluator()
 				.getRating(player.getAttributes());
 
-			rating = playerEvaluator.calculateFormForRating(player, rating);
+			if (considerForm)
+			{
+				rating = playerEvaluator.calculateFormForRating(player, rating);
+			}
 
 			return rating;
 		}
