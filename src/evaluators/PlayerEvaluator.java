@@ -14,8 +14,8 @@ public class PlayerEvaluator<A extends Attributes>
 {
 	private static final int DAYS_PER_SEASON = 112;
 
-	private static final double EXPERIENCE_FACTOR = 0.2;
-	private static final double CHEMISTRY_FACTOR = 0.25;
+	private static final double EXPERIENCE_FACTOR = 0.3;
+	private static final double CHEMISTRY_FACTOR = 0.2;
 
 	private double a, b, c;
 
