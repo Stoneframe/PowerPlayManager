@@ -1,21 +1,17 @@
 package evaluators.handball;
 
-public class HandballWingAttributeEvaluator
+public abstract class HandballWingAttributeEvaluator
 	extends HandballAttributeEvaluator
 {
-	private static final String NAME = "Wing";
-
 	private static final int GOA = 0;
-	private static final int FIP = PRIMARY;
-	private static final int SHO = 21;
-	private static final int BLK = 21;
-	private static final int PAS = LOW;
-	private static final int TEC = MEDIUM;
-	private static final int SPE = HIGH;
-	private static final int AGR = LOW;
+	private static final int FIP = 100;
+	private static final int PAS = 30;
+	private static final int TEC = 60;
+	private static final int SPE = 80;
+	private static final int AGR = 30;
 
-	public HandballWingAttributeEvaluator()
+	public HandballWingAttributeEvaluator(String name, int sho, int blk)
 	{
-		super(NAME, GOA, FIP, SHO, BLK, PAS, TEC, SPE, AGR);
+		super(name, GOA, FIP, sho, blk, PAS, TEC, SPE, AGR);
 	}
 }

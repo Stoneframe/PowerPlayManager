@@ -13,7 +13,7 @@ public class FootballAttributeEvaluator
 	protected static final int PRIMARY = 100;
 	protected static final int HIGH = 75;
 	protected static final int MEDIUM = 50;
-	protected static final int LOW = 25;
+	protected static final int LOW = 30;
 
 	private double goa;
 	private double def;
