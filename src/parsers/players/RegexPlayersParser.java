@@ -337,7 +337,7 @@ public abstract class RegexPlayersParser<A extends Attributes>
 	{
 		return "(?<country>("
 				+ String.join("|", countries).replace("-", "\\-")
-				+ ")+) (?<name>\\S+(((?! Dagar)( \\S+))+)).*";
+				+ ")+) (?<name>\\S+(((?!( Dagar| \\d))( \\S+))+)).*";
 	}
 
 	protected static String age()
