@@ -40,6 +40,7 @@ public class IceHockeyProfilePlayersParser
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			throw new ParseException(e);
 		}
 	}
@@ -163,7 +164,7 @@ public class IceHockeyProfilePlayersParser
 			.findFirst()
 			.get();
 
-		return Integer.parseInt(chemText.split("\t")[1].replace("%", ""));
+		return Integer.parseInt(chemText.split("\t")[1].replace("%", "").replace("-", "0"));
 	}
 
 	private static int parseEnergy(String text)

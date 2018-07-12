@@ -168,7 +168,7 @@ public class HandballProfilePlayersParser
 			.findFirst()
 			.get();
 
-		return Integer.parseInt(chemText.split("\t")[1].replace("%", ""));
+		return Integer.parseInt(chemText.split("\t")[1].replace("%", "").replace("-", "0"));
 	}
 
 	private static int parseEnergy(String text)
