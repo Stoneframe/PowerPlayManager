@@ -85,9 +85,6 @@ public class MainFrame
 						new Settings(new SettingStorage("handball")),
 						Arrays.asList(
 							new HandballGoalieAttributeEvaluator(),
-							// new HandballBackAttributeEvaluator(),
-							// new HandballPivotAttributeEvaluator(),
-							// new HandballWingAttributeEvaluator(),
 							new HandballDefBackAttributeEvaluator(),
 							new HandballDefPivotAttributeEvaluator(),
 							new HandballDefWingAttributeEvaluator(),

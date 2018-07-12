@@ -13,7 +13,7 @@ public class FootballGoalkeeperAttributeEvaluator
 	private static final int PAS = LOW;
 	private static final int TEC = HIGH;
 	private static final int SPE = HIGH;
-	private static final int HEA = LOW;
+	private static final int HEA = 40;
 
 	public FootballGoalkeeperAttributeEvaluator()
 	{

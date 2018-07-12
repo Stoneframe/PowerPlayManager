@@ -5,13 +5,13 @@ public class HandballGoalieAttributeEvaluator
 {
 	private static final String NAME = "Goalie";
 
-	private static final int GOA = PRIMARY;
+	private static final int GOA = 100;
 	private static final int FIP = 0;
 	private static final int SHO = 0;
-	private static final int BLK = 70;
-	private static final int PAS = MEDIUM;
-	private static final int TEC = LOW;
-	private static final int SPE = LOW;
+	private static final int BLK = 85;
+	private static final int PAS = 55;
+	private static final int TEC = 30;
+	private static final int SPE = 30;
 	private static final int AGR = 0;
 
 	public HandballGoalieAttributeEvaluator()
