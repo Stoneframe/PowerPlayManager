@@ -56,21 +56,22 @@ import parsers.players.icehockey.IceHockeyMarketPlayersParser;
 import parsers.players.icehockey.IceHockeyOverviewPlayersParser;
 import parsers.players.icehockey.IceHockeyPractiseProPlayersParser;
 import parsers.players.icehockey.IceHockeyProfilePlayersParser;
+import settings.AppSettings;
 import settings.SettingStorage;
-import settings.Settings;
+import settings.SportSettings;
 
 public class MainFrame
 	extends JFrame
 {
 	private static final long serialVersionUID = -8026416994513756565L;
 
+	private AppSettings appSettings = new AppSettings(new SettingStorage("app"));
+
 	private JTabbedPane tabbedPane;
 
 	private IceHockeyMainPanel iceHockeyPanel;
 	private FootballMainPanel footballPanel;
 	private HandballMainPanel handballPanel;
-
-	private SettingStorage settingStorage = new SettingStorage("main");
 
 	public MainFrame()
 	{
@@ -84,7 +85,7 @@ public class MainFrame
 					new IceHockeyPractiseProPlayersParser(),
 					new IceHockeyFormationPlayersParser()),
 				new IceHockeyPlayerEvaluator(
-						new Settings(new SettingStorage("icehockey")),
+						new SportSettings(new SettingStorage("icehockey")),
 						Arrays.asList(
 							new IceHockeyGoalieAttributeEvaluator(),
 							new IceHockeyForwardAttributeEvaluator(),
@@ -103,7 +104,7 @@ public class MainFrame
 					new FootballPractiseProPlayersParser(),
 					new FootballFormationPlayersProParser()),
 				new FootballPlayerEvaluator(
-						new Settings(new SettingStorage("football")),
+						new SportSettings(new SettingStorage("football")),
 						Arrays.asList(
 							new FootballGoalkeeperAttributeEvaluator(),
 							new FootballFullBackAttributeEvaluator(),
@@ -114,36 +115,36 @@ public class MainFrame
 							new FootballCenterForwardAttributeEvaluator())));
 
 		handballPanel = new HandballMainPanel(
-			Arrays.asList(
-				new HandballProfilePlayersParser(),
-				new HandballMarketPlayersParser(),
-				new HandballOverviewPlayersParser(),
-				new HandballPractisePlayersParser(),
-				new HandballPractiseProPlayersParser(),
-				new HandballFormationPlayersParser(),
-				new HandballFormationPlayersProParser()),
-			new HandballPlayerEvaluator(
-					new Settings(new SettingStorage("handball")),
-					Arrays.asList(
-						new HandballGoalieAttributeEvaluator(),
-						new HandballDefBackAttributeEvaluator(),
-						new HandballDefPivotAttributeEvaluator(),
-						new HandballDefWingAttributeEvaluator(),
-						new HandballOffBackAttributeEvaluator(),
-						new HandballOffPivotAttributeEvaluator(),
-						new HandballOffWingAttributeEvaluator())));
+				Arrays.asList(
+					new HandballProfilePlayersParser(),
+					new HandballMarketPlayersParser(),
+					new HandballOverviewPlayersParser(),
+					new HandballPractisePlayersParser(),
+					new HandballPractiseProPlayersParser(),
+					new HandballFormationPlayersParser(),
+					new HandballFormationPlayersProParser()),
+				new HandballPlayerEvaluator(
+						new SportSettings(new SettingStorage("handball")),
+						Arrays.asList(
+							new HandballGoalieAttributeEvaluator(),
+							new HandballDefBackAttributeEvaluator(),
+							new HandballDefPivotAttributeEvaluator(),
+							new HandballDefWingAttributeEvaluator(),
+							new HandballOffBackAttributeEvaluator(),
+							new HandballOffPivotAttributeEvaluator(),
+							new HandballOffWingAttributeEvaluator())));
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Ice Hockey", iceHockeyPanel);
 		tabbedPane.addTab("Football", footballPanel);
 		tabbedPane.addTab("Handball", handballPanel);
 
-		tabbedPane.setSelectedIndex(settingStorage.getIntSetting("previousTabIndex", 0));
+		tabbedPane.setSelectedIndex(appSettings.getPreviousTabIndex());
 		tabbedPane.addChangeListener(new ChangeListener()
 		{
 			public void stateChanged(ChangeEvent e)
 			{
-				settingStorage.setIntSetting("previousTabIndex", tabbedPane.getSelectedIndex());
+				appSettings.setPreviousTabIndex(tabbedPane.getSelectedIndex());
 			}
 		});
 

@@ -1,13 +1,13 @@
 package settings;
 
-public class Settings
+public class SportSettings
 {
 	private static final String FACILITY_LEVEL = "facilityLevel";
 	private static final String STAFF_EFFECTIVNESS = "staffEffectivness";
 
 	private SettingStorage settingStorage;
 
-	public Settings(SettingStorage settingStorage)
+	public SportSettings(SettingStorage settingStorage)
 	{
 		this.settingStorage = settingStorage;
 	}

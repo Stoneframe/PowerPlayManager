@@ -8,7 +8,7 @@ import comparators.QualityEvaluatorComparator;
 import comparators.RatingEvaluatorComparator;
 import model.Attributes;
 import model.Player;
-import settings.Settings;
+import settings.SportSettings;
 
 public class PlayerEvaluator<A extends Attributes>
 {
@@ -19,7 +19,7 @@ public class PlayerEvaluator<A extends Attributes>
 
 	private double a, b, c;
 
-	private Settings settings;
+	private SportSettings settings;
 
 	private List<AttributeEvaluator<A>> attributeEvaluators;
 
@@ -27,7 +27,7 @@ public class PlayerEvaluator<A extends Attributes>
 			double a,
 			double b,
 			double c,
-			Settings settings,
+			SportSettings settings,
 			List<AttributeEvaluator<A>> attributeEvaluators)
 	{
 		this.a = a;

@@ -5,7 +5,7 @@ import java.util.List;
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import model.handball.HandballAttributes;
-import settings.Settings;
+import settings.SportSettings;
 
 public class HandballPlayerEvaluator
 	extends PlayerEvaluator<HandballAttributes>
@@ -13,7 +13,7 @@ public class HandballPlayerEvaluator
 	private static final double A = -0.001801, B = 0.01567, C = 1.351;
 
 	public HandballPlayerEvaluator(
-			Settings settings,
+			SportSettings settings,
 			List<AttributeEvaluator<HandballAttributes>> attributeEvaluators)
 	{
 		super(A, B, C, settings, attributeEvaluators);

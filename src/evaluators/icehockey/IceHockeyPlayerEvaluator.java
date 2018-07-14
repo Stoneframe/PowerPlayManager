@@ -5,7 +5,7 @@ import java.util.List;
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import model.icehockey.IceHockeyAttributes;
-import settings.Settings;
+import settings.SportSettings;
 
 public class IceHockeyPlayerEvaluator
 	extends PlayerEvaluator<IceHockeyAttributes>
@@ -13,7 +13,7 @@ public class IceHockeyPlayerEvaluator
 	private static final double A = -0.001801, B = 0.01567, C = 1.351;
 
 	public IceHockeyPlayerEvaluator(
-			Settings settings,
+			SportSettings settings,
 			List<AttributeEvaluator<IceHockeyAttributes>> attributeEvaluators)
 	{
 		super(A, B, C, settings, attributeEvaluators);
