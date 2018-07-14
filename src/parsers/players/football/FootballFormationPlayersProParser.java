@@ -1,33 +1,33 @@
-package parsers.players.handball;
+package parsers.players.football;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class HandballOverviewPlayersParser
-	extends HandballPlayersParser
+public class FootballFormationPlayersProParser
+	extends FootballPlayersParser
 {
 	private static final Pattern REGEX_PATTERN = createPattern(
+		ignore(), // Checkbox
 		name(),
-		ignore(), // Position
+		ignore(), // Type
 		age(),
-		ignore(), // Scouting status
-		ignore(), // Average quality
-		cl(),
 		attributes(),
 		experience(),
 		ignore(), // Total rating
-		side());
+		side(),
+		chemistry(),
+		energy());
 
-	private static final boolean INCLUDE_CL = true;
+	private static final boolean INCLUDE_CL = false;
 	private static final boolean INCLUDE_SIDE = true;
 	private static final boolean INCLUDE_QUALITIES = false;
 	private static final boolean INCLUDE_EXPERIENCE = true;
-	private static final boolean INCLUDE_CHEMISTRY = false;
-	private static final boolean INCLUDE_ENERGY = false;
+	private static final boolean INCLUDE_CHEMISTRY = true;
+	private static final boolean INCLUDE_ENERGY = true;
 	private static final boolean INCLUDE_TRAINING = false;
 
-	public HandballOverviewPlayersParser()
+	public FootballFormationPlayersProParser()
 	{
 		super(
 			REGEX_PATTERN,
@@ -43,7 +43,7 @@ public class HandballOverviewPlayersParser
 	@Override
 	public String getName()
 	{
-		return "Overview";
+		return "Formation (Pro)";
 	}
 
 	@Override

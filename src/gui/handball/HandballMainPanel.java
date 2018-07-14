@@ -20,7 +20,7 @@ public class HandballMainPanel
 		super(
 			new HandballAttributesPanel(),
 			new HandballFormationTemplatePanelFactory(),
-			new PaulsFormationBuilder<>(),
+			new PaulsFormationBuilder<>(playerEvaluator),
 			parsers,
 			playerEvaluator);
 	}

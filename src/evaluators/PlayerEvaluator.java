@@ -14,6 +14,9 @@ public class PlayerEvaluator<A extends Attributes>
 {
 	private static final int DAYS_PER_SEASON = 112;
 
+	private static final double EXPERIENCE_FACTOR = 0.3;
+	private static final double CHEMISTRY_FACTOR = 0.2;
+
 	private double a, b, c;
 
 	private Settings settings;
@@ -92,6 +95,17 @@ public class PlayerEvaluator<A extends Attributes>
 				evaluator.getRating(player.getAttributes()));
 	}
 
+	public PositionNameValue getBestPositionForm(Player<A> player)
+	{
+		PositionNameValue bestPositionRating = getBestPositionRating(player);
+
+		double rating = bestPositionRating.getValue();
+
+		return new PositionNameValue(
+				bestPositionRating.getName(),
+				calculateFormForRating(player, rating));
+	}
+
 	public PositionNameValue getBestPositionQuality(Player<A> player)
 	{
 		AttributeEvaluator<A> evaluator = getBestEvaluatorByQuality(player.getAttributes());
@@ -99,6 +113,16 @@ public class PlayerEvaluator<A extends Attributes>
 		return new PositionNameValue(
 				evaluator.getName(),
 				evaluator.getQuality(player.getAttributes()));
+	}
+
+	public double calculateFormForRating(Player<A> player, double rating)
+	{
+		double energyBonus = player.getEnergy() / 100d;
+
+		double chemistryBonus = CHEMISTRY_FACTOR * player.getChemistry() / 100d;
+		double experienceBonus = EXPERIENCE_FACTOR * player.getExperience() / 100d;
+
+		return rating * energyBonus * (1 + chemistryBonus + experienceBonus);
 	}
 
 	public double calculateRatingForAge(Player<A> player, int age)

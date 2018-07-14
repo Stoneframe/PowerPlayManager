@@ -43,7 +43,7 @@ public class ParsePanel<A extends Attributes>
 		parsersList.add(new SmartPlayersParser<>(parsers));
 		parsersList.addAll(parsers);
 
-		parsersComboBox = new PpmComboBox<PlayersParser<A>>(parsersList);
+		parsersComboBox = new PpmComboBox<>(parsersList);
 
 		parseButton = new JButton("Parse");
 		parseButton.addActionListener(new ActionListener()

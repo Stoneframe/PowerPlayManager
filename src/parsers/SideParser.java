@@ -4,7 +4,8 @@ import model.Side;
 
 public class SideParser
 {
-	public static Side parseSide(String side) {
+	public static Side parseSide(String side)
+	{
 		side = side.trim();
 		if (side.equals("Universal") || side.equals("U"))
 		{

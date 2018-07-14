@@ -14,7 +14,7 @@ public class FootballFullBackAttributeEvaluator
 	private static final int TEC = MEDIUM;
 	private static final int SPE = HIGH;
 	private static final int HEA = LOW;
-	
+
 	public FootballFullBackAttributeEvaluator()
 	{
 		super(NAME, GOA, DEF, MID, OFF, SHO, PAS, TEC, SPE, HEA);

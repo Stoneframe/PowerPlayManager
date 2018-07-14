@@ -53,6 +53,8 @@ public class FormationBuilderPanel<A extends Attributes>
 	private JButton addTemplateButton;
 	private JButton removeTemplateButton;
 
+	private JCheckBox considerFormCheckBox;
+
 	private JButton createFormationsButton;
 
 	public FormationBuilderPanel(
@@ -171,6 +173,8 @@ public class FormationBuilderPanel<A extends Attributes>
 			}
 		});
 
+		considerFormCheckBox = new JCheckBox("Consider Form", true);
+
 		createFormationsButton = new JButton("Create Formations");
 		updateCreateFormationsButton(roster);
 		createFormationsButton.addActionListener(new ActionListener()
@@ -180,7 +184,10 @@ public class FormationBuilderPanel<A extends Attributes>
 				List<FormationTemplate<A>> formationTemplates = getFormationTemplates();
 
 				List<Formation<A>> formations =
-						formationBuilder.createFormations(roster, formationTemplates);
+						formationBuilder.createFormations(
+							roster,
+							formationTemplates,
+							considerFormCheckBox.isSelected());
 
 				updatePlayersSelectedList(roster);
 				updateCreateFormationsButton(roster);
@@ -227,7 +234,11 @@ public class FormationBuilderPanel<A extends Attributes>
 
 		add(topPanel, BorderLayout.NORTH);
 
-		add(createFormationsButton, BorderLayout.SOUTH);
+		JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		southPanel.add(considerFormCheckBox);
+		southPanel.add(createFormationsButton);
+
+		add(southPanel, BorderLayout.SOUTH);
 
 		updatePlayersSelectedList(roster);
 	}
@@ -240,9 +251,9 @@ public class FormationBuilderPanel<A extends Attributes>
 	private boolean isEnoughPlayers(Roster<?> roster)
 	{
 		int totalNbrOfRequiredPlayers = getFormationTemplates()
-				.stream()
-				.mapToInt(ft -> ft.getNumberOfRequiredPlayers())
-				.sum();
+			.stream()
+			.mapToInt(ft -> ft.getNumberOfRequiredPlayers())
+			.sum();
 
 		return totalNbrOfRequiredPlayers <= roster.size();
 	}

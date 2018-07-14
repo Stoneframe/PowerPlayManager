@@ -31,6 +31,9 @@ public class HandballProfilePlayersParser
 					parseCL(textToParse),
 					parseSide(textToParse),
 					parseAttributes(textToParse),
+					parseExperience(textToParse),
+					parseChemistry(textToParse),
+					parseEnergy(textToParse),
 					parseTraining(textToParse));
 
 			return Arrays.asList(player);
@@ -51,10 +54,10 @@ public class HandballProfilePlayersParser
 	private static int parseAge(String text)
 	{
 		String ageText = Arrays
-				.stream(text.split("\n"))
-				.filter(s -> s.contains("Ålder"))
-				.findFirst()
-				.get();
+			.stream(text.split("\n"))
+			.filter(s -> s.contains("Ålder"))
+			.findFirst()
+			.get();
 
 		String[] ageTextElements = ageText.split("\t");
 		return Integer.parseInt(ageTextElements[ageTextElements.length - 1]);
@@ -63,10 +66,10 @@ public class HandballProfilePlayersParser
 	private static int parseCL(String text)
 	{
 		String clText = Arrays
-				.stream(text.split("\n"))
-				.filter(s -> s.contains("KL"))
-				.findFirst()
-				.get();
+			.stream(text.split("\n"))
+			.filter(s -> s.contains("KL"))
+			.findFirst()
+			.get();
 
 		String clText1 = clText.split("/")[0];
 		String cl = clText1.substring(clText1.length() - 1);
@@ -77,10 +80,10 @@ public class HandballProfilePlayersParser
 	private static Side parseSide(String text)
 	{
 		String sideText = Arrays
-				.stream(text.split("\n"))
-				.filter(s -> s.contains("FvS"))
-				.findFirst()
-				.get();
+			.stream(text.split("\n"))
+			.filter(s -> s.contains("FvS"))
+			.findFirst()
+			.get();
 
 		String[] sideTextElements = sideText.split("\t");
 		String side = sideTextElements[sideTextElements.length - 1];
@@ -130,11 +133,11 @@ public class HandballProfilePlayersParser
 	private static int[] parseAttribute(String text, String attrName)
 	{
 		String[] split = Arrays
-				.stream(text.split("\n"))
-				.filter(s -> s.startsWith(attrName))
-				.findFirst()
-				.get()
-				.split("\t");
+			.stream(text.split("\n"))
+			.filter(s -> s.startsWith(attrName))
+			.findFirst()
+			.get()
+			.split("\t");
 
 		int rating = Integer.parseInt(split[1]);
 		int quality = Integer.parseInt(split[split.length - 1]);
@@ -144,6 +147,39 @@ public class HandballProfilePlayersParser
 				rating,
 				quality,
 		};
+	}
+
+	private static int parseExperience(String text)
+	{
+		String expText = Arrays
+			.stream(text.split("\n"))
+			.filter(s -> s.contains("Erf"))
+			.findFirst()
+			.get();
+
+		return Integer.parseInt(expText.split("\t")[1]);
+	}
+
+	private static int parseChemistry(String text)
+	{
+		String chemText = Arrays
+			.stream(text.split("\n"))
+			.filter(s -> s.contains("Kem"))
+			.findFirst()
+			.get();
+
+		return Integer.parseInt(chemText.split("\t")[1].replace("%", "").replace("-", "0"));
+	}
+
+	private static int parseEnergy(String text)
+	{
+		String eneText = Arrays
+			.stream(text.split("\n"))
+			.filter(s -> s.contains("Ene"))
+			.findFirst()
+			.get();
+
+		return Integer.parseInt(eneText.split("\t")[1].split("/")[1]);
 	}
 
 	private static double parseTraining(String text)

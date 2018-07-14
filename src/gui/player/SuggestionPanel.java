@@ -84,11 +84,11 @@ public abstract class SuggestionPanel<A extends Attributes>
 	private List<AttributeEvaluator<A>> getSortedEvaluators()
 	{
 		return playerEvaluator
-				.getAttributeEvaluators(true)
-				.stream()
-				.sorted((a, b) -> compare(attributes, b, a))
-				.limit(DISPLAYED_POSITIONS_LIMIT)
-				.collect(Collectors.toList());
+			.getAttributeEvaluators(true)
+			.stream()
+			.sorted((a, b) -> compare(attributes, b, a))
+			.limit(DISPLAYED_POSITIONS_LIMIT)
+			.collect(Collectors.toList());
 	}
 
 	@Override
