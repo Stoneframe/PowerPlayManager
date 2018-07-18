@@ -60,7 +60,7 @@ public abstract class IceHockeyPlayersParser
 
 		return attributes;
 	}
-	
+
 	@Override
 	protected Player<IceHockeyAttributes> createPlayer(Matcher matcher)
 	{

@@ -64,7 +64,7 @@ public abstract class FootballPlayersParser
 
 		return attributes;
 	}
-	
+
 	@Override
 	protected Player<FootballAttributes> createPlayer(Matcher matcher)
 	{

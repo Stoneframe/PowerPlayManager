@@ -92,7 +92,7 @@ public class MainPanel<A extends Attributes>
 				if (isShowing())
 				{
 					JFileChooser fc = new JFileChooser();
-					
+
 					int returnVal = fc.showSaveDialog(MainPanel.this);
 
 					if (returnVal == JFileChooser.APPROVE_OPTION)
@@ -311,10 +311,5 @@ public class MainPanel<A extends Attributes>
 		add(rosterPanel, BorderLayout.CENTER);
 		add(playerPanel, BorderLayout.EAST);
 		add(buttonPanel, BorderLayout.SOUTH);
-	}
-
-	public Roster<A> getRoster()
-	{
-		return roster;
 	}
 }

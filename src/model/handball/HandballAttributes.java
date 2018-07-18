@@ -266,27 +266,60 @@ public class HandballAttributes
 			agr,
 			qAgr);
 	}
-	
+
 	@Override
 	public String toJson()
 	{
-		return "{" +
-				"goa:" + goa +
-				",fip:" + fip +
-				",sho:" + sho +
-				",blk:" + blk +
-				",pas:" + pas +
-				",tec:" + tec +
-				",spe:" + spe +
-				",agr:" + agr +
-				",qGoa:" + qGoa +
-				",qFip:" + qFip +
-				",qSho:" + qSho +
-				",qBlk:" + qBlk +
-				",qPas:" + qPas +
-				",qTec:" + qTec +
-				",qSpe:" + qSpe +
-				",qAgr:" + qAgr +
+		return "{"
+				+
+				"goa:"
+				+ goa
+				+
+				",fip:"
+				+ fip
+				+
+				",sho:"
+				+ sho
+				+
+				",blk:"
+				+ blk
+				+
+				",pas:"
+				+ pas
+				+
+				",tec:"
+				+ tec
+				+
+				",spe:"
+				+ spe
+				+
+				",agr:"
+				+ agr
+				+
+				",qGoa:"
+				+ qGoa
+				+
+				",qFip:"
+				+ qFip
+				+
+				",qSho:"
+				+ qSho
+				+
+				",qBlk:"
+				+ qBlk
+				+
+				",qPas:"
+				+ qPas
+				+
+				",qTec:"
+				+ qTec
+				+
+				",qSpe:"
+				+ qSpe
+				+
+				",qAgr:"
+				+ qAgr
+				+
 				"}";
 	}
 }
