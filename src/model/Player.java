@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Locale;
+
 import util.AbstractModelObject;
 
 public class Player<A extends Attributes>
@@ -170,27 +172,11 @@ public class Player<A extends Attributes>
 
 	public String toJson()
 	{
-		return "{"
-				+
-				"name:\""
-				+ name
-				+
-				"\",\"age\":"
-				+ age
-				+
-				",\"cl\":"
-				+ cl
-				+
-				",\"side\":\""
-				+ side
-				+
-				"\",attributes:"
-				+ attributes.toJson()
-				+
-				",training:"
-				+ training
-				+
-				"}";
+		String format =
+				"{'name': '%s', 'age': %d, 'cl': %d, 'side': '%s', 'attributes': %s, 'training': %f}"
+					.replace('\'', '"');
+
+		return String.format(Locale.US, format, name, age, cl, side, attributes.toJson(), training);
 	}
 
 	@Override

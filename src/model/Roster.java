@@ -161,26 +161,11 @@ public class Roster<A extends Attributes>
 
 	public String toJson()
 	{
-		StringBuilder sb = new StringBuilder();
-		// Begin Roster object
-		sb.append("{");
-		// Begin players list
-		sb.append("\"players\":[");
-		for (Player<?> p : players)
-		{
-			sb.append(p.toJson());
-			sb.append(",");
-		}
-		// Remove the last comma
-		if (!players.isEmpty())
-		{
-			sb.deleteCharAt(sb.length() - 1);
-		}
-		// End players list
-		sb.append("]");
-		// End Roster object
-		sb.append("}");
-		return sb.toString();
+		String format = "{'players': [%s]}".replace('\'', '"');
+
+		return String.format(
+			format,
+			String.join(",", players.stream().map(p -> p.toJson()).collect(Collectors.toList())));
 	}
 
 	private List<Player<A>> getFilteredPlayersList()
