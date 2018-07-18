@@ -245,29 +245,6 @@ public class HandballAttributes
 	}
 
 	@Override
-	public String toString()
-	{
-		return String.format(
-			"\tGoa: %d(%d)\tFip: %d(%d)\tSho: %d(%d)\tBlk: %d(%d)\tPas: %d(%d)\tTec: %d(%d)\tSpe: %d(%d)\tAgr: %d(%d)\n",
-			goa,
-			qGoa,
-			fip,
-			qFip,
-			sho,
-			qSho,
-			blk,
-			qBlk,
-			pas,
-			qPas,
-			tec,
-			qTec,
-			spe,
-			qSpe,
-			agr,
-			qAgr);
-	}
-
-	@Override
 	public String toJson()
 	{
 		String format = ("{"
@@ -294,4 +271,28 @@ public class HandballAttributes
 			qSpe,
 			qAgr);
 	}
+
+	@Override
+	public String toString()
+	{
+		return String.format(
+			"\tGoa: %d(%d)\tFip: %d(%d)\tSho: %d(%d)\tBlk: %d(%d)\tPas: %d(%d)\tTec: %d(%d)\tSpe: %d(%d)\tAgr: %d(%d)\n",
+			goa,
+			qGoa,
+			fip,
+			qFip,
+			sho,
+			qSho,
+			blk,
+			qBlk,
+			pas,
+			qPas,
+			tec,
+			qTec,
+			spe,
+			qSpe,
+			agr,
+			qAgr);
+	}
+
 }
