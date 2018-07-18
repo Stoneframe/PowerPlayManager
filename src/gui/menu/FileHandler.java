@@ -23,7 +23,7 @@ import parsers.SideParser;
 
 public abstract class FileHandler<A extends Attributes>
 {
-	public void saveRosterToFile(File file, Roster<A> roster, String sport)
+	public void saveRosterToFile(File file, Roster<A> roster)
 	{
 		try (FileWriter writer = new FileWriter(file))
 		{

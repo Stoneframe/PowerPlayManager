@@ -99,7 +99,7 @@ public class MainPanel<A extends Attributes>
 					{
 						File file = fc.getSelectedFile();
 
-						fileHandler.saveRosterToFile(file, roster, "");
+						fileHandler.saveRosterToFile(file, roster);
 					}
 				}
 			}
