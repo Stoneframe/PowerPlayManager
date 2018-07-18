@@ -5,23 +5,23 @@ import model.Attributes;
 public class HandballAttributes
 	extends Attributes
 {
-	int goa;
-	int fip;
-	int sho;
-	int blk;
-	int pas;
-	int tec;
-	int spe;
-	int agr;
+	private int goa;
+	private int fip;
+	private int sho;
+	private int blk;
+	private int pas;
+	private int tec;
+	private int spe;
+	private int agr;
 
-	int qGoa;
-	int qFip;
-	int qSho;
-	int qBlk;
-	int qPas;
-	int qTec;
-	int qSpe;
-	int qAgr;
+	private int qGoa;
+	private int qFip;
+	private int qSho;
+	private int qBlk;
+	private int qPas;
+	private int qTec;
+	private int qSpe;
+	private int qAgr;
 
 	public int getGoa()
 	{
@@ -270,56 +270,28 @@ public class HandballAttributes
 	@Override
 	public String toJson()
 	{
-		return "{"
-				+
-				"goa:"
-				+ goa
-				+
-				",fip:"
-				+ fip
-				+
-				",sho:"
-				+ sho
-				+
-				",blk:"
-				+ blk
-				+
-				",pas:"
-				+ pas
-				+
-				",tec:"
-				+ tec
-				+
-				",spe:"
-				+ spe
-				+
-				",agr:"
-				+ agr
-				+
-				",qGoa:"
-				+ qGoa
-				+
-				",qFip:"
-				+ qFip
-				+
-				",qSho:"
-				+ qSho
-				+
-				",qBlk:"
-				+ qBlk
-				+
-				",qPas:"
-				+ qPas
-				+
-				",qTec:"
-				+ qTec
-				+
-				",qSpe:"
-				+ qSpe
-				+
-				",qAgr:"
-				+ qAgr
-				+
-				"}";
+		String format = ("{"
+				+ "'goa': %d, 'fip': %d, 'sho': %d, 'blk': %d, pas': %d, tec': %d, spe': %d, agr': %d, "
+				+ "'qGoa': %d, qFip': %d, qSho': %d, qBlk': %d, qPas': %d, qTec': %d, qSpe': %d, qAgr': %d"
+				+ "}").replace('\'', '"');
+
+		return String.format(
+			format,
+			goa,
+			fip,
+			sho,
+			blk,
+			pas,
+			tec,
+			spe,
+			agr,
+			qGoa,
+			qFip,
+			qSho,
+			qBlk,
+			qPas,
+			qTec,
+			qSpe,
+			qAgr);
 	}
 }
