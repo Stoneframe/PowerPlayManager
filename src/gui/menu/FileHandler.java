@@ -1,7 +1,5 @@
 package gui.menu;
 
-import gui.MainFrame;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,10 +10,6 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import parsers.SideParser;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -25,22 +19,15 @@ import com.google.gson.stream.JsonReader;
 import model.Attributes;
 import model.Player;
 import model.Roster;
-import model.handball.HandballAttributes;
-import model.handball.HandballPlayer;
+import parsers.SideParser;
 
-public class FileHandler
+public abstract class FileHandler<A extends Attributes>
 {
-	public static <A extends Attributes> void saveRosterToFile(
-			File file,
-			Roster<A> roster,
-			String sport)
+	public void saveRosterToFile(File file, Roster<A> roster, String sport)
 	{
-		FileWriter writer;
-		try
+		try (FileWriter writer = new FileWriter(file))
 		{
-			writer = new FileWriter(file);
-			writer.write(roster.toJson(sport));
-			writer.close();
+			writer.write(roster.toJson());
 		}
 		catch (IOException e)
 		{
@@ -52,39 +39,36 @@ public class FileHandler
 		}
 	}
 
-	public static <A extends Attributes> Roster<A> loadRosterFromFile(
-			File file,
-			Roster<A> roster)
+	public Roster<A> loadRosterFromFile(File file, Roster<A> roster)
 	{
 		try
 		{
 			List<Player<A>> fileRoster = new LinkedList<>();
+
 			JsonReader reader = new JsonReader(new FileReader(file));
 			JsonElement jelement = new JsonParser().parse(reader);
 			JsonObject jobject = jelement.getAsJsonObject();
-			String sport = jobject.get("sport").getAsString();
 			JsonArray jarray = jobject.getAsJsonArray("players");
+
 			for (int i = 0; i < jarray.size(); i++)
 			{
 				JsonObject player = jarray.get(i).getAsJsonObject();
-				String name = player.get("name").getAsString();
-				int age = player.get("age").getAsInt();
-				int cl = player.get("cl").getAsInt();
-				String side = player.get("side").getAsString();
-				double training = player.get("training").getAsDouble();
 				JsonObject attr = player.get("attributes").getAsJsonObject();
-				if (sport.equals(MainFrame.HANDBALL_TITLE))
-				{
-					HandballAttributes attributes = parseHandballAttributes(attr);
-					Player newPlayer = new HandballPlayer(name,
-							age,
-							cl,
-							SideParser.parseSide(side),
-							attributes,
-							0, 0, 100,
-							training);
-					fileRoster.add(newPlayer);
-				}
+
+				A attributes = parseAttributes(attr);
+
+				Player<A> newPlayer = new Player<>(
+						player.get("name").getAsString(),
+						player.get("age").getAsInt(),
+						player.get("cl").getAsInt(),
+						SideParser.parseSide(player.get("side").getAsString()),
+						attributes,
+						0,
+						0,
+						100,
+						player.get("training").getAsDouble());
+
+				fileRoster.add(newPlayer);
 			}
 
 			roster.addAll(fileRoster);
@@ -97,16 +81,16 @@ public class FileHandler
 				"File Error",
 				JOptionPane.WARNING_MESSAGE);
 		}
+
 		return null;
 	}
 
-	private static HandballAttributes parseHandballAttributes(JsonObject attr)
-	{
-		Gson gson = new GsonBuilder().create();
-		HandballAttributes attributes = gson.fromJson(
-			attr,
-			HandballAttributes.class);
+	protected abstract A parseAttributes(JsonObject attr);
 
-		return attributes;
-	}
+	// private A parseHandballAttributes(JsonObject attr)
+	// {
+	// Gson gson = new GsonBuilder().create();
+	//
+	// return gson.fromJson(attr, HandballAttributes.class);
+	// }
 }

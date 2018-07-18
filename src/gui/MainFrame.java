@@ -40,6 +40,7 @@ import gui.football.FootballMainPanel;
 import gui.handball.HandballMainPanel;
 import gui.icehockey.IceHockeyMainPanel;
 import gui.menu.MenuBar;
+import gui.menu.handball.HandballFileHandler;
 import parsers.players.football.FootballFormationPlayersProParser;
 import parsers.players.football.FootballMarketPlayersParser;
 import parsers.players.football.FootballOverviewPlayersParser;
@@ -82,7 +83,11 @@ public class MainFrame
 	{
 		super("PPM Assistant");
 
+		MenuBar menuBar = new MenuBar(this, tabbedPane);
+
 		iceHockeyPanel = new IceHockeyMainPanel(
+				menuBar,
+				null,
 				Arrays.asList(
 					new IceHockeyProfilePlayersParser(),
 					new IceHockeyMarketPlayersParser(),
@@ -102,6 +107,8 @@ public class MainFrame
 							new IceHockeyOffensiveAttributeEvaluator())));
 
 		footballPanel = new FootballMainPanel(
+				menuBar,
+				null,
 				Arrays.asList(
 					new FootballMarketPlayersParser(),
 					new FootballOverviewPlayersParser(),
@@ -120,6 +127,8 @@ public class MainFrame
 							new FootballCenterForwardAttributeEvaluator())));
 
 		handballPanel = new HandballMainPanel(
+				menuBar,
+				new HandballFileHandler(),
 				Arrays.asList(
 					new HandballProfilePlayersParser(),
 					new HandballMarketPlayersParser(),
@@ -156,7 +165,7 @@ public class MainFrame
 		setLayout(new BorderLayout());
 
 		add(tabbedPane, BorderLayout.CENTER);
-		setJMenuBar(new MenuBar(this, tabbedPane));
+		setJMenuBar(menuBar);
 
 		pack();
 		setLocationRelativeTo(null);

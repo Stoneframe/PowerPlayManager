@@ -2,7 +2,7 @@ package model;
 
 import util.AbstractModelObject;
 
-public abstract class Player<A extends Attributes>
+public class Player<A extends Attributes>
 	extends AbstractModelObject
 {
 	protected String name;
@@ -168,6 +168,31 @@ public abstract class Player<A extends Attributes>
 		this.attributes.merge(other.attributes);
 	}
 
+	public String toJson()
+	{
+		return "{"
+				+
+				"name:\""
+				+ name
+				+
+				"\",\"age\":"
+				+ age
+				+
+				",\"cl\":"
+				+ cl
+				+
+				",\"side\":\""
+				+ side
+				+
+				"\",attributes:"
+				+ attributes.toJson()
+				+
+				",training:"
+				+ training
+				+
+				"}";
+	}
+
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -185,6 +210,4 @@ public abstract class Player<A extends Attributes>
 	{
 		return String.format("%s (%s)\n%s", name, side, attributes);
 	}
-	
-	public abstract String toJson();
 }

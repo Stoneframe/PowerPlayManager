@@ -4,9 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,6 +20,8 @@ import evaluators.PlayerEvaluator;
 import formation.FormationBuilder;
 import gui.formation.FormationBuilderPanel;
 import gui.formation.FormationTemplatePanelFactory;
+import gui.menu.FileHandler;
+import gui.menu.MenuBar;
 import gui.player.AttributesPanel;
 import gui.player.PlayerPanel;
 import gui.player.PlayerSelectedEvent;
@@ -51,15 +55,56 @@ public class MainPanel<A extends Attributes>
 	private JButton plotButton;
 	private JButton clearRosterButton;
 
-	private Roster<A> roster = new Roster<A>();
+	private Roster<A> roster = new Roster<>();
 
 	public MainPanel(
+			MenuBar menuBar,
+			FileHandler<A> fileHandler,
 			AttributesPanel<A> attributesPanel,
 			FormationTemplatePanelFactory<A> formationTemplatePanelFactory,
 			FormationBuilder<A> formationBuilder,
 			List<PlayersParser<A>> parsers,
 			PlayerEvaluator<A> playerEvaluator)
 	{
+		menuBar.addOpenActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (isShowing())
+				{
+					JFileChooser fc = new JFileChooser();
+
+					int returnVal = fc.showOpenDialog(MainPanel.this);
+
+					if (returnVal == JFileChooser.APPROVE_OPTION)
+					{
+						File file = fc.getSelectedFile();
+
+						fileHandler.loadRosterFromFile(file, roster);
+					}
+				}
+			}
+		});
+		menuBar.addSaveActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (isShowing())
+				{
+					JFileChooser fc = new JFileChooser();
+					
+					int returnVal = fc.showSaveDialog(MainPanel.this);
+
+					if (returnVal == JFileChooser.APPROVE_OPTION)
+					{
+						File file = fc.getSelectedFile();
+
+						fileHandler.saveRosterToFile(file, roster, "");
+					}
+				}
+			}
+		});
+
 		rosterPanel = new RosterPanel<A>(roster, playerEvaluator);
 		rosterPanel.setPlayerSelectedListener(new PlayerSelectedListener<A>()
 		{
@@ -267,8 +312,9 @@ public class MainPanel<A extends Attributes>
 		add(playerPanel, BorderLayout.EAST);
 		add(buttonPanel, BorderLayout.SOUTH);
 	}
-	
-	public Roster<A> getRoster() {
+
+	public Roster<A> getRoster()
+	{
 		return roster;
 	}
 }

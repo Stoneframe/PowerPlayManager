@@ -9,9 +9,7 @@ import java.util.stream.Collectors;
 
 import model.Attributes;
 import model.Player;
-import model.Side;
 import parsers.ParseException;
-import parsers.SideParser;
 
 public abstract class RegexPlayersParser<A extends Attributes>
 	extends PlayersParser<A>
