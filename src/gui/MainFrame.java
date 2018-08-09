@@ -40,7 +40,9 @@ import gui.football.FootballMainPanel;
 import gui.handball.HandballMainPanel;
 import gui.icehockey.IceHockeyMainPanel;
 import gui.menu.MenuBar;
+import gui.menu.football.FootballFileHandler;
 import gui.menu.handball.HandballFileHandler;
+import gui.menu.icehockey.IceHockeyFileHandler;
 import parsers.players.football.FootballFormationPlayersProParser;
 import parsers.players.football.FootballMarketPlayersParser;
 import parsers.players.football.FootballOverviewPlayersParser;
@@ -87,7 +89,7 @@ public class MainFrame
 
 		iceHockeyPanel = new IceHockeyMainPanel(
 				menuBar,
-				null,
+				new IceHockeyFileHandler(),
 				Arrays.asList(
 					new IceHockeyProfilePlayersParser(),
 					new IceHockeyMarketPlayersParser(),
@@ -108,7 +110,7 @@ public class MainFrame
 
 		footballPanel = new FootballMainPanel(
 				menuBar,
-				null,
+				new FootballFileHandler(),
 				Arrays.asList(
 					new FootballMarketPlayersParser(),
 					new FootballOverviewPlayersParser(),

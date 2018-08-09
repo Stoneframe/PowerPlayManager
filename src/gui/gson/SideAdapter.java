@@ -11,17 +11,11 @@ import model.Side;
 public final class SideAdapter
 	extends TypeAdapter<Side>
 {
-
-	public SideAdapter()
-	{
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public Side read(JsonReader reader) throws IOException
 	{
 		String s = reader.nextString();
-		// FIXME switch?
+
 		if (Side.LEFT.toString().equals(s))
 		{
 			return Side.LEFT;
@@ -34,7 +28,10 @@ public final class SideAdapter
 		{
 			return Side.UNIVERSAL;
 		}
-		return Side.UNKNOWN;
+		else
+		{
+			return Side.UNKNOWN;
+		}
 	}
 
 	@Override

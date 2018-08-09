@@ -159,15 +159,6 @@ public class Roster<A extends Attributes>
 		return Collections.unmodifiableList(groups);
 	}
 
-	public String toJson()
-	{
-		String format = "{'players': [%s]}".replace('\'', '"');
-
-		return String.format(
-			format,
-			String.join(",", players.stream().map(p -> p.toJson()).collect(Collectors.toList())));
-	}
-
 	private List<Player<A>> getFilteredPlayersList()
 	{
 		return players

@@ -245,34 +245,6 @@ public class HandballAttributes
 	}
 
 	@Override
-	public String toJson()
-	{
-		String format = ("{"
-				+ "'goa': %d, 'fip': %d, 'sho': %d, 'blk': %d, 'pas': %d, 'tec': %d, 'spe': %d, 'agr': %d, "
-				+ "'qGoa': %d, 'qFip': %d, 'qSho': %d, 'qBlk': %d, 'qPas': %d, 'qTec': %d, 'qSpe': %d, 'qAgr': %d"
-				+ "}").replace('\'', '"');
-
-		return String.format(
-			format,
-			goa,
-			fip,
-			sho,
-			blk,
-			pas,
-			tec,
-			spe,
-			agr,
-			qGoa,
-			qFip,
-			qSho,
-			qBlk,
-			qPas,
-			qTec,
-			qSpe,
-			qAgr);
-	}
-
-	@Override
 	public String toString()
 	{
 		return String.format(
@@ -294,5 +266,4 @@ public class HandballAttributes
 			agr,
 			qAgr);
 	}
-
 }

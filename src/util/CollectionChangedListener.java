@@ -2,7 +2,7 @@ package util;
 
 import java.util.EventListener;
 
-public interface CollectionChangedListeners
+public interface CollectionChangedListener
 	extends
 		EventListener
 {

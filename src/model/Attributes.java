@@ -24,6 +24,4 @@ public abstract class Attributes
 			thisSet.accept(otherGet.get());
 		}
 	}
-
-	public abstract String toJson();
 }

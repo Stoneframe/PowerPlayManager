@@ -40,7 +40,6 @@ public class IceHockeyProfilePlayersParser
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
 			throw new ParseException(e);
 		}
 	}

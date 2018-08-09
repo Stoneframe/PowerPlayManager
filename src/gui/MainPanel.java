@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import evaluators.PlayerEvaluator;
 import formation.FormationBuilder;
@@ -72,14 +73,10 @@ public class MainPanel<A extends Attributes>
 			{
 				if (isShowing())
 				{
-					JFileChooser fc = new JFileChooser();
+					File file = chooseFile(true);
 
-					int returnVal = fc.showOpenDialog(MainPanel.this);
-
-					if (returnVal == JFileChooser.APPROVE_OPTION)
+					if (file != null)
 					{
-						File file = fc.getSelectedFile();
-
 						fileHandler.loadRosterFromFile(file, roster);
 					}
 				}
@@ -91,14 +88,10 @@ public class MainPanel<A extends Attributes>
 			{
 				if (isShowing())
 				{
-					JFileChooser fc = new JFileChooser();
+					File file = chooseFile(false);
 
-					int returnVal = fc.showSaveDialog(MainPanel.this);
-
-					if (returnVal == JFileChooser.APPROVE_OPTION)
+					if (file != null)
 					{
-						File file = fc.getSelectedFile();
-
 						fileHandler.saveRosterToFile(file, roster);
 					}
 				}
@@ -311,5 +304,31 @@ public class MainPanel<A extends Attributes>
 		add(rosterPanel, BorderLayout.CENTER);
 		add(playerPanel, BorderLayout.EAST);
 		add(buttonPanel, BorderLayout.SOUTH);
+	}
+
+	private File chooseFile(boolean open)
+	{
+		JFileChooser fc = new JFileChooser();
+
+		fc.setFileFilter(new FileNameExtensionFilter("PPM Files", "ppm"));
+
+		int returnVal = open
+				? fc.showOpenDialog(MainPanel.this)
+				: fc.showSaveDialog(MainPanel.this);
+
+		if (returnVal == JFileChooser.APPROVE_OPTION)
+		{
+			FileNameExtensionFilter fileFilter =
+					(FileNameExtensionFilter)fc.getFileFilter();
+
+			return fc.accept(fc.getSelectedFile())
+					? fc.getSelectedFile()
+					: new File(
+							fc.getSelectedFile() + "." + fileFilter.getExtensions()[0]);
+		}
+		else
+		{
+			return null;
+		}
 	}
 }

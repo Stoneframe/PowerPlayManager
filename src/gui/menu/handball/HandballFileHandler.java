@@ -1,20 +1,24 @@
 package gui.menu.handball;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 
 import gui.menu.FileHandler;
+import model.Player;
 import model.handball.HandballAttributes;
+import model.handball.HandballPlayer;
 
 public class HandballFileHandler
 	extends FileHandler<HandballAttributes>
 {
 	@Override
-	protected HandballAttributes parseAttributes(JsonObject attr)
+	protected String convertPlayer(Gson gson, Player<HandballAttributes> player)
 	{
-		Gson gson = new GsonBuilder().create();
+		return gson.toJson(player, HandballPlayer.class);
+	}
 
-		return gson.fromJson(attr, HandballAttributes.class);
+	@Override
+	protected Player<HandballAttributes> convertPlayer(Gson gson, String json)
+	{
+		return gson.fromJson(json, HandballPlayer.class);
 	}
 }

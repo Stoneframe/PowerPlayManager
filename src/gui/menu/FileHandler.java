@@ -1,32 +1,42 @@
 package gui.menu;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import gui.gson.SideAdapter;
 import model.Attributes;
 import model.Player;
 import model.Roster;
-import parsers.SideParser;
+import model.Side;
 
 public abstract class FileHandler<A extends Attributes>
 {
+	private Gson gson;
+
+	public FileHandler()
+	{
+		gson = new GsonBuilder()
+			.registerTypeAdapter(Side.class, new SideAdapter())
+			.create();
+	}
+
 	public void saveRosterToFile(File file, Roster<A> roster)
 	{
-		try (FileWriter writer = new FileWriter(file))
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))
 		{
-			writer.write(roster.toJson());
+			for (Player<A> player : roster)
+			{
+				writer.write(convertPlayer(gson, player) + System.lineSeparator());
+			}
 		}
 		catch (IOException e)
 		{
@@ -38,38 +48,17 @@ public abstract class FileHandler<A extends Attributes>
 		}
 	}
 
-	public Roster<A> loadRosterFromFile(File file, Roster<A> roster)
+	public void loadRosterFromFile(File file, Roster<A> roster)
 	{
-		try (JsonReader reader = new JsonReader(new FileReader(file)))
+		try (BufferedReader reader = new BufferedReader(new FileReader(file)))
 		{
-			JsonElement jelement = new JsonParser().parse(reader);
-			JsonObject jobject = jelement.getAsJsonObject();
-			JsonArray jarray = jobject.getAsJsonArray("players");
-
-			List<Player<A>> fileRoster = new LinkedList<>();
-
-			for (int i = 0; i < jarray.size(); i++)
+			String line;
+			while ((line = reader.readLine()) != null)
 			{
-				JsonObject player = jarray.get(i).getAsJsonObject();
-				JsonObject attr = player.get("attributes").getAsJsonObject();
+				Player<A> player = convertPlayer(gson, line);
 
-				A attributes = parseAttributes(attr);
-
-				Player<A> newPlayer = new Player<>(
-						player.get("name").getAsString(),
-						player.get("age").getAsInt(),
-						player.get("cl").getAsInt(),
-						SideParser.parseSide(player.get("side").getAsString()),
-						attributes,
-						player.get("experience").getAsInt(),
-						player.get("chemistry").getAsInt(),
-						player.get("energy").getAsInt(),
-						player.get("training").getAsDouble());
-
-				fileRoster.add(newPlayer);
+				roster.add(player);
 			}
-
-			roster.addAll(fileRoster);
 		}
 		catch (IOException e)
 		{
@@ -79,9 +68,9 @@ public abstract class FileHandler<A extends Attributes>
 				"File Error",
 				JOptionPane.WARNING_MESSAGE);
 		}
-
-		return null;
 	}
 
-	protected abstract A parseAttributes(JsonObject attr);
+	protected abstract String convertPlayer(Gson gson, Player<A> player);
+
+	protected abstract Player<A> convertPlayer(Gson gson, String json);
 }

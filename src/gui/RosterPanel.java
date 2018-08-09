@@ -39,7 +39,7 @@ import model.Attributes;
 import model.Player;
 import model.Roster;
 import util.CollectionChangedEvent;
-import util.CollectionChangedListeners;
+import util.CollectionChangedListener;
 import util.Colors;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
@@ -54,14 +54,15 @@ public class RosterPanel<A extends Attributes>
 	private PlayerEvaluator<A> playerEvaluator;
 
 	private List<ColumnData> columnDatas = Arrays.asList(
-		new ColumnData("Name", p -> p.getName()),
+		new ColumnData("Name", p -> p.getName(), 200),
 		new ColumnData("Age", p -> Integer.toString(p.getAge())),
 		new ColumnData("CL", p -> Integer.toString(p.getCL())),
 		new ColumnData("Side", p -> p.getSide()),
 		new ColumnData("Total", p -> p.getAttributes().getTotalRating()),
 		new ColumnData(
 				"Position",
-				p -> playerEvaluator.getBestPositionRating(p).getName()),
+				p -> playerEvaluator.getBestPositionRating(p).getName(),
+				100),
 		new ColumnData(
 				"Rating",
 				p -> playerEvaluator.getBestPositionRating(p).getValue(),
@@ -72,7 +73,8 @@ public class RosterPanel<A extends Attributes>
 				v -> String.format("%.1f", v)),
 		new ColumnData(
 				"Training",
-				p -> playerEvaluator.getBestPositionQuality(p).getName()),
+				p -> playerEvaluator.getBestPositionQuality(p).getName(),
+				100),
 		new ColumnData(
 				"Quality",
 				p -> playerEvaluator.getBestPositionQuality(p).getValue(),
@@ -359,6 +361,7 @@ public class RosterPanel<A extends Attributes>
 		private String name;
 		private Function<Player<A>, Object> getValueFunction;
 		private Function<Object, String> formatValueFunction;
+		private int preferedWidth = 0;
 
 		public ColumnData(
 				String name,
@@ -377,6 +380,17 @@ public class RosterPanel<A extends Attributes>
 			this.formatValueFunction = (v) -> v.toString();
 		}
 
+		public ColumnData(
+				String name,
+				Function<Player<A>, Object> getValueAction,
+				int preferedWidth)
+		{
+			this.name = name;
+			this.getValueFunction = getValueAction;
+			this.formatValueFunction = (v) -> v.toString();
+			this.preferedWidth = preferedWidth;
+		}
+
 		public String getName()
 		{
 			return name;
@@ -391,12 +405,17 @@ public class RosterPanel<A extends Attributes>
 		{
 			return formatValueFunction.apply(value);
 		}
+
+		public int getPreferedWidth()
+		{
+			return preferedWidth;
+		}
 	}
 
 	private class RosterTableModel
 		extends DefaultTableModel
 		implements
-			CollectionChangedListeners,
+			CollectionChangedListener,
 			PropertyChangedListener
 	{
 		private static final long serialVersionUID = -3862251740620048034L;
@@ -587,9 +606,11 @@ public class RosterPanel<A extends Attributes>
 				}
 			});
 
-			if (columnIndex == 0)
+			ColumnData columnData = columnDatas.get(column.getModelIndex());
+
+			if (columnData.getPreferedWidth() != 0)
 			{
-				column.setPreferredWidth(200);
+				column.setPreferredWidth(columnData.getPreferedWidth());
 			}
 
 			return column;

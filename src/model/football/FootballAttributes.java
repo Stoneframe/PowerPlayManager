@@ -279,11 +279,4 @@ public class FootballAttributes
 		mergeAttribute(this::getQSpe, other::getQSpe, this::setQSpe);
 		mergeAttribute(this::getQHea, other::getQHea, this::setQHea);
 	}
-
-	@Override
-	public String toJson()
-	{
-		// TODO Auto-generated method stub
-		return "not implemented";
-	}
 }

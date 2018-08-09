@@ -5,21 +5,20 @@ import java.util.List;
 
 public abstract class AbstractModelObject
 {
-	private List<PropertyChangedListener> propertyChangedListeners;
-
-	public AbstractModelObject()
-	{
-		propertyChangedListeners = new LinkedList<PropertyChangedListener>();
-	}
+	private transient List<PropertyChangedListener> listeners;
 
 	public void addPropertyChangedListener(PropertyChangedListener listener)
 	{
-		propertyChangedListeners.add(listener);
+		if (listeners == null) listeners = new LinkedList<>();
+
+		listeners.add(listener);
 	}
 
 	public void removePropertyChangedListener(PropertyChangedListener listener)
 	{
-		propertyChangedListeners.remove(listener);
+		if (listeners == null) listeners = new LinkedList<>();
+
+		listeners.remove(listener);
 	}
 
 	protected void firePropertyChanged(
@@ -32,7 +31,9 @@ public abstract class AbstractModelObject
 
 	protected void firePropertyChanged(PropertyChangedEvent event)
 	{
-		for (PropertyChangedListener listener : propertyChangedListeners)
+		if (listeners == null) listeners = new LinkedList<>();
+
+		for (PropertyChangedListener listener : listeners)
 		{
 			listener.propertyChanged(this, event);
 		}

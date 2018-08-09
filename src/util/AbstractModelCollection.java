@@ -5,23 +5,20 @@ import java.util.List;
 
 public abstract class AbstractModelCollection
 {
-	private List<CollectionChangedListeners> collectionChangedListeners;
+	private transient List<CollectionChangedListener> listeners;
 
-	public AbstractModelCollection()
+	public void addCollectionChangedListener(CollectionChangedListener listener)
 	{
-		collectionChangedListeners = new LinkedList<CollectionChangedListeners>();
+		if (listeners == null) listeners = new LinkedList<>();
+
+		listeners.add(listener);
 	}
 
-	public void addCollectionChangedListener(
-			CollectionChangedListeners listeners)
+	public void removeCollectionChangedListener(CollectionChangedListener listener)
 	{
-		collectionChangedListeners.add(listeners);
-	}
+		if (listeners == null) listeners = new LinkedList<>();
 
-	public void removeCollectionChangedListener(
-			CollectionChangedListeners listeners)
-	{
-		collectionChangedListeners.remove(listeners);
+		listeners.remove(listener);
 	}
 
 	protected void fireCollectionChanged(
@@ -29,9 +26,11 @@ public abstract class AbstractModelCollection
 			int indexChanged,
 			Object objectChanged)
 	{
-		for (CollectionChangedListeners listeners : collectionChangedListeners)
+		if (listeners == null) listeners = new LinkedList<>();
+
+		for (CollectionChangedListener listener : listeners)
 		{
-			listeners.collectionChanged(
+			listener.collectionChanged(
 				this,
 				new CollectionChangedEvent(
 						this,
