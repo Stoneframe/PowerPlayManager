@@ -1,7 +1,6 @@
 package gui.menu;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -41,14 +40,13 @@ public abstract class FileHandler<A extends Attributes>
 
 	public Roster<A> loadRosterFromFile(File file, Roster<A> roster)
 	{
-		try
+		try (JsonReader reader = new JsonReader(new FileReader(file)))
 		{
-			List<Player<A>> fileRoster = new LinkedList<>();
-
-			JsonReader reader = new JsonReader(new FileReader(file));
 			JsonElement jelement = new JsonParser().parse(reader);
 			JsonObject jobject = jelement.getAsJsonObject();
 			JsonArray jarray = jobject.getAsJsonArray("players");
+
+			List<Player<A>> fileRoster = new LinkedList<>();
 
 			for (int i = 0; i < jarray.size(); i++)
 			{
@@ -63,9 +61,9 @@ public abstract class FileHandler<A extends Attributes>
 						player.get("cl").getAsInt(),
 						SideParser.parseSide(player.get("side").getAsString()),
 						attributes,
-						0,
-						0,
-						100,
+						player.get("experience").getAsInt(),
+						player.get("chemistry").getAsInt(),
+						player.get("energy").getAsInt(),
 						player.get("training").getAsDouble());
 
 				fileRoster.add(newPlayer);
@@ -73,7 +71,7 @@ public abstract class FileHandler<A extends Attributes>
 
 			roster.addAll(fileRoster);
 		}
-		catch (FileNotFoundException e)
+		catch (IOException e)
 		{
 			JOptionPane.showMessageDialog(
 				null,
@@ -86,11 +84,4 @@ public abstract class FileHandler<A extends Attributes>
 	}
 
 	protected abstract A parseAttributes(JsonObject attr);
-
-	// private A parseHandballAttributes(JsonObject attr)
-	// {
-	// Gson gson = new GsonBuilder().create();
-	//
-	// return gson.fromJson(attr, HandballAttributes.class);
-	// }
 }

@@ -173,10 +173,21 @@ public class Player<A extends Attributes>
 	public String toJson()
 	{
 		String format =
-				"{'name': '%s', 'age': %d, 'cl': %d, 'side': '%s', 'attributes': %s, 'training': %f}"
+				"{'name': '%s', 'age': %d, 'cl': %d, 'side': '%s', 'attributes': %s, 'experience': %d, 'chemistry': %d, 'energy': %d, 'training': %f}"
 					.replace('\'', '"');
 
-		return String.format(Locale.US, format, name, age, cl, side, attributes.toJson(), training);
+		return String.format(
+			Locale.US,
+			format,
+			name,
+			age,
+			cl,
+			side,
+			attributes.toJson(),
+			experience,
+			chemistry,
+			energy,
+			training);
 	}
 
 	@Override

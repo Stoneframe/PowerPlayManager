@@ -248,8 +248,8 @@ public class HandballAttributes
 	public String toJson()
 	{
 		String format = ("{"
-				+ "'goa': %d, 'fip': %d, 'sho': %d, 'blk': %d, pas': %d, tec': %d, spe': %d, agr': %d, "
-				+ "'qGoa': %d, qFip': %d, qSho': %d, qBlk': %d, qPas': %d, qTec': %d, qSpe': %d, qAgr': %d"
+				+ "'goa': %d, 'fip': %d, 'sho': %d, 'blk': %d, 'pas': %d, 'tec': %d, 'spe': %d, 'agr': %d, "
+				+ "'qGoa': %d, 'qFip': %d, 'qSho': %d, 'qBlk': %d, 'qPas': %d, 'qTec': %d, 'qSpe': %d, 'qAgr': %d"
 				+ "}").replace('\'', '"');
 
 		return String.format(
