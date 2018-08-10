@@ -14,12 +14,23 @@ public abstract class Attributes
 
 	public abstract void merge(Attributes attributes);
 
-	protected void mergeAttribute(
+	protected void mergeAttributeRating(
 			Supplier<Integer> thisGet,
 			Supplier<Integer> otherGet,
 			Consumer<Integer> thisSet)
 	{
-		if (thisGet.get() == 0)
+		if (thisGet.get() < otherGet.get())
+		{
+			thisSet.accept(otherGet.get());
+		}
+	}
+
+	protected void mergeAttributeQuality(
+			Supplier<Integer> thisGet,
+			Supplier<Integer> otherGet,
+			Consumer<Integer> thisSet)
+	{
+		if (otherGet.get() != 0)
 		{
 			thisSet.accept(otherGet.get());
 		}

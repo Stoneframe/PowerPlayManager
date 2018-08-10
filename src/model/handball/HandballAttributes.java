@@ -226,22 +226,23 @@ public class HandballAttributes
 
 		HandballAttributes other = (HandballAttributes)attributes;
 
-		mergeAttribute(() -> this.getGoa(), () -> other.getGoa(), (v) -> this.setGoa(v));
-		mergeAttribute(() -> this.getFip(), () -> other.getFip(), (v) -> this.setFip(v));
-		mergeAttribute(() -> this.getSho(), () -> other.getSho(), (v) -> this.setSho(v));
-		mergeAttribute(() -> this.getBlk(), () -> other.getBlk(), (v) -> this.setBlk(v));
-		mergeAttribute(() -> this.getPas(), () -> other.getPas(), (v) -> this.setPas(v));
-		mergeAttribute(() -> this.getTec(), () -> other.getTec(), (v) -> this.setTec(v));
-		mergeAttribute(() -> this.getSpe(), () -> other.getSpe(), (v) -> this.setSpe(v));
-		mergeAttribute(() -> this.getAgr(), () -> other.getAgr(), (v) -> this.setAgr(v));
-		mergeAttribute(() -> this.getQGoa(), () -> other.getQGoa(), (v) -> this.setQGoa(v));
-		mergeAttribute(() -> this.getQFip(), () -> other.getQFip(), (v) -> this.setQFip(v));
-		mergeAttribute(() -> this.getQSho(), () -> other.getQSho(), (v) -> this.setQSho(v));
-		mergeAttribute(() -> this.getQBlk(), () -> other.getQBlk(), (v) -> this.setQBlk(v));
-		mergeAttribute(() -> this.getQPas(), () -> other.getQPas(), (v) -> this.setQPas(v));
-		mergeAttribute(() -> this.getQTec(), () -> other.getQTec(), (v) -> this.setQTec(v));
-		mergeAttribute(() -> this.getQSpe(), () -> other.getQSpe(), (v) -> this.setQSpe(v));
-		mergeAttribute(() -> this.getQAgr(), () -> other.getQAgr(), (v) -> this.setQAgr(v));
+		mergeAttributeRating(() -> this.getGoa(), () -> other.getGoa(), (v) -> this.setGoa(v));
+		mergeAttributeRating(() -> this.getFip(), () -> other.getFip(), (v) -> this.setFip(v));
+		mergeAttributeRating(() -> this.getSho(), () -> other.getSho(), (v) -> this.setSho(v));
+		mergeAttributeRating(() -> this.getBlk(), () -> other.getBlk(), (v) -> this.setBlk(v));
+		mergeAttributeRating(() -> this.getPas(), () -> other.getPas(), (v) -> this.setPas(v));
+		mergeAttributeRating(() -> this.getTec(), () -> other.getTec(), (v) -> this.setTec(v));
+		mergeAttributeRating(() -> this.getSpe(), () -> other.getSpe(), (v) -> this.setSpe(v));
+		mergeAttributeRating(() -> this.getAgr(), () -> other.getAgr(), (v) -> this.setAgr(v));
+
+		mergeAttributeQuality(() -> this.getQGoa(), () -> other.getQGoa(), (v) -> this.setQGoa(v));
+		mergeAttributeQuality(() -> this.getQFip(), () -> other.getQFip(), (v) -> this.setQFip(v));
+		mergeAttributeQuality(() -> this.getQSho(), () -> other.getQSho(), (v) -> this.setQSho(v));
+		mergeAttributeQuality(() -> this.getQBlk(), () -> other.getQBlk(), (v) -> this.setQBlk(v));
+		mergeAttributeQuality(() -> this.getQPas(), () -> other.getQPas(), (v) -> this.setQPas(v));
+		mergeAttributeQuality(() -> this.getQTec(), () -> other.getQTec(), (v) -> this.setQTec(v));
+		mergeAttributeQuality(() -> this.getQSpe(), () -> other.getQSpe(), (v) -> this.setQSpe(v));
+		mergeAttributeQuality(() -> this.getQAgr(), () -> other.getQAgr(), (v) -> this.setQAgr(v));
 	}
 
 	@Override

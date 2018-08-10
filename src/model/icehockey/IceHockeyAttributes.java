@@ -208,74 +208,20 @@ public class IceHockeyAttributes
 
 		IceHockeyAttributes other = (IceHockeyAttributes)attributes;
 
-		mergeAttribute(
-			() -> this.getGoa(),
-			() -> other.getGoa(),
-			(v) -> this.setGoa(v));
+		mergeAttributeRating(this::getGoa, other::getGoa, this::setGoa);
+		mergeAttributeRating(this::getDef, other::getDef, this::setDef);
+		mergeAttributeRating(this::getOff, other::getOff, this::setOff);
+		mergeAttributeRating(this::getSho, other::getSho, this::setSho);
+		mergeAttributeRating(this::getPas, other::getPas, this::setPas);
+		mergeAttributeRating(this::getTec, other::getTec, this::setTec);
+		mergeAttributeRating(this::getAgr, other::getAgr, this::setAgr);
 
-		mergeAttribute(
-			() -> this.getDef(),
-			() -> other.getDef(),
-			(v) -> this.setDef(v));
-
-		mergeAttribute(
-			() -> this.getOff(),
-			() -> other.getOff(),
-			(v) -> this.setOff(v));
-
-		mergeAttribute(
-			() -> this.getSho(),
-			() -> other.getSho(),
-			(v) -> this.setSho(v));
-
-		mergeAttribute(
-			() -> this.getPas(),
-			() -> other.getPas(),
-			(v) -> this.setPas(v));
-
-		mergeAttribute(
-			() -> this.getTec(),
-			() -> other.getTec(),
-			(v) -> this.setTec(v));
-
-		mergeAttribute(
-			() -> this.getAgr(),
-			() -> other.getAgr(),
-			(v) -> this.setAgr(v));
-
-		mergeAttribute(
-			() -> this.getQGoa(),
-			() -> other.getQGoa(),
-			(v) -> this.setQGoa(v));
-
-		mergeAttribute(
-			() -> this.getQDef(),
-			() -> other.getQDef(),
-			(v) -> this.setQDef(v));
-
-		mergeAttribute(
-			() -> this.getQOff(),
-			() -> other.getQOff(),
-			(v) -> this.setQOff(v));
-
-		mergeAttribute(
-			() -> this.getQSho(),
-			() -> other.getQSho(),
-			(v) -> this.setQSho(v));
-
-		mergeAttribute(
-			() -> this.getQPas(),
-			() -> other.getQPas(),
-			(v) -> this.setQPas(v));
-
-		mergeAttribute(
-			() -> this.getQTec(),
-			() -> other.getQTec(),
-			(v) -> this.setQTec(v));
-
-		mergeAttribute(
-			() -> this.getQAgr(),
-			() -> other.getQAgr(),
-			(v) -> this.setQAgr(v));
+		mergeAttributeQuality(this::getQGoa, other::getQGoa, this::setQGoa);
+		mergeAttributeQuality(this::getQDef, other::getQDef, this::setQDef);
+		mergeAttributeQuality(this::getQOff, other::getQOff, this::setQOff);
+		mergeAttributeQuality(this::getQSho, other::getQSho, this::setQSho);
+		mergeAttributeQuality(this::getQPas, other::getQPas, this::setQPas);
+		mergeAttributeQuality(this::getQTec, other::getQTec, this::setQTec);
+		mergeAttributeQuality(this::getQAgr, other::getQAgr, this::setQAgr);
 	}
 }

@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 
 import model.Attributes;
 import model.Player;
+import model.Side;
 import parsers.ParseException;
+import parsers.SideParser;
 
 public abstract class RegexPlayersParser<A extends Attributes>
 	extends PlayersParser<A>
@@ -301,9 +303,23 @@ public abstract class RegexPlayersParser<A extends Attributes>
 		return players;
 	}
 
-	protected abstract List<String> toSinglePlayerPerLine(String textToParse);
+	private Player<A> createPlayer(Matcher matcher)
+	{
+		A attributes = createAttributes(matcher, includeQualities);
 
-	protected abstract Player<A> createPlayer(Matcher matcher);
+		return new Player<A>(
+				matcher.group("name"),
+				Integer.parseInt(matcher.group("age")),
+				includeCL ? Integer.parseInt(matcher.group("cl")) : -1,
+				includeSide ? SideParser.parseSide(matcher.group("side")) : Side.UNKNOWN,
+				attributes,
+				includeExperience ? Integer.parseInt(matcher.group("experience")) : 0,
+				includeChemistry ? Integer.parseInt(matcher.group("chemistry")) : 0,
+				includeEnergy ? Integer.parseInt(matcher.group("energy")) : 100,
+				includeTraining ? Double.parseDouble(matcher.group("training")) : 0);
+	}
+
+	protected abstract List<String> toSinglePlayerPerLine(String textToParse);
 
 	protected abstract A createAttributes(Matcher matcher, boolean includeQuality);
 
