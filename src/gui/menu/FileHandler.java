@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import gui.gson.SideAdapter;
 import model.Attributes;
 import model.Player;
 import model.Roster;
