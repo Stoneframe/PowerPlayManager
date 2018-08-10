@@ -24,6 +24,7 @@ public abstract class FileHandler<A extends Attributes>
 	public FileHandler()
 	{
 		gson = new GsonBuilder()
+			.setExclusionStrategies(new PlayerExclusionStrategy())
 			.registerTypeAdapter(Side.class, new SideAdapter())
 			.create();
 	}
