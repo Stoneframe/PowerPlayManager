@@ -55,9 +55,7 @@ public abstract class FileHandler<A extends Attributes>
 			String line;
 			while ((line = reader.readLine()) != null)
 			{
-				Player<A> player = convertPlayer(gson, line);
-
-				roster.add(player);
+				roster.add(convertPlayer(gson, line));
 			}
 		}
 		catch (IOException e)
