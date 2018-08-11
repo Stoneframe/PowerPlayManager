@@ -160,7 +160,7 @@ public class Player<A extends Attributes>
 			this.setChemistry(other.getChemistry());
 		}
 
-		if (other.getEnergy() != 0)
+		if (other.getEnergy() < this.getEnergy())
 		{
 			this.setEnergy(other.getEnergy());
 		}
