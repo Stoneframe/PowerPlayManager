@@ -67,7 +67,7 @@ public class MainPanel<A extends Attributes>
 			List<PlayersParser<A>> parsers,
 			PlayerEvaluator<A> playerEvaluator)
 	{
-		menuBar.addOpenActionListener(new ActionListener()
+		menuBar.addImportActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -82,7 +82,7 @@ public class MainPanel<A extends Attributes>
 				}
 			}
 		});
-		menuBar.addSaveActionListener(new ActionListener()
+		menuBar.addExportActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
