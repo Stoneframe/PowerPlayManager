@@ -77,7 +77,7 @@ public class MainPanel<A extends Attributes>
 
 					if (file != null)
 					{
-						fileHandler.loadRosterFromFile(file, roster);
+						fileHandler.loadPlayersFromFile(file, roster);
 					}
 				}
 			}
@@ -92,7 +92,7 @@ public class MainPanel<A extends Attributes>
 
 					if (file != null)
 					{
-						fileHandler.saveRosterToFile(file, roster);
+						fileHandler.savePlayersToFile(file, roster);
 					}
 				}
 			}
