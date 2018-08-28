@@ -198,7 +198,10 @@ public class FormationBuilderPanel<A extends Attributes>
 				{
 					public void run()
 					{
-						new FormationDisplayFrame<A>(formations);
+						FormationDisplayFrame<A> display = new FormationDisplayFrame<A>(formations);
+
+						display.setLocationRelativeTo(FormationBuilderPanel.this);
+						display.setVisible(true);
 					}
 				});
 			}

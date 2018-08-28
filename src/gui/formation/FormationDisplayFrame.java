@@ -25,7 +25,5 @@ public class FormationDisplayFrame<A extends Attributes>
 		}
 
 		pack();
-		setLocationRelativeTo(null);
-		setVisible(true);
 	}
 }
