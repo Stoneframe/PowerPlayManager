@@ -24,11 +24,12 @@ public abstract class FileHandler<A extends Attributes>
 	public FileHandler()
 	{
 		gson = new GsonBuilder()
+			.setExclusionStrategies(new PlayerExclusionStrategy())
 			.registerTypeAdapter(Side.class, new SideAdapter())
 			.create();
 	}
 
-	public void saveRosterToFile(File file, Roster<A> roster)
+	public void savePlayersToFile(File file, Roster<A> roster)
 	{
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))
 		{
@@ -47,16 +48,14 @@ public abstract class FileHandler<A extends Attributes>
 		}
 	}
 
-	public void loadRosterFromFile(File file, Roster<A> roster)
+	public void loadPlayersFromFile(File file, Roster<A> roster)
 	{
 		try (BufferedReader reader = new BufferedReader(new FileReader(file)))
 		{
 			String line;
 			while ((line = reader.readLine()) != null)
 			{
-				Player<A> player = convertPlayer(gson, line);
-
-				roster.add(player);
+				roster.add(convertPlayer(gson, line));
 			}
 		}
 		catch (IOException e)

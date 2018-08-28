@@ -3,11 +3,7 @@ package parsers.players.handball;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import model.Player;
-import model.Side;
 import model.handball.HandballAttributes;
-import model.handball.HandballPlayer;
-import parsers.SideParser;
 import parsers.players.RegexPlayersParser;
 
 public abstract class HandballPlayersParser
@@ -61,23 +57,6 @@ public abstract class HandballPlayersParser
 		}
 
 		return attributes;
-	}
-
-	@Override
-	protected Player<HandballAttributes> createPlayer(Matcher matcher)
-	{
-		HandballAttributes attributes = createAttributes(matcher, includeQualities);
-
-		return new HandballPlayer(
-				matcher.group("name"),
-				Integer.parseInt(matcher.group("age")),
-				includeCL ? Integer.parseInt(matcher.group("cl")) : 0,
-				includeSide ? SideParser.parseSide(matcher.group("side")) : Side.UNKNOWN,
-				attributes,
-				includeExperience ? Integer.parseInt(matcher.group("experience")) : 0,
-				includeChemistry ? Integer.parseInt(matcher.group("chemistry")) : 0,
-				includeEnergy ? Integer.parseInt(matcher.group("energy")) : 100,
-				includeTraining ? Double.parseDouble(matcher.group("training")) : 0);
 	}
 
 	protected static String attributes()

@@ -128,19 +128,19 @@ public class Player<A extends Attributes>
 	public void setTraining(double training)
 	{
 		this.training = training;
-		firePropertyChanged("Traning", training);
+		firePropertyChanged("Training", training);
 	}
 
 	public void merge(Player<A> other)
 	{
 		if (!this.equals(other)) return;
 
-		if (this.age == 0)
+		if (other.getAge() > this.getAge())
 		{
 			this.setAge(other.getAge());
 		}
 
-		if (this.cl == 0)
+		if (this.getCL() == -1)
 		{
 			this.setCL(other.getCL());
 		}
@@ -150,17 +150,17 @@ public class Player<A extends Attributes>
 			this.setSide(other.getSide());
 		}
 
-		if (this.experience == 0)
+		if (other.getExperience() > this.getExperience())
 		{
 			this.setExperience(other.getExperience());
 		}
 
-		if (this.chemistry == 0)
+		if (other.getChemistry() != 0)
 		{
 			this.setChemistry(other.getChemistry());
 		}
 
-		if (this.energy == 100)
+		if (other.getEnergy() < this.getEnergy())
 		{
 			this.setEnergy(other.getEnergy());
 		}
