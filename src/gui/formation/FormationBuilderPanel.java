@@ -26,19 +26,16 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import evaluators.PlayerEvaluator;
+import formation.Formation;
 import formation.FormationBuilder;
 import formation.FormationTemplate;
 import model.Attributes;
-import model.Formation;
 import model.Player;
 import model.Roster;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public class FormationBuilderPanel<
-		A extends Attributes,
-		F extends Formation,
-		FT extends FormationTemplate>
+public class FormationBuilderPanel<A extends Attributes>
 	extends JPanel
 {
 	private static final long serialVersionUID = -5043434553464317980L;
@@ -46,22 +43,23 @@ public class FormationBuilderPanel<
 	private DefaultListModel<Player<A>> playerListModel;
 	private JList<Player<A>> playerList;
 
-	private DefaultListModel<FT> templateListModel;
-	private JList<FT> templateList;
+	private DefaultListModel<FormationTemplate<A>> templateListModel;
+	private JList<FormationTemplate<A>> templateList;
 
-	private FormationTemplatePanel<FT> templatePanel;
+	private FormationTemplatePanel<A> templatePanel;
 
 	private JLabel nbrPlayersSelectedLabel;
 
 	private JButton addTemplateButton;
 	private JButton removeTemplateButton;
 
+	private JCheckBox considerFormCheckBox;
+
 	private JButton createFormationsButton;
 
 	public FormationBuilderPanel(
-			FormationTemplatePanelFactory<FT, A> formationTemplatePanelFactory,
-			FormationPanelFactory<F> formationPanelFactory,
-			FormationBuilder<A, F, FT> formationBuilder,
+			FormationTemplatePanelFactory<A> formationTemplatePanelFactory,
+			FormationBuilder<A> formationBuilder,
 			PlayerEvaluator<A> playerEvaluator,
 			Roster<A> roster)
 	{
@@ -121,9 +119,9 @@ public class FormationBuilderPanel<
 			}
 		});
 
-		templateListModel = new DefaultListModel<FT>();
+		templateListModel = new DefaultListModel<>();
 
-		templateList = new JList<FT>(templateListModel);
+		templateList = new JList<>(templateListModel);
 		templateList.setPreferredSize(new Dimension(200, 1));
 		templateList.setBorder(BorderFactory.createEtchedBorder());
 		templateList.addListSelectionListener(new ListSelectionListener()
@@ -175,15 +173,21 @@ public class FormationBuilderPanel<
 			}
 		});
 
+		considerFormCheckBox = new JCheckBox("Consider Form", true);
+
 		createFormationsButton = new JButton("Create Formations");
 		updateCreateFormationsButton(roster);
 		createFormationsButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				List<FT> formationTemplates = getFormationTemplates();
+				List<FormationTemplate<A>> formationTemplates = getFormationTemplates();
 
-				List<F> formations = formationBuilder.createFormations(roster, formationTemplates);
+				List<Formation<A>> formations =
+						formationBuilder.createFormations(
+							roster,
+							formationTemplates,
+							considerFormCheckBox.isSelected());
 
 				updatePlayersSelectedList(roster);
 				updateCreateFormationsButton(roster);
@@ -194,7 +198,10 @@ public class FormationBuilderPanel<
 				{
 					public void run()
 					{
-						new FormationDisplayFrame<F>(formationPanelFactory, formations);
+						FormationDisplayFrame<A> display = new FormationDisplayFrame<A>(formations);
+
+						display.setLocationRelativeTo(FormationBuilderPanel.this);
+						display.setVisible(true);
 					}
 				});
 			}
@@ -230,7 +237,11 @@ public class FormationBuilderPanel<
 
 		add(topPanel, BorderLayout.NORTH);
 
-		add(createFormationsButton, BorderLayout.SOUTH);
+		JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		southPanel.add(considerFormCheckBox);
+		southPanel.add(createFormationsButton);
+
+		add(southPanel, BorderLayout.SOUTH);
 
 		updatePlayersSelectedList(roster);
 	}
@@ -243,20 +254,20 @@ public class FormationBuilderPanel<
 	private boolean isEnoughPlayers(Roster<?> roster)
 	{
 		int totalNbrOfRequiredPlayers = getFormationTemplates()
-				.stream()
-				.mapToInt(ft -> ft.getNumberOfRequiredPlayers())
-				.sum();
+			.stream()
+			.mapToInt(ft -> ft.getNumberOfRequiredPlayers())
+			.sum();
 
 		return totalNbrOfRequiredPlayers <= roster.size();
 	}
 
-	private List<FT> getFormationTemplates()
+	private List<FormationTemplate<A>> getFormationTemplates()
 	{
-		List<FT> formationTemplates = new LinkedList<>();
+		List<FormationTemplate<A>> formationTemplates = new LinkedList<>();
 
 		for (int i = 0; i < templateListModel.size(); i++)
 		{
-			FT formationTemplate = templateListModel.getElementAt(i);
+			FormationTemplate<A> formationTemplate = templateListModel.getElementAt(i);
 
 			formationTemplates.add(formationTemplate);
 		}

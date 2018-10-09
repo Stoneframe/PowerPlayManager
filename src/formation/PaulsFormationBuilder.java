@@ -4,78 +4,88 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
 
-import evaluators.AttributeEvaluator;
+import evaluators.PlayerEvaluator;
 import model.Attributes;
-import model.Formation;
 import model.Player;
 import model.Roster;
-import model.Side;
 
-public abstract class PaulsFormationBuilder<
-		A extends Attributes,
-		F extends Formation,
-		FT extends FormationTemplate>
+public class PaulsFormationBuilder<A extends Attributes>
 	implements
-		FormationBuilder<A, F, FT>
+		FormationBuilder<A>
 {
-	@Override
-	public List<F> createFormations(Roster<A> roster, List<FT> formationTemplates)
+	private PlayerEvaluator<A> playerEvaluator;
+
+	public PaulsFormationBuilder(PlayerEvaluator<A> playerEvaluator)
 	{
-		List<F> formations = new LinkedList<>();
+		this.playerEvaluator = playerEvaluator;
+	}
 
-		List<PositionAssigner<A>> positionAssigners = new LinkedList<>();
+	@Override
+	public List<Formation<A>> createFormations(
+			Roster<A> roster,
+			List<FormationTemplate<A>> formationTemplates,
+			boolean considerForm)
+	{
+		List<Formation<A>> formations = new LinkedList<>();
 
-		for (FT formationTemplate : formationTemplates)
+		List<PositionAssigner> positionAssigners = new LinkedList<>();
+
+		for (FormationTemplate<A> formationTemplate : formationTemplates)
 		{
-			F formation = createFormation(formationTemplate.getName());
+			List<Position<A>> positions = new LinkedList<>();
 
-			formations.add(formation);
+			for (PositionTemplate<A> positionTemplate : formationTemplate.getPositions())
+			{
+				if (positionTemplate.isIgnored()) continue;
 
-			positionAssigners.addAll(createPositionAssigners(roster, formationTemplate, formation));
+				Position<A> position = new Position<>(positionTemplate.getName());
+
+				positions.add(position);
+
+				PositionAssigner positionAssigner =
+						new PositionAssigner(roster, positionTemplate, position, considerForm);
+
+				positionAssigners.add(positionAssigner);
+			}
+
+			formations.add(new Formation<>(formationTemplate.getName(), positions));
 		}
 
 		while (!positionAssigners.isEmpty())
 		{
 			Collections.sort(positionAssigners);
-			PositionAssigner<A> assigner = positionAssigners.remove(0);
+			PositionAssigner assigner = positionAssigners.remove(0);
 			assigner.assignBestPlayerToPosition();
 		}
 
 		return formations;
 	}
 
-	protected abstract F createFormation(String name);
-
-	protected abstract List<PositionAssigner<A>> createPositionAssigners(
-			Roster<A> roster,
-			FT formationTemplate,
-			F formation);
-
-	protected static class PositionAssigner<A extends Attributes>
+	protected class PositionAssigner
 		implements
-			Comparable<PositionAssigner<A>>
+			Comparable<PositionAssigner>
 	{
-		private AttributeEvaluator<A> evaluator;
-		private Side side;
 		private Roster<A> roster;
-		private Consumer<Player<A>> assignAction;
+		private PositionTemplate<A> positionTemplate;
+		private Position<A> position;
+
+		private boolean considerForm;
 
 		public PositionAssigner(
 				Roster<A> roster,
-				AttributeEvaluator<A> evaluator,
-				Side side,
-				Consumer<Player<A>> assignAction)
+				PositionTemplate<A> positionTemplate,
+				Position<A> position,
+				boolean considerForm)
 		{
-			this.evaluator = evaluator;
-			this.side = side;
 			this.roster = roster;
-			this.assignAction = assignAction;
+			this.positionTemplate = positionTemplate;
+			this.position = position;
+			this.considerForm = considerForm;
 		}
 
 		@Override
-		public int compareTo(PositionAssigner<A> other)
+		public int compareTo(PositionAssigner other)
 		{
 			int bestPlayersComparison = comparePlayersAtRank(other, this, 0);
 
@@ -99,13 +109,13 @@ public abstract class PaulsFormationBuilder<
 		public void assignBestPlayerToPosition()
 		{
 			Player<A> player = getBestPlayer();
-			assignAction.accept(player);
+			position.setPlayer(player);
 			roster.remove(player);
 		}
 
-		private static int comparePlayersAtRank(
-				PositionAssigner<?> assigner1,
-				PositionAssigner<?> assigner2,
+		private int comparePlayersAtRank(
+				PositionAssigner assigner1,
+				PositionAssigner assigner2,
 				int rank)
 		{
 			return Double.compare(
@@ -122,7 +132,14 @@ public abstract class PaulsFormationBuilder<
 				return Double.MIN_VALUE;
 			}
 
-			return evaluator.getRating(player.getAttributes());
+			double rating = getPlayerRating(player);
+
+			if (!player.getSide().matches(positionTemplate.getSide()))
+			{
+				rating *= 0.84;
+			}
+
+			return rating;
 		}
 
 		private Player<A> getBestPlayer()
@@ -133,37 +150,28 @@ public abstract class PaulsFormationBuilder<
 		private Player<A> getPlayerAtRank(int rank)
 		{
 			return roster
-					.stream()
-					.sorted(new PaulsComparator().reversed())
-					.skip(rank)
-					.findFirst()
-					.orElse(null);
+				.stream()
+				.sorted(
+					Comparator
+						.comparingDouble((Player<A> p) -> getPlayerRating(p))
+						.reversed())
+				.skip(rank)
+				.findFirst()
+				.orElse(null);
 		}
 
-		private class PaulsComparator
-			implements
-				Comparator<Player<A>>
+		private double getPlayerRating(Player<A> player)
 		{
-			@Override
-			public int compare(Player<A> o1, Player<A> o2)
+			double rating = positionTemplate
+				.getAttributeEvaluator()
+				.getRating(player.getAttributes());
+
+			if (considerForm)
 			{
-				double rating1 = evaluator.getRating(o1.getAttributes());
-				double rating2 = evaluator.getRating(o2.getAttributes());
-
-				final double wrongSidePenalty = 0.84;
-
-				if (!o1.getSide().equals(side))
-				{
-					rating1 *= wrongSidePenalty;
-				}
-
-				if (!o2.getSide().equals(side))
-				{
-					rating2 *= wrongSidePenalty;
-				}
-
-				return Double.compare(rating1, rating2);
+				rating = playerEvaluator.calculateFormForRating(player, rating);
 			}
+
+			return rating;
 		}
 	}
 }

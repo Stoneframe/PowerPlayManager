@@ -1,61 +1,74 @@
 package gui.menu;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
 
-import gui.gson.SideAdapter;
 import model.Attributes;
+import model.Player;
 import model.Roster;
 import model.Side;
 
-public class FileHandler
+public abstract class FileHandler<A extends Attributes>
 {
-	public static <A extends Attributes> void saveRosterToFile(
-			File file,
-			Roster<A> roster)
-	{
-		GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(Side.class, new SideAdapter());
-		Gson gson = builder.create();
+	private Gson gson;
 
-		try
+	public FileHandler()
+	{
+		gson = new GsonBuilder()
+			.setExclusionStrategies(new PlayerExclusionStrategy())
+			.registerTypeAdapter(Side.class, new SideAdapter())
+			.create();
+	}
+
+	public void savePlayersToFile(File file, Roster<A> roster)
+	{
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))
 		{
-			// FIXME use JsonWriter?
-			FileWriter writer = new FileWriter(file);
-			writer.write(gson.toJson(roster));
-			writer.close();
+			for (Player<A> player : roster)
+			{
+				writer.write(convertPlayer(gson, player) + System.lineSeparator());
+			}
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(
+				null,
+				"Cannot write to file",
+				"File Error",
+				JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
-	public static <A extends Attributes> Roster<A> loadRosterFromFile(File file)
+	public void loadPlayersFromFile(File file, Roster<A> roster)
 	{
-		GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(Side.class, new SideAdapter());
-		Gson gson = builder.create();
-		try
+		try (BufferedReader reader = new BufferedReader(new FileReader(file)))
 		{
-			JsonReader reader = new JsonReader(new FileReader(file));
-			Roster<A> roster = gson.fromJson(reader, Roster.class);
-			return roster;
+			String line;
+			while ((line = reader.readLine()) != null)
+			{
+				roster.add(convertPlayer(gson, line));
+			}
 		}
-		catch (FileNotFoundException e)
+		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(
+				null,
+				"Cannot open file",
+				"File Error",
+				JOptionPane.WARNING_MESSAGE);
 		}
-		return null;
 	}
 
+	protected abstract String convertPlayer(Gson gson, Player<A> player);
+
+	protected abstract Player<A> convertPlayer(Gson gson, String json);
 }

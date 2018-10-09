@@ -20,26 +20,16 @@ public abstract class Attributes
 
 	public int getTotalRating()
 	{
-		int sum = 0;
-
-		for (Attribute attribute : attributes)
-		{
-			sum += attribute.getRating();
-		}
-
-		return sum;
+		return attributes.stream().mapToInt(a -> a.getRating()).sum();
 	}
 
 	public double getAverageQuality()
 	{
-		double sum = 0;
-
-		for (Attribute attribute : attributes)
-		{
-			sum += attribute.getQuality();
-		}
-
-		return sum / attributes.size();
+		return attributes
+			.stream()
+			.mapToDouble(a -> a.getQuality())
+			.summaryStatistics()
+			.getAverage();
 	}
 
 	public void merge(Attributes other)
@@ -48,7 +38,7 @@ public abstract class Attributes
 		{
 			this.attributes.get(i).merge(other.attributes.get(i));
 		}
-		
+
 		firePropertyChanged("All", null);
 	}
 

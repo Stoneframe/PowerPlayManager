@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import util.AbstractModelCollection;
@@ -15,16 +16,9 @@ public class Roster<A extends Attributes>
 	implements
 		Iterable<Player<A>>
 {
-	public static <A extends Attributes> Roster<A> intersection(
-			Roster<A> r1,
-			Roster<A> r2)
-	{
-		Roster<A> intr = r1.copy();
-		intr.players.retainAll(r2.players);
-		return intr;
-	}
-
-	private List<Player<A>> players = new LinkedList<Player<A>>();
+	private List<Player<A>> players = new LinkedList<>();
+	private List<Player<A>> ignored = new LinkedList<>();
+	private List<Group> groups = new LinkedList<>();
 
 	public Roster()
 	{
@@ -49,10 +43,12 @@ public class Roster<A extends Attributes>
 
 		players.add(player);
 
-		fireCollectionChanged(
-			CollectionChangedEvent.ADDED,
-			players.indexOf(player),
-			player);
+		int index = getFilteredPlayersList().indexOf(player);
+
+		if (index != -1)
+		{
+			fireCollectionChanged(CollectionChangedEvent.ADDED, index, player);
+		}
 	}
 
 	public void addAll(List<Player<A>> players)
@@ -65,54 +61,58 @@ public class Roster<A extends Attributes>
 
 	public void remove(Player<A> player)
 	{
-		int index = players.indexOf(player);
+		int index = getFilteredPlayersList().indexOf(player);
 
 		players.remove(player);
+		groups.forEach(g -> g.players.remove(player));
 
-		fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
+		if (index != -1)
+		{
+			fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
+		}
 	}
 
 	public boolean contains(Player<A> player)
 	{
-		return players.contains(player);
+		return getFilteredPlayersList().contains(player);
 	}
 
 	public Player<A> get(int index)
 	{
-		return players.get(index);
+		return getFilteredPlayersList().get(index);
 	}
 
 	public int indexOf(Object player)
 	{
-		return players.indexOf(player);
+		return getFilteredPlayersList().indexOf(player);
 	}
 
 	public int size()
 	{
-		return players.size();
+		return getFilteredPlayersList().size();
 	}
 
 	public Roster<A> copy()
 	{
-		return new Roster<A>(players);
+		return new Roster<A>(getFilteredPlayersList());
 	}
 
 	public void clear()
 	{
-		while (!players.isEmpty())
+		while (!getFilteredPlayersList().isEmpty())
 		{
-			remove(players.get(0));
+			remove(getFilteredPlayersList().get(0));
 		}
 	}
 
 	public Stream<Player<A>> stream()
 	{
-		return players.stream();
+		return getFilteredPlayersList().stream();
 	}
 
 	public List<Player<A>> sort(Comparator<Player<A>> comparator)
 	{
-		List<Player<A>> copy = new LinkedList<Player<A>>(players);
+		List<Player<A>> copy = new LinkedList<Player<A>>(getFilteredPlayersList());
 
 		Collections.sort(copy, comparator);
 		Collections.reverse(copy);
@@ -120,14 +120,158 @@ public class Roster<A extends Attributes>
 		return Collections.unmodifiableList(copy);
 	}
 
-	// public Player<A>[] toArray()
-	// {
-	// return players.toArray(new Player[0]);
-	// }
-
 	@Override
 	public Iterator<Player<A>> iterator()
 	{
-		return players.iterator();
+		return getFilteredPlayersList().iterator();
+	}
+
+	public Group addGroup(String name, List<Player<A>> players)
+	{
+		Group group = new Group(name, players);
+
+		groups.add(group);
+
+		return group;
+	}
+
+	public void removeGroup(Group group)
+	{
+		if (!groups.contains(group)) return;
+
+		groups.remove(group);
+
+		for (Player<A> player : group.players)
+		{
+			if (shouldBeEnabled(player) && isDisabled(player))
+			{
+				enablePlayer(player);
+			}
+			else if (shouldBeDisabled(player) && isEnabled(player))
+			{
+				disablePlayer(player);
+			}
+		}
+	}
+
+	public List<Group> getGroups()
+	{
+		return Collections.unmodifiableList(groups);
+	}
+
+	private List<Player<A>> getFilteredPlayersList()
+	{
+		return players
+			.stream()
+			.filter(p -> isEnabled(p))
+			.collect(Collectors.toList());
+	}
+
+	private boolean shouldBeEnabled(Player<A> player)
+	{
+		return !isInGroup(player) || isInEnabledGroup(player);
+	}
+
+	private boolean shouldBeDisabled(Player<A> player)
+	{
+		return isInGroup(player) && !isInEnabledGroup(player);
+	}
+
+	private boolean isInGroup(Player<A> player)
+	{
+		return groups.stream().anyMatch(g -> g.players.contains(player));
+	}
+
+	private boolean isInEnabledGroup(Player<A> player)
+	{
+		return groups.stream().anyMatch(g -> g.isEnabled && g.players.contains(player));
+	}
+
+	private boolean isEnabled(Player<A> player)
+	{
+		return !ignored.contains(player);
+	}
+
+	private boolean isDisabled(Player<A> player)
+	{
+		return ignored.contains(player);
+	}
+
+	private void enablePlayer(Player<A> player)
+	{
+		ignored.remove(player);
+
+		int index = getFilteredPlayersList().indexOf(player);
+
+		fireCollectionChanged(CollectionChangedEvent.ADDED, index, player);
+	}
+
+	private void disablePlayer(Player<A> player)
+	{
+		int index = getFilteredPlayersList().indexOf(player);
+
+		ignored.add(player);
+
+		fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
+	}
+
+	public class Group
+	{
+		private String name;
+		private List<Player<A>> players;
+		private boolean isEnabled = true;
+
+		public Group(String name, List<Player<A>> players)
+		{
+			this.name = name;
+			this.players = players;
+		}
+
+		public String getName()
+		{
+			return name;
+		}
+
+		public void setName(String name)
+		{
+			this.name = name;
+		}
+
+		public List<Player<A>> getPlayers()
+		{
+			return players;
+		}
+
+		public boolean isEnabled()
+		{
+			return isEnabled;
+		}
+
+		public void setEnabled(boolean isEnabled)
+		{
+			if (this.isEnabled == isEnabled) return;
+
+			this.isEnabled = isEnabled;
+
+			for (Player<A> player : players)
+			{
+				if (isEnabled && ignored.contains(player))
+				{
+					enablePlayer(player);
+				}
+				else if (!isEnabled
+						&& !ignored.contains(player)
+						&& !isInEnabledGroup(player))
+				{
+					disablePlayer(player);
+				}
+			}
+		}
+
+		@Override
+		public String toString()
+		{
+			return getName();
+		}
 	}
 }

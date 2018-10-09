@@ -3,28 +3,30 @@ package gui.handball;
 import java.util.List;
 
 import evaluators.PlayerEvaluator;
-import formation.handball.HandballFormationTemplate;
-import formation.handball.HandballPaulsFormationBuilder;
+import formation.PaulsFormationBuilder;
 import gui.MainPanel;
+import gui.menu.FileHandler;
+import gui.menu.MenuBar;
 import model.handball.HandballAttributes;
-import model.handball.HandballFormation;
 import parsers.players.PlayersParser;
 
 public class HandballMainPanel
-	extends MainPanel<HandballAttributes, HandballFormation, HandballFormationTemplate>
+	extends MainPanel<HandballAttributes>
 {
 	private static final long serialVersionUID = -3164509414943511994L;
 
 	public HandballMainPanel(
+			MenuBar menuBar,
+			FileHandler<HandballAttributes> fileHandler,
 			List<PlayersParser<HandballAttributes>> parsers,
 			PlayerEvaluator<HandballAttributes> playerEvaluator)
 	{
 		super(
+			menuBar,
+			fileHandler,
 			new HandballAttributesPanel(),
-			new HandballTrainingPanel(playerEvaluator),
 			new HandballFormationTemplatePanelFactory(),
-			new HandballFormationPanelFactory(),
-			new HandballPaulsFormationBuilder(),
+			new PaulsFormationBuilder<>(playerEvaluator),
 			parsers,
 			playerEvaluator);
 	}

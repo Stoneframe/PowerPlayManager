@@ -39,7 +39,7 @@ import model.Attributes;
 import model.Player;
 import model.Roster;
 import util.CollectionChangedEvent;
-import util.CollectionChangedListeners;
+import util.CollectionChangedListener;
 import util.Colors;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
@@ -54,21 +54,27 @@ public class RosterPanel<A extends Attributes>
 	private PlayerEvaluator<A> playerEvaluator;
 
 	private List<ColumnData> columnDatas = Arrays.asList(
-		new ColumnData("Name", p -> p.getName()),
+		new ColumnData("Name", p -> p.getName(), 200),
 		new ColumnData("Age", p -> Integer.toString(p.getAge())),
 		new ColumnData("CL", p -> Integer.toString(p.getCL())),
 		new ColumnData("Side", p -> p.getSide()),
 		new ColumnData("Total", p -> p.getAttributes().getTotalRating()),
 		new ColumnData(
 				"Position",
-				p -> playerEvaluator.getBestPositionRating(p).getName()),
+				p -> playerEvaluator.getBestPositionRating(p).getName(),
+				100),
 		new ColumnData(
 				"Rating",
 				p -> playerEvaluator.getBestPositionRating(p).getValue(),
 				v -> String.format("%.1f", v)),
 		new ColumnData(
+				"Form",
+				p -> playerEvaluator.getBestPositionForm(p).getValue(),
+				v -> String.format("%.1f", v)),
+		new ColumnData(
 				"Training",
-				p -> playerEvaluator.getBestPositionQuality(p).getName()),
+				p -> playerEvaluator.getBestPositionQuality(p).getName(),
+				100),
 		new ColumnData(
 				"Quality",
 				p -> playerEvaluator.getBestPositionQuality(p).getValue(),
@@ -104,6 +110,10 @@ public class RosterPanel<A extends Attributes>
 		new ColumnData(
 				"Age 30",
 				p -> playerEvaluator.calculateRatingForAge(p, 30),
+				v -> String.format("%.0f", v)),
+		new ColumnData(
+				"Max",
+				p -> playerEvaluator.calculateHighestPossibleRating(p),
 				v -> String.format("%.0f", v)));
 
 	private JTextField facilityLevelTextField;
@@ -126,14 +136,16 @@ public class RosterPanel<A extends Attributes>
 
 	private Roster<A> roster;
 
-	public RosterPanel(PlayerEvaluator<A> playerEvaluator)
+	public RosterPanel(Roster<A> roster, PlayerEvaluator<A> playerEvaluator)
 	{
-		this.playerEvaluator = playerEvaluator;
-
-		roster = new Roster<A>();
-
 		rosterTableColumnModel = new RosterTableColumnModel();
 		rosterTableModel = new RosterTableModel();
+
+		this.roster = roster;
+		this.roster.addCollectionChangedListener(rosterTableModel);
+		this.roster.forEach(p -> p.addPropertyChangedListener(rosterTableModel));
+
+		this.playerEvaluator = playerEvaluator;
 
 		KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK, false);
 
@@ -158,7 +170,6 @@ public class RosterPanel<A extends Attributes>
 			});
 		rosterTable.setColumnModel(rosterTableColumnModel);
 		rosterTable.setModel(rosterTableModel);
-		rosterTable.getColumnModel().getColumn(0).setPreferredWidth(200);
 		rosterTable.registerKeyboardAction(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -175,8 +186,8 @@ public class RosterPanel<A extends Attributes>
 							player.getName()));
 
 					Object value = columnDatas
-							.get(rosterTable.getSelectedColumn())
-							.getValue(player);
+						.get(rosterTable.getSelectedColumn())
+						.getValue(player);
 
 					if (value instanceof Double)
 					{
@@ -189,9 +200,9 @@ public class RosterPanel<A extends Attributes>
 				StringSelection selection = new StringSelection(builder.toString());
 
 				Toolkit
-						.getDefaultToolkit()
-						.getSystemClipboard()
-						.setContents(selection, selection);
+					.getDefaultToolkit()
+					.getSystemClipboard()
+					.setContents(selection, selection);
 			}
 		}, "Copy", copy, JComponent.WHEN_FOCUSED);
 
@@ -247,33 +258,6 @@ public class RosterPanel<A extends Attributes>
 
 		add(tablePanel, BorderLayout.CENTER);
 		add(controllerPanel, BorderLayout.SOUTH);
-	}
-
-	public void bind(Roster<A> roster)
-	{
-		if (this.roster != null)
-		{
-			for (Player<A> player : this.roster)
-			{
-				player.removePropertyChangedListener(rosterTableModel);
-			}
-
-			this.roster.removeCollectionChangedListener(rosterTableModel);
-		}
-
-		this.roster = roster;
-
-		if (this.roster != null)
-		{
-			for (Player<A> player : this.roster)
-			{
-				player.addPropertyChangedListener(rosterTableModel);
-			}
-
-			this.roster.addCollectionChangedListener(rosterTableModel);
-		}
-
-		rosterTableModel.fireTableDataChanged();
 	}
 
 	public void setPlayerSelectedListener(PlayerSelectedListener<A> listener)
@@ -333,8 +317,8 @@ public class RosterPanel<A extends Attributes>
 			for (Player<A> player : getSelectedPlayers())
 			{
 				Object object = columnDatas
-						.get(rosterTable.getSelectedColumn())
-						.getValue(player);
+					.get(rosterTable.getSelectedColumn())
+					.getValue(player);
 
 				if (object instanceof Integer || object instanceof Double)
 				{
@@ -377,6 +361,7 @@ public class RosterPanel<A extends Attributes>
 		private String name;
 		private Function<Player<A>, Object> getValueFunction;
 		private Function<Object, String> formatValueFunction;
+		private int preferedWidth = 0;
 
 		public ColumnData(
 				String name,
@@ -395,6 +380,17 @@ public class RosterPanel<A extends Attributes>
 			this.formatValueFunction = (v) -> v.toString();
 		}
 
+		public ColumnData(
+				String name,
+				Function<Player<A>, Object> getValueAction,
+				int preferedWidth)
+		{
+			this.name = name;
+			this.getValueFunction = getValueAction;
+			this.formatValueFunction = (v) -> v.toString();
+			this.preferedWidth = preferedWidth;
+		}
+
 		public String getName()
 		{
 			return name;
@@ -409,12 +405,17 @@ public class RosterPanel<A extends Attributes>
 		{
 			return formatValueFunction.apply(value);
 		}
+
+		public int getPreferedWidth()
+		{
+			return preferedWidth;
+		}
 	}
 
 	private class RosterTableModel
 		extends DefaultTableModel
 		implements
-			CollectionChangedListeners,
+			CollectionChangedListener,
 			PropertyChangedListener
 	{
 		private static final long serialVersionUID = -3862251740620048034L;
@@ -576,8 +577,8 @@ public class RosterPanel<A extends Attributes>
 				private boolean isHighQualityPlayer(Player<A> player)
 				{
 					double bestPositionQuality = playerEvaluator
-							.getBestPositionQuality(player)
-							.getValue();
+						.getBestPositionQuality(player)
+						.getValue();
 
 					return bestPositionQuality > getHighQualityLimit();
 				}
@@ -585,8 +586,8 @@ public class RosterPanel<A extends Attributes>
 				private boolean isLowQualityPlayer(Player<A> player)
 				{
 					double bestPositionQuality = playerEvaluator
-							.getBestPositionQuality(player)
-							.getValue();
+						.getBestPositionQuality(player)
+						.getValue();
 
 					return bestPositionQuality < getLowQualityLimit();
 				}
@@ -594,16 +595,23 @@ public class RosterPanel<A extends Attributes>
 				private boolean isSymmetricPlayer(Player<A> player)
 				{
 					String bestRatingPosition = playerEvaluator
-							.getBestPositionRating(player)
-							.getName();
+						.getBestPositionRating(player)
+						.getName();
 
 					String bestQualityPosition = playerEvaluator
-							.getBestPositionQuality(player)
-							.getName();
+						.getBestPositionQuality(player)
+						.getName();
 
 					return bestRatingPosition.equals(bestQualityPosition);
 				}
 			});
+
+			ColumnData columnData = columnDatas.get(column.getModelIndex());
+
+			if (columnData.getPreferedWidth() != 0)
+			{
+				column.setPreferredWidth(columnData.getPreferedWidth());
+			}
 
 			return column;
 		}

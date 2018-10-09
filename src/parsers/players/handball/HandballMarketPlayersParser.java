@@ -3,17 +3,45 @@ package parsers.players.handball;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
-import model.Player;
-import model.Side;
-import model.handball.HandballAttributes;
-import model.handball.HandballPlayer;
-import parsers.ParseException;
-import parsers.players.PlayersParser;
+import java.util.regex.Pattern;
 
 public class HandballMarketPlayersParser
-	extends PlayersParser<HandballAttributes>
+	extends HandballPlayersParser
 {
+	private static final Pattern REGEX_PATTERN = createPattern(
+		name(),
+		ignore(), // Deadline
+		ignore(), // Cost
+		age(),
+		ignore(), // Scouting status
+		ignore(), // Average quality
+		cl(),
+		attributesWithQualities(),
+		experience(),
+		ignore(), // Total rating
+		side());
+
+	private static final boolean INCLUDE_CL = true;
+	private static final boolean INCLUDE_SIDE = true;
+	private static final boolean INCLUDE_QUALITIES = true;
+	private static final boolean INCLUDE_EXPERIENCE = true;
+	private static final boolean INCLUDE_CHEMISTRY = false;
+	private static final boolean INCLUDE_ENERGY = false;
+	private static final boolean INCLUDE_TRAINING = false;
+
+	public HandballMarketPlayersParser()
+	{
+		super(
+			REGEX_PATTERN,
+			INCLUDE_CL,
+			INCLUDE_SIDE,
+			INCLUDE_QUALITIES,
+			INCLUDE_EXPERIENCE,
+			INCLUDE_CHEMISTRY,
+			INCLUDE_ENERGY,
+			INCLUDE_TRAINING);
+	}
+
 	@Override
 	public String getName()
 	{
@@ -21,121 +49,17 @@ public class HandballMarketPlayersParser
 	}
 
 	@Override
-	public List<Player<HandballAttributes>> parsePlayers(String textToParse) throws ParseException
+	protected List<String> toSinglePlayerPerLine(String textToParse)
 	{
-		try
+		List<String> lines = new LinkedList<>();
+
+		String[] split = textToParse.split("\n");
+
+		for (int i = 0; i < split.length; i += 4)
 		{
-			List<Player<HandballAttributes>> players = new LinkedList<Player<HandballAttributes>>();
-
-			String[] lines = textToParse.split("\n");
-
-			for (int i = 0; i < lines.length; i += 4)
-			{
-				HandballPlayer player = new HandballPlayer(
-						parseName(lines[i]),
-						parseAge(lines[i + 3].split("\t")[0]),
-						parseCL(lines[i + 3].split("\t")[3]),
-						parseSide(lines[i + 3].split("\t")[14]),
-						parseAttributes(
-							Arrays.copyOfRange(lines[i + 3].trim().split("\t"), 4, 12)),
-						0);
-
-				players.add(player);
-			}
-
-			return players;
+			lines.add(String.join("\t", Arrays.copyOfRange(split, i, i + 4)));
 		}
-		catch (Exception e)
-		{
-			throw new ParseException(e);
-		}
-	}
 
-	private static String parseName(String text)
-	{
-		String[] split = text.trim().split(" ");
-
-		return String.format("%s %s", split[1], split[2]);
-	}
-
-	private static int parseAge(String text)
-	{
-		return Integer.parseInt(text);
-	}
-
-	private static int parseCL(String text)
-	{
-		return Integer.parseInt(text.split("/")[0]);
-	}
-
-	private static Side parseSide(String text)
-	{
-		if (text.equals("U"))
-		{
-			return Side.UNIVERSAL;
-		}
-		else if (text.equals("L"))
-		{
-			return Side.LEFT;
-		}
-		else if (text.equals("R"))
-		{
-			return Side.RIGHT;
-		}
-		else
-		{
-			return Side.UNKNOWN;
-		}
-	}
-
-	private static HandballAttributes parseAttributes(String[] texts)
-	{
-		HandballAttributes attributes = new HandballAttributes();
-
-		int[] goa = parseAttribute(texts[0]);
-		attributes.setGoa(goa[0]);
-		attributes.setQGoa(goa[1]);
-
-		int[] fip = parseAttribute(texts[1]);
-		attributes.setFip(fip[0]);
-		attributes.setQFip(fip[1]);
-
-		int[] sho = parseAttribute(texts[2]);
-		attributes.setSho(sho[0]);
-		attributes.setQSho(sho[1]);
-
-		int[] blk = parseAttribute(texts[3]);
-		attributes.setBlk(blk[0]);
-		attributes.setQBlk(blk[1]);
-
-		int[] pas = parseAttribute(texts[4]);
-		attributes.setPas(pas[0]);
-		attributes.setQPas(pas[1]);
-
-		int[] tec = parseAttribute(texts[5]);
-		attributes.setTec(tec[0]);
-		attributes.setQTec(tec[1]);
-
-		int[] spe = parseAttribute(texts[6]);
-		attributes.setSpe(spe[0]);
-		attributes.setQSpe(spe[1]);
-
-		int[] agr = parseAttribute(texts[7]);
-		attributes.setAgr(agr[0]);
-		attributes.setQAgr(agr[1]);
-
-		return attributes;
-	}
-
-	private static int[] parseAttribute(String text)
-	{
-		int rating = Integer.parseInt(text.substring(0, text.length() - 2));
-		int quality = Integer.parseInt(text.substring(text.length() - 2, text.length()));
-
-		return new int[]
-		{
-				rating,
-				quality
-		};
+		return lines;
 	}
 }

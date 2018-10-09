@@ -1,6 +1,8 @@
 package gui.player;
 
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -14,7 +16,7 @@ import model.Attributes;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
 
-public abstract class TrainingPlannerPanel<A extends Attributes>
+public class TrainingPlannerPanel<A extends Attributes>
 	extends JPanel
 	implements
 		PropertyChangedListener
@@ -42,10 +44,19 @@ public abstract class TrainingPlannerPanel<A extends Attributes>
 					BorderFactory.createTitledBorder("Training Planner"),
 					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-		setLayout(new GridLayout(1, 2, 10, 10));
+		setLayout(new GridBagLayout());
 
-		add(positionComboBox);
-		add(nextAttributeTextField);
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.weightx = 1;
+
+		gbc.gridy = 0;
+		add(positionComboBox, gbc);
+
+		gbc.gridy = 1;
+		add(nextAttributeTextField, gbc);
 	}
 
 	public void bind(A attributes)

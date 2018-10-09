@@ -19,6 +19,18 @@ public class PpmComboBox<E>
 		items.forEach(this::addItem);
 	}
 
+	public PpmComboBox(List<E> items, E selectedItem)
+	{
+		this(items);
+		setSelectedItem(selectedItem);
+	}
+
+	public PpmComboBox(List<E> items, int selectedIndex)
+	{
+		this(items);
+		setSelectedIndex(selectedIndex);
+	}
+
 	public E getSelection()
 	{
 		return getItemAt(getSelectedIndex());

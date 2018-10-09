@@ -10,9 +10,21 @@ public class Player<A extends Attributes>
 	protected int cl;
 	protected Side side;
 	protected A attributes;
+	protected int experience;
+	protected int chemistry;
+	protected int energy;
 	protected double training;
 
-	protected Player(String name, int age, int cl, Side side, A attributes, double training)
+	public Player(
+			String name,
+			int age,
+			int cl,
+			Side side,
+			A attributes,
+			int experience,
+			int chemistry,
+			int energy,
+			double training)
 	{
 		this.name = name;
 		this.age = age;
@@ -20,6 +32,9 @@ public class Player<A extends Attributes>
 		this.side = side;
 		this.attributes = attributes;
 		this.attributes.addPropertyChangedListener((s, e) -> firePropertyChanged(e));
+		this.experience = experience;
+		this.chemistry = chemistry;
+		this.energy = energy;
 		this.training = training;
 	}
 
@@ -72,6 +87,39 @@ public class Player<A extends Attributes>
 		return attributes;
 	}
 
+	public int getExperience()
+	{
+		return experience;
+	}
+
+	public void setExperience(int experience)
+	{
+		this.experience = experience;
+		firePropertyChanged("Experience", experience);
+	}
+
+	public int getChemistry()
+	{
+		return chemistry;
+	}
+
+	public void setChemistry(int chemistry)
+	{
+		this.chemistry = chemistry;
+		firePropertyChanged("Chemistry", chemistry);
+	}
+
+	public int getEnergy()
+	{
+		return energy;
+	}
+
+	public void setEnergy(int energy)
+	{
+		this.energy = energy;
+		firePropertyChanged("Energy", energy);
+	}
+
 	public double getTraining()
 	{
 		return training;
@@ -80,19 +128,19 @@ public class Player<A extends Attributes>
 	public void setTraining(double training)
 	{
 		this.training = training;
-		firePropertyChanged("Traning", training);
+		firePropertyChanged("Training", training);
 	}
 
 	public void merge(Player<A> other)
 	{
 		if (!this.equals(other)) return;
 
-		if (this.age == 0)
+		if (other.getAge() > this.getAge())
 		{
 			this.setAge(other.getAge());
 		}
 
-		if (this.cl == 0)
+		if (this.getCL() == -1)
 		{
 			this.setCL(other.getCL());
 		}
@@ -102,17 +150,30 @@ public class Player<A extends Attributes>
 			this.setSide(other.getSide());
 		}
 
+		if (other.getExperience() > this.getExperience())
+		{
+			this.setExperience(other.getExperience());
+		}
+
+		if (other.getChemistry() != 0)
+		{
+			this.setChemistry(other.getChemistry());
+		}
+
+		if (other.getEnergy() < this.getEnergy())
+		{
+			this.setEnergy(other.getEnergy());
+		}
+
 		this.attributes.merge(other.attributes);
 	}
 
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this)
-			return true;
+		if (obj == this) return true;
 
-		if (!(obj instanceof Player<?>))
-			return false;
+		if (!(obj instanceof Player<?>)) return false;
 
 		Player<?> other = (Player<?>)obj;
 

@@ -24,10 +24,10 @@ public abstract class MicroAttributeEvaluator<A extends Attributes>
 		List<Pair<String, Double>> pairs = createPairs(attributes);
 
 		double value = pairs
-				.stream()
-				.min((o1, o2) -> Double.compare(o1.getValue(), o2.getValue()))
-				.get()
-				.getValue();
+			.stream()
+			.min((o1, o2) -> Double.compare(o1.getValue(), o2.getValue()))
+			.get()
+			.getValue();
 
 		return weightSum() * value;
 	}
@@ -39,10 +39,10 @@ public abstract class MicroAttributeEvaluator<A extends Attributes>
 		List<Pair<String, Double>> pairs = createPairs(attributes);
 
 		return pairs
-				.stream()
-				.min((o1, o2) -> Double.compare(o1.getValue(), o2.getValue()))
-				.get()
-				.getKey();
+			.stream()
+			.min((o1, o2) -> Double.compare(o1.getValue(), o2.getValue()))
+			.get()
+			.getKey();
 	}
 
 	protected abstract double weightSum();

@@ -22,8 +22,7 @@ public class TrainingSuggestionPanel<A extends Attributes>
 			AttributeEvaluator<A> evaluator2)
 
 	{
-		return new QualityEvaluatorComparator<A>(attributes)
-				.compare(evaluator1, evaluator2);
+		return new QualityEvaluatorComparator<A>(attributes).compare(evaluator1, evaluator2);
 	}
 
 	@Override

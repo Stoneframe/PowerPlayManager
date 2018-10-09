@@ -1,14 +1,19 @@
 package formation;
 
-public abstract class FormationTemplate
+import java.util.List;
+
+import model.Attributes;
+
+public class FormationTemplate<A extends Attributes>
 {
 	private String name;
-	private int nbrOfRequiredPlayers;
 
-	protected FormationTemplate(String name, int nbrOfRequiredPlayers)
+	protected List<PositionTemplate<A>> positions;
+
+	public FormationTemplate(String name, List<PositionTemplate<A>> positions)
 	{
 		this.name = name;
-		this.nbrOfRequiredPlayers = nbrOfRequiredPlayers;
+		this.positions = positions;
 	}
 
 	public String getName()
@@ -16,9 +21,14 @@ public abstract class FormationTemplate
 		return name;
 	}
 
+	public List<PositionTemplate<A>> getPositions()
+	{
+		return positions;
+	}
+
 	public int getNumberOfRequiredPlayers()
 	{
-		return nbrOfRequiredPlayers;
+		return positions.size();
 	}
 
 	@Override
