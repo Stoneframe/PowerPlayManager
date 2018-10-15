@@ -29,6 +29,8 @@ import evaluators.PlayerEvaluator;
 import formation.Formation;
 import formation.FormationBuilder;
 import formation.FormationTemplate;
+import formation.manipulators.PlayerFormManipulator;
+import formation.manipulators.PlayerNoneManipulator;
 import model.Attributes;
 import model.Player;
 import model.Roster;
@@ -187,7 +189,9 @@ public class FormationBuilderPanel<A extends Attributes>
 						formationBuilder.createFormations(
 							roster,
 							formationTemplates,
-							considerFormCheckBox.isSelected());
+							considerFormCheckBox.isSelected()
+									? new PlayerFormManipulator<>(playerEvaluator)
+									: new PlayerNoneManipulator<>());
 
 				updatePlayersSelectedList(roster);
 				updateCreateFormationsButton(roster);

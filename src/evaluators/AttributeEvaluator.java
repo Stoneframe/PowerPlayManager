@@ -1,5 +1,6 @@
 package evaluators;
 
+import model.Attribute;
 import model.Attributes;
 
 public abstract class AttributeEvaluator<A extends Attributes>
@@ -22,7 +23,7 @@ public abstract class AttributeEvaluator<A extends Attributes>
 
 	public abstract double getQuality(A attributes);
 
-	public abstract String getNextTraining(A attributes);
+	public abstract Attribute getNextTraining(A attributes);
 
 	@Override
 	public boolean equals(Object obj)

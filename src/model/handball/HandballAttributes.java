@@ -1,6 +1,7 @@
 package model.handball;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import model.Attribute;
 import model.Attributes;
@@ -212,5 +213,17 @@ public class HandballAttributes
 		attributes.get(7).setQuality(qAgr);
 		firePropertyChanged("QAgr", qAgr);
 		firePropertyChanged("AverageQuality", getAverageQuality());
+	}
+
+	public HandballAttributes copy()
+	{
+		HandballAttributes other = new HandballAttributes();
+		
+		other.attributes = this.attributes
+				.stream()
+				.map(a -> a.clone())
+				.collect(Collectors.toList());
+		
+		return other;
 	}
 }

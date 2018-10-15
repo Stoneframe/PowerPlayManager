@@ -52,4 +52,18 @@ public abstract class Attributes
 	{
 		return attributes.iterator();
 	}
+
+	@Override
+	public String toString()
+	{
+		StringBuilder builder = new StringBuilder();
+
+		for (Attribute attribute : attributes)
+		{
+			builder.append(attribute);
+			builder.append(System.lineSeparator());
+		}
+
+		return builder.toString();
+	}
 }

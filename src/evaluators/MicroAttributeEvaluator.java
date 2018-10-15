@@ -31,16 +31,15 @@ public abstract class MicroAttributeEvaluator<A extends Attributes>
 		return weights.getQuality(attributes);
 	}
 
-	public String getNextTraining(A attributes)
+	public Attribute getNextTraining(A attributes)
 	{
-		Attribute attribute = attributes
+		return attributes
 			.stream()
+			.filter(a -> weights.getRating(a) > 0)
 			.min(
 				(a1, a2) -> Double.compare(
 					weights.getRating(a1),
 					weights.getRating(a2)))
 			.get();
-
-		return attribute.getName();
 	}
 }

@@ -26,7 +26,8 @@ public class FootballMainPanel
 			fileHandler,
 			new FootballAttributesPanel(),
 			new FootballFormationTemplatePanelFactory(),
-			new PaulsFormationBuilder<>(playerEvaluator),
+			new PaulsFormationBuilder<>(),
+			null,
 			parsers,
 			playerEvaluator);
 	}

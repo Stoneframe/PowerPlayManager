@@ -9,6 +9,7 @@ import gui.menu.FileHandler;
 import gui.menu.MenuBar;
 import model.handball.HandballAttributes;
 import parsers.players.PlayersParser;
+import warper.handball.HandballPlayerWarper;
 
 public class HandballMainPanel
 	extends MainPanel<HandballAttributes>
@@ -26,7 +27,8 @@ public class HandballMainPanel
 			fileHandler,
 			new HandballAttributesPanel(),
 			new HandballFormationTemplatePanelFactory(),
-			new PaulsFormationBuilder<>(playerEvaluator),
+			new PaulsFormationBuilder<>(),
+			new HandballPlayerWarper(playerEvaluator),
 			parsers,
 			playerEvaluator);
 	}

@@ -4,6 +4,7 @@ import java.util.List;
 
 import comparators.QualityEvaluatorComparator;
 import comparators.RatingEvaluatorComparator;
+import model.Attribute;
 import model.Attributes;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -46,7 +47,7 @@ public class MacroAttributeEvaluator<A extends Attributes>
 	}
 
 	@Override
-	public String getNextTraining(A attributes)
+	public Attribute getNextTraining(A attributes)
 	{
 		throw new NotImplementedException();
 	}

@@ -26,7 +26,8 @@ public class IceHockeyMainPanel
 			fileHandler,
 			new IceHockeyAttributesPanel(),
 			new IceHockeyFormationTemplatePanelFactory(),
-			new PaulsFormationBuilder<>(playerEvaluator),
+			new PaulsFormationBuilder<>(),
+			null,
 			parsers,
 			playerEvaluator);
 	}

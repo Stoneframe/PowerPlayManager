@@ -34,6 +34,7 @@ import model.Attributes;
 import model.Player;
 import model.Roster;
 import parsers.players.PlayersParser;
+import warper.PlayerWarper;
 
 public class MainPanel<A extends Attributes>
 	extends JPanel
@@ -55,6 +56,8 @@ public class MainPanel<A extends Attributes>
 	private JButton groupsButton;
 	private JButton plotButton;
 	private JButton clearRosterButton;
+	
+	private JButton warpPlayerButton;
 
 	private Roster<A> roster = new Roster<>();
 
@@ -64,6 +67,7 @@ public class MainPanel<A extends Attributes>
 			AttributesPanel<A> attributesPanel,
 			FormationTemplatePanelFactory<A> formationTemplatePanelFactory,
 			FormationBuilder<A> formationBuilder,
+			PlayerWarper<A> playerWarper,
 			List<PlayersParser<A>> parsers,
 			PlayerEvaluator<A> playerEvaluator)
 	{
@@ -290,6 +294,17 @@ public class MainPanel<A extends Attributes>
 				roster.clear();
 			}
 		});
+		
+		warpPlayerButton = new JButton("Warp Player");
+		warpPlayerButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				A attributes = playerWarper.warp(rosterPanel.getSelectedPlayer(), 5);
+				
+				System.out.println(attributes);
+			}
+		});
 
 		buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		buttonPanel.add(addPlayersButton);
@@ -298,6 +313,7 @@ public class MainPanel<A extends Attributes>
 		buttonPanel.add(groupsButton);
 		buttonPanel.add(plotButton);
 		buttonPanel.add(clearRosterButton);
+		buttonPanel.add(warpPlayerButton);
 
 		setLayout(new BorderLayout());
 

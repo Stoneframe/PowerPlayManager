@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import evaluators.PlayerEvaluator;
 import model.Attributes;
 import model.Player;
 import model.Roster;
@@ -14,18 +13,11 @@ public class PaulsFormationBuilder<A extends Attributes>
 	implements
 		FormationBuilder<A>
 {
-	private PlayerEvaluator<A> playerEvaluator;
-
-	public PaulsFormationBuilder(PlayerEvaluator<A> playerEvaluator)
-	{
-		this.playerEvaluator = playerEvaluator;
-	}
-
 	@Override
 	public List<Formation<A>> createFormations(
 			Roster<A> roster,
 			List<FormationTemplate<A>> formationTemplates,
-			boolean considerForm)
+			PlayerManipulator<A> manipulator)
 	{
 		List<Formation<A>> formations = new LinkedList<>();
 
@@ -44,7 +36,7 @@ public class PaulsFormationBuilder<A extends Attributes>
 				positions.add(position);
 
 				PositionAssigner positionAssigner =
-						new PositionAssigner(roster, positionTemplate, position, considerForm);
+						new PositionAssigner(roster, positionTemplate, position, manipulator);
 
 				positionAssigners.add(positionAssigner);
 			}
@@ -69,19 +61,19 @@ public class PaulsFormationBuilder<A extends Attributes>
 		private Roster<A> roster;
 		private PositionTemplate<A> positionTemplate;
 		private Position<A> position;
-
-		private boolean considerForm;
+		
+		private PlayerManipulator<A> manipulator;
 
 		public PositionAssigner(
 				Roster<A> roster,
 				PositionTemplate<A> positionTemplate,
 				Position<A> position,
-				boolean considerForm)
+				PlayerManipulator<A> manipulator)
 		{
 			this.roster = roster;
 			this.positionTemplate = positionTemplate;
 			this.position = position;
-			this.considerForm = considerForm;
+			this.manipulator = manipulator;
 		}
 
 		@Override
@@ -166,11 +158,8 @@ public class PaulsFormationBuilder<A extends Attributes>
 				.getAttributeEvaluator()
 				.getRating(player.getAttributes());
 
-			if (considerForm)
-			{
-				rating = playerEvaluator.calculateFormForRating(player, rating);
-			}
-
+			rating = manipulator.manipulate(player, positionTemplate.getAttributeEvaluator());
+			
 			return rating;
 		}
 	}

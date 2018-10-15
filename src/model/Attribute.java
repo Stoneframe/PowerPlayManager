@@ -14,6 +14,14 @@ public class Attribute
 		this.name = name;
 	}
 
+	private Attribute(String name, int rating, int quality)
+	{
+		this(name);
+
+		this.rating = rating;
+		this.quality = quality;
+	}
+
 	public String getName()
 	{
 		return name;
@@ -51,5 +59,16 @@ public class Attribute
 	{
 		this.rating = other.rating;
 		this.quality = other.quality;
+	}
+
+	public Attribute clone()
+	{
+		return new Attribute(name, rating, quality);
+	}
+
+	@Override
+	public String toString()
+	{
+		return String.format("%s: %d (%d)", name, rating, quality);
 	}
 }
