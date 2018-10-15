@@ -1,79 +1,37 @@
 package evaluators.handball;
 
 import java.util.Arrays;
-import java.util.List;
 
 import evaluators.MicroAttributeEvaluator;
-import javafx.util.Pair;
+import evaluators.Weight;
+import evaluators.Weights;
 import model.handball.HandballAttributes;
 
 public class HandballAttributeEvaluator
 	extends MicroAttributeEvaluator<HandballAttributes>
 {
-	private double goa;
-	private double fip;
-	private double sho;
-	private double blk;
-	private double pas;
-	private double tec;
-	private double spe;
-	private double agr;
-
 	public HandballAttributeEvaluator(
 			String name,
-			double goa,
-			double fip,
-			double sho,
-			double blk,
-			double pas,
-			double tec,
-			double spe,
-			double agr)
+			int goa,
+			int fip,
+			int sho,
+			int blk,
+			int pas,
+			int tec,
+			int spe,
+			int agr)
 	{
-		super(name);
-		this.goa = goa;
-		this.fip = fip;
-		this.sho = sho;
-		this.blk = blk;
-		this.pas = pas;
-		this.tec = tec;
-		this.spe = spe;
-		this.agr = agr;
-	}
-
-	@Override
-	public double getQuality(HandballAttributes attributes)
-	{
-		// @formatter:off
-		return (goa + fip + sho + blk + pas + tec + spe + agr) /
-				(goa / attributes.getQGoa() +
-				 fip / attributes.getQFip() +
-				 sho / attributes.getQSho()	+
-				 blk / attributes.getQBlk() +
-				 pas / attributes.getQPas() +
-				 tec / attributes.getQTec() +
-				 spe / attributes.getQSpe() +
-				 agr / attributes.getQAgr());
-		// @formatter:on
-	}
-
-	@Override
-	protected List<Pair<String, Double>> createPairs(HandballAttributes attributes)
-	{
-		return Arrays.asList(
-			createPair("Goalkeeping", attributes.getGoa(), goa),
-			createPair("Field Play", attributes.getFip(), fip),
-			createPair("Shooting", attributes.getSho(), sho),
-			createPair("Blocking", attributes.getBlk(), blk),
-			createPair("Passing", attributes.getPas(), pas),
-			createPair("Technique", attributes.getTec(), tec),
-			createPair("Speed", attributes.getSpe(), spe),
-			createPair("Aggressivness", attributes.getAgr(), agr));
-	}
-
-	@Override
-	protected double weightSum()
-	{
-		return goa + fip + sho + blk + pas + tec + spe + agr;
+		super(
+			name,
+			new Weights(
+					Arrays.asList(
+						new Weight("Goa", goa),
+						new Weight("Fip", fip),
+						new Weight("Sho", sho),
+						new Weight("Blk", blk),
+						new Weight("Pas", pas),
+						new Weight("Tec", tec),
+						new Weight("Spe", spe),
+						new Weight("Agr", agr))));
 	}
 }
