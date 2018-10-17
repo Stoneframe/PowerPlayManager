@@ -9,6 +9,7 @@ import gui.menu.FileHandler;
 import gui.menu.MenuBar;
 import model.icehockey.IceHockeyAttributes;
 import parsers.players.PlayersParser;
+import warper.icehockey.IceHockeyPlayerWarper;
 
 public class IceHockeyMainPanel
 	extends MainPanel<IceHockeyAttributes>
@@ -27,7 +28,7 @@ public class IceHockeyMainPanel
 			new IceHockeyAttributesPanel(),
 			new IceHockeyFormationTemplatePanelFactory(),
 			new PaulsFormationBuilder<>(),
-			null,
+			new IceHockeyPlayerWarper(playerEvaluator),
 			parsers,
 			playerEvaluator);
 	}

@@ -2,9 +2,12 @@ package formation;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import evaluators.AttributeEvaluator;
 import model.Attributes;
 import model.Player;
 import model.Roster;
@@ -58,10 +61,12 @@ public class PaulsFormationBuilder<A extends Attributes>
 		implements
 			Comparable<PositionAssigner>
 	{
+		private Map<Player<A>, Double> playerRatingCache = new HashMap<>();
+
 		private Roster<A> roster;
 		private PositionTemplate<A> positionTemplate;
 		private Position<A> position;
-		
+
 		private PlayerManipulator<A> manipulator;
 
 		public PositionAssigner(
@@ -154,12 +159,17 @@ public class PaulsFormationBuilder<A extends Attributes>
 
 		private double getPlayerRating(Player<A> player)
 		{
-			double rating = positionTemplate
-				.getAttributeEvaluator()
-				.getRating(player.getAttributes());
+			AttributeEvaluator<A> attributeEvaluator = positionTemplate.getAttributeEvaluator();
 
-			rating = manipulator.manipulate(player, positionTemplate.getAttributeEvaluator());
-			
+			if (playerRatingCache.containsKey(player))
+			{
+				return playerRatingCache.get(player);
+			}
+
+			double rating = manipulator.manipulate(player, attributeEvaluator);
+
+			playerRatingCache.put(player, rating);
+
 			return rating;
 		}
 	}

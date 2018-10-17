@@ -18,22 +18,22 @@ public abstract class PlayerWarper<A extends Attributes>
 	public A warp(Player<A> player, int years)
 	{
 		AttributeEvaluator<A> attributeEvaluator =
-				playerEvaluator.getBestEvaluatorByQuality(player.getAttributes());
+				playerEvaluator.getBestEvaluatorByRating(player.getAttributes());
 
 		A attributes = copyAttributes(player.getAttributes());
 
 		int improvement = calculateImprovement(player, years);
 
-		for (int i = 0; i < improvement; i++)
+		for (int i = 0; i < Math.abs(improvement); i++)
 		{
 			Attribute attribute = attributeEvaluator.getNextTraining(attributes);
 
-			attribute.setRating(attribute.getRating() + 1);
+			attribute.setRating(attribute.getRating() + Integer.signum(improvement));
 		}
 
 		return attributes;
 	}
-	
+
 	protected abstract A copyAttributes(A original);
 
 	private int calculateImprovement(Player<A> player, int years)

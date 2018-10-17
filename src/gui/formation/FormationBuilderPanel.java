@@ -13,13 +13,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
@@ -29,13 +32,16 @@ import evaluators.PlayerEvaluator;
 import formation.Formation;
 import formation.FormationBuilder;
 import formation.FormationTemplate;
+import formation.PlayerManipulator;
 import formation.manipulators.PlayerFormManipulator;
 import formation.manipulators.PlayerNoneManipulator;
+import formation.manipulators.PlayerWarpManipulator;
 import model.Attributes;
 import model.Player;
 import model.Roster;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
+import warper.PlayerWarper;
 
 public class FormationBuilderPanel<A extends Attributes>
 	extends JPanel
@@ -55,7 +61,11 @@ public class FormationBuilderPanel<A extends Attributes>
 	private JButton addTemplateButton;
 	private JButton removeTemplateButton;
 
-	private JCheckBox considerFormCheckBox;
+	private JRadioButton noneRadioButton;
+	private JRadioButton formRadioButton;
+	private JRadioButton warpRadioButton;
+	private JLabel yearsLabel;
+	private JTextField yearsTextField;
 
 	private JButton createFormationsButton;
 
@@ -63,6 +73,7 @@ public class FormationBuilderPanel<A extends Attributes>
 			FormationTemplatePanelFactory<A> formationTemplatePanelFactory,
 			FormationBuilder<A> formationBuilder,
 			PlayerEvaluator<A> playerEvaluator,
+			PlayerWarper<A> playerWarper,
 			Roster<A> roster)
 	{
 		playerListModel = new DefaultListModel<>();
@@ -175,7 +186,32 @@ public class FormationBuilderPanel<A extends Attributes>
 			}
 		});
 
-		considerFormCheckBox = new JCheckBox("Consider Form", true);
+		noneRadioButton = new JRadioButton("None");
+		formRadioButton = new JRadioButton("Form");
+		warpRadioButton = new JRadioButton("Warp");
+		yearsLabel = new JLabel("Years:");
+		yearsTextField = new JTextField(3);
+
+		ButtonGroup buttonGroup = new ButtonGroup();
+		buttonGroup.add(noneRadioButton);
+		buttonGroup.add(formRadioButton);
+		buttonGroup.add(warpRadioButton);
+
+		ActionListener radioButtonListener = new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				yearsLabel.setEnabled(warpRadioButton.isSelected());
+				yearsTextField.setEnabled(warpRadioButton.isSelected());
+			}
+		};
+
+		noneRadioButton.setSelected(true);
+		noneRadioButton.addActionListener(radioButtonListener);
+		formRadioButton.addActionListener(radioButtonListener);
+		warpRadioButton.addActionListener(radioButtonListener);
+		yearsLabel.setEnabled(false);
+		yearsTextField.setEnabled(false);
 
 		createFormationsButton = new JButton("Create Formations");
 		updateCreateFormationsButton(roster);
@@ -189,9 +225,7 @@ public class FormationBuilderPanel<A extends Attributes>
 						formationBuilder.createFormations(
 							roster,
 							formationTemplates,
-							considerFormCheckBox.isSelected()
-									? new PlayerFormManipulator<>(playerEvaluator)
-									: new PlayerNoneManipulator<>());
+							getPlayerManipulator());
 
 				updatePlayersSelectedList(roster);
 				updateCreateFormationsButton(roster);
@@ -208,6 +242,23 @@ public class FormationBuilderPanel<A extends Attributes>
 						display.setVisible(true);
 					}
 				});
+			}
+
+			private PlayerManipulator<A> getPlayerManipulator()
+			{
+				if (formRadioButton.isSelected())
+				{
+					return new PlayerFormManipulator<>(playerEvaluator);
+				}
+
+				if (warpRadioButton.isSelected())
+				{
+					return new PlayerWarpManipulator<>(
+							playerWarper,
+							Integer.parseInt(yearsTextField.getText()));
+				}
+
+				return new PlayerNoneManipulator<>();
 			}
 		});
 
@@ -242,7 +293,11 @@ public class FormationBuilderPanel<A extends Attributes>
 		add(topPanel, BorderLayout.NORTH);
 
 		JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		southPanel.add(considerFormCheckBox);
+		southPanel.add(noneRadioButton);
+		southPanel.add(formRadioButton);
+		southPanel.add(warpRadioButton);
+		southPanel.add(yearsLabel);
+		southPanel.add(yearsTextField);
 		southPanel.add(createFormationsButton);
 
 		add(southPanel, BorderLayout.SOUTH);

@@ -1,6 +1,7 @@
 package model.football;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import model.Attribute;
 import model.Attributes;
@@ -237,5 +238,17 @@ public class FootballAttributes
 		attributes.get(8).setQuality(qHea);
 		firePropertyChanged("QHea", qHea);
 		firePropertyChanged("AverageQuality", getAverageQuality());
+	}
+
+	public FootballAttributes copy()
+	{
+		FootballAttributes other = new FootballAttributes();
+		
+		other.attributes = this.attributes
+				.stream()
+				.map(a -> a.clone())
+				.collect(Collectors.toList());
+		
+		return other;
 	}
 }

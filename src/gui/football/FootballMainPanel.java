@@ -9,6 +9,7 @@ import gui.menu.FileHandler;
 import gui.menu.MenuBar;
 import model.football.FootballAttributes;
 import parsers.players.PlayersParser;
+import warper.football.FootballPlayerWarper;
 
 public class FootballMainPanel
 	extends MainPanel<FootballAttributes>
@@ -27,7 +28,7 @@ public class FootballMainPanel
 			new FootballAttributesPanel(),
 			new FootballFormationTemplatePanelFactory(),
 			new PaulsFormationBuilder<>(),
-			null,
+			new FootballPlayerWarper(playerEvaluator),
 			parsers,
 			playerEvaluator);
 	}

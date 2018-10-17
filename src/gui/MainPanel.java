@@ -56,8 +56,6 @@ public class MainPanel<A extends Attributes>
 	private JButton groupsButton;
 	private JButton plotButton;
 	private JButton clearRosterButton;
-	
-	private JButton warpPlayerButton;
 
 	private Roster<A> roster = new Roster<>();
 
@@ -230,6 +228,7 @@ public class MainPanel<A extends Attributes>
 									formationTemplatePanelFactory,
 									formationBuilder,
 									playerEvaluator,
+									playerWarper,
 									roster.copy()));
 						formationBuilderFrame.pack();
 						formationBuilderFrame.setLocationRelativeTo(MainPanel.this);
@@ -294,17 +293,6 @@ public class MainPanel<A extends Attributes>
 				roster.clear();
 			}
 		});
-		
-		warpPlayerButton = new JButton("Warp Player");
-		warpPlayerButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				A attributes = playerWarper.warp(rosterPanel.getSelectedPlayer(), 5);
-				
-				System.out.println(attributes);
-			}
-		});
 
 		buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		buttonPanel.add(addPlayersButton);
@@ -313,7 +301,6 @@ public class MainPanel<A extends Attributes>
 		buttonPanel.add(groupsButton);
 		buttonPanel.add(plotButton);
 		buttonPanel.add(clearRosterButton);
-		buttonPanel.add(warpPlayerButton);
 
 		setLayout(new BorderLayout());
 

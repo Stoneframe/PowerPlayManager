@@ -1,6 +1,7 @@
 package model.icehockey;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import model.Attribute;
 import model.Attributes;
@@ -187,5 +188,17 @@ public class IceHockeyAttributes
 		attributes.get(6).setQuality(qAgr);
 		firePropertyChanged("QAgr", qAgr);
 		firePropertyChanged("AverageQuality", getAverageQuality());
+	}
+
+	public IceHockeyAttributes copy()
+	{
+		IceHockeyAttributes other = new IceHockeyAttributes();
+		
+		other.attributes = this.attributes
+				.stream()
+				.map(a -> a.clone())
+				.collect(Collectors.toList());
+		
+		return other;
 	}
 }
