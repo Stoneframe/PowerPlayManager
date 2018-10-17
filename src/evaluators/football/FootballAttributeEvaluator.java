@@ -33,7 +33,7 @@ public class FootballAttributeEvaluator
 					Arrays.asList(
 						new Weight("Goa", goa),
 						new Weight("Def", def),
-						new Weight("Mig", mid),
+						new Weight("Mid", mid),
 						new Weight("Off", off),
 						new Weight("Sho", sho),
 						new Weight("Pas", pas),

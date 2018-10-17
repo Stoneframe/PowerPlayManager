@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -253,12 +254,28 @@ public class FormationBuilderPanel<A extends Attributes>
 
 				if (warpRadioButton.isSelected())
 				{
-					return new PlayerWarpManipulator<>(
-							playerWarper,
-							Integer.parseInt(yearsTextField.getText()));
+					return new PlayerWarpManipulator<>(playerWarper, getYears());
 				}
 
 				return new PlayerNoneManipulator<>();
+			}
+
+			private int getYears()
+			{
+				try
+				{
+					return Integer.parseInt(yearsTextField.getText());
+				}
+				catch (NumberFormatException e)
+				{
+					JOptionPane.showMessageDialog(
+						FormationBuilderPanel.this,
+						"The 'Years' input is not a valid number. Using 0 as default.",
+						"Bad Year Input",
+						JOptionPane.WARNING_MESSAGE);
+
+					return 0;
+				}
 			}
 		});
 
