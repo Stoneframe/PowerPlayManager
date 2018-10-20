@@ -1,6 +1,7 @@
 package formation.manipulators;
 
 import evaluators.AttributeEvaluator;
+import evaluators.PlayerEvaluator;
 import formation.PlayerManipulator;
 import model.Attributes;
 import model.Player;
@@ -10,12 +11,17 @@ public class PlayerWarpManipulator<A extends Attributes>
 	implements
 		PlayerManipulator<A>
 {
+	private PlayerEvaluator<A> playerEvaluator;
 	private PlayerWarper<A> playerWarper;
-	
+
 	private int years;
-	
-	public PlayerWarpManipulator(PlayerWarper<A> playerWarper, int years)
+
+	public PlayerWarpManipulator(
+			PlayerEvaluator<A> playerEvaluator,
+			PlayerWarper<A> playerWarper,
+			int years)
 	{
+		this.playerEvaluator = playerEvaluator;
 		this.playerWarper = playerWarper;
 		this.years = years;
 	}
@@ -23,8 +29,12 @@ public class PlayerWarpManipulator<A extends Attributes>
 	@Override
 	public double manipulate(Player<A> player, AttributeEvaluator<A> attributeEvaluator)
 	{
-		A attributes = playerWarper.warp(player, years);
-		
+		A attributes =
+				playerWarper.warp(
+					player,
+					playerEvaluator.getBestEvaluatorByRating(player.getAttributes()),
+					years);
+
 		return attributeEvaluator.getRating(attributes);
 	}
 }

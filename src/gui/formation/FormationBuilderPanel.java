@@ -254,7 +254,7 @@ public class FormationBuilderPanel<A extends Attributes>
 
 				if (warpRadioButton.isSelected())
 				{
-					return new PlayerWarpManipulator<>(playerWarper, getYears());
+					return new PlayerWarpManipulator<>(playerEvaluator, playerWarper, getYears());
 				}
 
 				return new PlayerNoneManipulator<>();

@@ -15,11 +15,8 @@ public abstract class PlayerWarper<A extends Attributes>
 		this.playerEvaluator = playerEvaluator;
 	}
 
-	public A warp(Player<A> player, int years)
+	public A warp(Player<A> player, AttributeEvaluator<A> attributeEvaluator, int years)
 	{
-		AttributeEvaluator<A> attributeEvaluator =
-				playerEvaluator.getBestEvaluatorByRating(player.getAttributes());
-
 		A attributes = copyAttributes(player.getAttributes());
 
 		int improvement = calculateImprovement(player, years);
