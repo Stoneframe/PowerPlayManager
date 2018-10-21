@@ -35,6 +35,7 @@ import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import gui.player.PlayerSelectedEvent;
 import gui.player.PlayerSelectedListener;
+import javafx.collections.ListChangeListener;
 import model.Attributes;
 import model.Player;
 import model.Roster;
@@ -142,8 +143,10 @@ public class RosterPanel<A extends Attributes>
 		rosterTableModel = new RosterTableModel();
 
 		this.roster = roster;
-		this.roster.addCollectionChangedListener(rosterTableModel);
+		// this.roster.addCollectionChangedListener(rosterTableModel);
 		this.roster.forEach(p -> p.addPropertyChangedListener(rosterTableModel));
+
+		this.roster.getPlayers().addListener(rosterTableModel);
 
 		this.playerEvaluator = playerEvaluator;
 
@@ -416,7 +419,8 @@ public class RosterPanel<A extends Attributes>
 		extends DefaultTableModel
 		implements
 			CollectionChangedListener,
-			PropertyChangedListener
+			PropertyChangedListener,
+			ListChangeListener<Player<A>>
 	{
 		private static final long serialVersionUID = -3862251740620048034L;
 
@@ -497,6 +501,26 @@ public class RosterPanel<A extends Attributes>
 				for (int column = 0; column < getColumnCount(); column++)
 				{
 					fireTableCellUpdated(row, column);
+				}
+			}
+		}
+
+		@Override
+		public void onChanged(Change<? extends Player<A>> c)
+		{
+			while (c.next())
+			{
+				if (c.wasAdded())
+				{
+					c.getAddedSubList().forEach(p -> p.addPropertyChangedListener(this));
+
+					fireTableRowsInserted(c.getFrom(), c.getTo() - 1);
+				}
+				else if (c.wasRemoved())
+				{
+					c.getRemoved().forEach(p -> p.removePropertyChangedListener(this));
+
+					fireTableRowsDeleted(c.getFrom(), c.getTo());
 				}
 			}
 		}

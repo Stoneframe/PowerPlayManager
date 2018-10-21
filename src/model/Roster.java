@@ -5,9 +5,11 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import util.AbstractModelCollection;
 import util.CollectionChangedEvent;
 
@@ -16,7 +18,13 @@ public class Roster<A extends Attributes>
 	implements
 		Iterable<Player<A>>
 {
-	private List<Player<A>> players = new LinkedList<>();
+	private ObservableList<Player<A>> playerList =
+			FXCollections.observableArrayList();
+
+	private ObservableList<Player<A>> umPlayerList =
+			FXCollections.unmodifiableObservableList(
+				new FilteredList<>(playerList, p -> isEnabled(p)));
+
 	private List<Player<A>> ignored = new LinkedList<>();
 	private List<Group> groups = new LinkedList<>();
 
@@ -26,29 +34,26 @@ public class Roster<A extends Attributes>
 
 	private Roster(List<Player<A>> players)
 	{
-		this.players.addAll(players);
+		this.playerList.addAll(players);
+	}
+
+	public ObservableList<Player<A>> getPlayers()
+	{
+		return umPlayerList;
 	}
 
 	public void add(Player<A> player)
 	{
-		for (Player<A> addedPlayer : players)
+		for (Player<A> addedPlayer : playerList)
 		{
 			if (addedPlayer.equals(player))
 			{
 				addedPlayer.merge(player);
-
 				return;
 			}
 		}
 
-		players.add(player);
-
-		int index = getFilteredPlayersList().indexOf(player);
-
-		if (index != -1)
-		{
-			fireCollectionChanged(CollectionChangedEvent.ADDED, index, player);
-		}
+		playerList.add(player);
 	}
 
 	public void addAll(List<Player<A>> players)
@@ -61,58 +66,51 @@ public class Roster<A extends Attributes>
 
 	public void remove(Player<A> player)
 	{
-		int index = getFilteredPlayersList().indexOf(player);
-
-		players.remove(player);
+		playerList.remove(player);
 		groups.forEach(g -> g.players.remove(player));
-
-		if (index != -1)
-		{
-			fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
-		}
 	}
 
 	public boolean contains(Player<A> player)
 	{
-		return getFilteredPlayersList().contains(player);
+		return playerList.contains(player);
 	}
 
 	public Player<A> get(int index)
 	{
-		return getFilteredPlayersList().get(index);
+		return playerList.get(index);
 	}
 
 	public int indexOf(Object player)
 	{
-		return getFilteredPlayersList().indexOf(player);
+		return playerList.indexOf(player);
 	}
 
 	public int size()
 	{
-		return getFilteredPlayersList().size();
+		return playerList.size();
 	}
 
 	public Roster<A> copy()
 	{
-		return new Roster<A>(getFilteredPlayersList());
+		return new Roster<A>(new LinkedList<>(playerList.subList(0, playerList.size())));
 	}
 
 	public void clear()
 	{
-		while (!getFilteredPlayersList().isEmpty())
+		for (Player<A> player : new LinkedList<>(playerList.subList(0, playerList.size())))
 		{
-			remove(getFilteredPlayersList().get(0));
+			remove(player);
 		}
 	}
 
 	public Stream<Player<A>> stream()
 	{
-		return getFilteredPlayersList().stream();
+		return playerList.stream();
 	}
 
 	public List<Player<A>> sort(Comparator<Player<A>> comparator)
 	{
-		List<Player<A>> copy = new LinkedList<Player<A>>(getFilteredPlayersList());
+		List<Player<A>> copy = new LinkedList<Player<A>>(playerList);
 
 		Collections.sort(copy, comparator);
 		Collections.reverse(copy);
@@ -123,7 +121,7 @@ public class Roster<A extends Attributes>
 	@Override
 	public Iterator<Player<A>> iterator()
 	{
-		return getFilteredPlayersList().iterator();
+		return playerList.iterator();
 	}
 
 	public Group addGroup(String name, List<Player<A>> players)
@@ -157,14 +155,6 @@ public class Roster<A extends Attributes>
 	public List<Group> getGroups()
 	{
 		return Collections.unmodifiableList(groups);
-	}
-
-	private List<Player<A>> getFilteredPlayersList()
-	{
-		return players
-			.stream()
-			.filter(p -> isEnabled(p))
-			.collect(Collectors.toList());
 	}
 
 	private boolean shouldBeEnabled(Player<A> player)
@@ -201,14 +191,14 @@ public class Roster<A extends Attributes>
 	{
 		ignored.remove(player);
 
-		int index = getFilteredPlayersList().indexOf(player);
+		int index = playerList.indexOf(player);
 
 		fireCollectionChanged(CollectionChangedEvent.ADDED, index, player);
 	}
 
 	private void disablePlayer(Player<A> player)
 	{
-		int index = getFilteredPlayersList().indexOf(player);
+		int index = playerList.indexOf(player);
 
 		ignored.add(player);
 
