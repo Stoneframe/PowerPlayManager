@@ -5,28 +5,37 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import javafx.beans.Observable;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import util.AbstractModelCollection;
-import util.CollectionChangedEvent;
 
 public class Roster<A extends Attributes>
-	extends AbstractModelCollection
+	// extends AbstractModelCollection
 	implements
 		Iterable<Player<A>>
 {
-	private ObservableList<Player<A>> playerList =
-			FXCollections.observableArrayList();
+	private ObservableList<Group> groups = createGroupList();
+	private ObservableList<Player<A>> players = createPlayerList();
 
-	private ObservableList<Player<A>> umPlayerList =
-			FXCollections.unmodifiableObservableList(
-				new FilteredList<>(playerList, p -> isEnabled(p)));
+	private FilteredList<Player<A>> filteredPlayer =
+			new FilteredList<>(players, getPredicate(groups));
 
-	private List<Player<A>> ignored = new LinkedList<>();
-	private List<Group> groups = new LinkedList<>();
+//	private ObservableList<Player<A>> playerList =
+//			FXCollections.observableArrayList();
+
+	// private ObservableList<Player<A>> umPlayerList =
+	// FXCollections.unmodifiableObservableList(
+	// new FilteredList<>(playerList, p -> isEnabled(p)));
+
+	// private List<Player<A>> ignored = new LinkedList<>();
+	// private List<Group> groups = new LinkedList<>();
 
 	public Roster()
 	{
@@ -34,17 +43,27 @@ public class Roster<A extends Attributes>
 
 	private Roster(List<Player<A>> players)
 	{
-		this.playerList.addAll(players);
+		this.players.addAll(players);
 	}
 
 	public ObservableList<Player<A>> getPlayers()
 	{
-		return umPlayerList;
+		return filteredPlayer;
 	}
+
+	public ObservableList<Group> getGroups()
+	{
+		return FXCollections.unmodifiableObservableList(groups);
+	}
+
+	// public ObservableList<Player<A>> getPlayers()
+	// {
+	// return umPlayerList;
+	// }
 
 	public void add(Player<A> player)
 	{
-		for (Player<A> addedPlayer : playerList)
+		for (Player<A> addedPlayer : players)
 		{
 			if (addedPlayer.equals(player))
 			{
@@ -53,7 +72,7 @@ public class Roster<A extends Attributes>
 			}
 		}
 
-		playerList.add(player);
+		players.add(player);
 	}
 
 	public void addAll(List<Player<A>> players)
@@ -66,38 +85,38 @@ public class Roster<A extends Attributes>
 
 	public void remove(Player<A> player)
 	{
-		playerList.remove(player);
+		players.remove(player);
 		groups.forEach(g -> g.players.remove(player));
 	}
 
 	public boolean contains(Player<A> player)
 	{
-		return playerList.contains(player);
+		return players.contains(player);
 	}
 
 	public Player<A> get(int index)
 	{
-		return playerList.get(index);
+		return players.get(index);
 	}
 
 	public int indexOf(Object player)
 	{
-		return playerList.indexOf(player);
+		return players.indexOf(player);
 	}
 
 	public int size()
 	{
-		return playerList.size();
+		return players.size();
 	}
 
 	public Roster<A> copy()
 	{
-		return new Roster<A>(new LinkedList<>(playerList.subList(0, playerList.size())));
+		return new Roster<A>(new LinkedList<>(players.subList(0, players.size())));
 	}
 
 	public void clear()
 	{
-		for (Player<A> player : new LinkedList<>(playerList.subList(0, playerList.size())))
+		for (Player<A> player : new LinkedList<>(players.subList(0, players.size())))
 		{
 			remove(player);
 		}
@@ -105,12 +124,12 @@ public class Roster<A extends Attributes>
 
 	public Stream<Player<A>> stream()
 	{
-		return playerList.stream();
+		return players.stream();
 	}
 
 	public List<Player<A>> sort(Comparator<Player<A>> comparator)
 	{
-		List<Player<A>> copy = new LinkedList<Player<A>>(playerList);
+		List<Player<A>> copy = new LinkedList<Player<A>>(players);
 
 		Collections.sort(copy, comparator);
 		Collections.reverse(copy);
@@ -121,7 +140,7 @@ public class Roster<A extends Attributes>
 	@Override
 	public Iterator<Player<A>> iterator()
 	{
-		return playerList.iterator();
+		return players.iterator();
 	}
 
 	public Group addGroup(String name, List<Player<A>> players)
@@ -135,81 +154,115 @@ public class Roster<A extends Attributes>
 
 	public void removeGroup(Group group)
 	{
-		if (!groups.contains(group)) return;
+		// if (!groups.contains(group)) return;
 
 		groups.remove(group);
 
-		for (Player<A> player : group.players)
+		// for (Player<A> player : group.players)
+		// {
+		// if (shouldBeEnabled(player) && isDisabled(player))
+		// {
+		// enablePlayer(player);
+		// }
+		// else if (shouldBeDisabled(player) && isEnabled(player))
+		// {
+		// disablePlayer(player);
+		// }
+		// }
+	}
+
+	// public List<Group> getGroups()
+	// {
+	// return Collections.unmodifiableList(groups);
+	// }
+
+	private ObservableList<Group> createGroupList()
+	{
+		ObservableList<Group> groups = FXCollections.observableArrayList(
+			group -> new Observable[]
+			{
+					group.enabledProperty()
+			});
+
+		groups.addListener(new ListChangeListener<Group>()
 		{
-			if (shouldBeEnabled(player) && isDisabled(player))
+			public void onChanged(Change<? extends Group> c)
 			{
-				enablePlayer(player);
+				filteredPlayer.setPredicate(getPredicate(groups));
 			}
-			else if (shouldBeDisabled(player) && isEnabled(player))
-			{
-				disablePlayer(player);
-			}
-		}
+		});
+
+		return groups;
 	}
 
-	public List<Group> getGroups()
+	private ObservableList<Player<A>> createPlayerList()
 	{
-		return Collections.unmodifiableList(groups);
+		return FXCollections.observableArrayList();
 	}
 
-	private boolean shouldBeEnabled(Player<A> player)
+	private Predicate<? super Player<A>> getPredicate(ObservableList<Group> groups)
 	{
-		return !isInGroup(player) || isInEnabledGroup(player);
+		return p -> groups.stream().allMatch(g -> !g.getPlayers().contains(p))
+				|| groups.stream().anyMatch(g -> g.isEnabled() && g.getPlayers().contains(p));
 	}
 
-	private boolean shouldBeDisabled(Player<A> player)
-	{
-		return isInGroup(player) && !isInEnabledGroup(player);
-	}
+	// private boolean shouldBeEnabled(Player<A> player)
+	// {
+	// return !isInGroup(player) || isInEnabledGroup(player);
+	// }
+	//
+	// private boolean shouldBeDisabled(Player<A> player)
+	// {
+	// return isInGroup(player) && !isInEnabledGroup(player);
+	// }
 
-	private boolean isInGroup(Player<A> player)
-	{
-		return groups.stream().anyMatch(g -> g.players.contains(player));
-	}
+	// private boolean isInGroup(Player<A> player)
+	// {
+	// return groups.stream().anyMatch(g -> g.players.contains(player));
+	// }
+	//
+	// private boolean isInEnabledGroup(Player<A> player)
+	// {
+	// return groups.stream().anyMatch(g -> g.isEnabled() &&
+	// g.players.contains(player));
+	// }
 
-	private boolean isInEnabledGroup(Player<A> player)
-	{
-		return groups.stream().anyMatch(g -> g.isEnabled && g.players.contains(player));
-	}
-
-	private boolean isEnabled(Player<A> player)
-	{
-		return !ignored.contains(player);
-	}
-
-	private boolean isDisabled(Player<A> player)
-	{
-		return ignored.contains(player);
-	}
-
-	private void enablePlayer(Player<A> player)
-	{
-		ignored.remove(player);
-
-		int index = playerList.indexOf(player);
-
-		fireCollectionChanged(CollectionChangedEvent.ADDED, index, player);
-	}
-
-	private void disablePlayer(Player<A> player)
-	{
-		int index = playerList.indexOf(player);
-
-		ignored.add(player);
-
-		fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
-	}
+	// private boolean isEnabled(Player<A> player)
+	// {
+	// return !ignored.contains(player);
+	// }
+	//
+	// private boolean isDisabled(Player<A> player)
+	// {
+	// return ignored.contains(player);
+	// }
+	//
+	// private void enablePlayer(Player<A> player)
+	// {
+	// ignored.remove(player);
+	//
+	// int index = playerList.indexOf(player);
+	//
+	// fireCollectionChanged(CollectionChangedEvent.ADDED, index, player);
+	// }
+	//
+	// private void disablePlayer(Player<A> player)
+	// {
+	// int index = playerList.indexOf(player);
+	//
+	// ignored.add(player);
+	//
+	// fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
+	// }
 
 	public class Group
 	{
 		private String name;
 		private List<Player<A>> players;
-		private boolean isEnabled = true;
+
+		// private boolean isEnabled = true;
+
+		private BooleanProperty enabled = new SimpleBooleanProperty();
 
 		public Group(String name, List<Player<A>> players)
 		{
@@ -234,28 +287,35 @@ public class Roster<A extends Attributes>
 
 		public boolean isEnabled()
 		{
-			return isEnabled;
+			return enabled.get();
 		}
 
 		public void setEnabled(boolean isEnabled)
 		{
-			if (this.isEnabled == isEnabled) return;
+			enabled.set(isEnabled);
 
-			this.isEnabled = isEnabled;
+			// if (this.isEnabled == isEnabled) return;
+			//
+			// this.isEnabled = isEnabled;
+			//
+			// for (Player<A> player : players)
+			// {
+			// if (isEnabled && ignored.contains(player))
+			// {
+			// enablePlayer(player);
+			// }
+			// else if (!isEnabled
+			// && !ignored.contains(player)
+			// && !isInEnabledGroup(player))
+			// {
+			// disablePlayer(player);
+			// }
+			// }
+		}
 
-			for (Player<A> player : players)
-			{
-				if (isEnabled && ignored.contains(player))
-				{
-					enablePlayer(player);
-				}
-				else if (!isEnabled
-						&& !ignored.contains(player)
-						&& !isInEnabledGroup(player))
-				{
-					disablePlayer(player);
-				}
-			}
+		public BooleanProperty enabledProperty()
+		{
+			return enabled;
 		}
 
 		@Override

@@ -510,17 +510,20 @@ public class RosterPanel<A extends Attributes>
 		{
 			while (c.next())
 			{
+				if (c.wasUpdated())
+
+					if (c.wasRemoved())
+					{
+					c.getRemoved().forEach(p -> p.removePropertyChangedListener(this));
+
+					fireTableRowsDeleted(c.getFrom(), c.getTo() - 1);
+					}
+
 				if (c.wasAdded())
 				{
 					c.getAddedSubList().forEach(p -> p.addPropertyChangedListener(this));
 
 					fireTableRowsInserted(c.getFrom(), c.getTo() - 1);
-				}
-				else if (c.wasRemoved())
-				{
-					c.getRemoved().forEach(p -> p.removePropertyChangedListener(this));
-
-					fireTableRowsDeleted(c.getFrom(), c.getTo());
 				}
 			}
 		}
