@@ -1,5 +1,6 @@
 package gui.icehockey;
 
+import javax.swing.JComponent;
 import javax.swing.JTextField;
 
 import gui.player.AttributesPanel;
@@ -106,5 +107,11 @@ public class IceHockeyAttributesPanel
 		agrQTextField.setText(intToString(attributes::getQAgr));
 		totTextField.setText(intToString(attributes::getTotalRating));
 		avgQTextField.setText(doubleToString(attributes::getAverageQuality));
+	}
+
+	@Override
+	public JComponent getPanel()
+	{
+		return this;
 	}
 }

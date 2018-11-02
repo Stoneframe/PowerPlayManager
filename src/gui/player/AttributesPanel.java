@@ -13,7 +13,8 @@ import util.PropertyChangedListener;
 public abstract class AttributesPanel<A extends Attributes>
 	extends SimpleFormPanel
 	implements
-		PropertyChangedListener
+		PropertyChangedListener,
+		AttributesPanelInterface<A>
 {
 	private static final long serialVersionUID = -7993333522332535462L;
 
@@ -29,6 +30,7 @@ public abstract class AttributesPanel<A extends Attributes>
 					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 	}
 
+	@Override
 	public void bind(A attributes)
 	{
 		if (this.attributes != null)

@@ -1,69 +1,83 @@
 package model;
 
-import util.AbstractModelObject;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class Attribute
-	extends AbstractModelObject
 {
-	private String name;
-	private int rating;
-	private int quality;
+	private StringProperty name = new SimpleStringProperty();
+	private IntegerProperty rating = new SimpleIntegerProperty();
+	private IntegerProperty quality = new SimpleIntegerProperty();
 
 	public Attribute(String name)
 	{
-		this.name = name;
+		setName(name);
 	}
 
 	private Attribute(String name, int rating, int quality)
 	{
 		this(name);
 
-		this.rating = rating;
-		this.quality = quality;
+		setRating(rating);
+		setQuality(quality);
 	}
 
 	public String getName()
 	{
-		return name;
+		return nameProperty().get();
 	}
 
 	public void setName(String name)
 	{
-		this.name = name;
-		firePropertyChanged("Name", name);
+		nameProperty().set(name);
+	}
+
+	public StringProperty nameProperty()
+	{
+		return name;
 	}
 
 	public int getRating()
 	{
-		return rating;
+		return ratingProperty().get();
 	}
 
 	public void setRating(int rating)
 	{
-		this.rating = rating;
-		firePropertyChanged("Rating", rating);
+		ratingProperty().set(rating);
+	}
+
+	public IntegerProperty ratingProperty()
+	{
+		return rating;
 	}
 
 	public int getQuality()
 	{
-		return quality;
+		return qualityProperty().get();
 	}
 
 	public void setQuality(int quality)
 	{
-		this.quality = quality;
-		firePropertyChanged("Quality", quality);
+		qualityProperty().set(quality);
+	}
+
+	public IntegerProperty qualityProperty()
+	{
+		return quality;
 	}
 
 	public void merge(Attribute other)
 	{
-		this.rating = other.rating;
-		this.quality = other.quality;
+		this.setRating(other.getRating());
+		this.setQuality(other.getQuality());
 	}
 
 	public Attribute clone()
 	{
-		return new Attribute(name, rating, quality);
+		return new Attribute(getName(), getRating(), getQuality());
 	}
 
 	@Override

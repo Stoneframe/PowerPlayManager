@@ -35,27 +35,27 @@ public abstract class FootballPlayersParser
 	{
 		FootballAttributes attributes = new FootballAttributes();
 
-		attributes.setGoa(Integer.parseInt(matcher.group("goa")));
-		attributes.setDef(Integer.parseInt(matcher.group("def")));
-		attributes.setMid(Integer.parseInt(matcher.group("mid")));
-		attributes.setOff(Integer.parseInt(matcher.group("off")));
-		attributes.setSho(Integer.parseInt(matcher.group("sho")));
-		attributes.setPas(Integer.parseInt(matcher.group("pas")));
-		attributes.setTec(Integer.parseInt(matcher.group("tec")));
-		attributes.setSpe(Integer.parseInt(matcher.group("spe")));
-		attributes.setHea(Integer.parseInt(matcher.group("hea")));
+		attributes.getGoa().setRating(Integer.parseInt(matcher.group("goa")));
+		attributes.getDef().setRating(Integer.parseInt(matcher.group("def")));
+		attributes.getMid().setRating(Integer.parseInt(matcher.group("mid")));
+		attributes.getOff().setRating(Integer.parseInt(matcher.group("off")));
+		attributes.getSho().setRating(Integer.parseInt(matcher.group("sho")));
+		attributes.getPas().setRating(Integer.parseInt(matcher.group("pas")));
+		attributes.getTec().setRating(Integer.parseInt(matcher.group("tec")));
+		attributes.getSpe().setRating(Integer.parseInt(matcher.group("spe")));
+		attributes.getHea().setRating(Integer.parseInt(matcher.group("hea")));
 
 		if (includeQuality)
 		{
-			attributes.setQGoa(Integer.parseInt(matcher.group("qgoa")));
-			attributes.setQDef(Integer.parseInt(matcher.group("qdef")));
-			attributes.setQMid(Integer.parseInt(matcher.group("qmid")));
-			attributes.setQOff(Integer.parseInt(matcher.group("qoff")));
-			attributes.setQSho(Integer.parseInt(matcher.group("qsho")));
-			attributes.setQPas(Integer.parseInt(matcher.group("qpas")));
-			attributes.setQTec(Integer.parseInt(matcher.group("qtec")));
-			attributes.setQSpe(Integer.parseInt(matcher.group("qspe")));
-			attributes.setQHea(Integer.parseInt(matcher.group("qhea")));
+			attributes.getGoa().setQuality(Integer.parseInt(matcher.group("qgoa")));
+			attributes.getDef().setQuality(Integer.parseInt(matcher.group("qdef")));
+			attributes.getMid().setQuality(Integer.parseInt(matcher.group("qmid")));
+			attributes.getOff().setQuality(Integer.parseInt(matcher.group("qoff")));
+			attributes.getSho().setQuality(Integer.parseInt(matcher.group("qsho")));
+			attributes.getPas().setQuality(Integer.parseInt(matcher.group("qpas")));
+			attributes.getTec().setQuality(Integer.parseInt(matcher.group("qtec")));
+			attributes.getSpe().setQuality(Integer.parseInt(matcher.group("qspe")));
+			attributes.getHea().setQuality(Integer.parseInt(matcher.group("qhea")));
 		}
 
 		return attributes;

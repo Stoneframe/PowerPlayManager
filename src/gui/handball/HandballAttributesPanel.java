@@ -1,5 +1,6 @@
 package gui.handball;
 
+import javax.swing.JComponent;
 import javax.swing.JTextField;
 
 import gui.player.AttributesPanel;
@@ -117,5 +118,11 @@ public class HandballAttributesPanel
 		agrQTextField.setText(intToString(attributes::getQAgr));
 		totTextField.setText(intToString(attributes::getTotalRating));
 		avgQTextField.setText(doubleToString(attributes::getAverageQuality));
+	}
+
+	@Override
+	public JComponent getPanel()
+	{
+		return this;
 	}
 }
