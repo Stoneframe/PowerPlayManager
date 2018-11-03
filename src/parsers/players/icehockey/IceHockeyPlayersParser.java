@@ -35,23 +35,23 @@ public abstract class IceHockeyPlayersParser
 	{
 		IceHockeyAttributes attributes = new IceHockeyAttributes();
 
-		attributes.setGoa(Integer.parseInt(matcher.group("goa")));
-		attributes.setDef(Integer.parseInt(matcher.group("def")));
-		attributes.setOff(Integer.parseInt(matcher.group("off")));
-		attributes.setSho(Integer.parseInt(matcher.group("sho")));
-		attributes.setPas(Integer.parseInt(matcher.group("pas")));
-		attributes.setTec(Integer.parseInt(matcher.group("tec")));
-		attributes.setAgr(Integer.parseInt(matcher.group("agr")));
+		attributes.getGoa().setRating(Integer.parseInt(matcher.group("goa")));
+		attributes.getDef().setRating(Integer.parseInt(matcher.group("def")));
+		attributes.getOff().setRating(Integer.parseInt(matcher.group("off")));
+		attributes.getSho().setRating(Integer.parseInt(matcher.group("sho")));
+		attributes.getPas().setRating(Integer.parseInt(matcher.group("pas")));
+		attributes.getTec().setRating(Integer.parseInt(matcher.group("tec")));
+		attributes.getAgr().setRating(Integer.parseInt(matcher.group("agr")));
 
 		if (includeQuality)
 		{
-			attributes.setQGoa(Integer.parseInt(matcher.group("qgoa")));
-			attributes.setQDef(Integer.parseInt(matcher.group("qdef")));
-			attributes.setQOff(Integer.parseInt(matcher.group("qoff")));
-			attributes.setQSho(Integer.parseInt(matcher.group("qsho")));
-			attributes.setQPas(Integer.parseInt(matcher.group("qpas")));
-			attributes.setQTec(Integer.parseInt(matcher.group("qtec")));
-			attributes.setQAgr(Integer.parseInt(matcher.group("qagr")));
+			attributes.getGoa().setQuality(Integer.parseInt(matcher.group("qgoa")));
+			attributes.getDef().setQuality(Integer.parseInt(matcher.group("qdef")));
+			attributes.getOff().setQuality(Integer.parseInt(matcher.group("qoff")));
+			attributes.getSho().setQuality(Integer.parseInt(matcher.group("qsho")));
+			attributes.getPas().setQuality(Integer.parseInt(matcher.group("qpas")));
+			attributes.getTec().setQuality(Integer.parseInt(matcher.group("qtec")));
+			attributes.getAgr().setQuality(Integer.parseInt(matcher.group("qagr")));
 		}
 
 		return attributes;

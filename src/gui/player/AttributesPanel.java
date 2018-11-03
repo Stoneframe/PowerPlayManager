@@ -1,72 +1,65 @@
 package gui.player;
 
-import java.util.function.Supplier;
+import java.util.Arrays;
 
-import javax.swing.BorderFactory;
-import javax.swing.border.CompoundBorder;
-
-import gui.util.SimpleFormPanel;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.GridPane;
+import model.Attribute;
 import model.Attributes;
-import util.PropertyChangedEvent;
-import util.PropertyChangedListener;
 
 public abstract class AttributesPanel<A extends Attributes>
-	extends SimpleFormPanel
-	implements
-		PropertyChangedListener,
-		AttributesPanelInterface<A>
+	extends JFXPanel
 {
 	private static final long serialVersionUID = -7993333522332535462L;
 
-	protected static final int TEXTFIELD_COLUMNS = 6;
+	protected AttributePanel[] attributePanels;
 
-	protected A attributes;
-
-	protected AttributesPanel()
+	protected AttributesPanel(AttributePanel... attributePanels)
 	{
-		setBorder(
-			new CompoundBorder(
-					BorderFactory.createTitledBorder("Attributes"),
-					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		this.attributePanels = attributePanels;
+
+		Platform.runLater(new Runnable()
+		{
+			public void run()
+			{
+				GridPane gridPane = new GridPane();
+
+				gridPane.setVgap(5);
+				gridPane.setPadding(new Insets(10, 20, 10, 20));
+
+				for (int i = 0; i < attributePanels.length; i++)
+				{
+					gridPane.add(attributePanels[i], 0, i);
+				}
+
+				TitledPane titledPane = new TitledPane();
+
+				titledPane.setText("Attributes");
+				titledPane.setCollapsible(false);
+				titledPane.setContent(gridPane);
+
+				setScene(new Scene(titledPane));
+			}
+		});
 	}
 
-	@Override
 	public void bind(A attributes)
 	{
-		if (this.attributes != null)
+		Arrays.stream(attributePanels).forEach(ap -> ap.bind(null));
+
+		if (attributes == null)
 		{
-			this.attributes.removePropertyChangedListener(this);
+			return;
 		}
 
-		this.attributes = attributes;
-
-		if (this.attributes != null)
+		int i = 0;
+		for (Attribute attribute : attributes)
 		{
-			this.attributes.addPropertyChangedListener(this);
+			attributePanels[i++].bind(attribute);
 		}
-
-		update();
 	}
-
-	@Override
-	public void propertyChanged(Object source, PropertyChangedEvent event)
-	{
-		update();
-	}
-
-	protected String intToString(Supplier<Integer> getValueSupplier)
-	{
-		return attributes != null
-				? Integer.toString(getValueSupplier.get())
-				: "";
-	}
-
-	protected String doubleToString(Supplier<Double> getValueSupplier)
-	{
-		return attributes != null
-				? String.format("%.1f", getValueSupplier.get())
-				: "";
-	}
-
-	protected abstract void update();
 }

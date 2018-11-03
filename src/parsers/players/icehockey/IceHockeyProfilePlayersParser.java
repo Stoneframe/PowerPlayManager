@@ -95,32 +95,32 @@ public class IceHockeyProfilePlayersParser
 		IceHockeyAttributes attributes = new IceHockeyAttributes();
 
 		int[] goa = parseAttribute(text, "Mål");
-		attributes.setGoa(goa[0]);
-		attributes.setQGoa(goa[1]);
+		attributes.getGoa().setRating(goa[0]);
+		attributes.getGoa().setQuality(goa[1]);
 
 		int[] def = parseAttribute(text, "För");
-		attributes.setDef(def[0]);
-		attributes.setQDef(def[1]);
+		attributes.getDef().setRating(def[0]);
+		attributes.getDef().setQuality(def[1]);
 
 		int[] off = parseAttribute(text, "Off");
-		attributes.setOff(off[0]);
-		attributes.setQOff(off[1]);
+		attributes.getOff().setRating(off[0]);
+		attributes.getOff().setQuality(off[1]);
 
 		int[] sho = parseAttribute(text, "Sko");
-		attributes.setSho(sho[0]);
-		attributes.setQSho(sho[1]);
+		attributes.getSho().setRating(sho[0]);
+		attributes.getSho().setQuality(sho[1]);
 
 		int[] pas = parseAttribute(text, "Pas");
-		attributes.setPas(pas[0]);
-		attributes.setQPas(pas[1]);
+		attributes.getPas().setRating(pas[0]);
+		attributes.getPas().setQuality(pas[1]);
 
 		int[] tec = parseAttribute(text, "Tek");
-		attributes.setTec(tec[0]);
-		attributes.setQTec(tec[1]);
+		attributes.getTec().setRating(tec[0]);
+		attributes.getTec().setQuality(tec[1]);
 
 		int[] agr = parseAttribute(text, "Agr");
-		attributes.setAgr(agr[0]);
-		attributes.setQAgr(agr[1]);
+		attributes.getAgr().setRating(agr[0]);
+		attributes.getAgr().setQuality(agr[1]);
 
 		return attributes;
 	}

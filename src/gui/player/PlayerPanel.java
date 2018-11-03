@@ -34,7 +34,7 @@ public class PlayerPanel<A extends Attributes>
 	private JTextField sideTextField;
 	private JTextField trainingTextField;
 
-	private AttributesPanelInterface<A> attributePanel;
+	private AttributesPanel<A> attributePanel;
 
 	private PlayerFormPanel<A> playerFormPanel;
 
@@ -44,7 +44,7 @@ public class PlayerPanel<A extends Attributes>
 	private TrainingPlannerPanel<A> trainingPanel;
 
 	public PlayerPanel(
-			AttributesPanelInterface<A> attributePanel,
+			AttributesPanel<A> attributePanel,
 			PlayerEvaluator<A> playerEvaluator)
 	{
 		this.attributePanel = attributePanel;
@@ -105,7 +105,7 @@ public class PlayerPanel<A extends Attributes>
 		panel.add(playerInformationPanel, gbc);
 
 		gbc.gridy = 1;
-		panel.add(attributePanel.getPanel(), gbc);
+		panel.add(attributePanel, gbc);
 
 		gbc.gridy = 2;
 		panel.add(playerFormPanel, gbc);

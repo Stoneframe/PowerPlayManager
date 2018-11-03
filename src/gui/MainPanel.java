@@ -23,7 +23,7 @@ import gui.formation.FormationBuilderPanel;
 import gui.formation.FormationTemplatePanelFactory;
 import gui.menu.FileHandler;
 import gui.menu.MenuBar;
-import gui.player.AttributesPanelInterface;
+import gui.player.AttributesPanel;
 import gui.player.PlayerPanel;
 import gui.player.PlayerSelectedEvent;
 import gui.player.PlayerSelectedListener;
@@ -62,7 +62,7 @@ public class MainPanel<A extends Attributes>
 	public MainPanel(
 			MenuBar menuBar,
 			FileHandler<A> fileHandler,
-			AttributesPanelInterface<A> attributesPanel,
+			AttributesPanel<A> attributesPanel,
 			FormationTemplatePanelFactory<A> formationTemplatePanelFactory,
 			FormationBuilder<A> formationBuilder,
 			PlayerWarper<A> playerWarper,

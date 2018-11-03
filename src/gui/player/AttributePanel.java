@@ -1,6 +1,5 @@
 package gui.player;
 
-import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -39,27 +38,13 @@ public class AttributePanel
 
 	public void bind(Attribute attribute)
 	{
-		bindRating(attribute.ratingProperty());
-		bindQuality(attribute.qualityProperty());
-	}
-
-	public void bindRating(ReadOnlyIntegerProperty ratingProperty)
-	{
 		ratingTextField.textProperty().unbind();
-
-		if (ratingProperty != null)
-		{
-			ratingTextField.textProperty().bind(ratingProperty.asString());
-		}
-	}
-
-	public void bindQuality(ReadOnlyIntegerProperty qualityProperty)
-	{
 		qualityTextField.textProperty().unbind();
 
-		if (qualityProperty != null)
+		if (attribute != null)
 		{
-			qualityTextField.textProperty().bind(qualityProperty.asString());
+			ratingTextField.textProperty().bind(attribute.ratingProperty().asString());
+			qualityTextField.textProperty().bind(attribute.qualityProperty().asString());
 		}
 	}
 }

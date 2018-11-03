@@ -43,6 +43,7 @@ import gui.menu.MenuBar;
 import gui.menu.football.FootballFileHandler;
 import gui.menu.handball.HandballFileHandler;
 import gui.menu.icehockey.IceHockeyFileHandler;
+import javafx.embed.swing.JFXPanel;
 import parsers.players.football.FootballFormationPlayersProParser;
 import parsers.players.football.FootballMarketPlayersParser;
 import parsers.players.football.FootballOverviewPlayersParser;
@@ -84,6 +85,8 @@ public class MainFrame
 	public MainFrame()
 	{
 		super("PPM Assistant");
+		
+		new JFXPanel();
 
 		MenuBar menuBar = new MenuBar(this, tabbedPane);
 

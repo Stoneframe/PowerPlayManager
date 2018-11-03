@@ -96,36 +96,36 @@ public class HandballProfilePlayersParser
 		HandballAttributes attributes = new HandballAttributes();
 
 		int[] goa = parseAttribute(text, "Mål");
-		attributes.setGoa(goa[0]);
-		attributes.setQGoa(goa[1]);
+		attributes.getGoa().setRating(goa[0]);
+		attributes.getGoa().setQuality(goa[1]);
 
 		int[] fip = parseAttribute(text, "Uts");
-		attributes.setFip(fip[0]);
-		attributes.setQFip(fip[1]);
+		attributes.getFip().setRating(fip[0]);
+		attributes.getFip().setQuality(fip[1]);
 
 		int[] sho = parseAttribute(text, "Sko");
-		attributes.setSho(sho[0]);
-		attributes.setQSho(sho[1]);
+		attributes.getSho().setRating(sho[0]);
+		attributes.getSho().setQuality(sho[1]);
 
 		int[] blk = parseAttribute(text, "Blk");
-		attributes.setBlk(blk[0]);
-		attributes.setQBlk(blk[1]);
+		attributes.getBlk().setRating(blk[0]);
+		attributes.getBlk().setQuality(blk[1]);
 
 		int[] pas = parseAttribute(text, "Pas");
-		attributes.setPas(pas[0]);
-		attributes.setQPas(pas[1]);
+		attributes.getPas().setRating(pas[0]);
+		attributes.getPas().setQuality(pas[1]);
 
 		int[] tec = parseAttribute(text, "Tek");
-		attributes.setTec(tec[0]);
-		attributes.setQTec(tec[1]);
+		attributes.getTec().setRating(tec[0]);
+		attributes.getTec().setQuality(tec[1]);
 
 		int[] spe = parseAttribute(text, "Sna");
-		attributes.setSpe(spe[0]);
-		attributes.setQSpe(spe[1]);
+		attributes.getSpe().setRating(spe[0]);
+		attributes.getSpe().setQuality(spe[1]);
 
 		int[] agr = parseAttribute(text, "Agr");
-		attributes.setAgr(agr[0]);
-		attributes.setQAgr(agr[1]);
+		attributes.getAgr().setRating(agr[0]);
+		attributes.getAgr().setQuality(agr[1]);
 
 		return attributes;
 	}
