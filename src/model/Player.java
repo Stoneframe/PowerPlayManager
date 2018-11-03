@@ -1,5 +1,7 @@
 package model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import util.AbstractModelObject;
 
 public class Player<A extends Attributes>
@@ -10,10 +12,11 @@ public class Player<A extends Attributes>
 	protected int cl;
 	protected Side side;
 	protected A attributes;
-	protected int experience;
-	protected int chemistry;
-	protected int energy;
 	protected double training;
+
+	private final IntegerProperty experience = new SimpleIntegerProperty();
+	private final IntegerProperty chemistry = new SimpleIntegerProperty();
+	private final IntegerProperty energy = new SimpleIntegerProperty();
 
 	public Player(
 			String name,
@@ -32,9 +35,9 @@ public class Player<A extends Attributes>
 		this.side = side;
 		this.attributes = attributes;
 		this.attributes.addPropertyChangedListener((s, e) -> firePropertyChanged(e));
-		this.experience = experience;
-		this.chemistry = chemistry;
-		this.energy = energy;
+		setExperience(experience);
+		setChemistry(chemistry);
+		setEnergy(energy);
 		this.training = training;
 	}
 
@@ -89,35 +92,50 @@ public class Player<A extends Attributes>
 
 	public int getExperience()
 	{
-		return experience;
+		return experienceProperty().get();
 	}
 
 	public void setExperience(int experience)
 	{
-		this.experience = experience;
+		experienceProperty().set(experience);
 		firePropertyChanged("Experience", experience);
+	}
+
+	public IntegerProperty experienceProperty()
+	{
+		return experience;
 	}
 
 	public int getChemistry()
 	{
-		return chemistry;
+		return chemistryProperty().get();
 	}
 
 	public void setChemistry(int chemistry)
 	{
-		this.chemistry = chemistry;
+		chemistryProperty().set(chemistry);
 		firePropertyChanged("Chemistry", chemistry);
+	}
+
+	public IntegerProperty chemistryProperty()
+	{
+		return chemistry;
 	}
 
 	public int getEnergy()
 	{
-		return energy;
+		return energyProperty().get();
 	}
 
 	public void setEnergy(int energy)
 	{
-		this.energy = energy;
+		energyProperty().set(energy);
 		firePropertyChanged("Energy", energy);
+	}
+
+	public IntegerProperty energyProperty()
+	{
+		return energy;
 	}
 
 	public double getTraining()
