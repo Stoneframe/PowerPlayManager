@@ -1,6 +1,5 @@
 package gui.util;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -17,7 +16,6 @@ public class SimpleFormPane
 	{
 		setHgap(30);
 		setVgap(5);
-		setPadding(new Insets(10, 20, 10, 20));
 	}
 
 	public void addRow(String text, Control control)

@@ -1,19 +1,15 @@
 package gui.player;
 
 import gui.util.SimpleFormPane;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
+import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import model.Attributes;
 import model.Player;
 
 public class PlayerFormPanel<A extends Attributes>
-	extends JFXPanel
+	extends TitledPane
 {
-	private static final long serialVersionUID = 8882584125182046203L;
-
 	private final TextField experienceTextField;
 	private final TextField chemistryTextField;
 	private final TextField energyTextField;
@@ -32,25 +28,17 @@ public class PlayerFormPanel<A extends Attributes>
 		energyTextField.setPrefWidth(90);
 		energyTextField.setEditable(false);
 
-		Platform.runLater(new Runnable()
-		{
-			public void run()
-			{
-				SimpleFormPane formPane = new SimpleFormPane();
+		SimpleFormPane formPane = new SimpleFormPane();
 
-				formPane.addRow("Experience:", experienceTextField);
-				formPane.addRow("Chemistry:", chemistryTextField);
-				formPane.addRow("Energy:", energyTextField);
+		formPane.setPadding(new Insets(10, 20, 10, 20));
 
-				TitledPane titledPane = new TitledPane();
+		formPane.addRow("Experience:", experienceTextField);
+		formPane.addRow("Chemistry:", chemistryTextField);
+		formPane.addRow("Energy:", energyTextField);
 
-				titledPane.setText("Form");
-				titledPane.setCollapsible(false);
-				titledPane.setContent(formPane);
-
-				setScene(new Scene(titledPane));
-			}
-		});
+		setText("Form");
+		setCollapsible(false);
+		setContent(formPane);
 	}
 
 	public void bind(Player<A> player)
