@@ -39,7 +39,7 @@ public class Player<A extends Attributes>
 	{
 		setName(name);
 		setAge(age);
-		setCL(cl);
+		setCl(cl);
 		setSide(side);
 		this.attributes = attributes;
 		this.attributes.addPropertyChangedListener((s, e) -> firePropertyChanged(e));
@@ -81,12 +81,12 @@ public class Player<A extends Attributes>
 		return age;
 	}
 
-	public int getCL()
+	public int getCl()
 	{
 		return clProperty().get();
 	}
 
-	public void setCL(int cl)
+	public void setCl(int cl)
 	{
 		clProperty().set(cl);
 		firePropertyChanged("CL", cl);
@@ -191,9 +191,9 @@ public class Player<A extends Attributes>
 			this.setAge(other.getAge());
 		}
 
-		if (this.getCL() == -1)
+		if (this.getCl() == -1)
 		{
-			this.setCL(other.getCL());
+			this.setCl(other.getCl());
 		}
 
 		if (this.getSide() == Side.UNKNOWN)

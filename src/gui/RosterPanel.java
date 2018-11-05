@@ -57,7 +57,7 @@ public class RosterPanel<A extends Attributes>
 	private List<ColumnData> columnDatas = Arrays.asList(
 		new ColumnData("Name", p -> p.getName(), 200),
 		new ColumnData("Age", p -> Integer.toString(p.getAge())),
-		new ColumnData("CL", p -> Integer.toString(p.getCL())),
+		new ColumnData("CL", p -> Integer.toString(p.getCl())),
 		new ColumnData("Side", p -> p.getSide()),
 		new ColumnData("Total", p -> p.getAttributes().getTotalRating()),
 		new ColumnData(

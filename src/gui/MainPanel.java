@@ -24,7 +24,7 @@ import gui.formation.FormationTemplatePanelFactory;
 import gui.menu.FileHandler;
 import gui.menu.MenuBar;
 import gui.player.AttributesPane;
-import gui.player.PlayerPanel;
+import gui.player.PlayerPane;
 import gui.player.PlayerSelectedEvent;
 import gui.player.PlayerSelectedListener;
 import gui.player.PlayersParsedEvent;
@@ -42,7 +42,7 @@ public class MainPanel<A extends Attributes>
 	private static final long serialVersionUID = -8438576029794021570L;
 
 	private RosterPanel<A> rosterPanel;
-	private PlayerPanel<A> playerPanel;
+	private PlayerPane<A> playerPanel;
 	private ParsePanel<A> parsePanel;
 	private GroupPanel<A> groupPanel;
 
@@ -111,7 +111,7 @@ public class MainPanel<A extends Attributes>
 			}
 		});
 
-		playerPanel = new PlayerPanel<A>(attributesPanel, playerEvaluator);
+		playerPanel = new PlayerPane<A>(attributesPanel, playerEvaluator);
 
 		parsePanel = new ParsePanel<A>(parsers);
 		parsePanel.setPlayersParseListener(new PlayersParsedListener<A>()
@@ -305,7 +305,7 @@ public class MainPanel<A extends Attributes>
 		setLayout(new BorderLayout());
 
 		add(rosterPanel, BorderLayout.CENTER);
-		add(playerPanel, BorderLayout.EAST);
+//		add(playerPanel, BorderLayout.EAST);
 		add(buttonPanel, BorderLayout.SOUTH);
 	}
 

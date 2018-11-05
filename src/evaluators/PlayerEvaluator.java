@@ -127,7 +127,7 @@ public class PlayerEvaluator<A extends Attributes>
 
 	public double calculateRatingForAge(Player<A> player, int age)
 	{
-		double modifier = getCLModifier(player.getCL(), player.getAge());
+		double modifier = getCLModifier(player.getCl(), player.getAge());
 
 		return F(player.getAge(), age, x -> f(x * modifier))
 				* DAYS_PER_SEASON
@@ -181,7 +181,7 @@ public class PlayerEvaluator<A extends Attributes>
 	private static double getAgeClModifier(Player<?> player)
 	{
 		int age = player.getAge() - 15;
-		int cl = player.getCL();
+		int cl = player.getCl();
 
 		return 0.15882
 				+ 0.000012542 * Math.pow(age, 3)
