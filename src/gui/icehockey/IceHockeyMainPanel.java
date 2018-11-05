@@ -25,7 +25,7 @@ public class IceHockeyMainPanel
 		super(
 			menuBar,
 			fileHandler,
-			new IceHockeyAttributesPanel(),
+			new IceHockeyAttributesPane(),
 			new IceHockeyFormationTemplatePanelFactory(),
 			new PaulsFormationBuilder<>(),
 			new IceHockeyPlayerWarper(playerEvaluator),

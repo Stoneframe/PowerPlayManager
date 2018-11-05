@@ -25,7 +25,7 @@ public class HandballMainPanel
 		super(
 			menuBar,
 			fileHandler,
-			new HandballAttributesPanel(),
+			new HandballAttributesPane(),
 			new HandballFormationTemplatePanelFactory(),
 			new PaulsFormationBuilder<>(),
 			new HandballPlayerWarper(playerEvaluator),

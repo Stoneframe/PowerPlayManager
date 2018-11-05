@@ -8,14 +8,14 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import model.Attribute;
 
-public class AttributePanel
+public class AttributePane
 	extends GridPane
 {
 	private final Label nameLabel;
 	private final TextField ratingTextField;
 	private final TextField qualityTextField;
 
-	public AttributePanel(String name)
+	public AttributePane(String name)
 	{
 		nameLabel = new Label(name);
 		nameLabel.setFont(Font.font("Dialog", FontWeight.BOLD, FontPosture.REGULAR, 12));

@@ -17,12 +17,12 @@ public class PlayerPanel<A extends Attributes>
 
 	private InformationPane informationPane;
 
-	private AttributesPanel<A> attributePanel;
+	private AttributesPane<A> attributePanel;
 
 	private PlayerFormPanel<A> formPanel;
 
 	public PlayerPanel(
-			AttributesPanel<A> attributePane,
+			AttributesPane<A> attributePane,
 			PlayerEvaluator<A> playerEvaluator)
 	{
 		this.attributePanel = attributePane;

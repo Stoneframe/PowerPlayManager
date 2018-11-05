@@ -25,7 +25,7 @@ public class FootballMainPanel
 		super(
 			menuBar,
 			fileHandler,
-			new FootballAttributesPanel(),
+			new FootballAttributesPane(),
 			new FootballFormationTemplatePanelFactory(),
 			new PaulsFormationBuilder<>(),
 			new FootballPlayerWarper(playerEvaluator),

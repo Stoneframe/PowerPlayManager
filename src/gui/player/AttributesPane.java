@@ -8,12 +8,12 @@ import javafx.scene.layout.GridPane;
 import model.Attribute;
 import model.Attributes;
 
-public abstract class AttributesPanel<A extends Attributes>
+public abstract class AttributesPane<A extends Attributes>
 	extends TitledPane
 {
-	protected AttributePanel[] attributePanels;
+	protected AttributePane[] attributePanels;
 
-	protected AttributesPanel(AttributePanel... attributePanels)
+	protected AttributesPane(AttributePane... attributePanels)
 	{
 		this.attributePanels = attributePanels;
 
