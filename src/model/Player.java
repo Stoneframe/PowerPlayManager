@@ -1,22 +1,30 @@
 package model;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import util.AbstractModelObject;
 
 public class Player<A extends Attributes>
 	extends AbstractModelObject
 {
-	protected String name;
-	protected int age;
-	protected int cl;
-	protected Side side;
 	protected A attributes;
-	protected double training;
+
+	private final StringProperty name = new SimpleStringProperty();
+	private final IntegerProperty age = new SimpleIntegerProperty();
+	private final IntegerProperty cl = new SimpleIntegerProperty();
+	private final ObjectProperty<Side> side = new SimpleObjectProperty<>();
 
 	private final IntegerProperty experience = new SimpleIntegerProperty();
 	private final IntegerProperty chemistry = new SimpleIntegerProperty();
 	private final IntegerProperty energy = new SimpleIntegerProperty();
+
+	private final DoubleProperty training = new SimpleDoubleProperty();
 
 	public Player(
 			String name,
@@ -29,60 +37,80 @@ public class Player<A extends Attributes>
 			int energy,
 			double training)
 	{
-		this.name = name;
-		this.age = age;
-		this.cl = cl;
-		this.side = side;
+		setName(name);
+		setAge(age);
+		setCL(cl);
+		setSide(side);
 		this.attributes = attributes;
 		this.attributes.addPropertyChangedListener((s, e) -> firePropertyChanged(e));
 		setExperience(experience);
 		setChemistry(chemistry);
 		setEnergy(energy);
-		this.training = training;
+		setTraining(training);
 	}
 
 	public String getName()
 	{
-		return name;
+		return nameProperty().get();
 	}
 
 	public void setName(String name)
 	{
-		this.name = name;
+		nameProperty().set(name);
 		firePropertyChanged("Name", name);
+	}
+
+	public StringProperty nameProperty()
+	{
+		return name;
 	}
 
 	public int getAge()
 	{
-		return age;
+		return ageProperty().get();
 	}
 
 	public void setAge(int age)
 	{
-		this.age = age;
+		ageProperty().set(age);
 		firePropertyChanged("Age", age);
+	}
+
+	public IntegerProperty ageProperty()
+	{
+		return age;
 	}
 
 	public int getCL()
 	{
-		return cl;
+		return clProperty().get();
 	}
 
 	public void setCL(int cl)
 	{
-		this.cl = cl;
+		clProperty().set(cl);
 		firePropertyChanged("CL", cl);
+	}
+
+	public IntegerProperty clProperty()
+	{
+		return cl;
 	}
 
 	public Side getSide()
 	{
-		return side;
+		return sideProperty().get();
 	}
 
 	public void setSide(Side side)
 	{
-		this.side = side;
+		sideProperty().set(side);
 		firePropertyChanged("Side", side);
+	}
+
+	public ObjectProperty<Side> sideProperty()
+	{
+		return side;
 	}
 
 	public A getAttributes()
@@ -140,13 +168,18 @@ public class Player<A extends Attributes>
 
 	public double getTraining()
 	{
-		return training;
+		return trainingProperty().get();
 	}
 
 	public void setTraining(double training)
 	{
-		this.training = training;
+		trainingProperty().set(training);
 		firePropertyChanged("Training", training);
+	}
+
+	public DoubleProperty trainingProperty()
+	{
+		return training;
 	}
 
 	public void merge(Player<A> other)
@@ -163,7 +196,7 @@ public class Player<A extends Attributes>
 			this.setCL(other.getCL());
 		}
 
-		if (this.side == Side.UNKNOWN)
+		if (this.getSide() == Side.UNKNOWN)
 		{
 			this.setSide(other.getSide());
 		}
@@ -195,7 +228,7 @@ public class Player<A extends Attributes>
 
 		Player<?> other = (Player<?>)obj;
 
-		return this.name.equals(other.name);
+		return this.getName().equals(other.getName());
 	}
 
 	@Override

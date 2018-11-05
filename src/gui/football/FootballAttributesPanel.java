@@ -7,8 +7,6 @@ import model.football.FootballAttributes;
 public class FootballAttributesPanel
 	extends AttributesPanel<FootballAttributes>
 {
-	private static final long serialVersionUID = -4623262476204460582L;
-
 	public FootballAttributesPanel()
 	{
 		super(

@@ -7,8 +7,6 @@ import model.handball.HandballAttributes;
 public class HandballAttributesPanel
 	extends AttributesPanel<HandballAttributes>
 {
-	private static final long serialVersionUID = -550607296797083079L;
-
 	public HandballAttributesPanel()
 	{
 		super(
