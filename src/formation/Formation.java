@@ -1,8 +1,10 @@
 package formation;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import model.Attributes;
+import model.Player;
 
 public class Formation<A extends Attributes>
 {
@@ -29,5 +31,10 @@ public class Formation<A extends Attributes>
 	public List<Position<A>> getPositions()
 	{
 		return positions;
+	}
+
+	public List<Player<A>> getPlayers()
+	{
+		return positions.stream().map(p -> p.getPlayer()).collect(Collectors.toList());
 	}
 }

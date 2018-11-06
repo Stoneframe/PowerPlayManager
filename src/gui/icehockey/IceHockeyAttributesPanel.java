@@ -90,21 +90,43 @@ public class IceHockeyAttributesPanel
 	@Override
 	protected void update()
 	{
-		goaTextField.setText(intToString(attributes::getGoa));
-		goaQTextField.setText(intToString(attributes::getQGoa));
-		defTextField.setText(intToString(attributes::getDef));
-		defQTextField.setText(intToString(attributes::getQDef));
-		offTextField.setText(intToString(attributes::getOff));
-		offQTextField.setText(intToString(attributes::getQOff));
-		shoTextField.setText(intToString(attributes::getSho));
-		shoQTextField.setText(intToString(attributes::getQSho));
-		pasTextField.setText(intToString(attributes::getPas));
-		pasQTextField.setText(intToString(attributes::getQPas));
-		tecTextField.setText(intToString(attributes::getTec));
-		tecQTextField.setText(intToString(attributes::getQTec));
-		agrTextField.setText(intToString(attributes::getAgr));
-		agrQTextField.setText(intToString(attributes::getQAgr));
-		totTextField.setText(intToString(attributes::getTotalRating));
-		avgQTextField.setText(doubleToString(attributes::getAverageQuality));
+		if (attributes != null)
+		{
+			goaTextField.setText(intToString(attributes::getGoa));
+			goaQTextField.setText(intToString(attributes::getQGoa));
+			defTextField.setText(intToString(attributes::getDef));
+			defQTextField.setText(intToString(attributes::getQDef));
+			offTextField.setText(intToString(attributes::getOff));
+			offQTextField.setText(intToString(attributes::getQOff));
+			shoTextField.setText(intToString(attributes::getSho));
+			shoQTextField.setText(intToString(attributes::getQSho));
+			pasTextField.setText(intToString(attributes::getPas));
+			pasQTextField.setText(intToString(attributes::getQPas));
+			tecTextField.setText(intToString(attributes::getTec));
+			tecQTextField.setText(intToString(attributes::getQTec));
+			agrTextField.setText(intToString(attributes::getAgr));
+			agrQTextField.setText(intToString(attributes::getQAgr));
+			totTextField.setText(intToString(attributes::getTotalRating));
+			avgQTextField.setText(doubleToString(attributes::getAverageQuality));
+		}
+		else
+		{
+			goaTextField.setText("");
+			goaQTextField.setText("");
+			defTextField.setText("");
+			defQTextField.setText("");
+			offTextField.setText("");
+			offQTextField.setText("");
+			shoTextField.setText("");
+			shoQTextField.setText("");
+			pasTextField.setText("");
+			pasQTextField.setText("");
+			tecTextField.setText("");
+			tecQTextField.setText("");
+			agrTextField.setText("");
+			agrQTextField.setText("");
+			totTextField.setText("");
+			avgQTextField.setText("");
+		}
 	}
 }

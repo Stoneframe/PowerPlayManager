@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -18,7 +21,9 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import evaluators.PlayerEvaluator;
+import formation.Formation;
 import formation.FormationBuilder;
+import formation.Position;
 import gui.formation.FormationBuilderPanel;
 import gui.formation.FormationTemplatePanelFactory;
 import gui.menu.FileHandler;
@@ -229,10 +234,48 @@ public class MainPanel<A extends Attributes>
 									formationBuilder,
 									playerEvaluator,
 									playerWarper,
-									roster.copy()));
+									roster.copy(),
+									formations -> createGroups(formations)));
 						formationBuilderFrame.pack();
 						formationBuilderFrame.setLocationRelativeTo(MainPanel.this);
 						formationBuilderFrame.setVisible(true);
+					}
+
+					private void createGroups(List<Formation<A>> formations)
+					{
+						createGroupsByFormation(formations);
+						createGroupsByPositions(formations);
+					}
+
+					private void createGroupsByFormation(List<Formation<A>> formations)
+					{
+						for (Formation<A> formation : formations)
+						{
+							Roster<A>.Group group = roster.addGroup(
+								formation.getName(),
+								formation.getPlayers());
+
+							groupPanel.addGroup(group);
+						}
+					}
+					private void createGroupsByPositions(List<Formation<A>> formations)
+					{
+						Map<String, List<Player<A>>> o = formations
+							.stream()
+							.flatMap(f -> f.getPositions().stream())
+							.collect(
+								Collectors.groupingBy(
+									Position<A>::getName,
+									Collectors.mapping(p -> p.getPlayer(), Collectors.toList())));
+
+						for (Entry<String, List<Player<A>>> entry : o.entrySet())
+						{
+							Roster<A>.Group group = roster.addGroup(
+								entry.getKey(),
+								entry.getValue());
+
+							groupPanel.addGroup(group);
+						}
 					}
 				});
 			}

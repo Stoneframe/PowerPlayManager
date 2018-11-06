@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -75,7 +76,8 @@ public class FormationBuilderPanel<A extends Attributes>
 			FormationBuilder<A> formationBuilder,
 			PlayerEvaluator<A> playerEvaluator,
 			PlayerWarper<A> playerWarper,
-			Roster<A> roster)
+			Roster<A> roster,
+			Consumer<List<Formation<A>>> formationsCreatedCallback)
 	{
 		playerListModel = new DefaultListModel<>();
 		roster.forEach(playerListModel::addElement);
@@ -243,6 +245,8 @@ public class FormationBuilderPanel<A extends Attributes>
 						display.setVisible(true);
 					}
 				});
+				
+				formationsCreatedCallback.accept(formations);
 			}
 
 			private PlayerManipulator<A> getPlayerManipulator()
