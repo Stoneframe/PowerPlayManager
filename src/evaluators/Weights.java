@@ -53,6 +53,6 @@ public class Weights
 
 	private Weight getWeight(Attribute attribute)
 	{
-		return weights.get(attribute.getName());
+		return weights.get(attribute.getShortName());
 	}
 }

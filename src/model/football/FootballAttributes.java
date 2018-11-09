@@ -13,15 +13,15 @@ public class FootballAttributes
 	{
 		super(
 			Arrays.asList(
-				new Attribute("Goa"),
-				new Attribute("Def"),
-				new Attribute("Mid"),
-				new Attribute("Off"),
-				new Attribute("Sho"),
-				new Attribute("Pas"),
-				new Attribute("Tec"),
-				new Attribute("Spe"),
-				new Attribute("Hea")));
+				new Attribute("Goa", "Goalkeeping"),
+				new Attribute("Def", "Defense"),
+				new Attribute("Mid", "Midfield"),
+				new Attribute("Off", "Offense"),
+				new Attribute("Sho", "Shooting"),
+				new Attribute("Pas", "Passing"),
+				new Attribute("Tec", "Technique"),
+				new Attribute("Spe", "Speed"),
+				new Attribute("Hea", "Heading")));
 	}
 
 	public int getGoa()
@@ -243,12 +243,12 @@ public class FootballAttributes
 	public FootballAttributes copy()
 	{
 		FootballAttributes other = new FootballAttributes();
-		
+
 		other.attributes = this.attributes
-				.stream()
-				.map(a -> a.clone())
-				.collect(Collectors.toList());
-		
+			.stream()
+			.map(a -> a.clone())
+			.collect(Collectors.toList());
+
 		return other;
 	}
 }

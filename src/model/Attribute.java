@@ -5,32 +5,46 @@ import util.AbstractModelObject;
 public class Attribute
 	extends AbstractModelObject
 {
-	private String name;
+	private String shortName;
+	private String longName;
+
 	private int rating;
 	private int quality;
 
-	public Attribute(String name)
+	public Attribute(String shortName, String longName)
 	{
-		this.name = name;
+		this.shortName = shortName;
+		this.longName = longName;
 	}
 
-	private Attribute(String name, int rating, int quality)
+	private Attribute(String shortName, String longName, int rating, int quality)
 	{
-		this(name);
+		this(shortName, longName);
 
 		this.rating = rating;
 		this.quality = quality;
 	}
 
-	public String getName()
+	public String getShortName()
 	{
-		return name;
+		return shortName;
 	}
 
-	public void setName(String name)
+	public void setShortName(String shortName)
 	{
-		this.name = name;
-		firePropertyChanged("Name", name);
+		this.shortName = shortName;
+		firePropertyChanged("ShortNme", shortName);
+	}
+
+	public String getLongName()
+	{
+		return longName;
+	}
+
+	public void setLongName(String longName)
+	{
+		this.longName = longName;
+		firePropertyChanged("LongNme", longName);
 	}
 
 	public int getRating()
@@ -63,12 +77,12 @@ public class Attribute
 
 	public Attribute clone()
 	{
-		return new Attribute(name, rating, quality);
+		return new Attribute(shortName, longName, rating, quality);
 	}
 
 	@Override
 	public String toString()
 	{
-		return String.format("%s: %d (%d)", name, rating, quality);
+		return String.format("%s: %d (%d)", shortName, rating, quality);
 	}
 }

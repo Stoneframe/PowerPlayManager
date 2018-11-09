@@ -105,7 +105,9 @@ public class TrainingPlannerPanel<A extends Attributes>
 	private void setNextAttributeToTrain(AttributeEvaluator<A> attributeEvaluator)
 	{
 		nextAttributeTextField.setText(
-			attributes != null ? attributeEvaluator.getWorstAttribute(attributes).getName() : "");
+			attributes != null
+					? attributeEvaluator.getWorstAttribute(attributes).getLongName()
+					: "");
 	}
 
 	@Override

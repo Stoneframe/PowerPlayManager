@@ -245,7 +245,7 @@ public class FormationBuilderPanel<A extends Attributes>
 						display.setVisible(true);
 					}
 				});
-				
+
 				formationsCreatedCallback.accept(formations);
 			}
 

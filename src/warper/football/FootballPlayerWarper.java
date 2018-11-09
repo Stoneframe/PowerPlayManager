@@ -6,7 +6,7 @@ import warper.PlayerWarper;
 
 public class FootballPlayerWarper
 	extends
-		PlayerWarper<FootballAttributes>
+	PlayerWarper<FootballAttributes>
 {
 	public FootballPlayerWarper(PlayerEvaluator<FootballAttributes> playerEvaluator)
 	{

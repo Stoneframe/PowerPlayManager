@@ -29,8 +29,8 @@ public class WeightsTest
 
 		weights = new Weights(Arrays.asList(weight1, weight2));
 
-		Attribute attribute1 = new Attribute(name1);
-		Attribute attribute2 = new Attribute(name2);
+		Attribute attribute1 = new Attribute(name1, name1);
+		Attribute attribute2 = new Attribute(name2, name2);
 
 		attribute1.setRating(60);
 		attribute2.setRating(40);

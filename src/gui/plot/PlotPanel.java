@@ -133,13 +133,14 @@ public class PlotPanel<A extends Attributes>
 
 		AttributeEvaluator<A> attributeEvaluator =
 				playerEvaluator.getBestEvaluatorByRating(player.getAttributes());
-		
+
 		for (int year = 0; year <= 15; year++)
 		{
 			A attributes = playerWarper.warp(player, attributeEvaluator, year);
 
 			series.add(year, attributeEvaluator.getRating(attributes));
-//			series.add(year, playerEvaluator.calculateRatingForAge(player, player.getAge() + year));
+			// series.add(year, playerEvaluator.calculateRatingForAge(player,
+			// player.getAge() + year));
 		}
 
 		return series;

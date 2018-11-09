@@ -11,15 +11,15 @@ import model.Attribute;
 public class WeightTest
 {
 	private Weight weight;
-	
+
 	private Attribute attribute;
 
 	@Before
 	public void setUp()
 	{
 		weight = new Weight("name", 50);
-		
-		attribute = new Attribute("name");
+
+		attribute = new Attribute("name", "name");
 		attribute.setRating(100);
 	}
 

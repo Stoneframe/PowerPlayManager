@@ -13,14 +13,14 @@ public class HandballAttributes
 	{
 		super(
 			Arrays.asList(
-				new Attribute("Goa"),
-				new Attribute("Fip"),
-				new Attribute("Sho"),
-				new Attribute("Blk"),
-				new Attribute("Pas"),
-				new Attribute("Tec"),
-				new Attribute("Spe"),
-				new Attribute("Agr")));
+				new Attribute("Goa", "Goalkeeping"),
+				new Attribute("Fip", "Field play"),
+				new Attribute("Sho", "Shooting"),
+				new Attribute("Blk", "Blocking"),
+				new Attribute("Pas", "Passing"),
+				new Attribute("Tec", "Technique"),
+				new Attribute("Spe", "Speed"),
+				new Attribute("Agr", "Aggressiveness")));
 	}
 
 	public int getGoa()
@@ -218,12 +218,12 @@ public class HandballAttributes
 	public HandballAttributes copy()
 	{
 		HandballAttributes other = new HandballAttributes();
-		
+
 		other.attributes = this.attributes
-				.stream()
-				.map(a -> a.clone())
-				.collect(Collectors.toList());
-		
+			.stream()
+			.map(a -> a.clone())
+			.collect(Collectors.toList());
+
 		return other;
 	}
 }

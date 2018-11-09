@@ -48,12 +48,12 @@ public abstract class MicroAttributeEvaluator<A extends Attributes>
 	public Attribute getBestAttribute(A attributes)
 	{
 		return attributes
-				.stream()
-				.filter(a -> weights.getRating(a) > 0)
-				.max(
-					(a1, a2) -> Double.compare(
-						weights.getRating(a1),
-						weights.getRating(a2)))
-				.get();
+			.stream()
+			.filter(a -> weights.getRating(a) > 0)
+			.max(
+				(a1, a2) -> Double.compare(
+					weights.getRating(a1),
+					weights.getRating(a2)))
+			.get();
 	}
 }

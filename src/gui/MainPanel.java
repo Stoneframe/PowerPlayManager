@@ -258,6 +258,7 @@ public class MainPanel<A extends Attributes>
 							groupPanel.addGroup(group);
 						}
 					}
+
 					private void createGroupsByPositions(List<Formation<A>> formations)
 					{
 						Map<String, List<Player<A>>> o = formations

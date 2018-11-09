@@ -13,13 +13,13 @@ public class IceHockeyAttributes
 	{
 		super(
 			Arrays.asList(
-				new Attribute("Goa"),
-				new Attribute("Def"),
-				new Attribute("Off"),
-				new Attribute("Sho"),
-				new Attribute("Pas"),
-				new Attribute("Tec"),
-				new Attribute("Agr")));
+				new Attribute("Goa", "Goaltending"),
+				new Attribute("Def", "Defense"),
+				new Attribute("Off", "Offense"),
+				new Attribute("Sho", "Shooting"),
+				new Attribute("Pas", "Passing"),
+				new Attribute("Tec", "Technique"),
+				new Attribute("Agr", "Aggressiveness")));
 	}
 
 	public int getGoa()
@@ -193,12 +193,12 @@ public class IceHockeyAttributes
 	public IceHockeyAttributes copy()
 	{
 		IceHockeyAttributes other = new IceHockeyAttributes();
-		
+
 		other.attributes = this.attributes
-				.stream()
-				.map(a -> a.clone())
-				.collect(Collectors.toList());
-		
+			.stream()
+			.map(a -> a.clone())
+			.collect(Collectors.toList());
+
 		return other;
 	}
 }
