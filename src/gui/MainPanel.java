@@ -318,6 +318,7 @@ public class MainPanel<A extends Attributes>
 						plotFrame.setContentPane(
 							new PlotPanel<A>(
 									playerEvaluator,
+									playerWarper,
 									rosterPanel.getSelectedPlayers(),
 									groupPanel.getSelectedGroups()));
 						plotFrame.pack();

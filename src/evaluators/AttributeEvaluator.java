@@ -23,7 +23,9 @@ public abstract class AttributeEvaluator<A extends Attributes>
 
 	public abstract double getQuality(A attributes);
 
-	public abstract Attribute getNextTraining(A attributes);
+	public abstract Attribute getWorstAttribute(A attributes);
+	
+	public abstract Attribute getBestAttribute(A attributes);
 
 	@Override
 	public boolean equals(Object obj)

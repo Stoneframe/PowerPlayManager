@@ -31,7 +31,8 @@ public abstract class MicroAttributeEvaluator<A extends Attributes>
 		return weights.getQuality(attributes);
 	}
 
-	public Attribute getNextTraining(A attributes)
+	@Override
+	public Attribute getWorstAttribute(A attributes)
 	{
 		return attributes
 			.stream()
@@ -41,5 +42,18 @@ public abstract class MicroAttributeEvaluator<A extends Attributes>
 					weights.getRating(a1),
 					weights.getRating(a2)))
 			.get();
+	}
+
+	@Override
+	public Attribute getBestAttribute(A attributes)
+	{
+		return attributes
+				.stream()
+				.filter(a -> weights.getRating(a) > 0)
+				.max(
+					(a1, a2) -> Double.compare(
+						weights.getRating(a1),
+						weights.getRating(a2)))
+				.get();
 	}
 }

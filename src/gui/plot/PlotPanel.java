@@ -20,10 +20,12 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import model.Attributes;
 import model.Player;
 import model.Roster;
+import warper.PlayerWarper;
 
 public class PlotPanel<A extends Attributes>
 	extends JPanel
@@ -44,13 +46,16 @@ public class PlotPanel<A extends Attributes>
 	};
 
 	private PlayerEvaluator<A> playerEvaluator;
+	private PlayerWarper<A> playerWarper;
 
 	public PlotPanel(
 			PlayerEvaluator<A> playerEvaluator,
+			PlayerWarper<A> playerWarper,
 			List<Player<A>> players,
 			List<Roster<A>.Group> groups)
 	{
 		this.playerEvaluator = playerEvaluator;
+		this.playerWarper = playerWarper;
 
 		XYDataset dataset = createDataset(players);
 
@@ -126,9 +131,15 @@ public class PlotPanel<A extends Attributes>
 	{
 		XYSeries series = new XYSeries(player.getName());
 
+		AttributeEvaluator<A> attributeEvaluator =
+				playerEvaluator.getBestEvaluatorByRating(player.getAttributes());
+		
 		for (int year = 0; year <= 15; year++)
 		{
-			series.add(year, playerEvaluator.calculateRatingForAge(player, player.getAge() + year));
+			A attributes = playerWarper.warp(player, attributeEvaluator, year);
+
+			series.add(year, attributeEvaluator.getRating(attributes));
+//			series.add(year, playerEvaluator.calculateRatingForAge(player, player.getAge() + year));
 		}
 
 		return series;

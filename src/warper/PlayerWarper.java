@@ -19,27 +19,56 @@ public abstract class PlayerWarper<A extends Attributes>
 	{
 		A attributes = copyAttributes(player.getAttributes());
 
-		int improvement = calculateImprovement(player, years);
+		double previousTotalRating = player.getAttributes().getTotalRating();
 
-		for (int i = 0; i < Math.abs(improvement); i++)
+		for (int i = 1; i <= years; i++)
 		{
-			Attribute attribute = attributeEvaluator.getNextTraining(attributes);
+			double nextTotalRating =
+					playerEvaluator.calculateTotalRatingForAge(player, player.getAge() + i);
 
-			attribute.setRating(attribute.getRating() + Integer.signum(improvement));
+			int improvement = (int)(nextTotalRating - previousTotalRating);
+
+			for (int j = 0; j < Math.abs(improvement); j++)
+			{
+				if (Integer.signum(improvement) > 0)
+				{
+					Attribute attribute = attributeEvaluator.getWorstAttribute(attributes);
+
+					attribute.setRating(attribute.getRating() + 1);
+				}
+				else
+				{
+					Attribute attribute = attributeEvaluator.getBestAttribute(attributes);
+
+					attribute.setRating(attribute.getRating() - 1);
+				}
+			}
+
+			previousTotalRating = nextTotalRating;
 		}
+
+		// int improvement = calculateImprovement(player, years);
+		//
+		// for (int i = 0; i < Math.abs(improvement); i++)
+		// {
+		// Attribute attribute = attributeEvaluator.getNextTraining(attributes);
+		//
+		// attribute.setRating(attribute.getRating() +
+		// Integer.signum(improvement));
+		// }
 
 		return attributes;
 	}
 
 	protected abstract A copyAttributes(A original);
 
-	private int calculateImprovement(Player<A> player, int years)
-	{
-		double futureRating = playerEvaluator
-			.calculateRatingForAge(player, player.getAge() + years);
-
-		double currentRating = player.getAttributes().getTotalRating();
-
-		return (int)(futureRating - currentRating);
-	}
+	// private int calculateImprovement(Player<A> player, int years)
+	// {
+	// double futureRating = playerEvaluator
+	// .calculateRatingForAge(player, player.getAge() + years);
+	//
+	// double currentRating = player.getAttributes().getTotalRating();
+	//
+	// return (int)(futureRating - currentRating);
+	// }
 }

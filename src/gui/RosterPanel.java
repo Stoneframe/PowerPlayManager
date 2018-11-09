@@ -81,35 +81,35 @@ public class RosterPanel<A extends Attributes>
 				v -> String.format("%.1f", v)),
 		new ColumnData(
 				"1 Year",
-				p -> playerEvaluator.calculateRatingForAge(p, p.getAge() + 1),
+				p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 1),
 				v -> String.format("%.0f", v)),
 		new ColumnData(
 				"2 Years",
-				p -> playerEvaluator.calculateRatingForAge(p, p.getAge() + 2),
+				p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 2),
 				v -> String.format("%.0f", v)),
 		new ColumnData(
 				"3 Years",
-				p -> playerEvaluator.calculateRatingForAge(p, p.getAge() + 3),
+				p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 3),
 				v -> String.format("%.0f", v)),
 		new ColumnData(
 				"5 Years",
-				p -> playerEvaluator.calculateRatingForAge(p, p.getAge() + 5),
+				p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 5),
 				v -> String.format("%.0f", v)),
 		new ColumnData(
 				"7 Years",
-				p -> playerEvaluator.calculateRatingForAge(p, p.getAge() + 7),
+				p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 7),
 				v -> String.format("%.0f", v)),
 		new ColumnData(
 				"10 Years",
-				p -> playerEvaluator.calculateRatingForAge(p, p.getAge() + 10),
+				p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 10),
 				v -> String.format("%.0f", v)),
 		new ColumnData(
 				"Age 25",
-				p -> playerEvaluator.calculateRatingForAge(p, 25),
+				p -> playerEvaluator.calculateTotalRatingForAge(p, 25),
 				v -> String.format("%.0f", v)),
 		new ColumnData(
 				"Age 30",
-				p -> playerEvaluator.calculateRatingForAge(p, 30),
+				p -> playerEvaluator.calculateTotalRatingForAge(p, 30),
 				v -> String.format("%.0f", v)),
 		new ColumnData(
 				"Max",

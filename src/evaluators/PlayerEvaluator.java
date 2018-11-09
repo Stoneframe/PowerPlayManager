@@ -125,7 +125,7 @@ public class PlayerEvaluator<A extends Attributes>
 		return rating * energyBonus * (1 + chemistryBonus + experienceBonus);
 	}
 
-	public double calculateRatingForAge(Player<A> player, int age)
+	public double calculateTotalRatingForAge(Player<A> player, int age)
 	{
 		double modifier = getCLModifier(player.getCL(), player.getAge());
 
@@ -141,7 +141,7 @@ public class PlayerEvaluator<A extends Attributes>
 
 		for (int i = player.getAge(); i < 40; i++)
 		{
-			double next = calculateRatingForAge(player, i);
+			double next = calculateTotalRatingForAge(player, i);
 
 			if (next > max)
 			{

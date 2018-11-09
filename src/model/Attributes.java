@@ -32,6 +32,11 @@ public abstract class Attributes
 			.getAverage();
 	}
 
+	public int getNumberOfAttributes()
+	{
+		return attributes.size();
+	}
+
 	public void merge(Attributes other)
 	{
 		for (int i = 0; i < this.attributes.size(); i++)

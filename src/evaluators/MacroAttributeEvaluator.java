@@ -47,7 +47,13 @@ public class MacroAttributeEvaluator<A extends Attributes>
 	}
 
 	@Override
-	public Attribute getNextTraining(A attributes)
+	public Attribute getWorstAttribute(A attributes)
+	{
+		throw new NotImplementedException();
+	}
+
+	@Override
+	public Attribute getBestAttribute(A attributes)
 	{
 		throw new NotImplementedException();
 	}
