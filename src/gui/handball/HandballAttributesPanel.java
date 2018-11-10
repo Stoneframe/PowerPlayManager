@@ -99,23 +99,47 @@ public class HandballAttributesPanel
 	@Override
 	protected void update()
 	{
-		goaTextField.setText(intToString(attributes::getGoa));
-		goaQTextField.setText(intToString(attributes::getQGoa));
-		fipTextField.setText(intToString(attributes::getFip));
-		fipQTextField.setText(intToString(attributes::getQFip));
-		shoTextField.setText(intToString(attributes::getSho));
-		shoQTextField.setText(intToString(attributes::getQSho));
-		blkTextField.setText(intToString(attributes::getBlk));
-		blkQTextField.setText(intToString(attributes::getQBlk));
-		pasTextField.setText(intToString(attributes::getPas));
-		pasQTextField.setText(intToString(attributes::getQPas));
-		tecTextField.setText(intToString(attributes::getTec));
-		tecQTextField.setText(intToString(attributes::getQTec));
-		speTextField.setText(intToString(attributes::getSpe));
-		speQTextField.setText(intToString(attributes::getQSpe));
-		agrTextField.setText(intToString(attributes::getAgr));
-		agrQTextField.setText(intToString(attributes::getQAgr));
-		totTextField.setText(intToString(attributes::getTotalRating));
-		avgQTextField.setText(doubleToString(attributes::getAverageQuality));
+		if (attributes != null)
+		{
+			goaTextField.setText(intToString(attributes::getGoa));
+			goaQTextField.setText(intToString(attributes::getQGoa));
+			fipTextField.setText(intToString(attributes::getFip));
+			fipQTextField.setText(intToString(attributes::getQFip));
+			shoTextField.setText(intToString(attributes::getSho));
+			shoQTextField.setText(intToString(attributes::getQSho));
+			blkTextField.setText(intToString(attributes::getBlk));
+			blkQTextField.setText(intToString(attributes::getQBlk));
+			pasTextField.setText(intToString(attributes::getPas));
+			pasQTextField.setText(intToString(attributes::getQPas));
+			tecTextField.setText(intToString(attributes::getTec));
+			tecQTextField.setText(intToString(attributes::getQTec));
+			speTextField.setText(intToString(attributes::getSpe));
+			speQTextField.setText(intToString(attributes::getQSpe));
+			agrTextField.setText(intToString(attributes::getAgr));
+			agrQTextField.setText(intToString(attributes::getQAgr));
+			totTextField.setText(intToString(attributes::getTotalRating));
+			avgQTextField.setText(doubleToString(attributes::getAverageQuality));
+		}
+		else
+		{
+			goaTextField.setText("");
+			goaQTextField.setText("");
+			fipTextField.setText("");
+			fipQTextField.setText("");
+			shoTextField.setText("");
+			shoQTextField.setText("");
+			blkTextField.setText("");
+			blkQTextField.setText("");
+			pasTextField.setText("");
+			pasQTextField.setText("");
+			tecTextField.setText("");
+			tecQTextField.setText("");
+			speTextField.setText("");
+			speQTextField.setText("");
+			agrTextField.setText("");
+			agrQTextField.setText("");
+			totTextField.setText("");
+			avgQTextField.setText("");
+		}
 	}
 }
