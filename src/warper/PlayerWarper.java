@@ -47,28 +47,8 @@ public abstract class PlayerWarper<A extends Attributes>
 			previousTotalRating = nextTotalRating;
 		}
 
-		// int improvement = calculateImprovement(player, years);
-		//
-		// for (int i = 0; i < Math.abs(improvement); i++)
-		// {
-		// Attribute attribute = attributeEvaluator.getNextTraining(attributes);
-		//
-		// attribute.setRating(attribute.getRating() +
-		// Integer.signum(improvement));
-		// }
-
 		return attributes;
 	}
 
 	protected abstract A copyAttributes(A original);
-
-	// private int calculateImprovement(Player<A> player, int years)
-	// {
-	// double futureRating = playerEvaluator
-	// .calculateRatingForAge(player, player.getAge() + years);
-	//
-	// double currentRating = player.getAttributes().getTotalRating();
-	//
-	// return (int)(futureRating - currentRating);
-	// }
 }
