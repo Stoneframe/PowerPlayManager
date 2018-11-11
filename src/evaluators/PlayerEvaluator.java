@@ -210,6 +210,8 @@ public class PlayerEvaluator<A extends Attributes>
 				return calc.apply((age - 23d) / 10d);
 			case 1:
 				return calc.apply((age - 25d) / 10d);
+			case 0:
+				return calc.apply((age - 29d) / 7d);
 			default:
 				return 1;
 		}
@@ -245,6 +247,18 @@ public class PlayerEvaluator<A extends Attributes>
 
 	private double f(double x)
 	{
-		return a * Math.pow(x, 2) + b * Math.pow(x, 1) + c;
+		if (x < 33)
+		{
+			return a * Math.pow(x, 2) + b * Math.pow(x, 1) + c;
+		}
+		else if (x > 35)
+		{
+			return -0.4084 * x + 14.294;
+//			return -0.4084 * x + 13.1024407;
+		}
+		else
+		{
+			return 0.0001;
+		}
 	}
 }
