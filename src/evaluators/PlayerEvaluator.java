@@ -211,7 +211,7 @@ public class PlayerEvaluator<A extends Attributes>
 			case 1:
 				return calc.apply((age - 25d) / 10d);
 			default:
-				return 0;
+				return 1;
 		}
 	}
 
@@ -233,7 +233,7 @@ public class PlayerEvaluator<A extends Attributes>
 			b = t;
 		}
 
-		double sum = 0.5 * f(a) + 0.5 * f(b);
+		double sum = 0.5 * f.apply((double)a) + 0.5 * f.apply((double)b);
 
 		for (double x = a + 1; x < b; x++)
 		{
