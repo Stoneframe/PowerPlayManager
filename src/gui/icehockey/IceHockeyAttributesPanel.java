@@ -90,43 +90,22 @@ public class IceHockeyAttributesPanel
 	@Override
 	protected void update()
 	{
-		if (attributes != null)
-		{
-			goaTextField.setText(intToString(attributes::getGoa));
-			goaQTextField.setText(intToString(attributes::getQGoa));
-			defTextField.setText(intToString(attributes::getDef));
-			defQTextField.setText(intToString(attributes::getQDef));
-			offTextField.setText(intToString(attributes::getOff));
-			offQTextField.setText(intToString(attributes::getQOff));
-			shoTextField.setText(intToString(attributes::getSho));
-			shoQTextField.setText(intToString(attributes::getQSho));
-			pasTextField.setText(intToString(attributes::getPas));
-			pasQTextField.setText(intToString(attributes::getQPas));
-			tecTextField.setText(intToString(attributes::getTec));
-			tecQTextField.setText(intToString(attributes::getQTec));
-			agrTextField.setText(intToString(attributes::getAgr));
-			agrQTextField.setText(intToString(attributes::getQAgr));
-			totTextField.setText(intToString(attributes::getTotalRating));
-			avgQTextField.setText(doubleToString(attributes::getAverageQuality));
-		}
-		else
-		{
-			goaTextField.setText("");
-			goaQTextField.setText("");
-			defTextField.setText("");
-			defQTextField.setText("");
-			offTextField.setText("");
-			offQTextField.setText("");
-			shoTextField.setText("");
-			shoQTextField.setText("");
-			pasTextField.setText("");
-			pasQTextField.setText("");
-			tecTextField.setText("");
-			tecQTextField.setText("");
-			agrTextField.setText("");
-			agrQTextField.setText("");
-			totTextField.setText("");
-			avgQTextField.setText("");
-		}
+		goaTextField.setText(attributes != null ? toString(attributes.getGoa()) : "");
+		defTextField.setText(attributes != null ? toString(attributes.getDef()) : "");
+		offTextField.setText(attributes != null ? toString(attributes.getOff()) : "");
+		shoTextField.setText(attributes != null ? toString(attributes.getSho()) : "");
+		pasTextField.setText(attributes != null ? toString(attributes.getPas()) : "");
+		tecTextField.setText(attributes != null ? toString(attributes.getTec()) : "");
+		agrTextField.setText(attributes != null ? toString(attributes.getAgr()) : "");
+		totTextField.setText(attributes != null ? toString(attributes.getTotalRating()) : "");
+
+		goaQTextField.setText(attributes != null ? toString(attributes.getQGoa()) : "");
+		defQTextField.setText(attributes != null ? toString(attributes.getQDef()) : "");
+		offQTextField.setText(attributes != null ? toString(attributes.getQOff()) : "");
+		shoQTextField.setText(attributes != null ? toString(attributes.getQSho()) : "");
+		pasQTextField.setText(attributes != null ? toString(attributes.getQPas()) : "");
+		tecQTextField.setText(attributes != null ? toString(attributes.getQTec()) : "");
+		agrQTextField.setText(attributes != null ? toString(attributes.getQAgr()) : "");
+		avgQTextField.setText(attributes != null ? toString(attributes.getAverageQuality()) : "");
 	}
 }

@@ -99,47 +99,24 @@ public class HandballAttributesPanel
 	@Override
 	protected void update()
 	{
-		if (attributes != null)
-		{
-			goaTextField.setText(intToString(attributes::getGoa));
-			goaQTextField.setText(intToString(attributes::getQGoa));
-			fipTextField.setText(intToString(attributes::getFip));
-			fipQTextField.setText(intToString(attributes::getQFip));
-			shoTextField.setText(intToString(attributes::getSho));
-			shoQTextField.setText(intToString(attributes::getQSho));
-			blkTextField.setText(intToString(attributes::getBlk));
-			blkQTextField.setText(intToString(attributes::getQBlk));
-			pasTextField.setText(intToString(attributes::getPas));
-			pasQTextField.setText(intToString(attributes::getQPas));
-			tecTextField.setText(intToString(attributes::getTec));
-			tecQTextField.setText(intToString(attributes::getQTec));
-			speTextField.setText(intToString(attributes::getSpe));
-			speQTextField.setText(intToString(attributes::getQSpe));
-			agrTextField.setText(intToString(attributes::getAgr));
-			agrQTextField.setText(intToString(attributes::getQAgr));
-			totTextField.setText(intToString(attributes::getTotalRating));
-			avgQTextField.setText(doubleToString(attributes::getAverageQuality));
-		}
-		else
-		{
-			goaTextField.setText("");
-			goaQTextField.setText("");
-			fipTextField.setText("");
-			fipQTextField.setText("");
-			shoTextField.setText("");
-			shoQTextField.setText("");
-			blkTextField.setText("");
-			blkQTextField.setText("");
-			pasTextField.setText("");
-			pasQTextField.setText("");
-			tecTextField.setText("");
-			tecQTextField.setText("");
-			speTextField.setText("");
-			speQTextField.setText("");
-			agrTextField.setText("");
-			agrQTextField.setText("");
-			totTextField.setText("");
-			avgQTextField.setText("");
-		}
+		goaTextField.setText(attributes != null ? toString(attributes.getGoa()) : "");
+		fipTextField.setText(attributes != null ? toString(attributes.getFip()) : "");
+		shoTextField.setText(attributes != null ? toString(attributes.getSho()) : "");
+		blkTextField.setText(attributes != null ? toString(attributes.getBlk()) : "");
+		pasTextField.setText(attributes != null ? toString(attributes.getPas()) : "");
+		tecTextField.setText(attributes != null ? toString(attributes.getTec()) : "");
+		speTextField.setText(attributes != null ? toString(attributes.getSpe()) : "");
+		agrTextField.setText(attributes != null ? toString(attributes.getAgr()) : "");
+		totTextField.setText(attributes != null ? toString(attributes.getTotalRating()) : "");
+
+		goaQTextField.setText(attributes != null ? toString(attributes.getQGoa()) : "");
+		fipQTextField.setText(attributes != null ? toString(attributes.getQFip()) : "");
+		shoQTextField.setText(attributes != null ? toString(attributes.getQSho()) : "");
+		blkQTextField.setText(attributes != null ? toString(attributes.getQBlk()) : "");
+		pasQTextField.setText(attributes != null ? toString(attributes.getQPas()) : "");
+		tecQTextField.setText(attributes != null ? toString(attributes.getQTec()) : "");
+		speQTextField.setText(attributes != null ? toString(attributes.getQSpe()) : "");
+		agrQTextField.setText(attributes != null ? toString(attributes.getQAgr()) : "");
+		avgQTextField.setText(attributes != null ? toString(attributes.getAverageQuality()) : "");
 	}
 }

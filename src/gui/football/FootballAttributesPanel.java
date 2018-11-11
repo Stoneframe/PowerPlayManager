@@ -108,25 +108,26 @@ public class FootballAttributesPanel
 	@Override
 	protected void update()
 	{
-		goaTextField.setText(intToString(attributes::getGoa));
-		goaQTextField.setText(intToString(attributes::getQGoa));
-		defTextField.setText(intToString(attributes::getDef));
-		defQTextField.setText(intToString(attributes::getQDef));
-		midTextField.setText(intToString(attributes::getMid));
-		midQTextField.setText(intToString(attributes::getQMid));
-		offTextField.setText(intToString(attributes::getOff));
-		offQTextField.setText(intToString(attributes::getQOff));
-		shoTextField.setText(intToString(attributes::getSho));
-		shoQTextField.setText(intToString(attributes::getQSho));
-		pasTextField.setText(intToString(attributes::getPas));
-		pasQTextField.setText(intToString(attributes::getQPas));
-		tecTextField.setText(intToString(attributes::getTec));
-		tecQTextField.setText(intToString(attributes::getQTec));
-		speTextField.setText(intToString(attributes::getSpe));
-		speQTextField.setText(intToString(attributes::getQSpe));
-		heaTextField.setText(intToString(attributes::getHea));
-		heaQTextField.setText(intToString(attributes::getQHea));
-		totTextField.setText(intToString(attributes::getTotalRating));
-		avgQTextField.setText(doubleToString(attributes::getAverageQuality));
+		goaTextField.setText(attributes != null ? toString(attributes.getGoa()) : "");
+		defTextField.setText(attributes != null ? toString(attributes.getDef()) : "");
+		midTextField.setText(attributes != null ? toString(attributes.getMid()) : "");
+		offTextField.setText(attributes != null ? toString(attributes.getOff()) : "");
+		shoTextField.setText(attributes != null ? toString(attributes.getSho()) : "");
+		pasTextField.setText(attributes != null ? toString(attributes.getPas()) : "");
+		tecTextField.setText(attributes != null ? toString(attributes.getTec()) : "");
+		speTextField.setText(attributes != null ? toString(attributes.getSpe()) : "");
+		heaTextField.setText(attributes != null ? toString(attributes.getHea()) : "");
+		totTextField.setText(attributes != null ? toString(attributes.getTotalRating()) : "");
+
+		goaQTextField.setText(attributes != null ? toString(attributes.getQGoa()) : "");
+		defQTextField.setText(attributes != null ? toString(attributes.getQDef()) : "");
+		midQTextField.setText(attributes != null ? toString(attributes.getQMid()) : "");
+		offQTextField.setText(attributes != null ? toString(attributes.getQOff()) : "");
+		shoQTextField.setText(attributes != null ? toString(attributes.getQSho()) : "");
+		pasQTextField.setText(attributes != null ? toString(attributes.getQPas()) : "");
+		tecQTextField.setText(attributes != null ? toString(attributes.getQTec()) : "");
+		speQTextField.setText(attributes != null ? toString(attributes.getQSpe()) : "");
+		heaQTextField.setText(attributes != null ? toString(attributes.getQHea()) : "");
+		avgQTextField.setText(attributes != null ? toString(attributes.getAverageQuality()) : "");
 	}
 }

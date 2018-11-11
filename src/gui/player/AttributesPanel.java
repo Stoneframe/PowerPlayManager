@@ -1,7 +1,5 @@
 package gui.player;
 
-import java.util.function.Supplier;
-
 import javax.swing.BorderFactory;
 import javax.swing.border.CompoundBorder;
 
@@ -52,18 +50,14 @@ public abstract class AttributesPanel<A extends Attributes>
 		update();
 	}
 
-	protected String intToString(Supplier<Integer> getValueSupplier)
+	protected String toString(int value)
 	{
-		return attributes != null
-				? Integer.toString(getValueSupplier.get())
-				: "";
+		return Integer.toString(value);
 	}
 
-	protected String doubleToString(Supplier<Double> getValueSupplier)
+	protected String toString(double value)
 	{
-		return attributes != null
-				? String.format("%.1f", getValueSupplier.get())
-				: "";
+		return String.format("%.1f", value);
 	}
 
 	protected abstract void update();
