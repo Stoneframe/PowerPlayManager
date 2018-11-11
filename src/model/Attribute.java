@@ -54,7 +54,7 @@ public class Attribute
 
 	public void setRating(int rating)
 	{
-		this.rating = rating;
+		this.rating = Math.max(rating, 1);
 		firePropertyChanged("Rating", rating);
 	}
 
