@@ -73,6 +73,8 @@ public class GroupPanel<A extends Attributes>
 				{
 					Roster<A>.Group group = groupList.getSelectedValue();
 
+					if (group == null) return;
+
 					String newName = JOptionPane
 						.showInputDialog(GroupPanel.this, "New Name:", group.getName());
 
