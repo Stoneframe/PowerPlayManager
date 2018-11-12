@@ -48,6 +48,7 @@ import parsers.players.football.FootballMarketPlayersParser;
 import parsers.players.football.FootballOverviewPlayersParser;
 import parsers.players.football.FootballPractisePlayersParser;
 import parsers.players.football.FootballPractiseProPlayersParser;
+import parsers.players.football.FootballProfilePlayersParser;
 import parsers.players.handball.HandballFormationPlayersParser;
 import parsers.players.handball.HandballFormationPlayersProParser;
 import parsers.players.handball.HandballMarketPlayersParser;
@@ -112,6 +113,7 @@ public class MainFrame
 				menuBar,
 				new FootballFileHandler(),
 				Arrays.asList(
+					new FootballProfilePlayersParser(),
 					new FootballMarketPlayersParser(),
 					new FootballOverviewPlayersParser(),
 					new FootballPractisePlayersParser(),
