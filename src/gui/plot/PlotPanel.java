@@ -84,7 +84,7 @@ public class PlotPanel<A extends Attributes>
 				int index = groups.indexOf(
 					groups
 						.stream()
-						.filter(g -> g.getPlayers().contains(player))
+						.filter(g -> g.contains(player))
 						.findFirst()
 						.orElse(null));
 
@@ -152,7 +152,7 @@ public class PlotPanel<A extends Attributes>
 	{
 		return groups
 			.stream()
-			.filter(g -> players.stream().anyMatch(p -> g.getPlayers().contains(p)))
+			.filter(g -> players.stream().anyMatch(p -> g.contains(p)))
 			.count();
 	}
 }

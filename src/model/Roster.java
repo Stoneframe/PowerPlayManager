@@ -64,7 +64,7 @@ public class Roster<A extends Attributes>
 		int index = getFilteredPlayersList().indexOf(player);
 
 		players.remove(player);
-		groups.forEach(g -> g.players.remove(player));
+		groups.forEach(g -> g.playerNames.remove(player.getName()));
 
 		if (index != -1)
 		{
@@ -141,8 +141,10 @@ public class Roster<A extends Attributes>
 
 		groups.remove(group);
 
-		for (Player<A> player : group.players)
+		for (String name : group.playerNames)
 		{
+			Player<A> player = getPlayer(name);
+			
 			if (shouldBeEnabled(player) && isDisabled(player))
 			{
 				enablePlayer(player);
@@ -179,12 +181,12 @@ public class Roster<A extends Attributes>
 
 	private boolean isInGroup(Player<A> player)
 	{
-		return groups.stream().anyMatch(g -> g.players.contains(player));
+		return groups.stream().anyMatch(g -> g.contains(player));
 	}
 
 	private boolean isInEnabledGroup(Player<A> player)
 	{
-		return groups.stream().anyMatch(g -> g.isEnabled && g.players.contains(player));
+		return groups.stream().anyMatch(g -> g.isEnabled && g.contains(player));
 	}
 
 	private boolean isEnabled(Player<A> player)
@@ -215,16 +217,25 @@ public class Roster<A extends Attributes>
 		fireCollectionChanged(CollectionChangedEvent.REMOVED, index, player);
 	}
 
+	private Player<A> getPlayer(String playerName)
+	{
+		return players
+			.stream()
+			.filter(p -> playerName.equals(p.getName()))
+			.findFirst()
+			.get();
+	}
+
 	public class Group
 	{
 		private String name;
-		private List<Player<A>> players;
+		private List<String> playerNames;
 		private boolean isEnabled = true;
 
 		public Group(String name, List<Player<A>> players)
 		{
 			this.name = name;
-			this.players = players;
+			this.playerNames = players.stream().map(p -> p.getName()).collect(Collectors.toList());
 		}
 
 		public String getName()
@@ -237,9 +248,9 @@ public class Roster<A extends Attributes>
 			this.name = name;
 		}
 
-		public List<Player<A>> getPlayers()
+		public boolean contains(Player<A> player)
 		{
-			return players;
+			return playerNames.stream().anyMatch(name -> name.equals(player.getName()));
 		}
 
 		public boolean isEnabled()
@@ -253,8 +264,10 @@ public class Roster<A extends Attributes>
 
 			this.isEnabled = isEnabled;
 
-			for (Player<A> player : players)
+			for (String name : playerNames)
 			{
+				Player<A> player = getPlayer(name);
+
 				if (isEnabled && ignored.contains(player))
 				{
 					enablePlayer(player);
