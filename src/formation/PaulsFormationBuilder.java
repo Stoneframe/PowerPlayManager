@@ -1,13 +1,9 @@
 package formation;
 
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-import evaluators.AttributeEvaluator;
 import model.Attributes;
 import model.Player;
 import model.Roster;
@@ -20,7 +16,7 @@ public class PaulsFormationBuilder<A extends Attributes>
 	public List<Formation<A>> createFormations(
 			Roster<A> roster,
 			List<FormationTemplate<A>> formationTemplates,
-			PlayerManipulator<A> manipulator)
+			PlayerManipulator<A> playerManipulator)
 	{
 		List<Formation<A>> formations = new LinkedList<>();
 
@@ -39,7 +35,13 @@ public class PaulsFormationBuilder<A extends Attributes>
 				positions.add(position);
 
 				PositionAssigner positionAssigner =
-						new PositionAssigner(roster, positionTemplate, position, manipulator);
+						new PositionAssigner(
+								roster,
+								position,
+								new PlayerComparator<>(
+										positionTemplate.getSide(),
+										positionTemplate.getAttributeEvaluator(),
+										playerManipulator));
 
 				positionAssigners.add(positionAssigner);
 			}
@@ -61,24 +63,18 @@ public class PaulsFormationBuilder<A extends Attributes>
 		implements
 			Comparable<PositionAssigner>
 	{
-		private Map<Player<A>, Double> playerRatingCache = new HashMap<>();
-
 		private Roster<A> roster;
-		private PositionTemplate<A> positionTemplate;
 		private Position<A> position;
-
-		private PlayerManipulator<A> manipulator;
+		private PlayerComparator<A> playerComparator;
 
 		public PositionAssigner(
 				Roster<A> roster,
-				PositionTemplate<A> positionTemplate,
 				Position<A> position,
-				PlayerManipulator<A> manipulator)
+				PlayerComparator<A> playerComparator)
 		{
 			this.roster = roster;
-			this.positionTemplate = positionTemplate;
 			this.position = position;
-			this.manipulator = manipulator;
+			this.playerComparator = playerComparator;
 		}
 
 		@Override
@@ -115,28 +111,9 @@ public class PaulsFormationBuilder<A extends Attributes>
 				PositionAssigner assigner2,
 				int rank)
 		{
-			return Double.compare(
-				assigner1.getRatingOfPlayerAtRank(rank),
-				assigner2.getRatingOfPlayerAtRank(rank));
-		}
-
-		private double getRatingOfPlayerAtRank(int rank)
-		{
-			Player<A> player = getPlayerAtRank(rank);
-
-			if (player == null)
-			{
-				return Double.MIN_VALUE;
-			}
-
-			double rating = getPlayerRating(player);
-
-			if (!player.getSide().matches(positionTemplate.getSide()))
-			{
-				rating *= 0.84;
-			}
-
-			return rating;
+			return playerComparator.compare(
+				assigner1.getPlayerAtRank(rank),
+				assigner2.getPlayerAtRank(rank));
 		}
 
 		private Player<A> getBestPlayer()
@@ -148,29 +125,10 @@ public class PaulsFormationBuilder<A extends Attributes>
 		{
 			return roster
 				.stream()
-				.sorted(
-					Comparator
-						.comparingDouble((Player<A> p) -> getPlayerRating(p))
-						.reversed())
+				.sorted(playerComparator.reversed())
 				.skip(rank)
 				.findFirst()
 				.orElse(null);
-		}
-
-		private double getPlayerRating(Player<A> player)
-		{
-			AttributeEvaluator<A> attributeEvaluator = positionTemplate.getAttributeEvaluator();
-
-			if (playerRatingCache.containsKey(player))
-			{
-				return playerRatingCache.get(player);
-			}
-
-			double rating = manipulator.manipulate(player, attributeEvaluator);
-
-			playerRatingCache.put(player, rating);
-
-			return rating;
 		}
 	}
 }
