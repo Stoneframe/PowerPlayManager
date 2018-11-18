@@ -35,6 +35,7 @@ import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import gui.player.PlayerSelectedEvent;
 import gui.player.PlayerSelectedListener;
+import gui.util.PpmComboBox;
 import model.Attributes;
 import model.Player;
 import model.Roster;
@@ -52,6 +53,46 @@ public class RosterPanel<A extends Attributes>
 	private PlayerSelectedListener<A> playerSelectedListener;
 
 	private PlayerEvaluator<A> playerEvaluator;
+
+	private List<Function<Player<A>, Integer>> formValues = Arrays.asList(
+		new Function<Player<A>, Integer>()
+		{
+			public Integer apply(Player<A> player)
+			{
+				return player.getExperience();
+			}
+
+			public String toString()
+			{
+				return "Experience";
+			}
+		},
+		new Function<Player<A>, Integer>()
+		{
+			public Integer apply(Player<A> player)
+			{
+				return player.getChemistry();
+			}
+
+			public String toString()
+			{
+				return "Chemistry";
+			}
+		},
+		new Function<Player<A>, Integer>()
+		{
+			public Integer apply(Player<A> player)
+			{
+				return player.getEnergy();
+			}
+
+			public String toString()
+			{
+				return "Energy";
+			}
+		});
+
+	private Function<Player<A>, Integer> selectedFormValue = formValues.get(0);
 
 	private List<ColumnData> columnDatas = Arrays.asList(
 		new ColumnData("Name", p -> p.getName(), 200),
@@ -114,7 +155,10 @@ public class RosterPanel<A extends Attributes>
 		new ColumnData(
 				"Max",
 				p -> playerEvaluator.calculateHighestPossibleRating(p),
-				v -> String.format("%.0f", v)));
+				v -> String.format("%.0f", v)),
+		new ColumnData(
+				"Multi",
+				p -> selectedFormValue.apply(p)));
 
 	private JTextField facilityLevelTextField;
 	private JTextField staffEffectivnessTextField;
@@ -123,6 +167,8 @@ public class RosterPanel<A extends Attributes>
 	private JTextField lowQualityLimitTextField;
 
 	private JButton applyButton;
+
+	private PpmComboBox<Function<Player<A>, Integer>> formValueComboBox;
 
 	private JLabel statLabel;
 
@@ -235,6 +281,16 @@ public class RosterPanel<A extends Attributes>
 			}
 		});
 
+		formValueComboBox = new PpmComboBox<>(formValues);
+		formValueComboBox.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				selectedFormValue = formValueComboBox.getSelection();
+				rosterTableModel.fireTableDataChanged();
+			}
+		});
+
 		statLabel = new JLabel();
 
 		controllerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -247,6 +303,8 @@ public class RosterPanel<A extends Attributes>
 		controllerPanel.add(new JLabel("Low Quality:"));
 		controllerPanel.add(lowQualityLimitTextField);
 		controllerPanel.add(applyButton);
+		controllerPanel.add(new JLabel("     Multi:"));
+		controllerPanel.add(formValueComboBox);
 		controllerPanel.add(statLabel);
 
 		setBorder(
