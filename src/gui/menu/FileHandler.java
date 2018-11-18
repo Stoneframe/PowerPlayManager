@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 
 import javax.swing.JOptionPane;
 
@@ -33,10 +34,12 @@ public abstract class FileHandler<A extends Attributes>
 	{
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))
 		{
-			for (Player<A> player : roster)
-			{
-				writer.write(convertPlayer(gson, player) + System.lineSeparator());
-			}
+			// for (Player<A> player : roster)
+			// {
+			// writer.write(convertPlayer(gson, player) +
+			// System.lineSeparator());
+			// }
+			writer.write(gson.toJson(roster));
 		}
 		catch (IOException e)
 		{
@@ -52,11 +55,15 @@ public abstract class FileHandler<A extends Attributes>
 	{
 		try (BufferedReader reader = new BufferedReader(new FileReader(file)))
 		{
-			String line;
-			while ((line = reader.readLine()) != null)
-			{
-				roster.add(convertPlayer(gson, line));
-			}
+			Roster<A> roster2 = gson.fromJson(reader.readLine(), getRosterType());
+
+			System.out.println(roster2);
+
+			// String line;
+			// while ((line = reader.readLine()) != null)
+			// {
+			// roster.add(convertPlayer(gson, line));
+			// }
 		}
 		catch (IOException e)
 		{
@@ -67,6 +74,26 @@ public abstract class FileHandler<A extends Attributes>
 				JOptionPane.WARNING_MESSAGE);
 		}
 	}
+
+	public Roster<A> loadPlayersFromFile(File file)
+	{
+		try (BufferedReader reader = new BufferedReader(new FileReader(file)))
+		{
+			return gson.fromJson(reader.readLine(), getRosterType());
+		}
+		catch (IOException e)
+		{
+			JOptionPane.showMessageDialog(
+				null,
+				"Cannot open file",
+				"File Error",
+				JOptionPane.WARNING_MESSAGE);
+
+			return new Roster<A>();
+		}
+	}
+
+	protected abstract Type getRosterType();
 
 	protected abstract String convertPlayer(Gson gson, Player<A> player);
 

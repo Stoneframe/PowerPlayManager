@@ -17,8 +17,9 @@ public class Roster<A extends Attributes>
 		Iterable<Player<A>>
 {
 	private List<Player<A>> players = new LinkedList<>();
-	private List<Player<A>> ignored = new LinkedList<>();
 	private List<Group> groups = new LinkedList<>();
+
+	private transient List<Player<A>> ignored = new LinkedList<>();
 
 	public Roster()
 	{
@@ -144,7 +145,7 @@ public class Roster<A extends Attributes>
 		for (String name : group.playerNames)
 		{
 			Player<A> player = getPlayer(name);
-			
+
 			if (shouldBeEnabled(player) && isDisabled(player))
 			{
 				enablePlayer(player);

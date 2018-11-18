@@ -84,7 +84,8 @@ public class MainPanel<A extends Attributes>
 
 					if (file != null)
 					{
-						fileHandler.loadPlayersFromFile(file, roster);
+						roster = fileHandler.loadPlayersFromFile(file);
+						rosterPanel.updateUI();
 					}
 				}
 			}
