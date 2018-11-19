@@ -148,12 +148,16 @@ public class MainPanel<A extends Attributes>
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				String name = JOptionPane.showInputDialog(groupPanel, "Name:");
+				List<Player<A>> players = rosterPanel.getSelectedPlayers();
+
+				String initalValue = players.size() == 1
+						? players.get(0).getName()
+						: "";
+
+				String name = JOptionPane.showInputDialog(groupPanel, "Name:", initalValue);
 
 				if (name != null)
 				{
-					List<Player<A>> players = rosterPanel.getSelectedPlayers();
-
 					Roster<A>.Group group = roster.addGroup(name, players);
 
 					groupPanel.addGroup(group);
