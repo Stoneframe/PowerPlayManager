@@ -23,6 +23,7 @@ public class PaulsFormationBuilder<A extends Attributes>
 			PlayerManipulator<A> manipulator)
 	{
 		List<Formation<A>> formations = new LinkedList<>();
+
 		List<PositionAssigner> positionAssigners = new LinkedList<>();
 
 		for (FormationTemplate<A> formationTemplate : formationTemplates)
@@ -34,21 +35,23 @@ public class PaulsFormationBuilder<A extends Attributes>
 				if (positionTemplate.isIgnored()) continue;
 
 				Position<A> position = new Position<>(positionTemplate.getName());
+
+				positions.add(position);
+
 				PositionAssigner positionAssigner =
 						new PositionAssigner(roster, positionTemplate, position, manipulator);
 
-				positions.add(position);
 				positionAssigners.add(positionAssigner);
 			}
 
 			formations.add(new Formation<>(formationTemplate.getName(), positions));
 		}
 
-		Collections.sort(positionAssigners);
-
-		for (PositionAssigner positionAssigner : positionAssigners)
+		while (!positionAssigners.isEmpty())
 		{
-			positionAssigner.assignBestPlayerToPosition();
+			Collections.sort(positionAssigners);
+			PositionAssigner assigner = positionAssigners.remove(0);
+			assigner.assignBestPlayerToPosition();
 		}
 
 		return formations;
