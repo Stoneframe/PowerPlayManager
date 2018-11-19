@@ -39,14 +39,18 @@ public class PlayerComparator<A extends Attributes>
 	{
 		if (player == null) return Double.MIN_VALUE;
 
+		double rating;
+
 		if (playerRatingCache.containsKey(player))
 		{
-			return playerRatingCache.get(player);
+			rating = playerRatingCache.get(player);
 		}
+		else
+		{
+			rating = playerManipulator.manipulate(player, attributeEvaluator);
 
-		double rating = playerManipulator.manipulate(player, attributeEvaluator);
-
-		playerRatingCache.put(player, rating);
+			playerRatingCache.put(player, rating);
+		}
 
 		if (!player.getSide().matches(side))
 		{
