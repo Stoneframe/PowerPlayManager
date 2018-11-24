@@ -16,6 +16,6 @@ public class IceHockeyPlayerEvaluator
 			SportSettings settings,
 			List<AttributeEvaluator<IceHockeyAttributes>> attributeEvaluators)
 	{
-		super(A, B, C, settings, attributeEvaluators);
+		super(A, B, C, settings, 7, attributeEvaluators);
 	}
 }

@@ -16,6 +16,6 @@ public class HandballPlayerEvaluator
 			SportSettings settings,
 			List<AttributeEvaluator<HandballAttributes>> attributeEvaluators)
 	{
-		super(A, B, C, settings, attributeEvaluators);
+		super(A, B, C, settings, 8, attributeEvaluators);
 	}
 }

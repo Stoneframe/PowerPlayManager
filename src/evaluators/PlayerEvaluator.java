@@ -21,6 +21,7 @@ public class PlayerEvaluator<A extends Attributes>
 
 	private SportSettings settings;
 
+	private int numberOfAttributes;
 	private List<AttributeEvaluator<A>> attributeEvaluators;
 
 	public PlayerEvaluator(
@@ -28,12 +29,14 @@ public class PlayerEvaluator<A extends Attributes>
 			double b,
 			double c,
 			SportSettings settings,
+			int numberOfAttributes,
 			List<AttributeEvaluator<A>> attributeEvaluators)
 	{
 		this.a = a;
 		this.b = b;
 		this.c = c;
 		this.settings = settings;
+		this.numberOfAttributes = numberOfAttributes;
 		this.attributeEvaluators = attributeEvaluators;
 	}
 
@@ -129,9 +132,13 @@ public class PlayerEvaluator<A extends Attributes>
 	{
 		double modifier = getCLModifier(player.getCL(), player.getAge());
 
-		return F(player.getAge(), age, x -> f(x * modifier))
+		System.out.println("modifier: " + modifier);
+
+		return F(player.getAge(), age, x -> f(x, modifier))
 				* DAYS_PER_SEASON
-				* getTrainingValue(player, modifier)
+				* (player.getCL() > 0
+						? getTrainingValue(player, modifier)
+						: 1)
 				+ player.getAttributes().getTotalRating();
 	}
 
@@ -162,15 +169,19 @@ public class PlayerEvaluator<A extends Attributes>
 				? player.getTraining()
 				: calculatePlayerTraining(player);
 
-		return training / f(player.getAge() * modifier);
+		return training / f(player.getAge(), modifier);
 	}
 
 	private double calculatePlayerTraining(Player<A> player)
 	{
 		double weightedQuality = getBestPositionQuality(player).getValue();
 
-		return ((getFacilityEffectiveness() * 0.08 + 0.04) * weightedQuality / 100)
+		double result = ((getFacilityEffectiveness() * 0.08 + 0.04) * weightedQuality / 100)
 				* getAgeClModifier(player);
+
+		System.out.println(String.format("age: %d, result: %f", player.getAge(), result));
+
+		return result;
 	}
 
 	private double getFacilityEffectiveness()
@@ -211,7 +222,8 @@ public class PlayerEvaluator<A extends Attributes>
 			case 1:
 				return calc.apply((age - 25d) / 10d);
 			case 0:
-				return calc.apply((age - 29d) / 7d);
+				// return calc.apply(0.15 * age - 4.3d);
+				return calc.apply((age - 29d) / 11d);
 			default:
 				return 1;
 		}
@@ -245,20 +257,35 @@ public class PlayerEvaluator<A extends Attributes>
 		return invert ? -sum : sum;
 	}
 
-	private double f(double x)
+	private double f(double x, double modifier)
 	{
-		if (x < 33)
+		int zero = (int)Math.round(32 / modifier);
+
+		double value;
+
+		if (x < zero)
 		{
-			return a * Math.pow(x, 2) + b * Math.pow(x, 1) + c;
-		}
-		else if (x > 35)
-		{
-			return -0.4084 * x + 14.294;
-//			return -0.4084 * x + 13.1024407;
+			value = g(x * modifier);
 		}
 		else
 		{
-			return 0.0001;
+			value = h(x - zero);
 		}
+
+		System.out.println(String.format("x=%f, zero=%d, value=%f", x, zero, value));
+
+		return value;
+	}
+
+	private double g(double x)
+	{
+		System.out.println("g");
+		return a * Math.pow(x, 2) + b * Math.pow(x, 1) + c;
+	}
+
+	private double h(double x)
+	{
+		System.out.println("h");
+		return Math.min((-0.06 * x + 0.06) * numberOfAttributes, 0);
 	}
 }

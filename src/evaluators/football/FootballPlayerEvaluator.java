@@ -16,6 +16,6 @@ public class FootballPlayerEvaluator
 			SportSettings settings,
 			List<AttributeEvaluator<FootballAttributes>> attributeEvaluators)
 	{
-		super(A, B, C, settings, attributeEvaluators);
+		super(A, B, C, settings, 9, attributeEvaluators);
 	}
 }
