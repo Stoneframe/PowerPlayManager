@@ -10,12 +10,12 @@ import settings.SportSettings;
 public class IceHockeyPlayerEvaluator
 	extends PlayerEvaluator<IceHockeyAttributes>
 {
-	private static final double A = -0.001801, B = 0.01567, C = 1.351;
+	private static final double A = -0.002208, B = -0.02162;
 
 	public IceHockeyPlayerEvaluator(
 			SportSettings settings,
 			List<AttributeEvaluator<IceHockeyAttributes>> attributeEvaluators)
 	{
-		super(A, B, C, settings, attributeEvaluators);
+		super(A, B, settings, attributeEvaluators);
 	}
 }
