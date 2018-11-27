@@ -130,8 +130,6 @@ public class PlayerEvaluator<A extends Attributes>
 	{
 		double modifier = getCLModifier(player.getCL(), player.getAge());
 
-		System.out.println("modifier: " + modifier);
-
 		return F(player.getAge(), age, x -> f(x, modifier))
 				* DAYS_PER_SEASON
 				* (player.getCL() > 0
@@ -176,12 +174,8 @@ public class PlayerEvaluator<A extends Attributes>
 
 		double weightedQuality = getBestPositionQuality(player).getValue();
 
-		double result = ((getFacilityEffectiveness() * 0.08 + 0.04) * weightedQuality / 100)
+		return ((getFacilityEffectiveness() * 0.08 + 0.04) * weightedQuality / 100)
 				* f(player.getAge(), modifier);
-
-		System.out.println(String.format("age: %d, result: %f", player.getAge(), result));
-
-		return result;
 	}
 
 	private double getFacilityEffectiveness()
@@ -211,7 +205,6 @@ public class PlayerEvaluator<A extends Attributes>
 			case 1:
 				return calc.apply((age - 25d) / 10d);
 			case 0:
-				// return calc.apply(0.15 * age - 4.3d);
 				return calc.apply((age - 29d) / 11d);
 			default:
 				return 1;
@@ -248,43 +241,25 @@ public class PlayerEvaluator<A extends Attributes>
 
 	private double f(double x, double modifier)
 	{
-		// final double upper = 1.303;
-		// final double lower = 0.8067;
-		//
-		// double percent = (modifier - lower) / (upper - lower);
-		//
-		// System.out.println("Percent=" + percent);
-		//
-		// double temp = -4 + 8 * percent;
-
-		// int zero = (int)Math.round(32 / modifier);
 		int zero = (int)Math.round(5 * (Math.sqrt(23248561) - 1081) / (1104 * modifier) + 15);
-
-		double value;
 
 		if (x < zero)
 		{
-			value = g((x - 15) * modifier);
+			return g((x - 15) * modifier);
 		}
 		else
 		{
-			value = h(x - zero);
+			return h(x - zero);
 		}
-
-		System.out.println(String.format("x=%f, zero=%d, value=%f", x, zero, value));
-
-		return value;
 	}
 
 	private double g(double x)
 	{
-		System.out.println("g");
 		return a * Math.pow(x, 2) + b * Math.pow(x, 1) + 1;
 	}
 
 	private double h(double x)
 	{
-		System.out.println("h");
 		return Math.min((-0.06 * x + 0.06) * numberOfAttributes, 0);
 	}
 }
