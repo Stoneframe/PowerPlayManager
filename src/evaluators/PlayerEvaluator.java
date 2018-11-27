@@ -17,7 +17,7 @@ public class PlayerEvaluator<A extends Attributes>
 	private static final double EXPERIENCE_FACTOR = 0.3;
 	private static final double CHEMISTRY_FACTOR = 0.2;
 
-	private double a, b, c;
+	private double a, b;
 
 	private SportSettings settings;
 
@@ -27,14 +27,12 @@ public class PlayerEvaluator<A extends Attributes>
 	public PlayerEvaluator(
 			double a,
 			double b,
-			double c,
 			SportSettings settings,
 			int numberOfAttributes,
 			List<AttributeEvaluator<A>> attributeEvaluators)
 	{
 		this.a = a;
 		this.b = b;
-		this.c = c;
 		this.settings = settings;
 		this.numberOfAttributes = numberOfAttributes;
 		this.attributeEvaluators = attributeEvaluators;
@@ -172,12 +170,14 @@ public class PlayerEvaluator<A extends Attributes>
 		return training / f(player.getAge(), modifier);
 	}
 
-	private double calculatePlayerTraining(Player<A> player)
+	public double calculatePlayerTraining(Player<A> player)
 	{
+		double modifier = getCLModifier(player.getCL(), player.getAge());
+
 		double weightedQuality = getBestPositionQuality(player).getValue();
 
 		double result = ((getFacilityEffectiveness() * 0.08 + 0.04) * weightedQuality / 100)
-				* getAgeClModifier(player);
+				* f(player.getAge(), modifier);
 
 		System.out.println(String.format("age: %d, result: %f", player.getAge(), result));
 
@@ -189,23 +189,12 @@ public class PlayerEvaluator<A extends Attributes>
 		return (double)getFacilityLevel() * (1 + (double)getStaffEffectivness() / 200);
 	}
 
-	private static double getAgeClModifier(Player<?> player)
-	{
-		int age = player.getAge() - 15;
-		int cl = player.getCL();
-
-		return 0.15882
-				+ 0.000012542 * Math.pow(age, 3)
-				- 0.000068085 * Math.pow(age, 2)
-				- 0.025609 * Math.pow(age, 1)
-				- 0.0040358 * Math.pow(cl, 3)
-				+ 0.0075319 * Math.pow(cl, 2)
-				+ 0.24262 * Math.pow(cl, 1);
-	}
-
 	private static double getCLModifier(int cl, int age)
 	{
-		Function<Double, Double> calc = x -> 1.145 + (0.915 - 1.145) * x;
+		final double upper = 1.303;
+		final double lower = 0.8067;
+
+		Function<Double, Double> calc = x -> upper + (lower - upper) * x;
 
 		switch (cl)
 		{
@@ -259,7 +248,17 @@ public class PlayerEvaluator<A extends Attributes>
 
 	private double f(double x, double modifier)
 	{
-		int zero = (int)Math.round(32 / modifier);
+		final double upper = 1.303;
+		final double lower = 0.8067;
+
+		double percent = (modifier - lower) / (upper - lower);
+
+		System.out.println("Percent=" + percent);
+
+		double temp = -4 + 8 * percent;
+
+		// int zero = (int)Math.round(32 / modifier);
+		int zero = (int)Math.round(5 * (Math.sqrt(23248561) - 1081) / (1104 * modifier) + 15);
 
 		double value;
 
@@ -280,7 +279,7 @@ public class PlayerEvaluator<A extends Attributes>
 	private double g(double x)
 	{
 		System.out.println("g");
-		return a * Math.pow(x, 2) + b * Math.pow(x, 1) + c;
+		return a * Math.pow(x - 15, 2) + b * Math.pow(x - 15, 1) + 1;
 	}
 
 	private double h(double x)

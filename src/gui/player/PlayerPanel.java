@@ -43,11 +43,14 @@ public class PlayerPanel<A extends Attributes>
 
 	private TrainingPlannerPanel<A> trainingPanel;
 
+	private PlayerEvaluator<A> playerEvaluator;
+
 	public PlayerPanel(
 			AttributesPanel<A> attributePanel,
 			PlayerEvaluator<A> playerEvaluator)
 	{
 		this.attributePanel = attributePanel;
+		this.playerEvaluator = playerEvaluator;
 
 		this.trainingPanel = new TrainingPlannerPanel<>(playerEvaluator);
 
@@ -163,7 +166,14 @@ public class PlayerPanel<A extends Attributes>
 		nameTextField.setText(player == null ? "" : player.getName());
 		ageTextField.setText(player == null ? "" : Integer.toString(player.getAge()));
 		sideTextField.setText(player == null ? "" : player.getSide().toString());
-		trainingTextField.setText(player == null ? "" : Double.toString(player.getTraining()));
+		trainingTextField.setText(player == null ? "" : Double.toString(getPlayerTraining()));
+	}
+
+	private double getPlayerTraining()
+	{
+		return player.getTraining() != 0
+				? player.getTraining()
+				: playerEvaluator.calculatePlayerTraining(player);
 	}
 
 	@Override
