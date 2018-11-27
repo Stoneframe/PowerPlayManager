@@ -248,14 +248,14 @@ public class PlayerEvaluator<A extends Attributes>
 
 	private double f(double x, double modifier)
 	{
-		final double upper = 1.303;
-		final double lower = 0.8067;
-
-		double percent = (modifier - lower) / (upper - lower);
-
-		System.out.println("Percent=" + percent);
-
-		double temp = -4 + 8 * percent;
+		// final double upper = 1.303;
+		// final double lower = 0.8067;
+		//
+		// double percent = (modifier - lower) / (upper - lower);
+		//
+		// System.out.println("Percent=" + percent);
+		//
+		// double temp = -4 + 8 * percent;
 
 		// int zero = (int)Math.round(32 / modifier);
 		int zero = (int)Math.round(5 * (Math.sqrt(23248561) - 1081) / (1104 * modifier) + 15);
@@ -264,7 +264,7 @@ public class PlayerEvaluator<A extends Attributes>
 
 		if (x < zero)
 		{
-			value = g(x * modifier);
+			value = g((x - 15) * modifier);
 		}
 		else
 		{
@@ -279,7 +279,7 @@ public class PlayerEvaluator<A extends Attributes>
 	private double g(double x)
 	{
 		System.out.println("g");
-		return a * Math.pow(x - 15, 2) + b * Math.pow(x - 15, 1) + 1;
+		return a * Math.pow(x, 2) + b * Math.pow(x, 1) + 1;
 	}
 
 	private double h(double x)
