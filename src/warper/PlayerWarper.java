@@ -28,27 +28,22 @@ public abstract class PlayerWarper<A extends Attributes>
 
 			double improvement = (nextTotalRating - previousTotalRating);
 
-			for (int j = 0; j < Math.abs(improvement); j++)
+			if (Integer.signum((int)improvement) > 0)
 			{
-				if (Integer.signum((int)improvement) > 0)
+				for (int j = 0; j < Math.abs(improvement); j++)
 				{
 					Attribute attribute = attributeEvaluator.getWorstAttribute(attributes);
 
 					attribute.setRating(attribute.getRating() + 1);
 				}
-				else
+			}
+			else
+			{
+				double decreasePerAttribute = improvement / attributes.getNumberOfAttributes();
+
+				for (Attribute attribute : attributes)
 				{
-					double decreasePerAttribute = improvement / attributes.getNumberOfAttributes();
-
-					for (Attribute attribute : attributes)
-					{
-						attribute.addToRating(decreasePerAttribute);
-					}
-
-					// Attribute attribute =
-					// attributeEvaluator.getBestAttribute(attributes);
-					//
-					// attribute.setRating(attribute.getRating() - 1);
+					attribute.addToRating(decreasePerAttribute);
 				}
 			}
 

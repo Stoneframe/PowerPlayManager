@@ -89,6 +89,6 @@ public class Attribute
 	@Override
 	public String toString()
 	{
-		return String.format("%s: %d (%d)", shortName, rating, quality);
+		return String.format("%s: %f (%d)", shortName, rating, quality);
 	}
 }
