@@ -8,7 +8,7 @@ public class Attribute
 	private String shortName;
 	private String longName;
 
-	private int rating;
+	private double rating;
 	private int quality;
 
 	public Attribute(String shortName, String longName)
@@ -17,7 +17,7 @@ public class Attribute
 		this.longName = longName;
 	}
 
-	private Attribute(String shortName, String longName, int rating, int quality)
+	private Attribute(String shortName, String longName, double rating, int quality)
 	{
 		this(shortName, longName);
 
@@ -49,7 +49,7 @@ public class Attribute
 
 	public int getRating()
 	{
-		return rating;
+		return (int)rating;
 	}
 
 	public void setRating(int rating)
@@ -67,6 +67,12 @@ public class Attribute
 	{
 		this.quality = quality;
 		firePropertyChanged("Quality", quality);
+	}
+
+	public void addToRating(double value)
+	{
+		rating = Math.max(rating + value, 1);
+		firePropertyChanged("Rating", rating);
 	}
 
 	public void merge(Attribute other)

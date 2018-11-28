@@ -26,11 +26,11 @@ public abstract class PlayerWarper<A extends Attributes>
 			double nextTotalRating =
 					playerEvaluator.calculateTotalRatingForAge(player, player.getAge() + i);
 
-			int improvement = (int)(nextTotalRating - previousTotalRating);
+			double improvement = (nextTotalRating - previousTotalRating);
 
 			for (int j = 0; j < Math.abs(improvement); j++)
 			{
-				if (Integer.signum(improvement) > 0)
+				if (Integer.signum((int)improvement) > 0)
 				{
 					Attribute attribute = attributeEvaluator.getWorstAttribute(attributes);
 
@@ -38,9 +38,17 @@ public abstract class PlayerWarper<A extends Attributes>
 				}
 				else
 				{
-					Attribute attribute = attributeEvaluator.getBestAttribute(attributes);
+					double decreasePerAttribute = improvement / attributes.getNumberOfAttributes();
 
-					attribute.setRating(attribute.getRating() - 1);
+					for (Attribute attribute : attributes)
+					{
+						attribute.addToRating(decreasePerAttribute);
+					}
+
+					// Attribute attribute =
+					// attributeEvaluator.getBestAttribute(attributes);
+					//
+					// attribute.setRating(attribute.getRating() - 1);
 				}
 			}
 
