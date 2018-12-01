@@ -128,13 +128,11 @@ public class PlayerEvaluator<A extends Attributes>
 
 	public double calculateTotalRatingForAge(Player<A> player, int age)
 	{
-		double modifier = getCLModifier(player.getCL(), player.getAge());
+		double modifier = getCLModifier(player);
+		double quality = getBestPositionQuality(player).getValue();
 
-		return F(player.getAge(), age, x -> f(x, modifier))
+		return F(player.getAge(), age, createPlayerCurve(modifier, quality))
 				* DAYS_PER_SEASON
-				* (player.getCL() > 0
-						? getTrainingValue(player, modifier)
-						: 1)
 				+ player.getAttributes().getTotalRating();
 	}
 
@@ -159,28 +157,32 @@ public class PlayerEvaluator<A extends Attributes>
 		return max;
 	}
 
-	private double getTrainingValue(Player<A> player, double modifier)
-	{
-		double training = player.getTraining() != 0
-				? player.getTraining()
-				: calculatePlayerTraining(player);
-
-		return training / f(player.getAge(), modifier);
-	}
-
 	public double calculatePlayerTraining(Player<A> player)
 	{
-		double modifier = getCLModifier(player.getCL(), player.getAge());
+		double modifier = getCLModifier(player);
+		double quality = getBestPositionQuality(player).getValue();
 
-		double weightedQuality = getBestPositionQuality(player).getValue();
+		return createPlayerCurve(modifier, quality).apply((double)player.getAge());
+	}
 
-		return ((getFacilityEffectiveness() * 0.08 + 0.04) * weightedQuality / 100)
-				* f(player.getAge(), modifier);
+	private Function<Double, Double> createPlayerCurve(double modifier, double quality)
+	{
+		return x -> getFacilityTraining() * f(x, modifier) * quality / 100;
+	}
+
+	private double getFacilityTraining()
+	{
+		return getFacilityEffectiveness() * 0.08 + 0.04;
 	}
 
 	private double getFacilityEffectiveness()
 	{
 		return (double)getFacilityLevel() * (1 + (double)getStaffEffectivness() / 200);
+	}
+
+	private double getCLModifier(Player<A> player)
+	{
+		return getCLModifier(player.getCL(), player.getAge());
 	}
 
 	private static double getCLModifier(int cl, int age)
@@ -245,20 +247,20 @@ public class PlayerEvaluator<A extends Attributes>
 
 		if (x < zero)
 		{
-			return g((x - 15) * modifier);
+			return gtZeroCL((x - 15), modifier);
 		}
 		else
 		{
-			return h(x - zero);
+			return eqZeroCL(x - zero);
 		}
 	}
 
-	private double g(double x)
+	private double gtZeroCL(double x, double modifier)
 	{
-		return a * Math.pow(x, 2) + b * Math.pow(x, 1) + 1;
+		return a * Math.pow(x * modifier, 2) + b * Math.pow(x * modifier, 1) + 1;
 	}
 
-	private double h(double x)
+	private double eqZeroCL(double x)
 	{
 		return Math.min((-0.06 * x + 0.06) * numberOfAttributes, 0);
 	}
