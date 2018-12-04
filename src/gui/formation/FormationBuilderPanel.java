@@ -63,6 +63,7 @@ public class FormationBuilderPanel<A extends Attributes>
 	private JButton addTemplateButton;
 	private JButton removeTemplateButton;
 
+	private JCheckBox callbackCheckbox;
 	private JRadioButton noneRadioButton;
 	private JRadioButton formRadioButton;
 	private JRadioButton warpRadioButton;
@@ -189,6 +190,7 @@ public class FormationBuilderPanel<A extends Attributes>
 			}
 		});
 
+		callbackCheckbox = new JCheckBox("Create groups");
 		noneRadioButton = new JRadioButton("None");
 		formRadioButton = new JRadioButton("Form");
 		warpRadioButton = new JRadioButton("Warp");
@@ -246,7 +248,10 @@ public class FormationBuilderPanel<A extends Attributes>
 					}
 				});
 
-				formationsCreatedCallback.accept(formations);
+				if (callbackCheckbox.isSelected())
+				{
+					formationsCreatedCallback.accept(formations);
+				}
 			}
 
 			private PlayerManipulator<A> getPlayerManipulator()
@@ -314,6 +319,7 @@ public class FormationBuilderPanel<A extends Attributes>
 		add(topPanel, BorderLayout.NORTH);
 
 		JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		southPanel.add(callbackCheckbox);
 		southPanel.add(noneRadioButton);
 		southPanel.add(formRadioButton);
 		southPanel.add(warpRadioButton);
