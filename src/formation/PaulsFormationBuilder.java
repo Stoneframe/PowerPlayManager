@@ -45,11 +45,11 @@ public class PaulsFormationBuilder<A extends Attributes>
 			formations.add(new Formation<>(formationTemplate.getName(), positions));
 		}
 
-		Collections.sort(positionAssigners);
-
-		for (PositionAssigner positionAssigner : positionAssigners)
+		while (!positionAssigners.isEmpty())
 		{
-			positionAssigner.assignBestPlayerToPosition();
+			Collections.sort(positionAssigners);
+			PositionAssigner assigner = positionAssigners.remove(0);
+			assigner.assignBestPlayerToPosition();
 		}
 
 		return formations;
