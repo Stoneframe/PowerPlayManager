@@ -1,11 +1,13 @@
 package formation;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import evaluators.AttributeEvaluator;
 import model.Attributes;
@@ -36,7 +38,12 @@ public class PaulsFormationBuilder<A extends Attributes>
 
 				Position<A> position = new Position<>(positionTemplate.getName());
 				PositionAssigner positionAssigner =
-						new PositionAssigner(roster, positionTemplate, position, manipulator);
+						new PositionAssigner(
+								roster,
+								positionTemplate,
+								position,
+								manipulator,
+								formations.size() + 1);
 
 				positions.add(position);
 				positionAssigners.add(positionAssigner);
@@ -48,6 +55,10 @@ public class PaulsFormationBuilder<A extends Attributes>
 		while (!positionAssigners.isEmpty())
 		{
 			Collections.sort(positionAssigners);
+
+			System.out.println("==============");
+			positionAssigners.forEach(pa -> System.out.println(pa));
+
 			PositionAssigner assigner = positionAssigners.remove(0);
 			assigner.assignBestPlayerToPosition();
 		}
@@ -67,16 +78,20 @@ public class PaulsFormationBuilder<A extends Attributes>
 
 		private PlayerManipulator<A> manipulator;
 
+		private int formationNumber;
+
 		public PositionAssigner(
 				Roster<A> roster,
 				PositionTemplate<A> positionTemplate,
 				Position<A> position,
-				PlayerManipulator<A> manipulator)
+				PlayerManipulator<A> manipulator,
+				int formationNumber)
 		{
 			this.roster = roster;
 			this.positionTemplate = positionTemplate;
 			this.position = position;
 			this.manipulator = manipulator;
+			this.formationNumber = formationNumber;
 		}
 
 		@Override
@@ -108,6 +123,27 @@ public class PaulsFormationBuilder<A extends Attributes>
 			roster.remove(player);
 		}
 
+		@Override
+		public String toString()
+		{
+			return positionTemplate.getName()
+					+ " "
+					+ formationNumber
+					+ ": "
+					+ String.join(", ", Arrays.stream(new int[]
+					{
+							0, 1, 2, 3, 4
+					})
+						.mapToObj(
+							i -> getPlayerAtRank(i).getName()
+									+ " ("
+									+ getPlayerAtRank(i).getSide()
+									+ " "
+									+ getRatingOfPlayerAtRank(i)
+									+ ")")
+						.collect(Collectors.toList()));
+		}
+
 		private int comparePlayersAtRank(
 				PositionAssigner assigner1,
 				PositionAssigner assigner2,
@@ -128,11 +164,6 @@ public class PaulsFormationBuilder<A extends Attributes>
 			}
 
 			double rating = getPlayerRating(player);
-
-			if (!player.getSide().matches(positionTemplate.getSide()))
-			{
-				rating *= 0.84;
-			}
 
 			return rating;
 		}
@@ -165,6 +196,11 @@ public class PaulsFormationBuilder<A extends Attributes>
 			}
 
 			double rating = manipulator.manipulate(player, attributeEvaluator);
+
+			if (!player.getSide().matches(positionTemplate.getSide()))
+			{
+				rating *= 0.84;
+			}
 
 			playerRatingCache.put(player, rating);
 
