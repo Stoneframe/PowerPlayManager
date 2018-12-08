@@ -51,4 +51,20 @@ public class PositionTemplate<A extends Attributes>
 	{
 		return isIgnored;
 	}
+
+	@Override
+	public int hashCode()
+	{
+		return name.hashCode() ^ attributeEvaluator.hashCode() ^ side.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (!(obj instanceof PositionTemplate<?>)) return false;
+
+		PositionTemplate<?> other = (PositionTemplate<?>)obj;
+
+		return this.hashCode() == other.hashCode();
+	}
 }
