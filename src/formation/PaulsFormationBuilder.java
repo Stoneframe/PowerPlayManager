@@ -57,23 +57,19 @@ public class PaulsFormationBuilder<A extends Attributes>
 
 	private void assigntPlayersToPositions(List<PositionAssigner> positionAssigners)
 	{
-		Map<PositionTemplate<A>,
-				List<PositionAssigner>> equivalentPositionsGroups = positionAssigners
-					.stream()
-					.collect(Collectors.groupingBy(pa -> pa.positionTemplate));
+		Map<Object, List<PositionAssigner>> positionAssignerGroups = positionAssigners
+			.stream()
+			.collect(Collectors.groupingBy(pa -> pa.positionTemplate));
 
-		int numberOfEquivalentFormations =
-				calculateNumberOfEquivalentFormations(equivalentPositionsGroups);
+		int numberOfLayers = calculateNumberOfLayers(positionAssignerGroups);
 
-		for (int i = 0; i < numberOfEquivalentFormations; i++)
+		for (int i = 0; i < numberOfLayers; i++)
 		{
 			List<PositionAssigner> subPositionAssigners = new LinkedList<>();
 
-			for (PositionTemplate<A> key : equivalentPositionsGroups.keySet())
+			for (List<PositionAssigner> values : positionAssignerGroups.values())
 			{
-				List<PositionAssigner> values = equivalentPositionsGroups.get(key);
-
-				int amount = values.size() / numberOfEquivalentFormations;
+				int amount = values.size() / numberOfLayers;
 				int start = i * amount;
 
 				for (int j = start; j < start + amount; j++)
@@ -91,8 +87,8 @@ public class PaulsFormationBuilder<A extends Attributes>
 		}
 	}
 
-	private int calculateNumberOfEquivalentFormations(
-			Map<PositionTemplate<A>, List<PositionAssigner>> positionAssignerGroups)
+	private int calculateNumberOfLayers(
+			Map<Object, List<PositionAssigner>> positionAssignerGroups)
 	{
 		return positionAssignerGroups
 			.values()
