@@ -13,7 +13,7 @@ import model.Attributes;
 import model.Player;
 import model.Roster;
 
-public class PaulsFormationBuilder2<A extends Attributes>
+public class PaulsFormationBuilder<A extends Attributes>
 	implements
 		FormationBuilder<A>
 {

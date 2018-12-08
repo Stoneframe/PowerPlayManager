@@ -3,7 +3,7 @@ package gui.football;
 import java.util.List;
 
 import evaluators.PlayerEvaluator;
-import formation.PaulsFormationBuilder2;
+import formation.PaulsFormationBuilder;
 import gui.MainPanel;
 import gui.menu.FileHandler;
 import gui.menu.MenuBar;
@@ -27,7 +27,7 @@ public class FootballMainPanel
 			fileHandler,
 			new FootballAttributesPanel(),
 			new FootballFormationTemplatePanelFactory(),
-			new PaulsFormationBuilder2<>(),
+			new PaulsFormationBuilder<>(),
 			new FootballPlayerWarper(playerEvaluator),
 			parsers,
 			playerEvaluator);
