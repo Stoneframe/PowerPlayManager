@@ -26,6 +26,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -52,6 +53,7 @@ public class FormationBuilderPanel<A extends Attributes>
 
 	private DefaultListModel<Player<A>> playerListModel;
 	private JList<Player<A>> playerList;
+	private JButton selectAllButton;
 
 	private DefaultListModel<FormationTemplate<A>> templateListModel;
 	private JList<FormationTemplate<A>> templateList;
@@ -131,7 +133,30 @@ public class FormationBuilderPanel<A extends Attributes>
 
 				playerListModel.set(index, player);
 
-				updatePlayersSelectedList(roster);
+				updatePlayersSelectedLabel(roster);
+				updateCreateFormationsButton(roster);
+			}
+		});
+
+		selectAllButton = new JButton("Select All");
+		selectAllButton.setPreferredSize(new Dimension(1, 15));
+		selectAllButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				for (int i = 0; i < playerListModel.size(); i++)
+				{
+					Player<A> player = playerListModel.get(i);
+
+					if (!roster.contains(player))
+					{
+						roster.add(player);
+					}
+
+					playerListModel.set(i, player);
+				}
+
+				updatePlayersSelectedLabel(roster);
 				updateCreateFormationsButton(roster);
 			}
 		});
@@ -141,6 +166,7 @@ public class FormationBuilderPanel<A extends Attributes>
 		templateList = new JList<>(templateListModel);
 		templateList.setPreferredSize(new Dimension(200, 1));
 		templateList.setBorder(BorderFactory.createEtchedBorder());
+		templateList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		templateList.addListSelectionListener(new ListSelectionListener()
 		{
 			public void valueChanged(ListSelectionEvent e)
@@ -232,7 +258,7 @@ public class FormationBuilderPanel<A extends Attributes>
 							formationTemplates,
 							getPlayerManipulator());
 
-				updatePlayersSelectedList(roster);
+				updatePlayersSelectedLabel(roster);
 				updateCreateFormationsButton(roster);
 
 				playerList.updateUI();
@@ -290,12 +316,14 @@ public class FormationBuilderPanel<A extends Attributes>
 
 		setLayout(new BorderLayout());
 
-		JScrollPane playerListPanel = new JScrollPane(playerList);
-		playerListPanel.setBorder(
-			BorderFactory.createCompoundBorder(
-				BorderFactory.createTitledBorder("Players"),
-				BorderFactory.createEtchedBorder()));
+		JScrollPane playerListScrollPanel = new JScrollPane(playerList);
+		playerListScrollPanel.setBorder(BorderFactory.createEtchedBorder());
+
+		JPanel playerListPanel = new JPanel(new BorderLayout());
 		playerListPanel.setPreferredSize(new Dimension(200, 1));
+		playerListPanel.setBorder(BorderFactory.createTitledBorder("Players"));
+		playerListPanel.add(playerListScrollPanel, BorderLayout.CENTER);
+		playerListPanel.add(selectAllButton, BorderLayout.SOUTH);
 
 		add(playerListPanel, BorderLayout.WEST);
 
@@ -329,7 +357,7 @@ public class FormationBuilderPanel<A extends Attributes>
 
 		add(southPanel, BorderLayout.SOUTH);
 
-		updatePlayersSelectedList(roster);
+		updatePlayersSelectedLabel(roster);
 	}
 
 	private boolean canCreateFormations(Roster<A> roster)
@@ -361,7 +389,7 @@ public class FormationBuilderPanel<A extends Attributes>
 		return formationTemplates;
 	}
 
-	private void updatePlayersSelectedList(Roster<A> roster)
+	private void updatePlayersSelectedLabel(Roster<A> roster)
 	{
 		nbrPlayersSelectedLabel.setText("Number of players selected: " + roster.size());
 	}
