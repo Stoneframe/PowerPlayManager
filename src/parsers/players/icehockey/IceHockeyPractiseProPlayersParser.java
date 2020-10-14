@@ -64,7 +64,7 @@ public class IceHockeyPractiseProPlayersParser
 
 		String[] split = textToParse.split("\n");
 
-		for (int i = 0; i < split.length; i += 15)
+		for (int i = 0; i < split.length; i += 16)
 		{
 			lines.add(String.join("\t", Arrays.copyOfRange(split, i, i + 15)));
 		}
