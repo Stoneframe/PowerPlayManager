@@ -58,11 +58,11 @@ public class GroupPanel<A extends Attributes>
 			{
 				moveUpButton.setEnabled(
 					groupList.getSelectedIndices().length == 1
-							&& groupList.getSelectedIndex() != 0);
+						&& groupList.getSelectedIndex() != 0);
 
 				moveDownButton.setEnabled(
 					groupList.getSelectedIndices().length == 1
-							&& groupList.getSelectedIndex() != groupListModel.size() - 1);
+						&& groupList.getSelectedIndex() != groupListModel.size() - 1);
 			}
 		});
 		groupList.addMouseListener(new MouseAdapter()

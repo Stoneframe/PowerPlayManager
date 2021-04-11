@@ -17,10 +17,10 @@ public class HandballMainPanel
 	private static final long serialVersionUID = -3164509414943511994L;
 
 	public HandballMainPanel(
-			MenuBar menuBar,
-			FileHandler<HandballAttributes> fileHandler,
-			List<PlayersParser<HandballAttributes>> parsers,
-			PlayerEvaluator<HandballAttributes> playerEvaluator)
+		MenuBar menuBar,
+		FileHandler<HandballAttributes> fileHandler,
+		List<PlayersParser<HandballAttributes>> parsers,
+		PlayerEvaluator<HandballAttributes> playerEvaluator)
 	{
 		super(
 			menuBar,

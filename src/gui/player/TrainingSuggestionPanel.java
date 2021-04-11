@@ -17,9 +17,9 @@ public class TrainingSuggestionPanel<A extends Attributes>
 
 	@Override
 	protected int compare(
-			A attributes,
-			AttributeEvaluator<A> evaluator1,
-			AttributeEvaluator<A> evaluator2)
+		A attributes,
+		AttributeEvaluator<A> evaluator1,
+		AttributeEvaluator<A> evaluator2)
 
 	{
 		return new QualityEvaluatorComparator<A>(attributes).compare(evaluator1, evaluator2);
@@ -27,8 +27,8 @@ public class TrainingSuggestionPanel<A extends Attributes>
 
 	@Override
 	protected double getValue(
-			A attributes,
-			AttributeEvaluator<A> evaluator)
+		A attributes,
+		AttributeEvaluator<A> evaluator)
 	{
 		return evaluator.getQuality(attributes);
 	}

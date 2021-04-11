@@ -11,9 +11,9 @@ public class PropertyChangedEvent
 	private Object propertyValue;
 
 	public PropertyChangedEvent(
-			Object source,
-			String propertyName,
-			Object propertyValue)
+		Object source,
+		String propertyName,
+		Object propertyValue)
 	{
 		super(source);
 

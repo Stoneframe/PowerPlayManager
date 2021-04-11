@@ -32,59 +32,59 @@ public class HandballFormationTemplatePanel
 
 	private static List<FormationTemplate<HandballAttributes>> defaultTemplates = Arrays.asList(
 		new FormationTemplate<HandballAttributes>(
-				"Offensive",
-				Arrays.asList(
-					new PositionTemplate<>(
-							"Pivot",
-							new HandballOffPivotAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Left Wing",
-							new HandballOffWingAttributeEvaluator(),
-							Side.LEFT),
-					new PositionTemplate<>(
-							"Right Wing",
-							new HandballOffWingAttributeEvaluator(),
-							Side.RIGHT),
-					new PositionTemplate<>(
-							"Left Back",
-							new HandballOffBackAttributeEvaluator(),
-							Side.LEFT),
-					new PositionTemplate<>(
-							"Center Back",
-							new HandballOffBackAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Right Back",
-							new HandballOffBackAttributeEvaluator(),
-							Side.RIGHT))),
+			"Offensive",
+			Arrays.asList(
+				new PositionTemplate<>(
+					"Pivot",
+					new HandballOffPivotAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Left Wing",
+					new HandballOffWingAttributeEvaluator(),
+					Side.LEFT),
+				new PositionTemplate<>(
+					"Right Wing",
+					new HandballOffWingAttributeEvaluator(),
+					Side.RIGHT),
+				new PositionTemplate<>(
+					"Left Back",
+					new HandballOffBackAttributeEvaluator(),
+					Side.LEFT),
+				new PositionTemplate<>(
+					"Center Back",
+					new HandballOffBackAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Right Back",
+					new HandballOffBackAttributeEvaluator(),
+					Side.RIGHT))),
 		new FormationTemplate<HandballAttributes>(
-				"Defensive",
-				Arrays.asList(
-					new PositionTemplate<>(
-							"Pivot",
-							new HandballDefPivotAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Left Wing",
-							new HandballDefWingAttributeEvaluator(),
-							Side.LEFT),
-					new PositionTemplate<>(
-							"Right Wing",
-							new HandballDefWingAttributeEvaluator(),
-							Side.RIGHT),
-					new PositionTemplate<>(
-							"Left Back",
-							new HandballDefBackAttributeEvaluator(),
-							Side.LEFT),
-					new PositionTemplate<>(
-							"Center Back",
-							new HandballDefBackAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Right Back",
-							new HandballDefBackAttributeEvaluator(),
-							Side.RIGHT))));
+			"Defensive",
+			Arrays.asList(
+				new PositionTemplate<>(
+					"Pivot",
+					new HandballDefPivotAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Left Wing",
+					new HandballDefWingAttributeEvaluator(),
+					Side.LEFT),
+				new PositionTemplate<>(
+					"Right Wing",
+					new HandballDefWingAttributeEvaluator(),
+					Side.RIGHT),
+				new PositionTemplate<>(
+					"Left Back",
+					new HandballDefBackAttributeEvaluator(),
+					Side.LEFT),
+				new PositionTemplate<>(
+					"Center Back",
+					new HandballDefBackAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Right Back",
+					new HandballDefBackAttributeEvaluator(),
+					Side.RIGHT))));
 
 	private PpmComboBox<AttributeEvaluator<HandballAttributes>> pivotComboBox;
 	private PpmComboBox<AttributeEvaluator<HandballAttributes>> leftWingComboBox;
@@ -94,7 +94,7 @@ public class HandballFormationTemplatePanel
 	private PpmComboBox<AttributeEvaluator<HandballAttributes>> rightBackComboBox;
 
 	public HandballFormationTemplatePanel(
-			PlayerEvaluator<HandballAttributes> playerEvaluator)
+		PlayerEvaluator<HandballAttributes> playerEvaluator)
 	{
 		super(defaultTemplates);
 
@@ -149,28 +149,28 @@ public class HandballFormationTemplatePanel
 	{
 		return Arrays.asList(
 			new PositionTemplate<>(
-					"Pivot",
-					pivotComboBox.getSelection(),
-					Side.UNIVERSAL),
+				"Pivot",
+				pivotComboBox.getSelection(),
+				Side.UNIVERSAL),
 			new PositionTemplate<>(
-					"Left Wing",
-					leftWingComboBox.getSelection(),
-					Side.LEFT),
+				"Left Wing",
+				leftWingComboBox.getSelection(),
+				Side.LEFT),
 			new PositionTemplate<>(
-					"Right Wing",
-					rightWingComboBox.getSelection(),
-					Side.RIGHT),
+				"Right Wing",
+				rightWingComboBox.getSelection(),
+				Side.RIGHT),
 			new PositionTemplate<>(
-					"Left Back",
-					leftBackComboBox.getSelection(),
-					Side.LEFT),
+				"Left Back",
+				leftBackComboBox.getSelection(),
+				Side.LEFT),
 			new PositionTemplate<>(
-					"Center Back",
-					centerBackComboBox.getSelection(),
-					Side.UNIVERSAL),
+				"Center Back",
+				centerBackComboBox.getSelection(),
+				Side.UNIVERSAL),
 			new PositionTemplate<>(
-					"Right Back",
-					rightBackComboBox.getSelection(),
-					Side.RIGHT));
+				"Right Back",
+				rightBackComboBox.getSelection(),
+				Side.RIGHT));
 	}
 }

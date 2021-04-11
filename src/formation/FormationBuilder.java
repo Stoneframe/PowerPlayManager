@@ -8,7 +8,7 @@ import model.Roster;
 public interface FormationBuilder<A extends Attributes>
 {
 	public List<Formation<A>> createFormations(
-			Roster<A> roster,
-			List<FormationTemplate<A>> formationTemplates,
-			PlayerManipulator<A> manipulator);
+		Roster<A> roster,
+		List<FormationTemplate<A>> formationTemplates,
+		PlayerManipulator<A> manipulator);
 }

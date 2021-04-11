@@ -26,15 +26,15 @@ public class FootballProfilePlayersParser
 		try
 		{
 			FootballPlayer player = new FootballPlayer(
-					parseName(textToParse),
-					parseAge(textToParse),
-					parseCL(textToParse),
-					parseSide(textToParse),
-					parseAttributes(textToParse),
-					parseExperience(textToParse),
-					parseChemistry(textToParse),
-					parseEnergy(textToParse),
-					parseTraining(textToParse));
+				parseName(textToParse),
+				parseAge(textToParse),
+				parseCL(textToParse),
+				parseSide(textToParse),
+				parseAttributes(textToParse),
+				parseExperience(textToParse),
+				parseChemistry(textToParse),
+				parseEnergy(textToParse),
+				parseTraining(textToParse));
 
 			return Arrays.asList(player);
 		}

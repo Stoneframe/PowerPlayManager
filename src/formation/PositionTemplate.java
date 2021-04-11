@@ -22,10 +22,10 @@ public class PositionTemplate<A extends Attributes>
 	}
 
 	public PositionTemplate(
-			String name,
-			AttributeEvaluator<A> attributeEvaluator,
-			Side side,
-			boolean isIgnored)
+		String name,
+		AttributeEvaluator<A> attributeEvaluator,
+		Side side,
+		boolean isIgnored)
 	{
 		this(name, attributeEvaluator, side);
 

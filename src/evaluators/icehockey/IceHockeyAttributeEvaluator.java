@@ -11,25 +11,25 @@ public class IceHockeyAttributeEvaluator
 	extends MicroAttributeEvaluator<IceHockeyAttributes>
 {
 	public IceHockeyAttributeEvaluator(
-			String name,
-			int goa,
-			int def,
-			int off,
-			int sho,
-			int pas,
-			int tec,
-			int agr)
+		String name,
+		int goa,
+		int def,
+		int off,
+		int sho,
+		int pas,
+		int tec,
+		int agr)
 	{
 		super(
 			name,
 			new Weights(
-					Arrays.asList(
-						new Weight("Goa", goa),
-						new Weight("Def", def),
-						new Weight("Off", off),
-						new Weight("Sho", sho),
-						new Weight("Pas", pas),
-						new Weight("Tec", tec),
-						new Weight("Agr", agr))));
+				Arrays.asList(
+					new Weight("Goa", goa),
+					new Weight("Def", def),
+					new Weight("Off", off),
+					new Weight("Sho", sho),
+					new Weight("Pas", pas),
+					new Weight("Tec", tec),
+					new Weight("Agr", agr))));
 	}
 }

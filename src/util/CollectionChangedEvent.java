@@ -15,10 +15,10 @@ public class CollectionChangedEvent
 	private Object objectChanged;
 
 	public CollectionChangedEvent(
-			Object source,
-			int action,
-			int indexChanged,
-			Object objectChanged)
+		Object source,
+		int action,
+		int indexChanged,
+		Object objectChanged)
 	{
 		super(source);
 

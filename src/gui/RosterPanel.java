@@ -60,61 +60,61 @@ public class RosterPanel<A extends Attributes>
 		new ColumnData("Side", p -> p.getSide()),
 		new ColumnData("Total", p -> p.getAttributes().getTotalRating()),
 		new ColumnData(
-				"Position",
-				p -> playerEvaluator.getBestPositionRating(p).getName(),
-				100),
+			"Position",
+			p -> playerEvaluator.getBestPositionRating(p).getName(),
+			100),
 		new ColumnData(
-				"Rating",
-				p -> playerEvaluator.getBestPositionRating(p).getValue(),
-				v -> String.format("%.1f", v)),
+			"Rating",
+			p -> playerEvaluator.getBestPositionRating(p).getValue(),
+			v -> String.format("%.1f", v)),
 		new ColumnData(
-				"Form",
-				p -> playerEvaluator.getBestPositionForm(p).getValue(),
-				v -> String.format("%.1f", v)),
+			"Form",
+			p -> playerEvaluator.getBestPositionForm(p).getValue(),
+			v -> String.format("%.1f", v)),
 		new ColumnData(
-				"Training",
-				p -> playerEvaluator.getBestPositionQuality(p).getName(),
-				100),
+			"Training",
+			p -> playerEvaluator.getBestPositionQuality(p).getName(),
+			100),
 		new ColumnData(
-				"Quality",
-				p -> playerEvaluator.getBestPositionQuality(p).getValue(),
-				v -> String.format("%.1f", v)),
+			"Quality",
+			p -> playerEvaluator.getBestPositionQuality(p).getValue(),
+			v -> String.format("%.1f", v)),
 		new ColumnData(
-				"1 Year",
-				p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 1),
-				v -> String.format("%.0f", v)),
+			"1 Year",
+			p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 1),
+			v -> String.format("%.0f", v)),
 		new ColumnData(
-				"2 Years",
-				p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 2),
-				v -> String.format("%.0f", v)),
+			"2 Years",
+			p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 2),
+			v -> String.format("%.0f", v)),
 		new ColumnData(
-				"3 Years",
-				p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 3),
-				v -> String.format("%.0f", v)),
+			"3 Years",
+			p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 3),
+			v -> String.format("%.0f", v)),
 		new ColumnData(
-				"5 Years",
-				p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 5),
-				v -> String.format("%.0f", v)),
+			"5 Years",
+			p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 5),
+			v -> String.format("%.0f", v)),
 		new ColumnData(
-				"7 Years",
-				p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 7),
-				v -> String.format("%.0f", v)),
+			"7 Years",
+			p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 7),
+			v -> String.format("%.0f", v)),
 		new ColumnData(
-				"10 Years",
-				p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 10),
-				v -> String.format("%.0f", v)),
+			"10 Years",
+			p -> playerEvaluator.calculateTotalRatingForAge(p, p.getAge() + 10),
+			v -> String.format("%.0f", v)),
 		new ColumnData(
-				"Age 25",
-				p -> playerEvaluator.calculateTotalRatingForAge(p, 25),
-				v -> String.format("%.0f", v)),
+			"Age 25",
+			p -> playerEvaluator.calculateTotalRatingForAge(p, 25),
+			v -> String.format("%.0f", v)),
 		new ColumnData(
-				"Age 30",
-				p -> playerEvaluator.calculateTotalRatingForAge(p, 30),
-				v -> String.format("%.0f", v)),
+			"Age 30",
+			p -> playerEvaluator.calculateTotalRatingForAge(p, 30),
+			v -> String.format("%.0f", v)),
 		new ColumnData(
-				"Max",
-				p -> playerEvaluator.calculateHighestPossibleRating(p),
-				v -> String.format("%.0f", v)));
+			"Max",
+			p -> playerEvaluator.calculateHighestPossibleRating(p),
+			v -> String.format("%.0f", v)));
 
 	private JTextField facilityLevelTextField;
 	private JTextField staffEffectivnessTextField;
@@ -151,23 +151,24 @@ public class RosterPanel<A extends Attributes>
 
 		rosterTable = new JTable();
 		rosterTable.setAutoCreateRowSorter(true);
-		rosterTable.getSelectionModel().addListSelectionListener(
-			new ListSelectionListener()
-			{
-				public void valueChanged(ListSelectionEvent e)
+		rosterTable.getSelectionModel()
+			.addListSelectionListener(
+				new ListSelectionListener()
 				{
-					if (e.getValueIsAdjusting()) return;
-
-					if (playerSelectedListener != null)
+					public void valueChanged(ListSelectionEvent e)
 					{
-						playerSelectedListener.playerSelected(
-							RosterPanel.this,
-							new PlayerSelectedEvent<A>(RosterPanel.this, getSelectedPlayer()));
-					}
+						if (e.getValueIsAdjusting()) return;
 
-					updateStatLabel();
-				}
-			});
+						if (playerSelectedListener != null)
+						{
+							playerSelectedListener.playerSelected(
+								RosterPanel.this,
+								new PlayerSelectedEvent<A>(RosterPanel.this, getSelectedPlayer()));
+						}
+
+						updateStatLabel();
+					}
+				});
 		rosterTable.setColumnModel(rosterTableColumnModel);
 		rosterTable.setModel(rosterTableModel);
 		rosterTable.registerKeyboardAction(new ActionListener()
@@ -214,11 +215,11 @@ public class RosterPanel<A extends Attributes>
 		lowQualityLimitTextField = new JTextField(5);
 
 		facilityLevelTextField = new JTextField(
-				Integer.toString(playerEvaluator.getFacilityLevel()),
-				5);
+			Integer.toString(playerEvaluator.getFacilityLevel()),
+			5);
 		staffEffectivnessTextField = new JTextField(
-				Integer.toString(playerEvaluator.getStaffEffectivness()),
-				5);
+			Integer.toString(playerEvaluator.getStaffEffectivness()),
+			5);
 
 		applyButton = new JButton("Apply");
 		applyButton.addActionListener(new ActionListener()
@@ -251,8 +252,8 @@ public class RosterPanel<A extends Attributes>
 
 		setBorder(
 			new CompoundBorder(
-					BorderFactory.createTitledBorder("Roster"),
-					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+				BorderFactory.createTitledBorder("Roster"),
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		setLayout(new BorderLayout());
 
@@ -364,9 +365,9 @@ public class RosterPanel<A extends Attributes>
 		private int preferedWidth = 0;
 
 		public ColumnData(
-				String name,
-				Function<Player<A>, Object> getValueAction,
-				Function<Object, String> formatValueFunction)
+			String name,
+			Function<Player<A>, Object> getValueAction,
+			Function<Object, String> formatValueFunction)
 		{
 			this.name = name;
 			this.getValueFunction = getValueAction;
@@ -381,9 +382,9 @@ public class RosterPanel<A extends Attributes>
 		}
 
 		public ColumnData(
-				String name,
-				Function<Player<A>, Object> getValueAction,
-				int preferedWidth)
+			String name,
+			Function<Player<A>, Object> getValueAction,
+			int preferedWidth)
 		{
 			this.name = name;
 			this.getValueFunction = getValueAction;
@@ -460,8 +461,8 @@ public class RosterPanel<A extends Attributes>
 
 		@Override
 		public void collectionChanged(
-				Object source,
-				CollectionChangedEvent event)
+			Object source,
+			CollectionChangedEvent event)
 		{
 			Player<?> player = (Player<?>)event.getObjectChanged();
 
@@ -525,12 +526,12 @@ public class RosterPanel<A extends Attributes>
 
 				@Override
 				public Component getTableCellRendererComponent(
-						JTable table,
-						Object value,
-						boolean isSelected,
-						boolean hasFocus,
-						int row,
-						int column)
+					JTable table,
+					Object value,
+					boolean isSelected,
+					boolean hasFocus,
+					int row,
+					int column)
 				{
 					value = columnDatas.get(columnIndex).formatValue(value);
 

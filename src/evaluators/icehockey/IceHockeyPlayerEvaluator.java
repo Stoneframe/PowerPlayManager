@@ -13,8 +13,8 @@ public class IceHockeyPlayerEvaluator
 	private static final double A = -0.002208, B = -0.02162;
 
 	public IceHockeyPlayerEvaluator(
-			SportSettings settings,
-			List<AttributeEvaluator<IceHockeyAttributes>> attributeEvaluators)
+		SportSettings settings,
+		List<AttributeEvaluator<IceHockeyAttributes>> attributeEvaluators)
 	{
 		super(A, B, settings, 7, attributeEvaluators);
 	}

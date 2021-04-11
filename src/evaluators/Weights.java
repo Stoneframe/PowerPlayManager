@@ -24,21 +24,21 @@ public class Weights
 	public double getRating(Attributes attributes)
 	{
 		return sum()
-				* attributes
-					.stream()
-					.mapToDouble(a -> getWeight(a).getRating(a))
-					.filter(r -> r > 0)
-					.min()
-					.getAsDouble();
+			* attributes
+				.stream()
+				.mapToDouble(a -> getWeight(a).getRating(a))
+				.filter(r -> r > 0)
+				.min()
+				.getAsDouble();
 	}
 
 	public double getQuality(Attributes attributes)
 	{
 		return sum()
-				/ attributes
-					.stream()
-					.mapToDouble(a -> getWeight(a).getQuality(a))
-					.sum();
+			/ attributes
+				.stream()
+				.mapToDouble(a -> getWeight(a).getQuality(a))
+				.sum();
 	}
 
 	public double getRating(Attribute attribute)

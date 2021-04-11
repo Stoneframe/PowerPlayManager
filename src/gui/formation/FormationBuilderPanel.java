@@ -36,6 +36,7 @@ import formation.Formation;
 import formation.FormationBuilder;
 import formation.FormationTemplate;
 import formation.PlayerManipulator;
+import formation.manipulators.PlayerEnergyManipulator;
 import formation.manipulators.PlayerFormManipulator;
 import formation.manipulators.PlayerNoneManipulator;
 import formation.manipulators.PlayerWarpManipulator;
@@ -68,6 +69,7 @@ public class FormationBuilderPanel<A extends Attributes>
 	private JCheckBox callbackCheckbox;
 	private JRadioButton noneRadioButton;
 	private JRadioButton formRadioButton;
+	private JRadioButton energyRadioButton;
 	private JRadioButton warpRadioButton;
 	private JLabel yearsLabel;
 	private JTextField yearsTextField;
@@ -75,12 +77,12 @@ public class FormationBuilderPanel<A extends Attributes>
 	private JButton createFormationsButton;
 
 	public FormationBuilderPanel(
-			FormationTemplatePanelFactory<A> formationTemplatePanelFactory,
-			FormationBuilder<A> formationBuilder,
-			PlayerEvaluator<A> playerEvaluator,
-			PlayerWarper<A> playerWarper,
-			Roster<A> roster,
-			Consumer<List<Formation<A>>> formationsCreatedCallback)
+		FormationTemplatePanelFactory<A> formationTemplatePanelFactory,
+		FormationBuilder<A> formationBuilder,
+		PlayerEvaluator<A> playerEvaluator,
+		PlayerWarper<A> playerWarper,
+		Roster<A> roster,
+		Consumer<List<Formation<A>>> formationsCreatedCallback)
 	{
 		playerListModel = new DefaultListModel<>();
 		roster.forEach(playerListModel::addElement);
@@ -89,11 +91,11 @@ public class FormationBuilderPanel<A extends Attributes>
 		playerList.setCellRenderer(new ListCellRenderer<Player<A>>()
 		{
 			public Component getListCellRendererComponent(
-					JList<? extends Player<A>> list,
-					Player<A> value,
-					int index,
-					boolean isSelected,
-					boolean cellHasFocus)
+				JList<? extends Player<A>> list,
+				Player<A> value,
+				int index,
+				boolean isSelected,
+				boolean cellHasFocus)
 			{
 				JCheckBox checkBox = new JCheckBox(value.getName());
 
@@ -219,6 +221,7 @@ public class FormationBuilderPanel<A extends Attributes>
 		callbackCheckbox = new JCheckBox("Create groups");
 		noneRadioButton = new JRadioButton("None");
 		formRadioButton = new JRadioButton("Form");
+		energyRadioButton = new JRadioButton("Energy");
 		warpRadioButton = new JRadioButton("Warp");
 		yearsLabel = new JLabel("Years:");
 		yearsTextField = new JTextField(3);
@@ -226,6 +229,7 @@ public class FormationBuilderPanel<A extends Attributes>
 		ButtonGroup buttonGroup = new ButtonGroup();
 		buttonGroup.add(noneRadioButton);
 		buttonGroup.add(formRadioButton);
+		buttonGroup.add(energyRadioButton);
 		buttonGroup.add(warpRadioButton);
 
 		ActionListener radioButtonListener = new ActionListener()
@@ -240,6 +244,7 @@ public class FormationBuilderPanel<A extends Attributes>
 		noneRadioButton.setSelected(true);
 		noneRadioButton.addActionListener(radioButtonListener);
 		formRadioButton.addActionListener(radioButtonListener);
+		energyRadioButton.addActionListener(radioButtonListener);
 		warpRadioButton.addActionListener(radioButtonListener);
 		yearsLabel.setEnabled(false);
 		yearsTextField.setEnabled(false);
@@ -285,6 +290,11 @@ public class FormationBuilderPanel<A extends Attributes>
 				if (formRadioButton.isSelected())
 				{
 					return new PlayerFormManipulator<>(playerEvaluator);
+				}
+
+				if (energyRadioButton.isSelected())
+				{
+					return new PlayerEnergyManipulator<>(playerEvaluator);
 				}
 
 				if (warpRadioButton.isSelected())
@@ -350,6 +360,7 @@ public class FormationBuilderPanel<A extends Attributes>
 		southPanel.add(callbackCheckbox);
 		southPanel.add(noneRadioButton);
 		southPanel.add(formRadioButton);
+		southPanel.add(energyRadioButton);
 		southPanel.add(warpRadioButton);
 		southPanel.add(yearsLabel);
 		southPanel.add(yearsTextField);

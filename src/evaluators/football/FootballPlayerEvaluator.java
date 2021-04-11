@@ -13,8 +13,8 @@ public class FootballPlayerEvaluator
 	private static final double A = -0.002208, B = -0.02162;
 
 	public FootballPlayerEvaluator(
-			SportSettings settings,
-			List<AttributeEvaluator<FootballAttributes>> attributeEvaluators)
+		SportSettings settings,
+		List<AttributeEvaluator<FootballAttributes>> attributeEvaluators)
 	{
 		super(A, B, settings, 9, attributeEvaluators);
 	}

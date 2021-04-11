@@ -25,11 +25,11 @@ public class PlayerEvaluator<A extends Attributes>
 	private List<AttributeEvaluator<A>> attributeEvaluators;
 
 	public PlayerEvaluator(
-			double a,
-			double b,
-			SportSettings settings,
-			int numberOfAttributes,
-			List<AttributeEvaluator<A>> attributeEvaluators)
+		double a,
+		double b,
+		SportSettings settings,
+		int numberOfAttributes,
+		List<AttributeEvaluator<A>> attributeEvaluators)
 	{
 		this.a = a;
 		this.b = b;
@@ -92,8 +92,8 @@ public class PlayerEvaluator<A extends Attributes>
 		AttributeEvaluator<A> evaluator = getBestEvaluatorByRating(player.getAttributes());
 
 		return new PositionNameValue(
-				evaluator.getName(),
-				evaluator.getRating(player.getAttributes()));
+			evaluator.getName(),
+			evaluator.getRating(player.getAttributes()));
 	}
 
 	public PositionNameValue getBestPositionForm(Player<A> player)
@@ -103,8 +103,8 @@ public class PlayerEvaluator<A extends Attributes>
 		double rating = bestPositionRating.getValue();
 
 		return new PositionNameValue(
-				bestPositionRating.getName(),
-				calculateFormForRating(player, rating));
+			bestPositionRating.getName(),
+			calculateFormForRating(player, rating));
 	}
 
 	public PositionNameValue getBestPositionQuality(Player<A> player)
@@ -112,8 +112,8 @@ public class PlayerEvaluator<A extends Attributes>
 		AttributeEvaluator<A> evaluator = getBestEvaluatorByQuality(player.getAttributes());
 
 		return new PositionNameValue(
-				evaluator.getName(),
-				evaluator.getQuality(player.getAttributes()));
+			evaluator.getName(),
+			evaluator.getQuality(player.getAttributes()));
 	}
 
 	public double calculateFormForRating(Player<A> player, double rating)
@@ -132,8 +132,8 @@ public class PlayerEvaluator<A extends Attributes>
 		double quality = getBestPositionQuality(player).getValue();
 
 		return F(player.getAge(), age, createPlayerCurve(modifier, quality))
-				* DAYS_PER_SEASON
-				+ player.getAttributes().getTotalRating();
+			* DAYS_PER_SEASON
+			+ player.getAttributes().getTotalRating();
 	}
 
 	public double calculateHighestPossibleRating(Player<A> player)

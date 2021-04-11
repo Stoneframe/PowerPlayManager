@@ -12,7 +12,7 @@ public class FootballFormationTemplatePanelFactory
 
 	@Override
 	public FormationTemplatePanel<FootballAttributes> newInstance(
-			PlayerEvaluator<FootballAttributes> playerEvaluator)
+		PlayerEvaluator<FootballAttributes> playerEvaluator)
 	{
 		return new FootballFormationTemplatePanel(playerEvaluator);
 	}

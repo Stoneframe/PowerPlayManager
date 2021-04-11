@@ -59,10 +59,10 @@ public class CheckBoxList<T>
 				listeners.forEach(
 					l -> l.valueChanged(
 						new ListSelectionEvent(
-								this,
-								list.indexOf(item),
-								list.indexOf(item),
-								false)));
+							this,
+							list.indexOf(item),
+							list.indexOf(item),
+							false)));
 			}
 		});
 

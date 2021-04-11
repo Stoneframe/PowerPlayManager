@@ -52,8 +52,8 @@ public abstract class FormationTemplatePanel<A extends Attributes>
 
 		setBorder(
 			new CompoundBorder(
-					BorderFactory.createTitledBorder("Formation Template"),
-					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+				BorderFactory.createTitledBorder("Formation Template"),
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		addRow("Name:", nameComboBox);
 	}
@@ -68,8 +68,8 @@ public abstract class FormationTemplatePanel<A extends Attributes>
 	public abstract void setFormationTemplate(FormationTemplate<A> template);
 
 	protected static AttributeEvaluator<?> getAttributeEvaluator(
-			FormationTemplate<?> template,
-			int index)
+		FormationTemplate<?> template,
+		int index)
 	{
 		return template.getPositions().get(index).getAttributeEvaluator();
 	}

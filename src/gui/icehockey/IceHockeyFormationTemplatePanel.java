@@ -34,75 +34,75 @@ public class IceHockeyFormationTemplatePanel
 
 	private static List<FormationTemplate<IceHockeyAttributes>> defaultTemplates = Arrays.asList(
 		new FormationTemplate<IceHockeyAttributes>(
-				"Normal",
-				Arrays.asList(
-					new PositionTemplate<>(
-							"Left Wing",
-							new IceHockeyWingAttributeEvaluator(),
-							Side.LEFT),
-					new PositionTemplate<>(
-							"Center",
-							new IceHockeyCenterAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Right Wing",
-							new IceHockeyWingAttributeEvaluator(),
-							Side.RIGHT),
-					new PositionTemplate<>(
-							"Left Back",
-							new IceHockeyBackAttributeEvaluator(),
-							Side.LEFT),
-					new PositionTemplate<>(
-							"Right Back",
-							new IceHockeyBackAttributeEvaluator(),
-							Side.RIGHT))),
+			"Normal",
+			Arrays.asList(
+				new PositionTemplate<>(
+					"Left Wing",
+					new IceHockeyWingAttributeEvaluator(),
+					Side.LEFT),
+				new PositionTemplate<>(
+					"Center",
+					new IceHockeyCenterAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Right Wing",
+					new IceHockeyWingAttributeEvaluator(),
+					Side.RIGHT),
+				new PositionTemplate<>(
+					"Left Back",
+					new IceHockeyBackAttributeEvaluator(),
+					Side.LEFT),
+				new PositionTemplate<>(
+					"Right Back",
+					new IceHockeyBackAttributeEvaluator(),
+					Side.RIGHT))),
 		new FormationTemplate<>(
-				"Power Play",
-				Arrays.asList(
-					new PositionTemplate<>(
-							"Left Wing",
-							new IceHockeyWingAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Center",
-							new IceHockeyCenterAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Right Wing",
-							new IceHockeyWingAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Left Back",
-							new IceHockeyOffBackAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Right Back",
-							new IceHockeyOffensiveAttributeEvaluator(),
-							Side.UNIVERSAL))),
+			"Power Play",
+			Arrays.asList(
+				new PositionTemplate<>(
+					"Left Wing",
+					new IceHockeyWingAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Center",
+					new IceHockeyCenterAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Right Wing",
+					new IceHockeyWingAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Left Back",
+					new IceHockeyOffBackAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Right Back",
+					new IceHockeyOffensiveAttributeEvaluator(),
+					Side.UNIVERSAL))),
 		new FormationTemplate<>(
-				"Box Play",
-				Arrays.asList(
-					new PositionTemplate<>(
-							"Left Wing",
-							new IceHockeyWingAttributeEvaluator(),
-							Side.LEFT,
-							true),
-					new PositionTemplate<>(
-							"Center",
-							new IceHockeyForwardAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Right Wing",
-							new IceHockeyForwardAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Left Back",
-							new IceHockeyDefBackAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Right Back",
-							new IceHockeyDefBackAttributeEvaluator(),
-							Side.UNIVERSAL))));
+			"Box Play",
+			Arrays.asList(
+				new PositionTemplate<>(
+					"Left Wing",
+					new IceHockeyWingAttributeEvaluator(),
+					Side.LEFT,
+					true),
+				new PositionTemplate<>(
+					"Center",
+					new IceHockeyForwardAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Right Wing",
+					new IceHockeyForwardAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Left Back",
+					new IceHockeyDefBackAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Right Back",
+					new IceHockeyDefBackAttributeEvaluator(),
+					Side.UNIVERSAL))));
 
 	private JCheckBox leftWingCheckBox;
 	private JCheckBox centerCheckBox;
@@ -123,7 +123,7 @@ public class IceHockeyFormationTemplatePanel
 	private PpmComboBox<Side> rightBackSideComboBox;
 
 	public IceHockeyFormationTemplatePanel(
-			PlayerEvaluator<IceHockeyAttributes> playerEvaluator)
+		PlayerEvaluator<IceHockeyAttributes> playerEvaluator)
 	{
 		super(defaultTemplates);
 
@@ -213,29 +213,29 @@ public class IceHockeyFormationTemplatePanel
 	{
 		return Arrays.asList(
 			new PositionTemplate<>(
-					"Left Wing",
-					leftWingComboBox.getSelection(),
-					leftWingSideComboBox.getSelection(),
-					!leftWingCheckBox.isSelected()),
+				"Left Wing",
+				leftWingComboBox.getSelection(),
+				leftWingSideComboBox.getSelection(),
+				!leftWingCheckBox.isSelected()),
 			new PositionTemplate<>(
-					"Center",
-					centerComboBox.getSelection(),
-					centerSideComboBox.getSelection(),
-					!centerCheckBox.isSelected()),
+				"Center",
+				centerComboBox.getSelection(),
+				centerSideComboBox.getSelection(),
+				!centerCheckBox.isSelected()),
 			new PositionTemplate<>(
-					"Right Wing",
-					rightWingComboBox.getSelection(),
-					rightWingSideComboBox.getSelection(),
-					!rightWingCheckBox.isSelected()),
+				"Right Wing",
+				rightWingComboBox.getSelection(),
+				rightWingSideComboBox.getSelection(),
+				!rightWingCheckBox.isSelected()),
 			new PositionTemplate<>(
-					"Left Back",
-					leftBackComboBox.getSelection(),
-					leftBackSideComboBox.getSelection(),
-					!leftBackCheckBox.isSelected()),
+				"Left Back",
+				leftBackComboBox.getSelection(),
+				leftBackSideComboBox.getSelection(),
+				!leftBackCheckBox.isSelected()),
 			new PositionTemplate<>(
-					"Right Back",
-					rightBackComboBox.getSelection(),
-					rightBackSideComboBox.getSelection(),
-					!rightBackCheckBox.isSelected()));
+				"Right Back",
+				rightBackComboBox.getSelection(),
+				rightBackSideComboBox.getSelection(),
+				!rightBackCheckBox.isSelected()));
 	}
 }

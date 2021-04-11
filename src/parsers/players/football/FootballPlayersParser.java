@@ -10,16 +10,18 @@ public abstract class FootballPlayersParser
 	extends RegexPlayersParser<FootballAttributes>
 {
 	protected FootballPlayersParser(
-			Pattern regexPattern,
-			boolean includeCL,
-			boolean includeSide,
-			boolean includeQualities,
-			boolean includeExperience,
-			boolean includeChemistry,
-			boolean includeEnergy,
-			boolean includeTraining)
+		int numberOfLines,
+		Pattern regexPattern,
+		boolean includeCL,
+		boolean includeSide,
+		boolean includeQualities,
+		boolean includeExperience,
+		boolean includeChemistry,
+		boolean includeEnergy,
+		boolean includeTraining)
 	{
 		super(
+			numberOfLines,
 			regexPattern,
 			includeCL,
 			includeSide,

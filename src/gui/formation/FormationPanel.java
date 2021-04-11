@@ -19,8 +19,8 @@ public class FormationPanel<A extends Attributes>
 	{
 		setBorder(
 			new CompoundBorder(
-					BorderFactory.createTitledBorder(formation.getName()),
-					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+				BorderFactory.createTitledBorder(formation.getName()),
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		for (Position<A> position : formation.getPositions())
 		{

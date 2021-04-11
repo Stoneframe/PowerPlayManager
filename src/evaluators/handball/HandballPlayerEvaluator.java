@@ -13,8 +13,8 @@ public class HandballPlayerEvaluator
 	private static final double A = -0.002208, B = -0.02162;
 
 	public HandballPlayerEvaluator(
-			SportSettings settings,
-			List<AttributeEvaluator<HandballAttributes>> attributeEvaluators)
+		SportSettings settings,
+		List<AttributeEvaluator<HandballAttributes>> attributeEvaluators)
 	{
 		super(A, B, settings, 8, attributeEvaluators);
 	}

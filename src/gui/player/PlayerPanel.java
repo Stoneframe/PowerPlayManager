@@ -46,8 +46,8 @@ public class PlayerPanel<A extends Attributes>
 	private PlayerEvaluator<A> playerEvaluator;
 
 	public PlayerPanel(
-			AttributesPanel<A> attributePanel,
-			PlayerEvaluator<A> playerEvaluator)
+		AttributesPanel<A> attributePanel,
+		PlayerEvaluator<A> playerEvaluator)
 	{
 		this.attributePanel = attributePanel;
 		this.playerEvaluator = playerEvaluator;

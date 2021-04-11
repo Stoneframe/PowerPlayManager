@@ -40,8 +40,8 @@ public class PlayerFormPanel<A extends Attributes>
 
 		setBorder(
 			new CompoundBorder(
-					BorderFactory.createTitledBorder("Form"),
-					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+				BorderFactory.createTitledBorder("Form"),
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 	}
 
 	public void bind(Player<A> attributes)

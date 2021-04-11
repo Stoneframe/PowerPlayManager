@@ -260,8 +260,8 @@ public class Roster<A extends Attributes>
 					enablePlayer(player);
 				}
 				else if (!isEnabled
-						&& !ignored.contains(player)
-						&& !isInEnabledGroup(player))
+					&& !ignored.contains(player)
+					&& !isInEnabledGroup(player))
 				{
 					disablePlayer(player);
 				}

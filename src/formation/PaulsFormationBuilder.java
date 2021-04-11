@@ -19,9 +19,9 @@ public class PaulsFormationBuilder<A extends Attributes>
 {
 	@Override
 	public List<Formation<A>> createFormations(
-			Roster<A> roster,
-			List<FormationTemplate<A>> formationTemplates,
-			PlayerManipulator<A> manipulator)
+		Roster<A> roster,
+		List<FormationTemplate<A>> formationTemplates,
+		PlayerManipulator<A> manipulator)
 	{
 		List<Formation<A>> formations = new LinkedList<>();
 
@@ -38,10 +38,10 @@ public class PaulsFormationBuilder<A extends Attributes>
 				Position<A> position = new Position<>(positionTemplate.getName());
 				PositionAssigner positionAssigner =
 						new PositionAssigner(
-								roster,
-								positionTemplate,
-								position,
-								manipulator);
+							roster,
+							positionTemplate,
+							position,
+							manipulator);
 
 				positions.add(position);
 				positionAssigners.add(positionAssigner);
@@ -88,7 +88,7 @@ public class PaulsFormationBuilder<A extends Attributes>
 	}
 
 	private int calculateNumberOfLayers(
-			Map<Object, List<PositionAssigner>> positionAssignerGroups)
+		Map<Object, List<PositionAssigner>> positionAssignerGroups)
 	{
 		return positionAssignerGroups
 			.values()
@@ -111,10 +111,10 @@ public class PaulsFormationBuilder<A extends Attributes>
 		private PlayerManipulator<A> manipulator;
 
 		public PositionAssigner(
-				Roster<A> roster,
-				PositionTemplate<A> positionTemplate,
-				Position<A> position,
-				PlayerManipulator<A> manipulator)
+			Roster<A> roster,
+			PositionTemplate<A> positionTemplate,
+			Position<A> position,
+			PlayerManipulator<A> manipulator)
 		{
 			this.roster = roster;
 			this.positionTemplate = positionTemplate;
@@ -136,7 +136,7 @@ public class PaulsFormationBuilder<A extends Attributes>
 
 			int comparison;
 			while ((comparison = comparePlayersAtRank(this, other, rank)) == 0
-					&& rank < roster.size())
+				&& rank < roster.size())
 			{
 				rank++;
 			}
@@ -152,9 +152,9 @@ public class PaulsFormationBuilder<A extends Attributes>
 		}
 
 		private int comparePlayersAtRank(
-				PositionAssigner assigner1,
-				PositionAssigner assigner2,
-				int rank)
+			PositionAssigner assigner1,
+			PositionAssigner assigner2,
+			int rank)
 		{
 			return Double.compare(
 				assigner1.getRatingOfPlayerAtRank(rank),

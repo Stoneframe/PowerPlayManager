@@ -65,14 +65,14 @@ public class MainPanel<A extends Attributes>
 	private Roster<A> roster = new Roster<>();
 
 	public MainPanel(
-			MenuBar menuBar,
-			FileHandler<A> fileHandler,
-			AttributesPanel<A> attributesPanel,
-			FormationTemplatePanelFactory<A> formationTemplatePanelFactory,
-			FormationBuilder<A> formationBuilder,
-			PlayerWarper<A> playerWarper,
-			List<PlayersParser<A>> parsers,
-			PlayerEvaluator<A> playerEvaluator)
+		MenuBar menuBar,
+		FileHandler<A> fileHandler,
+		AttributesPanel<A> attributesPanel,
+		FormationTemplatePanelFactory<A> formationTemplatePanelFactory,
+		FormationBuilder<A> formationBuilder,
+		PlayerWarper<A> playerWarper,
+		List<PlayersParser<A>> parsers,
+		PlayerEvaluator<A> playerEvaluator)
 	{
 		menuBar.addImportActionListener(new ActionListener()
 		{
@@ -234,12 +234,12 @@ public class MainPanel<A extends Attributes>
 
 						formationBuilderFrame.setContentPane(
 							new FormationBuilderPanel<A>(
-									formationTemplatePanelFactory,
-									formationBuilder,
-									playerEvaluator,
-									playerWarper,
-									roster.copy(),
-									formations -> createGroups(formations)));
+								formationTemplatePanelFactory,
+								formationBuilder,
+								playerEvaluator,
+								playerWarper,
+								roster.copy(),
+								formations -> createGroups(formations)));
 						formationBuilderFrame.pack();
 						formationBuilderFrame.setLocationRelativeTo(MainPanel.this);
 						formationBuilderFrame.setVisible(true);
@@ -322,10 +322,10 @@ public class MainPanel<A extends Attributes>
 
 						plotFrame.setContentPane(
 							new PlotPanel<A>(
-									playerEvaluator,
-									playerWarper,
-									rosterPanel.getSelectedPlayers(),
-									groupPanel.getSelectedGroups()));
+								playerEvaluator,
+								playerWarper,
+								rosterPanel.getSelectedPlayers(),
+								groupPanel.getSelectedGroups()));
 						plotFrame.pack();
 						plotFrame.setLocationRelativeTo(MainPanel.this);
 						plotFrame.setVisible(true);
@@ -376,7 +376,7 @@ public class MainPanel<A extends Attributes>
 			return fc.accept(fc.getSelectedFile())
 					? fc.getSelectedFile()
 					: new File(
-							fc.getSelectedFile() + "." + fileFilter.getExtensions()[0]);
+						fc.getSelectedFile() + "." + fileFilter.getExtensions()[0]);
 		}
 		else
 		{

@@ -1,12 +1,11 @@
 package parsers.players.handball;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class HandballPractisePlayersParser
 	extends HandballPlayersParser
 {
+	private static final int NUMBER_OF_LINES = 1;
 	private static final Pattern REGEX_PATTERN = createPattern(
 		name(),
 		ignore(), // Position
@@ -27,6 +26,7 @@ public class HandballPractisePlayersParser
 	public HandballPractisePlayersParser()
 	{
 		super(
+			NUMBER_OF_LINES,
 			REGEX_PATTERN,
 			INCLUDE_CL,
 			INCLUDE_SIDE,
@@ -41,11 +41,5 @@ public class HandballPractisePlayersParser
 	public String getName()
 	{
 		return "Practise";
-	}
-
-	@Override
-	protected List<String> toSinglePlayerPerLine(String textToParse)
-	{
-		return Arrays.asList(textToParse.split("\n"));
 	}
 }

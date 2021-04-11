@@ -49,10 +49,10 @@ public class PlotPanel<A extends Attributes>
 	private PlayerWarper<A> playerWarper;
 
 	public PlotPanel(
-			PlayerEvaluator<A> playerEvaluator,
-			PlayerWarper<A> playerWarper,
-			List<Player<A>> players,
-			List<Roster<A>.Group> groups)
+		PlayerEvaluator<A> playerEvaluator,
+		PlayerWarper<A> playerWarper,
+		List<Player<A>> players,
+		List<Roster<A>.Group> groups)
 	{
 		this.playerEvaluator = playerEvaluator;
 		this.playerWarper = playerWarper;
@@ -102,11 +102,11 @@ public class PlotPanel<A extends Attributes>
 		plot.setRenderer(renderer);
 		plot.setDrawingSupplier(
 			new DefaultDrawingSupplier(
-					individualColors,
-					DefaultDrawingSupplier.DEFAULT_OUTLINE_PAINT_SEQUENCE,
-					DefaultDrawingSupplier.DEFAULT_STROKE_SEQUENCE,
-					DefaultDrawingSupplier.DEFAULT_OUTLINE_STROKE_SEQUENCE,
-					DefaultDrawingSupplier.DEFAULT_SHAPE_SEQUENCE));
+				individualColors,
+				DefaultDrawingSupplier.DEFAULT_OUTLINE_PAINT_SEQUENCE,
+				DefaultDrawingSupplier.DEFAULT_STROKE_SEQUENCE,
+				DefaultDrawingSupplier.DEFAULT_OUTLINE_STROKE_SEQUENCE,
+				DefaultDrawingSupplier.DEFAULT_SHAPE_SEQUENCE));
 
 		ChartPanel chartPanel = new ChartPanel(chart);
 
@@ -147,8 +147,8 @@ public class PlotPanel<A extends Attributes>
 	}
 
 	private long nbrOfGroupsContainingAnyPlayersToPlot(
-			List<Roster<A>.Group> groups,
-			List<Player<A>> players)
+		List<Roster<A>.Group> groups,
+		List<Player<A>> players)
 	{
 		return groups
 			.stream()

@@ -89,68 +89,68 @@ public class MainFrame
 		MenuBar menuBar = new MenuBar(this, tabbedPane);
 
 		iceHockeyPanel = new IceHockeyMainPanel(
-				menuBar,
-				new IceHockeyFileHandler(),
+			menuBar,
+			new IceHockeyFileHandler(),
+			Arrays.asList(
+				new IceHockeyProfilePlayersParser(),
+				new IceHockeyMarketPlayersParser(),
+				new IceHockeyOverviewPlayersParser(),
+				new IceHockeyPractiseProPlayersParser(),
+				new IceHockeyFormationPlayersParser()),
+			new IceHockeyPlayerEvaluator(
+				new SportSettings(new SettingStorage("icehockey")),
 				Arrays.asList(
-					new IceHockeyProfilePlayersParser(),
-					new IceHockeyMarketPlayersParser(),
-					new IceHockeyOverviewPlayersParser(),
-					new IceHockeyPractiseProPlayersParser(),
-					new IceHockeyFormationPlayersParser()),
-				new IceHockeyPlayerEvaluator(
-						new SportSettings(new SettingStorage("icehockey")),
-						Arrays.asList(
-							new IceHockeyGoalieAttributeEvaluator(),
-							new IceHockeyForwardAttributeEvaluator(),
-							new IceHockeyWingAttributeEvaluator(),
-							new IceHockeyCenterAttributeEvaluator(),
-							new IceHockeyBackAttributeEvaluator(),
-							new IceHockeyDefBackAttributeEvaluator(),
-							new IceHockeyOffBackAttributeEvaluator(),
-							new IceHockeyOffensiveAttributeEvaluator())));
+					new IceHockeyGoalieAttributeEvaluator(),
+					new IceHockeyForwardAttributeEvaluator(),
+					new IceHockeyWingAttributeEvaluator(),
+					new IceHockeyCenterAttributeEvaluator(),
+					new IceHockeyBackAttributeEvaluator(),
+					new IceHockeyDefBackAttributeEvaluator(),
+					new IceHockeyOffBackAttributeEvaluator(),
+					new IceHockeyOffensiveAttributeEvaluator())));
 
 		footballPanel = new FootballMainPanel(
-				menuBar,
-				new FootballFileHandler(),
+			menuBar,
+			new FootballFileHandler(),
+			Arrays.asList(
+				new FootballProfilePlayersParser(),
+				new FootballMarketPlayersParser(),
+				new FootballOverviewPlayersParser(),
+				new FootballPractisePlayersParser(),
+				new FootballPractiseProPlayersParser(),
+				new FootballFormationPlayersProParser()),
+			new FootballPlayerEvaluator(
+				new SportSettings(new SettingStorage("football")),
 				Arrays.asList(
-					new FootballProfilePlayersParser(),
-					new FootballMarketPlayersParser(),
-					new FootballOverviewPlayersParser(),
-					new FootballPractisePlayersParser(),
-					new FootballPractiseProPlayersParser(),
-					new FootballFormationPlayersProParser()),
-				new FootballPlayerEvaluator(
-						new SportSettings(new SettingStorage("football")),
-						Arrays.asList(
-							new FootballGoalkeeperAttributeEvaluator(),
-							new FootballFullBackAttributeEvaluator(),
-							new FootballCenterBackAttributeEvaluator(),
-							new FootballWideMidfielderAttributeEvaluator(),
-							new FootballCenterMidfielderAttributeEvaluator(),
-							new FootballWideForwardAttributeEvaluator(),
-							new FootballCenterForwardAttributeEvaluator())));
+					new FootballGoalkeeperAttributeEvaluator(),
+					new FootballFullBackAttributeEvaluator(),
+					new FootballCenterBackAttributeEvaluator(),
+					new FootballWideMidfielderAttributeEvaluator(),
+					new FootballCenterMidfielderAttributeEvaluator(),
+					new FootballWideForwardAttributeEvaluator(),
+					new FootballCenterForwardAttributeEvaluator())));
 
 		handballPanel = new HandballMainPanel(
-				menuBar,
-				new HandballFileHandler(),
+			menuBar,
+			new HandballFileHandler(),
+			Arrays.asList(
+				new HandballProfilePlayersParser(),
+				new HandballMarketPlayersParser(),
+				new HandballOverviewPlayersParser(),
+				new HandballPractisePlayersParser(),
+				new HandballPractiseProPlayersParser(),
+				new HandballFormationPlayersParser(),
+				new HandballFormationPlayersProParser()),
+			new HandballPlayerEvaluator(
+				new SportSettings(new SettingStorage("handball")),
 				Arrays.asList(
-					new HandballProfilePlayersParser(),
-					new HandballMarketPlayersParser(),
-					new HandballOverviewPlayersParser(),
-					new HandballPractisePlayersParser(),
-					new HandballPractiseProPlayersParser(),
-					new HandballFormationPlayersParser(),
-					new HandballFormationPlayersProParser()),
-				new HandballPlayerEvaluator(
-						new SportSettings(new SettingStorage("handball")),
-						Arrays.asList(
-							new HandballGoalieAttributeEvaluator(),
-							new HandballDefBackAttributeEvaluator(),
-							new HandballDefPivotAttributeEvaluator(),
-							new HandballDefWingAttributeEvaluator(),
-							new HandballOffBackAttributeEvaluator(),
-							new HandballOffPivotAttributeEvaluator(),
-							new HandballOffWingAttributeEvaluator())));
+					new HandballGoalieAttributeEvaluator(),
+					new HandballDefBackAttributeEvaluator(),
+					new HandballDefPivotAttributeEvaluator(),
+					new HandballDefWingAttributeEvaluator(),
+					new HandballOffBackAttributeEvaluator(),
+					new HandballOffPivotAttributeEvaluator(),
+					new HandballOffWingAttributeEvaluator())));
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab(ICE_HOCKEY_TITLE, iceHockeyPanel);

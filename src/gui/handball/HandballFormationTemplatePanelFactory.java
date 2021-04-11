@@ -11,7 +11,7 @@ public class HandballFormationTemplatePanelFactory
 {
 	@Override
 	public FormationTemplatePanel<HandballAttributes> newInstance(
-			PlayerEvaluator<HandballAttributes> playerEvaluator)
+		PlayerEvaluator<HandballAttributes> playerEvaluator)
 	{
 		return new HandballFormationTemplatePanel(playerEvaluator);
 	}

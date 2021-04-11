@@ -10,16 +10,18 @@ public abstract class HandballPlayersParser
 	extends RegexPlayersParser<HandballAttributes>
 {
 	protected HandballPlayersParser(
-			Pattern regexPattern,
-			boolean includeCL,
-			boolean includeSide,
-			boolean includeQualities,
-			boolean includeExperience,
-			boolean includeChemistry,
-			boolean includeEnergy,
-			boolean includeTraining)
+		int numberOfLines,
+		Pattern regexPattern,
+		boolean includeCL,
+		boolean includeSide,
+		boolean includeQualities,
+		boolean includeExperience,
+		boolean includeChemistry,
+		boolean includeEnergy,
+		boolean includeTraining)
 	{
 		super(
+			numberOfLines,
 			regexPattern,
 			includeCL,
 			includeSide,

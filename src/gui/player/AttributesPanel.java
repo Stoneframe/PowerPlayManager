@@ -23,8 +23,8 @@ public abstract class AttributesPanel<A extends Attributes>
 	{
 		setBorder(
 			new CompoundBorder(
-					BorderFactory.createTitledBorder("Attributes"),
-					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+				BorderFactory.createTitledBorder("Attributes"),
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 	}
 
 	public void bind(A attributes)

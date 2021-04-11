@@ -16,15 +16,15 @@ public class Player<A extends Attributes>
 	protected double training;
 
 	public Player(
-			String name,
-			int age,
-			int cl,
-			Side side,
-			A attributes,
-			int experience,
-			int chemistry,
-			int energy,
-			double training)
+		String name,
+		int age,
+		int cl,
+		Side side,
+		A attributes,
+		int experience,
+		int chemistry,
+		int energy,
+		double training)
 	{
 		this.name = name;
 		this.age = age;

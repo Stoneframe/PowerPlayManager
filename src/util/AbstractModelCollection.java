@@ -22,9 +22,9 @@ public abstract class AbstractModelCollection
 	}
 
 	protected void fireCollectionChanged(
-			int action,
-			int indexChanged,
-			Object objectChanged)
+		int action,
+		int indexChanged,
+		Object objectChanged)
 	{
 		if (listeners == null) listeners = new LinkedList<>();
 
@@ -33,10 +33,10 @@ public abstract class AbstractModelCollection
 			listener.collectionChanged(
 				this,
 				new CollectionChangedEvent(
-						this,
-						action,
-						indexChanged,
-						objectChanged));
+					this,
+					action,
+					indexChanged,
+					objectChanged));
 		}
 	}
 }

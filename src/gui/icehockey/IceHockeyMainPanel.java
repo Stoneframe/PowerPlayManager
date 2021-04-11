@@ -17,10 +17,10 @@ public class IceHockeyMainPanel
 	private static final long serialVersionUID = -9170227741926378853L;
 
 	public IceHockeyMainPanel(
-			MenuBar menuBar,
-			FileHandler<IceHockeyAttributes> fileHandler,
-			List<PlayersParser<IceHockeyAttributes>> parsers,
-			PlayerEvaluator<IceHockeyAttributes> playerEvaluator)
+		MenuBar menuBar,
+		FileHandler<IceHockeyAttributes> fileHandler,
+		List<PlayersParser<IceHockeyAttributes>> parsers,
+		PlayerEvaluator<IceHockeyAttributes> playerEvaluator)
 	{
 		super(
 			menuBar,

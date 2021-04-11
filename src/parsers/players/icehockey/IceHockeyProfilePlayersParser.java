@@ -26,15 +26,15 @@ public class IceHockeyProfilePlayersParser
 		try
 		{
 			IceHockeyPlayer player = new IceHockeyPlayer(
-					parseName(textToParse),
-					parseAge(textToParse),
-					parseCL(textToParse),
-					parseSide(textToParse),
-					parseAttributes(textToParse),
-					parseExperience(textToParse),
-					parseChemistry(textToParse),
-					parseEnergy(textToParse),
-					parseTraining(textToParse));
+				parseName(textToParse),
+				parseAge(textToParse),
+				parseCL(textToParse),
+				parseSide(textToParse),
+				parseAttributes(textToParse),
+				parseExperience(textToParse),
+				parseChemistry(textToParse),
+				parseEnergy(textToParse),
+				parseTraining(textToParse));
 
 			return Arrays.asList(player);
 		}

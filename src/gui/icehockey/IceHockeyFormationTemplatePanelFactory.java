@@ -11,7 +11,7 @@ public class IceHockeyFormationTemplatePanelFactory
 {
 	@Override
 	public FormationTemplatePanel<IceHockeyAttributes> newInstance(
-			PlayerEvaluator<IceHockeyAttributes> playerEvaluator)
+		PlayerEvaluator<IceHockeyAttributes> playerEvaluator)
 	{
 		return new IceHockeyFormationTemplatePanel(playerEvaluator);
 	}

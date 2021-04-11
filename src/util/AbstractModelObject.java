@@ -22,8 +22,8 @@ public abstract class AbstractModelObject
 	}
 
 	protected void firePropertyChanged(
-			String propertyName,
-			Object propertyValue)
+		String propertyName,
+		Object propertyValue)
 	{
 		firePropertyChanged(
 			new PropertyChangedEvent(this, propertyName, propertyValue));

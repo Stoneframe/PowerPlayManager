@@ -27,52 +27,52 @@ public class FootballFormationTemplatePanel
 
 	private static List<FormationTemplate<FootballAttributes>> defaultTemplates = Arrays.asList(
 		new FormationTemplate<>(
-				"4-4-2",
-				Arrays.asList(
-					new PositionTemplate<>(
-							"Goalkeeper",
-							new FootballGoalkeeperAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Left Full Back",
-							new FootballFullBackAttributeEvaluator(),
-							Side.LEFT),
-					new PositionTemplate<>(
-							"Center Back",
-							new FootballCenterBackAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Center Back",
-							new FootballCenterBackAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Right Full Back",
-							new FootballFullBackAttributeEvaluator(),
-							Side.RIGHT),
-					new PositionTemplate<>(
-							"Left Wide Midfielder",
-							new FootballWideMidfielderAttributeEvaluator(),
-							Side.LEFT),
-					new PositionTemplate<>(
-							"Center Midfielder",
-							new FootballCenterMidfielderAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Center Midfielder",
-							new FootballCenterMidfielderAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Right Wide Midfielder",
-							new FootballWideMidfielderAttributeEvaluator(),
-							Side.RIGHT),
-					new PositionTemplate<>(
-							"Center Forward",
-							new FootballCenterForwardAttributeEvaluator(),
-							Side.UNIVERSAL),
-					new PositionTemplate<>(
-							"Center Forward",
-							new FootballCenterForwardAttributeEvaluator(),
-							Side.UNIVERSAL))));
+			"4-4-2",
+			Arrays.asList(
+				new PositionTemplate<>(
+					"Goalkeeper",
+					new FootballGoalkeeperAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Left Full Back",
+					new FootballFullBackAttributeEvaluator(),
+					Side.LEFT),
+				new PositionTemplate<>(
+					"Center Back",
+					new FootballCenterBackAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Center Back",
+					new FootballCenterBackAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Right Full Back",
+					new FootballFullBackAttributeEvaluator(),
+					Side.RIGHT),
+				new PositionTemplate<>(
+					"Left Wide Midfielder",
+					new FootballWideMidfielderAttributeEvaluator(),
+					Side.LEFT),
+				new PositionTemplate<>(
+					"Center Midfielder",
+					new FootballCenterMidfielderAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Center Midfielder",
+					new FootballCenterMidfielderAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Right Wide Midfielder",
+					new FootballWideMidfielderAttributeEvaluator(),
+					Side.RIGHT),
+				new PositionTemplate<>(
+					"Center Forward",
+					new FootballCenterForwardAttributeEvaluator(),
+					Side.UNIVERSAL),
+				new PositionTemplate<>(
+					"Center Forward",
+					new FootballCenterForwardAttributeEvaluator(),
+					Side.UNIVERSAL))));
 
 	private JCheckBox goalkeeperCheckBox;
 	private JCheckBox fieldPlayer1CheckBox;
@@ -110,7 +110,7 @@ public class FootballFormationTemplatePanel
 	private PpmComboBox<Side> fieldPlayer10SideComboBox;
 
 	protected FootballFormationTemplatePanel(
-			PlayerEvaluator<FootballAttributes> playerEvaluator)
+		PlayerEvaluator<FootballAttributes> playerEvaluator)
 	{
 		super(defaultTemplates);
 
@@ -169,10 +169,10 @@ public class FootballFormationTemplatePanel
 	{
 		List<PositionTemplate<FootballAttributes>> positionTemplates = Arrays.asList(
 			new PositionTemplate<>(
-					"Goalkeeper",
-					goalkeeperComboBox.getSelection(),
-					Side.UNIVERSAL,
-					!goalkeeperCheckBox.isSelected()),
+				"Goalkeeper",
+				goalkeeperComboBox.getSelection(),
+				Side.UNIVERSAL,
+				!goalkeeperCheckBox.isSelected()),
 			getFieldPlayerPositionTemplate(
 				fieldPlayer1SideComboBox.getSelection(),
 				fieldPlayer1ComboBox.getSelection(),
@@ -301,20 +301,20 @@ public class FootballFormationTemplatePanel
 	}
 
 	private PositionTemplate<FootballAttributes> getFieldPlayerPositionTemplate(
-			Side side,
-			AttributeEvaluator<FootballAttributes> attributeEvaluator,
-			boolean isIgnored)
+		Side side,
+		AttributeEvaluator<FootballAttributes> attributeEvaluator,
+		boolean isIgnored)
 	{
 		return new PositionTemplate<>(
-				getPositionName(side, attributeEvaluator),
-				attributeEvaluator,
-				side,
-				isIgnored);
+			getPositionName(side, attributeEvaluator),
+			attributeEvaluator,
+			side,
+			isIgnored);
 	}
 
 	private String getPositionName(
-			Side side,
-			AttributeEvaluator<FootballAttributes> attributeEvaluator)
+		Side side,
+		AttributeEvaluator<FootballAttributes> attributeEvaluator)
 	{
 		if (side.equals(Side.UNIVERSAL))
 		{

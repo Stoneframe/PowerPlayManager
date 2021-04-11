@@ -17,9 +17,9 @@ public class PlayerWarpManipulator<A extends Attributes>
 	private int years;
 
 	public PlayerWarpManipulator(
-			PlayerEvaluator<A> playerEvaluator,
-			PlayerWarper<A> playerWarper,
-			int years)
+		PlayerEvaluator<A> playerEvaluator,
+		PlayerWarper<A> playerWarper,
+		int years)
 	{
 		this.playerEvaluator = playerEvaluator;
 		this.playerWarper = playerWarper;

@@ -41,8 +41,8 @@ public class TrainingPlannerPanel<A extends Attributes>
 
 		setBorder(
 			new CompoundBorder(
-					BorderFactory.createTitledBorder("Training Planner"),
-					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+				BorderFactory.createTitledBorder("Training Planner"),
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		setLayout(new GridBagLayout());
 

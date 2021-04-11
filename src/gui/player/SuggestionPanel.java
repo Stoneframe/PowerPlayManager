@@ -33,8 +33,8 @@ public abstract class SuggestionPanel<A extends Attributes>
 
 		setBorder(
 			new CompoundBorder(
-					BorderFactory.createTitledBorder(title + " Suggestions"),
-					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+				BorderFactory.createTitledBorder(title + " Suggestions"),
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		setLayout(new GridLayout(DISPLAYED_POSITIONS_LIMIT, 2));
 	}
@@ -57,13 +57,13 @@ public abstract class SuggestionPanel<A extends Attributes>
 	}
 
 	protected abstract int compare(
-			A attributes,
-			AttributeEvaluator<A> evaluator1,
-			AttributeEvaluator<A> evaluator2);
+		A attributes,
+		AttributeEvaluator<A> evaluator1,
+		AttributeEvaluator<A> evaluator2);
 
 	protected abstract double getValue(
-			A attributes,
-			AttributeEvaluator<A> evaluator);
+		A attributes,
+		AttributeEvaluator<A> evaluator);
 
 	private void update()
 	{

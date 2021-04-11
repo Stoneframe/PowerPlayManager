@@ -18,8 +18,8 @@ public abstract class EvaluatorComparator<A extends Attributes>
 
 	@Override
 	public int compare(
-			AttributeEvaluator<A> evaluator1,
-			AttributeEvaluator<A> evaluator2)
+		AttributeEvaluator<A> evaluator1,
+		AttributeEvaluator<A> evaluator2)
 	{
 		return Double.compare(
 			getValue(evaluator1, attributes),
@@ -27,6 +27,6 @@ public abstract class EvaluatorComparator<A extends Attributes>
 	}
 
 	protected abstract double getValue(
-			AttributeEvaluator<A> evaluator,
-			A attributes);
+		AttributeEvaluator<A> evaluator,
+		A attributes);
 }

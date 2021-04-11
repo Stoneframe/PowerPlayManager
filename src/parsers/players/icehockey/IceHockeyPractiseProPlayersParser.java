@@ -1,13 +1,11 @@
 package parsers.players.icehockey;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class IceHockeyPractiseProPlayersParser
 	extends IceHockeyPlayersParser
 {
+	private static final int NUMBER_OF_LINES = 16;
 	private static final Pattern REGEX_PATTERN = createPattern(
 		name(),
 		ignore(), // Position
@@ -41,6 +39,7 @@ public class IceHockeyPractiseProPlayersParser
 	public IceHockeyPractiseProPlayersParser()
 	{
 		super(
+			NUMBER_OF_LINES,
 			REGEX_PATTERN,
 			INCLUDE_CL,
 			INCLUDE_SIDE,
@@ -55,20 +54,5 @@ public class IceHockeyPractiseProPlayersParser
 	public String getName()
 	{
 		return "Practise (Pro)";
-	}
-
-	@Override
-	protected List<String> toSinglePlayerPerLine(String textToParse)
-	{
-		List<String> lines = new LinkedList<>();
-
-		String[] split = textToParse.split("\n");
-
-		for (int i = 0; i < split.length; i += 15)
-		{
-			lines.add(String.join("\t", Arrays.copyOfRange(split, i, i + 15)));
-		}
-
-		return lines;
 	}
 }

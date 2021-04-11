@@ -244,6 +244,7 @@ public abstract class RegexPlayersParser<A extends Attributes>
 			"Zimbabwe"
 	};
 
+	private final int numberOfLines;
 	private final Pattern regexPattern;
 
 	protected final boolean includeCL;
@@ -255,15 +256,17 @@ public abstract class RegexPlayersParser<A extends Attributes>
 	protected final boolean includeTraining;
 
 	protected RegexPlayersParser(
-			Pattern regexPattern,
-			boolean includeCL,
-			boolean includeSide,
-			boolean includeQualities,
-			boolean includeExperience,
-			boolean includeChemistry,
-			boolean includeEnergy,
-			boolean includeTraining)
+		int numberOfLines,
+		Pattern regexPattern,
+		boolean includeCL,
+		boolean includeSide,
+		boolean includeQualities,
+		boolean includeExperience,
+		boolean includeChemistry,
+		boolean includeEnergy,
+		boolean includeTraining)
 	{
+		this.numberOfLines = numberOfLines;
 		this.regexPattern = regexPattern;
 
 		this.includeCL = includeCL;
@@ -308,18 +311,30 @@ public abstract class RegexPlayersParser<A extends Attributes>
 		A attributes = createAttributes(matcher, includeQualities);
 
 		return new Player<A>(
-				matcher.group("name"),
-				Integer.parseInt(matcher.group("age")),
-				includeCL ? Integer.parseInt(matcher.group("cl")) : -1,
-				includeSide ? SideParser.parseSide(matcher.group("side")) : Side.UNKNOWN,
-				attributes,
-				includeExperience ? Integer.parseInt(matcher.group("experience")) : 0,
-				includeChemistry ? Integer.parseInt(matcher.group("chemistry")) : 0,
-				includeEnergy ? Integer.parseInt(matcher.group("energy")) : 100,
-				includeTraining ? Double.parseDouble(matcher.group("training")) : 0);
+			matcher.group("name"),
+			Integer.parseInt(matcher.group("age")),
+			includeCL ? Integer.parseInt(matcher.group("cl")) : -1,
+			includeSide ? SideParser.parseSide(matcher.group("side")) : Side.UNKNOWN,
+			attributes,
+			includeExperience ? Integer.parseInt(matcher.group("experience")) : 0,
+			includeChemistry ? Integer.parseInt(matcher.group("chemistry")) : 0,
+			includeEnergy ? Integer.parseInt(matcher.group("energy")) : 100,
+			includeTraining ? Double.parseDouble(matcher.group("training")) : 0);
 	}
 
-	protected abstract List<String> toSinglePlayerPerLine(String textToParse);
+	protected List<String> toSinglePlayerPerLine(String textToParse)
+	{
+		List<String> lines = new LinkedList<>();
+
+		String[] split = textToParse.split("\n");
+
+		for (int i = 0; i < split.length; i += numberOfLines)
+		{
+			lines.add(String.join("\t", Arrays.copyOfRange(split, i, i + numberOfLines)));
+		}
+
+		return lines;
+	}
 
 	protected abstract A createAttributes(Matcher matcher, boolean includeQuality);
 
@@ -336,8 +351,8 @@ public abstract class RegexPlayersParser<A extends Attributes>
 	protected static String name()
 	{
 		return "(?<country>("
-				+ String.join("|", countries).replace("-", "\\-")
-				+ ")+) (?<name>\\S+(((?!( Dagar| Spelare| \\d))( \\S+))+)).*";
+			+ String.join("|", countries).replace("-", "\\-")
+			+ ")+) (?<name>\\S+(((?!( Dagar| Spelare| \\d))( \\S+))+)).*";
 	}
 
 	protected static String age()
