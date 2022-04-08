@@ -10,12 +10,12 @@ import settings.SportSettings;
 public class HandballPlayerEvaluator
 	extends PlayerEvaluator<HandballAttributes>
 {
-	private static final double A = -0.002208, B = -0.02162;
+	private static final double A = -0.002208, B = -0.02162, C = 1;
 
 	public HandballPlayerEvaluator(
 		SportSettings settings,
 		List<AttributeEvaluator<HandballAttributes>> attributeEvaluators)
 	{
-		super(A, B, settings, 8, attributeEvaluators);
+		super(A, B, C, settings, 8, attributeEvaluators);
 	}
 }

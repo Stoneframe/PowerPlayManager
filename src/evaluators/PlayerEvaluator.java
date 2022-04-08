@@ -14,10 +14,10 @@ public class PlayerEvaluator<A extends Attributes>
 {
 	private static final int DAYS_PER_SEASON = 112;
 
-	private static final double EXPERIENCE_FACTOR = 0.3;
+	private static final double EXPERIENCE_FACTOR = 0.2;
 	private static final double CHEMISTRY_FACTOR = 0.2;
 
-	private double a, b;
+	private double a, b, c;
 
 	private SportSettings settings;
 
@@ -27,12 +27,14 @@ public class PlayerEvaluator<A extends Attributes>
 	public PlayerEvaluator(
 		double a,
 		double b,
+		double c,
 		SportSettings settings,
 		int numberOfAttributes,
 		List<AttributeEvaluator<A>> attributeEvaluators)
 	{
 		this.a = a;
 		this.b = b;
+		this.c = c;
 		this.settings = settings;
 		this.numberOfAttributes = numberOfAttributes;
 		this.attributeEvaluators = attributeEvaluators;
@@ -172,7 +174,7 @@ public class PlayerEvaluator<A extends Attributes>
 
 	private double getFacilityTraining()
 	{
-		return getFacilityEffectiveness() * 0.08 + 0.04;
+		return 1.9 * getFacilityEffectiveness() / 22.5;
 	}
 
 	private double getFacilityEffectiveness()
@@ -257,7 +259,7 @@ public class PlayerEvaluator<A extends Attributes>
 
 	private double gtZeroCL(double x, double modifier)
 	{
-		return a * Math.pow(x * modifier, 2) + b * Math.pow(x * modifier, 1) + 1;
+		return a * Math.pow(x * modifier, 2) + b * Math.pow(x * modifier, 1) + c;
 	}
 
 	private double eqZeroCL(double x)
