@@ -161,6 +161,7 @@ public abstract class RegexPlayersParser<A extends Attributes>
 			"Niger",
 			"Nigeria",
 			"Nordkorea",
+			"Nord-Makedonien",
 			"Nordmarianerna",
 			"Norge",
 			"Nya Kaledonien",

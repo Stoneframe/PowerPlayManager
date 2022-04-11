@@ -11,10 +11,10 @@ public class PlayerWarpManipulator<A extends Attributes>
 	implements
 		PlayerManipulator<A>
 {
-	private PlayerEvaluator<A> playerEvaluator;
-	private PlayerWarper<A> playerWarper;
+	private final PlayerEvaluator<A> playerEvaluator;
+	private final PlayerWarper<A> playerWarper;
 
-	private int years;
+	private final int years;
 
 	public PlayerWarpManipulator(
 		PlayerEvaluator<A> playerEvaluator,
@@ -29,11 +29,10 @@ public class PlayerWarpManipulator<A extends Attributes>
 	@Override
 	public double manipulate(Player<A> player, AttributeEvaluator<A> attributeEvaluator)
 	{
-		A attributes =
-				playerWarper.warp(
-					player,
-					playerEvaluator.getBestEvaluatorByRating(player.getAttributes()),
-					years);
+		A attributes = playerWarper.warp(
+			player,
+			playerEvaluator.getBestEvaluatorByRating(player.getAttributes()),
+			years);
 
 		return attributeEvaluator.getRating(attributes);
 	}

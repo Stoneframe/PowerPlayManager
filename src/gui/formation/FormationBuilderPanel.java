@@ -18,6 +18,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -40,6 +41,8 @@ import formation.manipulators.PlayerEnergyManipulator;
 import formation.manipulators.PlayerFormManipulator;
 import formation.manipulators.PlayerNoneManipulator;
 import formation.manipulators.PlayerWarpManipulator;
+import gui.plot.PlotPanel;
+import gui.plot.PositionPlotPanel;
 import model.Attributes;
 import model.Player;
 import model.Roster;
@@ -75,6 +78,7 @@ public class FormationBuilderPanel<A extends Attributes>
 	private JTextField yearsTextField;
 
 	private JButton createFormationsButton;
+	private JButton plotPositionsButton;
 
 	public FormationBuilderPanel(
 		FormationTemplatePanelFactory<A> formationTemplatePanelFactory,
@@ -137,6 +141,7 @@ public class FormationBuilderPanel<A extends Attributes>
 
 				updatePlayersSelectedLabel(roster);
 				updateCreateFormationsButton(roster);
+				updatePlotPositionsButton(roster);
 			}
 		});
 
@@ -160,6 +165,7 @@ public class FormationBuilderPanel<A extends Attributes>
 
 				updatePlayersSelectedLabel(roster);
 				updateCreateFormationsButton(roster);
+				updatePlotPositionsButton(roster);
 			}
 		});
 
@@ -200,6 +206,7 @@ public class FormationBuilderPanel<A extends Attributes>
 			{
 				templateListModel.addElement(templatePanel.getFormationTemplate());
 				updateCreateFormationsButton(roster);
+				updatePlotPositionsButton(roster);
 			}
 		});
 
@@ -214,6 +221,7 @@ public class FormationBuilderPanel<A extends Attributes>
 				{
 					templateListModel.remove(templateList.getSelectedIndex());
 					updateCreateFormationsButton(roster);
+					updatePlotPositionsButton(roster);
 				}
 			}
 		});
@@ -249,7 +257,7 @@ public class FormationBuilderPanel<A extends Attributes>
 		yearsLabel.setEnabled(false);
 		yearsTextField.setEnabled(false);
 
-		createFormationsButton = new JButton("Create Formations");
+		createFormationsButton = new JButton("Create");
 		updateCreateFormationsButton(roster);
 		createFormationsButton.addActionListener(new ActionListener()
 		{
@@ -265,6 +273,7 @@ public class FormationBuilderPanel<A extends Attributes>
 
 				updatePlayersSelectedLabel(roster);
 				updateCreateFormationsButton(roster);
+				updatePlotPositionsButton(roster);
 
 				playerList.updateUI();
 
@@ -324,6 +333,30 @@ public class FormationBuilderPanel<A extends Attributes>
 			}
 		});
 
+		plotPositionsButton = new JButton("Plot");
+		updatePlotPositionsButton(roster);
+		plotPositionsButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				List<FormationTemplate<A>> formationTemplates = getFormationTemplates();
+
+				PlotPanel<A> plotPanel = new PositionPlotPanel<A>(
+					playerEvaluator,
+					playerWarper,
+					formationTemplates,
+					roster.copy());
+
+				plotPanel.draw();
+
+				JFrame plotFrame = new JFrame("Plot");
+				plotFrame.setContentPane(plotPanel);
+				plotFrame.pack();
+				plotFrame.setLocationRelativeTo(null);
+				plotFrame.setVisible(true);
+			}
+		});
+
 		setLayout(new BorderLayout());
 
 		JScrollPane playerListScrollPanel = new JScrollPane(playerList);
@@ -365,6 +398,7 @@ public class FormationBuilderPanel<A extends Attributes>
 		southPanel.add(yearsLabel);
 		southPanel.add(yearsTextField);
 		southPanel.add(createFormationsButton);
+		southPanel.add(plotPositionsButton);
 
 		add(southPanel, BorderLayout.SOUTH);
 
@@ -408,5 +442,10 @@ public class FormationBuilderPanel<A extends Attributes>
 	private void updateCreateFormationsButton(Roster<A> roster)
 	{
 		createFormationsButton.setEnabled(canCreateFormations(roster));
+	}
+
+	private void updatePlotPositionsButton(Roster<A> roster)
+	{
+		plotPositionsButton.setEnabled(canCreateFormations(roster));
 	}
 }

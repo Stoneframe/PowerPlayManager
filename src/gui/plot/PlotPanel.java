@@ -1,9 +1,6 @@
 package gui.plot;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -11,102 +8,48 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.labels.StandardXYToolTipGenerator;
-import org.jfree.chart.plot.DefaultDrawingSupplier;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
 
-import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import model.Attributes;
-import model.Player;
-import model.Roster;
 import warper.PlayerWarper;
 
-public class PlotPanel<A extends Attributes>
+public abstract class PlotPanel<A extends Attributes>
 	extends JPanel
 {
 	private static final long serialVersionUID = 8016338235547425768L;
 
-	private Color[] colors = new Color[]
-	{
-			Color.RED,
-			Color.BLUE,
-			Color.GREEN,
-			Color.ORANGE,
-			Color.BLACK,
-			Color.MAGENTA,
-			Color.PINK,
-			Color.YELLOW,
-			Color.CYAN,
-	};
-
-	private PlayerEvaluator<A> playerEvaluator;
-	private PlayerWarper<A> playerWarper;
+	protected final PlayerEvaluator<A> playerEvaluator;
+	protected final PlayerWarper<A> playerWarper;
 
 	public PlotPanel(
 		PlayerEvaluator<A> playerEvaluator,
-		PlayerWarper<A> playerWarper,
-		List<Player<A>> players,
-		List<Roster<A>.Group> groups)
+		PlayerWarper<A> playerWarper)
 	{
 		this.playerEvaluator = playerEvaluator;
 		this.playerWarper = playerWarper;
+	}
 
-		XYDataset dataset = createDataset(players);
-
+	public void draw()
+	{
 		JFreeChart chart = ChartFactory.createXYLineChart(
-			"Player Development",
-			"Year",
-			"Rating",
-			dataset,
+			getTitle(),
+			getXAxisLabel(),
+			getYAxisLabel(),
+			createDataset(),
 			PlotOrientation.VERTICAL,
 			true,
 			true,
 			false);
 
-		XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-		renderer.setToolTipGenerator(new StandardXYToolTipGenerator());
-
-		Color[] groupColors = Arrays.copyOfRange(colors, 0, groups.size());
-		Color[] individualColors = Arrays.copyOfRange(colors, groups.size(), colors.length);
-
-		if (nbrOfGroupsContainingAnyPlayersToPlot(groups, players) > 1)
-		{
-			for (int i = 0; i < players.size(); i++)
-			{
-				Player<A> player = players.get(i);
-
-				int index = groups.indexOf(
-					groups
-						.stream()
-						.filter(g -> g.getPlayers().contains(player))
-						.findFirst()
-						.orElse(null));
-
-				if (index != -1)
-				{
-					renderer.setSeriesPaint(i, groupColors[index]);
-				}
-			}
-		}
-
 		XYPlot plot = chart.getXYPlot();
 		plot.getDomainAxis().setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 		plot.getDomainAxis().setUpperBound(15);
 		plot.getRangeAxis().setLowerBound(0);
-		plot.setRenderer(renderer);
-		plot.setDrawingSupplier(
-			new DefaultDrawingSupplier(
-				individualColors,
-				DefaultDrawingSupplier.DEFAULT_OUTLINE_PAINT_SEQUENCE,
-				DefaultDrawingSupplier.DEFAULT_STROKE_SEQUENCE,
-				DefaultDrawingSupplier.DEFAULT_OUTLINE_STROKE_SEQUENCE,
-				DefaultDrawingSupplier.DEFAULT_SHAPE_SEQUENCE));
+		plot.setRenderer(getLineRenderer());
 
 		ChartPanel chartPanel = new ChartPanel(chart);
 
@@ -115,44 +58,13 @@ public class PlotPanel<A extends Attributes>
 		add(chartPanel, BorderLayout.CENTER);
 	}
 
-	private XYDataset createDataset(List<Player<A>> players)
-	{
-		XYSeriesCollection dataset = new XYSeriesCollection();
+	protected abstract String getTitle();
 
-		for (Player<A> player : players)
-		{
-			dataset.addSeries(createSeries(player));
-		}
+	protected abstract String getXAxisLabel();
 
-		return dataset;
-	}
+	protected abstract String getYAxisLabel();
 
-	private XYSeries createSeries(Player<A> player)
-	{
-		XYSeries series = new XYSeries(player.getName());
+	protected abstract XYDataset createDataset();
 
-		AttributeEvaluator<A> attributeEvaluator =
-				playerEvaluator.getBestEvaluatorByRating(player.getAttributes());
-
-		for (int year = 0; year <= 15; year++)
-		{
-			A attributes = playerWarper.warp(player, attributeEvaluator, year);
-
-			series.add(year, attributeEvaluator.getRating(attributes));
-			// series.add(year, playerEvaluator.calculateRatingForAge(player,
-			// player.getAge() + year));
-		}
-
-		return series;
-	}
-
-	private long nbrOfGroupsContainingAnyPlayersToPlot(
-		List<Roster<A>.Group> groups,
-		List<Player<A>> players)
-	{
-		return groups
-			.stream()
-			.filter(g -> players.stream().anyMatch(p -> g.getPlayers().contains(p)))
-			.count();
-	}
+	protected abstract XYLineAndShapeRenderer getLineRenderer();
 }

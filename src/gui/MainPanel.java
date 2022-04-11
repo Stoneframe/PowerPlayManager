@@ -34,6 +34,7 @@ import gui.player.PlayerSelectedEvent;
 import gui.player.PlayerSelectedListener;
 import gui.player.PlayersParsedEvent;
 import gui.player.PlayersParsedListener;
+import gui.plot.PlayerPlotPanel;
 import gui.plot.PlotPanel;
 import model.Attributes;
 import model.Player;
@@ -221,7 +222,7 @@ public class MainPanel<A extends Attributes>
 			}
 		});
 
-		createFormationsButton = new JButton("Create Formations");
+		createFormationsButton = new JButton("Formations");
 		createFormationsButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -230,7 +231,7 @@ public class MainPanel<A extends Attributes>
 				{
 					public void run()
 					{
-						JFrame formationBuilderFrame = new JFrame("Formation Builder");
+						JFrame formationBuilderFrame = new JFrame("Formations");
 
 						formationBuilderFrame.setContentPane(
 							new FormationBuilderPanel<A>(
@@ -318,14 +319,16 @@ public class MainPanel<A extends Attributes>
 				{
 					public void run()
 					{
-						JFrame plotFrame = new JFrame("Plot");
+						PlotPanel<A> plotPanel = new PlayerPlotPanel<A>(
+							playerEvaluator,
+							playerWarper,
+							rosterPanel.getSelectedPlayers(),
+							groupPanel.getSelectedGroups());
 
-						plotFrame.setContentPane(
-							new PlotPanel<A>(
-								playerEvaluator,
-								playerWarper,
-								rosterPanel.getSelectedPlayers(),
-								groupPanel.getSelectedGroups()));
+						plotPanel.draw();
+
+						JFrame plotFrame = new JFrame("Plot");
+						plotFrame.setContentPane(plotPanel);
 						plotFrame.pack();
 						plotFrame.setLocationRelativeTo(MainPanel.this);
 						plotFrame.setVisible(true);
