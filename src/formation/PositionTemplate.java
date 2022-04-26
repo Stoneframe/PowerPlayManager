@@ -1,5 +1,7 @@
 package formation;
 
+import java.util.Objects;
+
 import evaluators.AttributeEvaluator;
 import model.Attributes;
 import model.Side;
@@ -55,16 +57,22 @@ public class PositionTemplate<A extends Attributes>
 	@Override
 	public int hashCode()
 	{
-		return name.hashCode() ^ attributeEvaluator.hashCode() ^ side.hashCode();
+		return Objects.hash(name, attributeEvaluator, side, isIgnored);
 	}
 
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (!(obj instanceof PositionTemplate<?>)) return false;
+		if (obj instanceof PositionTemplate<?>)
+		{
+			PositionTemplate<?> other = (PositionTemplate<?>)obj;
 
-		PositionTemplate<?> other = (PositionTemplate<?>)obj;
+			return Objects.equals(this.name, other.name)
+				&& Objects.equals(this.attributeEvaluator, other.attributeEvaluator)
+				&& Objects.equals(this.side, other.side)
+				&& Objects.equals(this.isIgnored, other.isIgnored);
+		}
 
-		return this.hashCode() == other.hashCode();
+		return false;
 	}
 }
