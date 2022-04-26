@@ -93,8 +93,8 @@ public class TrainingPlannerPanel<A extends Attributes>
 	private AttributeEvaluator<A> getEvaluatorForBestPosition()
 	{
 		return attributes != null
-				? playerEvaluator.getBestEvaluatorByQuality(attributes)
-				: null;
+			? playerEvaluator.getBestEvaluatorByQuality(attributes)
+			: null;
 	}
 
 	private AttributeEvaluator<A> getSelectedEvaluator()
@@ -106,8 +106,8 @@ public class TrainingPlannerPanel<A extends Attributes>
 	{
 		nextAttributeTextField.setText(
 			attributes != null
-					? attributeEvaluator.getWorstAttribute(attributes).getLongName()
-					: "");
+				? attributeEvaluator.getWorstAttribute(attributes).getLongName()
+				: "");
 	}
 
 	@Override

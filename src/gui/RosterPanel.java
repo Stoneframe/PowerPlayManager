@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -23,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.RowFilter;
 import javax.swing.border.CompoundBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -30,6 +32,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableRowSorter;
 
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
@@ -122,10 +125,13 @@ public class RosterPanel<A extends Attributes>
 	private JTextField highQualityLimitTextField;
 	private JTextField lowQualityLimitTextField;
 
+	private Predicate<Player<A>> playerFilter;
+
 	private JButton applyButton;
 
 	private JLabel statLabel;
 
+	private TableRowSorter<RosterTableModel> rosterSorter;
 	private JTable rosterTable;
 
 	private JPanel controllerPanel;
@@ -136,7 +142,10 @@ public class RosterPanel<A extends Attributes>
 
 	private Roster<A> roster;
 
-	public RosterPanel(Roster<A> roster, PlayerEvaluator<A> playerEvaluator)
+	public RosterPanel(
+		Roster<A> roster,
+		PlayerEvaluator<A> playerEvaluator,
+		Predicate<Player<A>> playerFilter)
 	{
 		rosterTableColumnModel = new RosterTableColumnModel();
 		rosterTableModel = new RosterTableModel();
@@ -147,7 +156,11 @@ public class RosterPanel<A extends Attributes>
 
 		this.playerEvaluator = playerEvaluator;
 
+		this.playerFilter = playerFilter;
+
 		KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK, false);
+
+		rosterSorter = new TableRowSorter<>(rosterTableModel);
 
 		rosterTable = new JTable();
 		rosterTable.setAutoCreateRowSorter(true);
@@ -171,6 +184,7 @@ public class RosterPanel<A extends Attributes>
 				});
 		rosterTable.setColumnModel(rosterTableColumnModel);
 		rosterTable.setModel(rosterTableModel);
+		rosterTable.setRowSorter(rosterSorter);
 		rosterTable.registerKeyboardAction(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -259,6 +273,23 @@ public class RosterPanel<A extends Attributes>
 
 		add(tablePanel, BorderLayout.CENTER);
 		add(controllerPanel, BorderLayout.SOUTH);
+
+		notifyPlayerFilterChanged();
+	}
+
+	public void notifyPlayerFilterChanged()
+	{
+		rosterSorter.setRowFilter(new RowFilter<RosterTableModel, Integer>()
+		{
+			@Override
+			public boolean include(
+				Entry<? extends RosterPanel<A>.RosterTableModel, ? extends Integer> entry)
+			{
+				Player<A> player = roster.get(entry.getIdentifier());
+
+				return playerFilter.test(player);
+			}
+		});
 	}
 
 	public void setPlayerSelectedListener(PlayerSelectedListener<A> listener)
@@ -292,8 +323,8 @@ public class RosterPanel<A extends Attributes>
 		int selectedRow = rosterTable.getSelectedRow();
 
 		return selectedRow >= 0
-				? roster.get(rosterTable.convertRowIndexToModel(selectedRow))
-				: null;
+			? roster.get(rosterTable.convertRowIndexToModel(selectedRow))
+			: null;
 	}
 
 	private int getHighQualityLimit()
@@ -335,12 +366,12 @@ public class RosterPanel<A extends Attributes>
 		}
 
 		String statText = count > 0
-				? String.format(
-					"Max: %.0f, Avg: %.0f, Min: %.0f",
-					max,
-					sum / count,
-					min)
-				: "";
+			? String.format(
+				"Max: %.0f, Avg: %.0f, Min: %.0f",
+				max,
+				sum / count,
+				min)
+			: "";
 
 		statLabel.setText(statText);
 	}
@@ -437,8 +468,8 @@ public class RosterPanel<A extends Attributes>
 		public Class<?> getColumnClass(int columnIndex)
 		{
 			return roster != null && roster.size() > 0
-					? getValueAt(0, columnIndex).getClass()
-					: Object.class;
+				? getValueAt(0, columnIndex).getClass()
+				: Object.class;
 		}
 
 		@Override
@@ -550,20 +581,20 @@ public class RosterPanel<A extends Attributes>
 					if (isHighQualityPlayer(player) && isSymmetricPlayer(player))
 					{
 						color = isSelected
-								? SELECTED_HIGH_QUALITY_AND_SYMMETRIC
-								: UNSELECTED_HIGH_QUALITY_AND_SYMMETRIC;
+							? SELECTED_HIGH_QUALITY_AND_SYMMETRIC
+							: UNSELECTED_HIGH_QUALITY_AND_SYMMETRIC;
 					}
 					else if (isHighQualityPlayer(player))
 					{
 						color = isSelected
-								? SELECTED_HIGH_QUALITY
-								: UNSELECTED_HIGH_QUALITY;
+							? SELECTED_HIGH_QUALITY
+							: UNSELECTED_HIGH_QUALITY;
 					}
 					else if (isLowQualityPlayer(player))
 					{
 						color = isSelected
-								? SELECTED_LOW_QUALITY
-								: UNSELECTED_LOW_QUALITY;
+							? SELECTED_LOW_QUALITY
+							: UNSELECTED_LOW_QUALITY;
 					}
 					else if (isSelected)
 					{

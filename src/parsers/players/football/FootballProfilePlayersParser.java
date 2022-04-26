@@ -148,8 +148,8 @@ public class FootballProfilePlayersParser
 
 		return new int[]
 		{
-				rating,
-				quality,
+			rating,
+			quality,
 		};
 	}
 

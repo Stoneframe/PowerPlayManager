@@ -21,9 +21,9 @@ public class PlayerEnergyManipulator<A extends Attributes>
 	public double manipulate(Player<A> player, AttributeEvaluator<A> attributeEvaluator)
 	{
 		double playerForm =
-				playerEvaluator.calculateFormForRating(
-					player,
-					attributeEvaluator.getRating(player.getAttributes()));
+			playerEvaluator.calculateFormForRating(
+				player,
+				attributeEvaluator.getRating(player.getAttributes()));
 
 		return playerForm * Math.pow((double)player.getEnergy() / 100, 5);
 	}

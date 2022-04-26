@@ -266,10 +266,10 @@ public class FormationBuilderPanel<A extends Attributes>
 				List<FormationTemplate<A>> formationTemplates = getFormationTemplates();
 
 				List<Formation<A>> formations =
-						formationBuilder.createFormations(
-							roster,
-							formationTemplates,
-							getPlayerManipulator());
+					formationBuilder.createFormations(
+						roster,
+						formationTemplates,
+						getPlayerManipulator());
 
 				updatePlayersSelectedLabel(roster);
 				updateCreateFormationsButton(roster);

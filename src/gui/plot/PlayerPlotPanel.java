@@ -13,8 +13,8 @@ import org.jfree.data.xy.XYSeriesCollection;
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import model.Attributes;
+import model.Groups;
 import model.Player;
-import model.Roster;
 import warper.PlayerWarper;
 
 public class PlayerPlotPanel<A extends Attributes>
@@ -24,25 +24,25 @@ public class PlayerPlotPanel<A extends Attributes>
 
 	private Color[] colors = new Color[]
 	{
-			Color.RED,
-			Color.BLUE,
-			Color.GREEN,
-			Color.ORANGE,
-			Color.BLACK,
-			Color.MAGENTA,
-			Color.PINK,
-			Color.YELLOW,
-			Color.CYAN,
+		Color.RED,
+		Color.BLUE,
+		Color.GREEN,
+		Color.ORANGE,
+		Color.BLACK,
+		Color.MAGENTA,
+		Color.PINK,
+		Color.YELLOW,
+		Color.CYAN,
 	};
 
 	private final List<Player<A>> players;
-	private final List<Roster<A>.Group> groups;
+	private final List<Groups<A>.Group> groups;
 
 	public PlayerPlotPanel(
 		PlayerEvaluator<A> playerEvaluator,
 		PlayerWarper<A> playerWarper,
 		List<Player<A>> players,
-		List<Roster<A>.Group> groups)
+		List<Groups<A>.Group> groups)
 	{
 		super(playerEvaluator, playerWarper);
 
@@ -122,7 +122,7 @@ public class PlayerPlotPanel<A extends Attributes>
 		XYSeries series = new XYSeries(player.getName());
 
 		AttributeEvaluator<A> attributeEvaluator =
-				playerEvaluator.getBestEvaluatorByRating(player.getAttributes());
+			playerEvaluator.getBestEvaluatorByRating(player.getAttributes());
 
 		for (int year = 0; year <= 15; year++)
 		{
@@ -135,7 +135,7 @@ public class PlayerPlotPanel<A extends Attributes>
 	}
 
 	private long nbrOfGroupsContainingAnyPlayersToPlot(
-		List<Roster<A>.Group> groups,
+		List<Groups<A>.Group> groups,
 		List<Player<A>> players)
 	{
 		return groups

@@ -24,7 +24,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import model.Attributes;
-import model.Roster;
+import model.Groups;
 
 public class GroupPanel<A extends Attributes>
 	extends JPanel
@@ -34,9 +34,9 @@ public class GroupPanel<A extends Attributes>
 	private static final Function<Integer, Integer> UP = index -> index - 1;
 	private static final Function<Integer, Integer> DOWN = index -> index + 1;
 
-	private DefaultListModel<Roster<A>.Group> groupListModel;
+	private DefaultListModel<Groups<A>.Group> groupListModel;
 
-	private JList<Roster<A>.Group> groupList;
+	private JList<Groups<A>.Group> groupList;
 
 	private JButton addButton;
 	private JButton removeButton;
@@ -71,7 +71,7 @@ public class GroupPanel<A extends Attributes>
 			{
 				if (evt.getClickCount() == 2)
 				{
-					Roster<A>.Group group = groupList.getSelectedValue();
+					Groups<A>.Group group = groupList.getSelectedValue();
 
 					if (group == null) return;
 
@@ -133,7 +133,7 @@ public class GroupPanel<A extends Attributes>
 		add(buttonAddRemovePanel, BorderLayout.SOUTH);
 	}
 
-	public void addGroup(Roster<A>.Group group)
+	public void addGroup(Groups<A>.Group group)
 	{
 		groupListModel.addElement(group);
 
@@ -143,17 +143,17 @@ public class GroupPanel<A extends Attributes>
 		}
 	}
 
-	public void removeGroup(Roster<A>.Group group)
+	public void removeGroup(Groups<A>.Group group)
 	{
 		groupListModel.removeElement(group);
 	}
 
-	public List<Roster<A>.Group> getGroups()
+	public List<Groups<A>.Group> getGroups()
 	{
 		return Collections.list(groupListModel.elements());
 	}
 
-	public List<Roster<A>.Group> getSelectedGroups()
+	public List<Groups<A>.Group> getSelectedGroups()
 	{
 		return groupList.getSelectedValuesList();
 	}
@@ -187,13 +187,13 @@ public class GroupPanel<A extends Attributes>
 	{
 		int index = groupList.getSelectedIndex();
 
-		Roster<A>.Group group = groupListModel.remove(index);
+		Groups<A>.Group group = groupListModel.remove(index);
 		groupListModel.add(direction.apply(index), group);
 
 		addGroupToSelectedGroups(group);
 	}
 
-	private void addGroupToSelectedGroups(Roster<A>.Group group)
+	private void addGroupToSelectedGroups(Groups<A>.Group group)
 	{
 		final int N = groupList.getSelectedIndices().length;
 

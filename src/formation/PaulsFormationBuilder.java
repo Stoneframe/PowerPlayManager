@@ -33,11 +33,11 @@ public class PaulsFormationBuilder<A extends Attributes>
 
 				Position<A> position = new Position<>(positionTemplate.getName());
 				PositionAssigner<A> positionAssigner =
-						new PositionAssigner<A>(
-							roster,
-							positionTemplate,
-							position,
-							manipulator);
+					new PositionAssigner<A>(
+						roster,
+						positionTemplate,
+						position,
+						manipulator);
 
 				positions.add(position);
 				positionAssigners.add(positionAssigner);

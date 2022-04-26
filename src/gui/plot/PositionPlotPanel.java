@@ -27,14 +27,14 @@ public class PositionPlotPanel<A extends Attributes>
 {
 	private final Color[] colors = new Color[]
 	{
-			Color.RED,
-			Color.BLUE,
-			Color.GREEN,
-			Color.ORANGE,
-			Color.MAGENTA,
-			Color.PINK,
-			Color.YELLOW,
-			Color.CYAN,
+		Color.RED,
+		Color.BLUE,
+		Color.GREEN,
+		Color.ORANGE,
+		Color.MAGENTA,
+		Color.PINK,
+		Color.YELLOW,
+		Color.CYAN,
 	};
 
 	private final List<FormationTemplate<A>> formationTemplates;

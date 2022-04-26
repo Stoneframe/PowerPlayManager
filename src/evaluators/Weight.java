@@ -26,8 +26,8 @@ public class Weight
 	public double getRating(Attribute attribute)
 	{
 		return value != 0
-				? attribute.getRating() / value
-				: 0;
+			? attribute.getRating() / value
+			: 0;
 	}
 
 	public double getQuality(Attribute attribute)

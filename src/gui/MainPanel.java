@@ -37,6 +37,7 @@ import gui.player.PlayersParsedListener;
 import gui.plot.PlayerPlotPanel;
 import gui.plot.PlotPanel;
 import model.Attributes;
+import model.Groups;
 import model.Player;
 import model.Roster;
 import parsers.players.PlayersParser;
@@ -61,9 +62,9 @@ public class MainPanel<A extends Attributes>
 	private JButton createFormationsButton;
 	private JButton groupsButton;
 	private JButton plotButton;
-	private JButton clearRosterButton;
 
 	private Roster<A> roster = new Roster<>();
+	private Groups<A> groups = new Groups<>();
 
 	public MainPanel(
 		MenuBar menuBar,
@@ -106,7 +107,7 @@ public class MainPanel<A extends Attributes>
 			}
 		});
 
-		rosterPanel = new RosterPanel<A>(roster, playerEvaluator);
+		rosterPanel = new RosterPanel<A>(roster, playerEvaluator, p -> groups.isEnabled(p));
 		rosterPanel.setPlayerSelectedListener(new PlayerSelectedListener<A>()
 		{
 			public void playerSelected(Object source, PlayerSelectedEvent<A> event)
@@ -135,7 +136,7 @@ public class MainPanel<A extends Attributes>
 			{
 				if (e.getValueIsAdjusting()) return;
 
-				for (Roster<A>.Group group : groupPanel.getGroups())
+				for (Groups<A>.Group group : groupPanel.getGroups())
 				{
 					boolean isSelected = groupPanel.getSelectedGroups().contains(group);
 
@@ -143,6 +144,8 @@ public class MainPanel<A extends Attributes>
 				}
 
 				groupPanel.setRemoveButtonEnabled(!groupPanel.getSelectedGroups().isEmpty());
+
+				rosterPanel.notifyPlayerFilterChanged();
 			}
 		});
 		groupPanel.addAddButtonActionListener(new ActionListener()
@@ -152,30 +155,34 @@ public class MainPanel<A extends Attributes>
 				List<Player<A>> players = rosterPanel.getSelectedPlayers();
 
 				String initalValue = players.size() == 1
-						? players.get(0).getName()
-						: "";
+					? players.get(0).getName()
+					: "";
 
 				String name = JOptionPane.showInputDialog(groupPanel, "Name:", initalValue);
 
 				if (name != null)
 				{
-					Roster<A>.Group group = roster.addGroup(name, players);
+					Groups<A>.Group group = groups.add(name, players);
 
 					groupPanel.addGroup(group);
 				}
+
+				rosterPanel.notifyPlayerFilterChanged();
 			}
 		});
 		groupPanel.addRemoveButtonActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				List<Roster<A>.Group> selectedGroups = groupPanel.getSelectedGroups();
+				List<Groups<A>.Group> selectedGroups = groupPanel.getSelectedGroups();
 
-				for (Roster<A>.Group group : selectedGroups)
+				for (Groups<A>.Group group : selectedGroups)
 				{
-					roster.removeGroup(group);
+					groups.remove(group);
 					groupPanel.removeGroup(group);
 				}
+
+				rosterPanel.notifyPlayerFilterChanged();
 			}
 		});
 
@@ -218,6 +225,7 @@ public class MainPanel<A extends Attributes>
 				for (Player<A> player : rosterPanel.getSelectedPlayers())
 				{
 					roster.remove(player);
+					groups.remove(player);
 				}
 			}
 		});
@@ -239,7 +247,7 @@ public class MainPanel<A extends Attributes>
 								formationBuilder,
 								playerEvaluator,
 								playerWarper,
-								roster.copy(),
+								roster.copy(p -> groups.isEnabled(p)),
 								formations -> createGroups(formations)));
 						formationBuilderFrame.pack();
 						formationBuilderFrame.setLocationRelativeTo(MainPanel.this);
@@ -256,7 +264,7 @@ public class MainPanel<A extends Attributes>
 					{
 						for (Formation<A> formation : formations)
 						{
-							Roster<A>.Group group = roster.addGroup(
+							Groups<A>.Group group = groups.add(
 								formation.getName(),
 								formation.getPlayers());
 
@@ -276,7 +284,7 @@ public class MainPanel<A extends Attributes>
 
 						for (Entry<String, List<Player<A>>> entry : o.entrySet())
 						{
-							Roster<A>.Group group = roster.addGroup(
+							Groups<A>.Group group = groups.add(
 								entry.getKey(),
 								entry.getValue());
 
@@ -337,22 +345,12 @@ public class MainPanel<A extends Attributes>
 			}
 		});
 
-		clearRosterButton = new JButton("Clear Roster");
-		clearRosterButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				roster.clear();
-			}
-		});
-
 		buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		buttonPanel.add(addPlayersButton);
 		buttonPanel.add(removePlayersButton);
 		buttonPanel.add(createFormationsButton);
 		buttonPanel.add(groupsButton);
 		buttonPanel.add(plotButton);
-		buttonPanel.add(clearRosterButton);
 
 		setLayout(new BorderLayout());
 
@@ -368,18 +366,18 @@ public class MainPanel<A extends Attributes>
 		fc.setFileFilter(new FileNameExtensionFilter("PPM Files", "ppm"));
 
 		int returnVal = open
-				? fc.showOpenDialog(MainPanel.this)
-				: fc.showSaveDialog(MainPanel.this);
+			? fc.showOpenDialog(MainPanel.this)
+			: fc.showSaveDialog(MainPanel.this);
 
 		if (returnVal == JFileChooser.APPROVE_OPTION)
 		{
 			FileNameExtensionFilter fileFilter =
-					(FileNameExtensionFilter)fc.getFileFilter();
+				(FileNameExtensionFilter)fc.getFileFilter();
 
 			return fc.accept(fc.getSelectedFile())
-					? fc.getSelectedFile()
-					: new File(
-						fc.getSelectedFile() + "." + fileFilter.getExtensions()[0]);
+				? fc.getSelectedFile()
+				: new File(
+					fc.getSelectedFile() + "." + fileFilter.getExtensions()[0]);
 		}
 		else
 		{

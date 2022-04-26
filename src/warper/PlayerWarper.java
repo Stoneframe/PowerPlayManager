@@ -24,7 +24,7 @@ public abstract class PlayerWarper<A extends Attributes>
 		for (int i = 1; i <= years; i++)
 		{
 			double nextTotalRating =
-					playerEvaluator.calculateTotalRatingForAge(player, player.getAge() + i);
+				playerEvaluator.calculateTotalRatingForAge(player, player.getAge() + i);
 
 			double improvement = (nextTotalRating - previousTotalRating);
 

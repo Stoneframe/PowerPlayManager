@@ -139,8 +139,8 @@ public class IceHockeyProfilePlayersParser
 
 		return new int[]
 		{
-				rating,
-				quality,
+			rating,
+			quality,
 		};
 	}
 

@@ -172,8 +172,8 @@ public class PlayerPanel<A extends Attributes>
 	private double getPlayerTraining()
 	{
 		return player.getTraining() != 0
-				? player.getTraining()
-				: playerEvaluator.calculatePlayerTraining(player);
+			? player.getTraining()
+			: playerEvaluator.calculatePlayerTraining(player);
 	}
 
 	@Override
