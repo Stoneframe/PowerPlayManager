@@ -35,6 +35,7 @@ public abstract class RegexPlayersParser<A extends Attributes>
 		"Bahrain",
 		"Bangladesh",
 		"Barbados",
+		"Belarus",
 		"Belgien",
 		"Belize",
 		"Benin",
