@@ -9,6 +9,7 @@ import gui.menu.FileHandler;
 import gui.menu.MenuBar;
 import model.football.FootballAttributes;
 import parsers.players.PlayersParser;
+import searcher.SearchTemplateStorage;
 import warper.football.FootballPlayerWarper;
 
 public class FootballMainPanel
@@ -30,6 +31,10 @@ public class FootballMainPanel
 			new PaulsFormationBuilder<>(),
 			new FootballPlayerWarper(playerEvaluator),
 			parsers,
-			playerEvaluator);
+			playerEvaluator,
+			new SearchTemplateStorage<FootballAttributes>(
+				"search-football",
+				playerEvaluator,
+				new FootballPlayerWarper(playerEvaluator)));
 	}
 }

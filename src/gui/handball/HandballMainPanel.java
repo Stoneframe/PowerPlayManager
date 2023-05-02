@@ -9,6 +9,7 @@ import gui.menu.FileHandler;
 import gui.menu.MenuBar;
 import model.handball.HandballAttributes;
 import parsers.players.PlayersParser;
+import searcher.SearchTemplateStorage;
 import warper.handball.HandballPlayerWarper;
 
 public class HandballMainPanel
@@ -30,6 +31,10 @@ public class HandballMainPanel
 			new PaulsFormationBuilder<>(),
 			new HandballPlayerWarper(playerEvaluator),
 			parsers,
-			playerEvaluator);
+			playerEvaluator,
+			new SearchTemplateStorage<HandballAttributes>(
+				"search-handball",
+				playerEvaluator,
+				new HandballPlayerWarper(playerEvaluator)));
 	}
 }

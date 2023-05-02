@@ -36,11 +36,13 @@ import gui.player.PlayersParsedEvent;
 import gui.player.PlayersParsedListener;
 import gui.plot.PlayerPlotPanel;
 import gui.plot.PlotPanel;
+import gui.searcher.SearcherPanel;
 import model.Attributes;
 import model.Groups;
 import model.Player;
 import model.Roster;
 import parsers.players.PlayersParser;
+import searcher.SearchTemplateStorage;
 import warper.PlayerWarper;
 
 public class MainPanel<A extends Attributes>
@@ -62,6 +64,7 @@ public class MainPanel<A extends Attributes>
 	private JButton createFormationsButton;
 	private JButton groupsButton;
 	private JButton plotButton;
+	private JButton searchButton;
 
 	private Roster<A> roster = new Roster<>();
 	private Groups<A> groups = new Groups<>();
@@ -74,7 +77,8 @@ public class MainPanel<A extends Attributes>
 		FormationBuilder<A> formationBuilder,
 		PlayerWarper<A> playerWarper,
 		List<PlayersParser<A>> parsers,
-		PlayerEvaluator<A> playerEvaluator)
+		PlayerEvaluator<A> playerEvaluator,
+		SearchTemplateStorage<A> searchTemplateStorage)
 	{
 		menuBar.addImportActionListener(new ActionListener()
 		{
@@ -345,12 +349,46 @@ public class MainPanel<A extends Attributes>
 			}
 		});
 
+		searchButton = new JButton("Search");
+		searchButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				SwingUtilities.invokeLater(new Runnable()
+				{
+					public void run()
+					{
+						JFrame searcherFrame = new JFrame("Search");
+
+						searcherFrame.setContentPane(
+							new SearcherPanel<A>(
+								roster.copy(p -> groups.isEnabled(p)),
+								playerEvaluator,
+								playerWarper,
+								searchTemplateStorage,
+								players -> createGroup(players)));
+						searcherFrame.pack();
+						searcherFrame.setLocationRelativeTo(MainPanel.this);
+						searcherFrame.setVisible(true);
+					}
+
+					private void createGroup(List<Player<A>> players)
+					{
+						Groups<A>.Group group = groups.add("Search", players);
+
+						groupPanel.addGroup(group);
+					}
+				});
+			}
+		});
+
 		buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		buttonPanel.add(addPlayersButton);
 		buttonPanel.add(removePlayersButton);
 		buttonPanel.add(createFormationsButton);
 		buttonPanel.add(groupsButton);
 		buttonPanel.add(plotButton);
+		buttonPanel.add(searchButton);
 
 		setLayout(new BorderLayout());
 

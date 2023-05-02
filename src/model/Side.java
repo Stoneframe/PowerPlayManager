@@ -7,6 +7,26 @@ public abstract class Side
 	public static final Side UNIVERSAL = new Universal();
 	public static final Side RIGHT = new Right();
 
+	public static Side parse(String string)
+	{
+		if (Side.LEFT.toString().equals(string))
+		{
+			return Side.LEFT;
+		}
+		else if (Side.RIGHT.toString().equals(string))
+		{
+			return Side.RIGHT;
+		}
+		else if (Side.UNIVERSAL.toString().equals(string))
+		{
+			return Side.UNIVERSAL;
+		}
+		else
+		{
+			return Side.UNKNOWN;
+		}
+	}
+
 	public abstract boolean matches(Side side);
 
 	@Override

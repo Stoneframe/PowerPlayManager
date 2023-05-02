@@ -15,23 +15,25 @@ public final class SideAdapter
 	public Side read(JsonReader reader) throws IOException
 	{
 		String s = reader.nextString();
-
-		if (Side.LEFT.toString().equals(s))
-		{
-			return Side.LEFT;
-		}
-		else if (Side.RIGHT.toString().equals(s))
-		{
-			return Side.RIGHT;
-		}
-		else if (Side.UNIVERSAL.toString().equals(s))
-		{
-			return Side.UNIVERSAL;
-		}
-		else
-		{
-			return Side.UNKNOWN;
-		}
+		
+		return Side.parse(s);
+//
+//		if (Side.LEFT.toString().equals(s))
+//		{
+//			return Side.LEFT;
+//		}
+//		else if (Side.RIGHT.toString().equals(s))
+//		{
+//			return Side.RIGHT;
+//		}
+//		else if (Side.UNIVERSAL.toString().equals(s))
+//		{
+//			return Side.UNIVERSAL;
+//		}
+//		else
+//		{
+//			return Side.UNKNOWN;
+//		}
 	}
 
 	@Override

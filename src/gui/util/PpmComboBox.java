@@ -1,5 +1,7 @@
 package gui.util;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JComboBox;
@@ -29,6 +31,18 @@ public class PpmComboBox<E>
 	{
 		this(items);
 		setSelectedIndex(selectedIndex);
+	}
+
+	public List<E> getAllItems()
+	{
+		List<E> list = new LinkedList<>();
+		
+		for (int i = 0; i < getItemCount(); i++)
+		{
+			list.add(getItemAt(i));
+		}
+		
+		return Collections.unmodifiableList(list);
 	}
 
 	public E getSelection()

@@ -9,6 +9,7 @@ import gui.menu.FileHandler;
 import gui.menu.MenuBar;
 import model.icehockey.IceHockeyAttributes;
 import parsers.players.PlayersParser;
+import searcher.SearchTemplateStorage;
 import warper.icehockey.IceHockeyPlayerWarper;
 
 public class IceHockeyMainPanel
@@ -30,6 +31,10 @@ public class IceHockeyMainPanel
 			new PaulsFormationBuilder<>(),
 			new IceHockeyPlayerWarper(playerEvaluator),
 			parsers,
-			playerEvaluator);
+			playerEvaluator,
+			new SearchTemplateStorage<IceHockeyAttributes>(
+				"search-icehockey",
+				playerEvaluator,
+				new IceHockeyPlayerWarper(playerEvaluator)));
 	}
 }
