@@ -7,10 +7,10 @@ import model.Player;
 import searcher.SearchCriteria;
 import warper.PlayerWarper;
 
-public class RatingInYearsSearchCriteria<A extends Attributes>
+public class EffectiveRatingInYearsSearchCriteria<A extends Attributes>
 	extends SearchCriteria<A>
 {
-	private static final long serialVersionUID = 5314298506876893802L;
+	public static final String NAME = "Effective Rating in Years";
 
 	private final int min;
 	private final int max;
@@ -18,7 +18,7 @@ public class RatingInYearsSearchCriteria<A extends Attributes>
 
 	private transient final PlayerWarper<A> playerWarper;
 
-	public RatingInYearsSearchCriteria(
+	public EffectiveRatingInYearsSearchCriteria(
 		int min,
 		int max,
 		int years,
@@ -36,7 +36,7 @@ public class RatingInYearsSearchCriteria<A extends Attributes>
 	@Override
 	public String getName()
 	{
-		return "Rating in Years";
+		return NAME;
 	}
 
 	@Override

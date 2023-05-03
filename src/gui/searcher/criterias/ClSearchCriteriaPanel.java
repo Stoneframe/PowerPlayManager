@@ -6,14 +6,14 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import evaluators.PlayerEvaluator;
-import gui.searcher.CriteriaPanel;
+import gui.searcher.SearchCriteriaPanel;
 import gui.util.IntegerUtil;
 import model.Attributes;
 import searcher.SearchCriteria;
 import searcher.criterias.ClSearchCriteria;
 
-public class ClCriteriaPanel<A extends Attributes>
-	extends CriteriaPanel<A>
+public class ClSearchCriteriaPanel<A extends Attributes>
+	extends SearchCriteriaPanel<A>
 {
 	private static final long serialVersionUID = 6426953700282529580L;
 
@@ -23,19 +23,9 @@ public class ClCriteriaPanel<A extends Attributes>
 	private final JTextField minClTextField;
 	private final JTextField maxClTextField;
 
-	public ClCriteriaPanel(
+	public ClSearchCriteriaPanel(
 		PlayerEvaluator<A> playerEvaluator,
-		Consumer<CriteriaPanel<A>> removeCallback,
-		ClSearchCriteria<A> criteria)
-	{
-		this(playerEvaluator, removeCallback);
-
-		update(criteria);
-	}
-
-	public ClCriteriaPanel(
-		PlayerEvaluator<A> playerEvaluator,
-		Consumer<CriteriaPanel<A>> removeCallback)
+		Consumer<SearchCriteriaPanel<A>> removeCallback)
 	{
 		super(playerEvaluator, removeCallback);
 
@@ -45,10 +35,16 @@ public class ClCriteriaPanel<A extends Attributes>
 		maxClLabel = new JLabel("Max CL:");
 		maxClTextField = new JTextField(4);
 
-		add(minClLabel);
-		add(minClTextField);
-		add(maxClLabel);
-		add(maxClTextField);
+		centerPanel.add(minClLabel);
+		centerPanel.add(minClTextField);
+		centerPanel.add(maxClLabel);
+		centerPanel.add(maxClTextField);
+	}
+
+	@Override
+	public String getName()
+	{
+		return ClSearchCriteria.NAME;
 	}
 
 	@Override

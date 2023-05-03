@@ -9,6 +9,8 @@ import searcher.SearchCriteria;
 public class SideSearchCriteria<A extends Attributes>
 	extends SearchCriteria<A>
 {
+	public static final String NAME = "Side";
+
 	private final String side;
 
 	public SideSearchCriteria(PlayerEvaluator<A> playerEvaluator, String side)
@@ -18,12 +20,10 @@ public class SideSearchCriteria<A extends Attributes>
 		this.side = side;
 	}
 
-	private static final long serialVersionUID = -3817513251249583650L;
-
 	@Override
 	public String getName()
 	{
-		return "Side";
+		return NAME;
 	}
 
 	@Override

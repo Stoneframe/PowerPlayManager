@@ -6,23 +6,25 @@ import java.util.function.Consumer;
 import javax.swing.JLabel;
 
 import evaluators.PlayerEvaluator;
-import gui.searcher.CriteriaPanel;
+import gui.searcher.SearchCriteriaPanel;
 import gui.util.PpmComboBox;
 import model.Attributes;
 import model.Side;
 import searcher.SearchCriteria;
 import searcher.criterias.SideSearchCriteria;
 
-public class SideCriteriaPanel<A extends Attributes>
-	extends CriteriaPanel<A>
+public class SideSearchCriteriaPanel<A extends Attributes>
+	extends SearchCriteriaPanel<A>
 {
+	private static final long serialVersionUID = 1617949699372903670L;
+
 	private final JLabel sideLabel;
 
 	private final PpmComboBox<String> sideComboBox;
 
-	public SideCriteriaPanel(
+	public SideSearchCriteriaPanel(
 		PlayerEvaluator<A> playerEvaluator,
-		Consumer<CriteriaPanel<A>> removeCallback)
+		Consumer<SearchCriteriaPanel<A>> removeCallback)
 	{
 		super(playerEvaluator, removeCallback);
 
@@ -33,21 +35,15 @@ public class SideCriteriaPanel<A extends Attributes>
 				Side.LEFT.toString(),
 				Side.RIGHT.toString()));
 
-		add(sideLabel);
-		add(sideComboBox);
+		centerPanel.add(sideLabel);
+		centerPanel.add(sideComboBox);
 	}
 
-	public SideCriteriaPanel(
-		PlayerEvaluator<A> playerEvaluator,
-		Consumer<CriteriaPanel<A>> removeCallback,
-		SideSearchCriteria<A> sideSearchCriteria)
+	@Override
+	public String getName()
 	{
-		this(playerEvaluator, removeCallback);
-
-		update(sideSearchCriteria);
+		return SideSearchCriteria.NAME;
 	}
-
-	private static final long serialVersionUID = 1617949699372903670L;
 
 	@Override
 	public SearchCriteria<A> getCriteria()

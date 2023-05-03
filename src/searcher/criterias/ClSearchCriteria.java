@@ -8,7 +8,7 @@ import searcher.SearchCriteria;
 public class ClSearchCriteria<A extends Attributes>
 	extends SearchCriteria<A>
 {
-	private static final long serialVersionUID = -2496655417379568675L;
+	public static final String NAME = "CL";
 
 	private final int min;
 	private final int max;
@@ -24,7 +24,7 @@ public class ClSearchCriteria<A extends Attributes>
 	@Override
 	public String getName()
 	{
-		return "CL";
+		return NAME;
 	}
 
 	@Override

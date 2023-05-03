@@ -7,14 +7,14 @@ import java.util.stream.Collectors;
 import javax.swing.JLabel;
 
 import evaluators.PlayerEvaluator;
-import gui.searcher.CriteriaPanel;
+import gui.searcher.SearchCriteriaPanel;
 import gui.util.PpmComboBox;
 import model.Attributes;
 import searcher.SearchCriteria;
 import searcher.criterias.BestPositionSearchCriteria;
 
-public class BestPositionTrainingCriteriaPanel<A extends Attributes>
-	extends CriteriaPanel<A>
+public class BestPositionTrainingSearchCriteriaPanel<A extends Attributes>
+	extends SearchCriteriaPanel<A>
 {
 	private static final long serialVersionUID = -1917983273654561735L;
 
@@ -22,9 +22,9 @@ public class BestPositionTrainingCriteriaPanel<A extends Attributes>
 
 	private final PpmComboBox<String> positionComboBox;
 
-	public BestPositionTrainingCriteriaPanel(
+	public BestPositionTrainingSearchCriteriaPanel(
 		PlayerEvaluator<A> playerEvaluator,
-		Consumer<CriteriaPanel<A>> removeCallback)
+		Consumer<SearchCriteriaPanel<A>> removeCallback)
 	{
 		super(playerEvaluator, removeCallback);
 
@@ -36,18 +36,14 @@ public class BestPositionTrainingCriteriaPanel<A extends Attributes>
 		positionLabel = new JLabel("Position:");
 		positionComboBox = new PpmComboBox<String>(positions, -1);
 
-		add(positionLabel);
-		add(positionComboBox);
+		centerPanel.add(positionLabel);
+		centerPanel.add(positionComboBox);
 	}
 
-	public BestPositionTrainingCriteriaPanel(
-		PlayerEvaluator<A> playerEvaluator,
-		Consumer<CriteriaPanel<A>> removeCallback,
-		BestPositionSearchCriteria<A> searchCriteria)
+	@Override
+	public String getName()
 	{
-		this(playerEvaluator, removeCallback);
-
-		update(searchCriteria);
+		return BestPositionSearchCriteria.NAME;
 	}
 
 	@Override

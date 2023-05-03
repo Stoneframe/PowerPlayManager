@@ -27,7 +27,7 @@ public class HandballProfilePlayersParser
 		{
 			HandballPlayer player = new HandballPlayer(
 				parseName(textToParse),
-				"",
+				parseCountry(textToParse),
 				parseAge(textToParse),
 				parseCL(textToParse),
 				parseSide(textToParse),
@@ -50,6 +50,12 @@ public class HandballProfilePlayersParser
 		String[] split = text.split("\n")[0].split("  ")[1].split(" ");
 
 		return String.format("%s %s", split[split.length - 2], split[split.length - 1]);
+	}
+
+	private static String parseCountry(String text)
+	{
+		System.out.println(text);
+		return "";
 	}
 
 	private static int parseAge(String text)
