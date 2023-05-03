@@ -8,7 +8,7 @@ import searcher.SearchCriteria;
 public class AgeSearchCriteria<A extends Attributes>
 	extends SearchCriteria<A>
 {
-	private static final long serialVersionUID = -603352123992942564L;
+	public static final String NAME = "Age";
 
 	private final int min;
 	private final int max;
@@ -24,7 +24,7 @@ public class AgeSearchCriteria<A extends Attributes>
 	@Override
 	public String getName()
 	{
-		return "Age";
+		return NAME;
 	}
 
 	@Override

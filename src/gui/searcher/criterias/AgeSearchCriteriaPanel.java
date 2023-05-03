@@ -6,14 +6,14 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import evaluators.PlayerEvaluator;
-import gui.searcher.CriteriaPanel;
+import gui.searcher.SearchCriteriaPanel;
 import gui.util.IntegerUtil;
 import model.Attributes;
 import searcher.SearchCriteria;
 import searcher.criterias.AgeSearchCriteria;
 
-public class AgeCriteriaPanel<A extends Attributes>
-	extends CriteriaPanel<A>
+public class AgeSearchCriteriaPanel<A extends Attributes>
+	extends SearchCriteriaPanel<A>
 {
 	private static final long serialVersionUID = 6426953700282529580L;
 
@@ -23,19 +23,9 @@ public class AgeCriteriaPanel<A extends Attributes>
 	private final JTextField minAgeTextField;
 	private final JTextField maxAgeTextField;
 
-	public AgeCriteriaPanel(
+	public AgeSearchCriteriaPanel(
 		PlayerEvaluator<A> playerEvaluator,
-		Consumer<CriteriaPanel<A>> removeCallback,
-		AgeSearchCriteria<A> criteria)
-	{
-		this(playerEvaluator, removeCallback);
-
-		update(criteria);
-	}
-
-	public AgeCriteriaPanel(
-		PlayerEvaluator<A> playerEvaluator,
-		Consumer<CriteriaPanel<A>> removeCallback)
+		Consumer<SearchCriteriaPanel<A>> removeCallback)
 	{
 		super(playerEvaluator, removeCallback);
 
@@ -45,10 +35,16 @@ public class AgeCriteriaPanel<A extends Attributes>
 		maxAgeLabel = new JLabel("Max age:");
 		maxAgeTextField = new JTextField(4);
 
-		add(minAgeLabel);
-		add(minAgeTextField);
-		add(maxAgeLabel);
-		add(maxAgeTextField);
+		centerPanel.add(minAgeLabel);
+		centerPanel.add(minAgeTextField);
+		centerPanel.add(maxAgeLabel);
+		centerPanel.add(maxAgeTextField);
+	}
+
+	@Override
+	public String getName()
+	{
+		return AgeSearchCriteria.NAME;
 	}
 
 	@Override

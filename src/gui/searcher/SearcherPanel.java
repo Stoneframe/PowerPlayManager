@@ -3,26 +3,25 @@ package gui.searcher;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import javax.swing.BoxLayout;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import evaluators.PlayerEvaluator;
-import gui.searcher.criterias.AgeCriteriaPanel;
-import gui.searcher.criterias.BestPositionTrainingCriteriaPanel;
-import gui.searcher.criterias.ClCriteriaPanel;
-import gui.searcher.criterias.SideCriteriaPanel;
-import gui.searcher.criterias.RatingInYearsCriteriaPanel;
+import gui.searcher.criterias.AgeSearchCriteriaPanel;
+import gui.searcher.criterias.BestPositionTrainingSearchCriteriaPanel;
+import gui.searcher.criterias.ClSearchCriteriaPanel;
+import gui.searcher.criterias.EffectiveRatingInYearsSearchCriteriaPanel;
+import gui.searcher.criterias.SideSearchCriteriaPanel;
 import gui.util.PpmComboBox;
+import gui.util.VerticalFlowLayout;
 import model.Attributes;
 import model.Player;
 import model.Roster;
@@ -30,11 +29,6 @@ import searcher.SearchCriteria;
 import searcher.SearchTemplate;
 import searcher.SearchTemplateStorage;
 import searcher.Searcher;
-import searcher.criterias.AgeSearchCriteria;
-import searcher.criterias.BestPositionSearchCriteria;
-import searcher.criterias.ClSearchCriteria;
-import searcher.criterias.SideSearchCriteria;
-import searcher.criterias.RatingInYearsSearchCriteria;
 import warper.PlayerWarper;
 
 public class SearcherPanel<A extends Attributes>
@@ -55,10 +49,7 @@ public class SearcherPanel<A extends Attributes>
 
 	private final SearchCriteriaListPanel centerPanel;
 
-	private final PlayerEvaluator<A> playerEvaluator;
-	private final PlayerWarper<A> playerWarper;
-	private final SearchTemplateStorage<A> templateStorage;
-
+	private final List<SearchCriteriaPanel<A>> searchCriteriaPanels;
 
 	public SearcherPanel(
 		Roster<A> roster,
@@ -67,147 +58,30 @@ public class SearcherPanel<A extends Attributes>
 		SearchTemplateStorage<A> templateStorage,
 		Consumer<List<Player<A>>> playersFoundCallback)
 	{
-		this.playerEvaluator = playerEvaluator;
-		this.playerWarper = playerWarper;
-		this.templateStorage = templateStorage;
+		List<String> templateNames = templateStorage.getTemplates()
+			.stream()
+			.map(t -> t.getName())
+			.collect(Collectors.toList());
 
-		searchTemplatesComboBox = new PpmComboBox<>(
-			templateStorage.getTemplates()
-				.stream()
-				.map(t -> t.getName())
-				.collect(Collectors.toList()),
-			-1);
+		searchTemplatesComboBox = new PpmComboBox<>(templateNames, -1);
 		searchTemplatesComboBox.setEditable(true);
 		searchTemplatesComboBox.setPreferredSize(new Dimension(250, 25));
-		searchTemplatesComboBox.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				update();
-			}
-		});
+		searchTemplatesComboBox.addActionListener(l -> onTemplateSelected(templateStorage));
 
 		addButton = new JButton("Add");
-		addButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				Object[] possibilities =
-				{
-					"Age",
-					"CL",
-					"Side",
-					"Rating in Years",
-					"Best position (Training)",
-				};
-
-				String selection = (String)JOptionPane.showInputDialog(
-					SearcherPanel.this,
-					"Select criteria",
-					"Select criteria",
-					JOptionPane.PLAIN_MESSAGE,
-					null,
-					possibilities,
-					"Age");
-
-				if (selection == null)
-				{
-					return;
-				}
-
-				switch (selection)
-				{
-					case "Age":
-						centerPanel.addCriteria(
-							new AgeCriteriaPanel<>(playerEvaluator, cp -> remove(cp)));
-						break;
-
-					case "CL":
-						centerPanel.addCriteria(
-							new ClCriteriaPanel<>(playerEvaluator, cp -> remove(cp)));
-						break;
-
-					case "Side":
-						centerPanel.addCriteria(
-							new SideCriteriaPanel<>(playerEvaluator, cp -> remove(cp)));
-						break;
-
-					case "Rating in Years":
-						centerPanel.addCriteria(
-							new RatingInYearsCriteriaPanel<>(
-								playerEvaluator,
-								playerWarper,
-								cp -> remove(cp)));
-						break;
-
-					case "Best position (Training)":
-						centerPanel.addCriteria(
-							new BestPositionTrainingCriteriaPanel<>(
-								playerEvaluator,
-								cp -> remove(cp)));
-						break;
-				}
-			}
-		});
+		addButton.addActionListener(l -> onAddSearchCriteria());
 
 		searchButton = new JButton("Search");
-		searchButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				List<Player<A>> players = new Searcher<A>(
-					roster,
-					centerPanel.getSearchCriterias()).search();
-
-				playersFoundCallback.accept(players);
-			}
-		});
+		searchButton.addActionListener(l -> onSearchPlayers(roster, playersFoundCallback));
 
 		saveButton = new JButton("Save");
-		saveButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				List<SearchCriteria<A>> searchCriterias = centerPanel.getSearchCriterias();
-				SearchTemplate<A> template =
-					new SearchTemplate<A>(
-						searchTemplatesComboBox.getText(),
-						searchCriterias);
-
-				templateStorage.add(template);
-
-				if (!searchTemplatesComboBox.getAllItems()
-					.stream()
-					.anyMatch(n -> n.equals(template.getName())))
-				{
-					searchTemplatesComboBox.addItem(template.getName());
-				}
-
-				update();
-			}
-		});
+		saveButton.addActionListener(l -> onSaveTemplate(templateStorage));
 
 		removeButton = new JButton("Remove");
-		removeButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				String templateName = searchTemplatesComboBox.getSelection();
-
-				templateStorage.remove(templateName);
-
-				centerPanel.setCriteria(Arrays.asList());
-
-				if (searchTemplatesComboBox.getAllItems()
-					.stream()
-					.anyMatch(n -> n.equals(templateName)))
-				{
-					searchTemplatesComboBox.removeItem(templateName);
-				}
-			}
-		});
+		removeButton.addActionListener(l -> onRemoveTemplate(templateStorage));
 
 		northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		northPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 		northPanel.add(addButton);
 		northPanel.add(searchTemplatesComboBox);
 		northPanel.add(saveButton);
@@ -215,20 +89,39 @@ public class SearcherPanel<A extends Attributes>
 
 		centerPanel = new SearchCriteriaListPanel();
 
+		searchCriteriaPanels = Arrays.asList(
+			new AgeSearchCriteriaPanel<A>(
+				playerEvaluator,
+				p -> onRemoveSearchCriteria(p)),
+			new ClSearchCriteriaPanel<A>(
+				playerEvaluator,
+				p -> onRemoveSearchCriteria(p)),
+			new SideSearchCriteriaPanel<>(
+				playerEvaluator,
+				p -> onRemoveSearchCriteria(p)),
+			new EffectiveRatingInYearsSearchCriteriaPanel<A>(
+				playerEvaluator,
+				playerWarper,
+				p -> onRemoveSearchCriteria(p)),
+			new BestPositionTrainingSearchCriteriaPanel<A>(
+				playerEvaluator,
+				p -> onRemoveSearchCriteria(p)));
+
 		southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		southPanel.add(searchButton);
 
 		setPreferredSize(new Dimension(600, 600));
 		setLayout(new BorderLayout());
+		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		add(BorderLayout.NORTH, northPanel);
 		add(BorderLayout.CENTER, centerPanel);
 		add(BorderLayout.SOUTH, southPanel);
 
-		update();
+		updateButtonsEnabled();
 	}
 
-	private void update()
+	private void onTemplateSelected(SearchTemplateStorage<A> templateStorage)
 	{
 		String templateName = searchTemplatesComboBox.getSelection();
 
@@ -239,67 +132,123 @@ public class SearcherPanel<A extends Attributes>
 
 		SearchTemplate<A> template = templateStorage.get(templateName);
 
-		List<CriteriaPanel<A>> list = new LinkedList<>();
-
 		for (SearchCriteria<A> criteria : template.getCriterias())
 		{
-			if (criteria instanceof AgeSearchCriteria)
-			{
-				list.add(
-					new AgeCriteriaPanel<A>(
-						playerEvaluator,
-						cp -> remove(cp),
-						(AgeSearchCriteria<A>)criteria));
-				continue;
-			}
+			SearchCriteriaPanel<A> criteriaPanel = getCriteriaPanel(criteria.getName());
 
-			if (criteria instanceof ClSearchCriteria)
-			{
-				list.add(
-					new ClCriteriaPanel<A>(
-						playerEvaluator,
-						cp -> remove(cp),
-						(ClSearchCriteria<A>)criteria));
-				continue;
-			}
+			criteriaPanel.update(criteria);
 
-			if (criteria instanceof SideSearchCriteria)
-			{
-				list.add(
-					new SideCriteriaPanel<>(
-						playerEvaluator,
-						cp -> remove(cp),
-						(SideSearchCriteria<A>)criteria));
-				continue;
-			}
-
-			if (criteria instanceof RatingInYearsSearchCriteria)
-			{
-				list.add(
-					new RatingInYearsCriteriaPanel<A>(
-						playerEvaluator,
-						playerWarper,
-						cp -> remove(cp),
-						(RatingInYearsSearchCriteria<A>)criteria));
-				continue;
-			}
-
-			if (criteria instanceof BestPositionSearchCriteria)
-			{
-				list.add(
-					new BestPositionTrainingCriteriaPanel<>(
-						playerEvaluator,
-						cp -> remove(cp),
-						(BestPositionSearchCriteria<A>)criteria));
-			}
+			centerPanel.addCriteria(criteriaPanel);
 		}
 
-		centerPanel.setCriteria(list);
+		updateButtonsEnabled();
 	}
 
-	private void remove(CriteriaPanel<A> criteriaPanel)
+	private void onSaveTemplate(SearchTemplateStorage<A> templateStorage)
+	{
+		List<SearchCriteria<A>> searchCriterias = centerPanel.getSearchCriterias();
+
+		SearchTemplate<A> template =
+			new SearchTemplate<A>(
+				searchTemplatesComboBox.getText(),
+				searchCriterias);
+
+		templateStorage.add(template);
+
+		if (!searchTemplatesComboBox.getAllItems()
+			.stream()
+			.anyMatch(n -> n.equals(template.getName())))
+		{
+			searchTemplatesComboBox.addItem(template.getName());
+		}
+
+		updateButtonsEnabled();
+	}
+
+	private void onRemoveTemplate(SearchTemplateStorage<A> templateStorage)
+	{
+		String templateName = searchTemplatesComboBox.getSelection();
+
+		templateStorage.remove(templateName);
+
+		centerPanel.clearCriteria();
+
+		if (searchTemplatesComboBox.getAllItems()
+			.stream()
+			.anyMatch(n -> n.equals(templateName)))
+		{
+			searchTemplatesComboBox.removeItem(templateName);
+		}
+
+		updateButtonsEnabled();
+	}
+
+	@SuppressWarnings("unchecked")
+	private void onAddSearchCriteria()
+	{
+		List<SearchCriteriaPanel<A>> available = getAvailableSearchCriteriaPanel();
+
+		if (available.size() == 0)
+		{
+			return;
+		}
+
+		SearchCriteriaPanel<A> selection = (SearchCriteriaPanel<A>)JOptionPane.showInputDialog(
+			SearcherPanel.this,
+			"Select criteria",
+			"Select criteria",
+			JOptionPane.PLAIN_MESSAGE,
+			null,
+			available.toArray(),
+			available.get(0));
+
+		if (selection == null)
+		{
+			return;
+		}
+
+		centerPanel.addCriteria(selection);
+
+		updateButtonsEnabled();
+	}
+
+	private void onRemoveSearchCriteria(SearchCriteriaPanel<A> criteriaPanel)
 	{
 		centerPanel.removeCritera(criteriaPanel);
+
+		updateButtonsEnabled();
+	}
+
+	private void onSearchPlayers(Roster<A> roster, Consumer<List<Player<A>>> playersFoundCallback)
+	{
+		List<Player<A>> players = new Searcher<A>(
+			roster,
+			centerPanel.getSearchCriterias()).search();
+
+		playersFoundCallback.accept(players);
+
+		updateButtonsEnabled();
+	}
+
+	private SearchCriteriaPanel<A> getCriteriaPanel(String criteriaName)
+	{
+		return searchCriteriaPanels.stream()
+			.filter(p -> p.getName().equals(criteriaName))
+			.findFirst()
+			.get();
+	}
+
+	private List<SearchCriteriaPanel<A>> getAvailableSearchCriteriaPanel()
+	{
+		return searchCriteriaPanels.stream()
+			.filter(p -> !centerPanel.criteriaPanels.contains(p))
+			.collect(Collectors.toList());
+	}
+
+	private void updateButtonsEnabled()
+	{
+		addButton.setEnabled(!getAvailableSearchCriteriaPanel().isEmpty());
+		searchButton.setEnabled(!centerPanel.getSearchCriterias().isEmpty());
 	}
 
 	private class SearchCriteriaListPanel
@@ -307,30 +256,30 @@ public class SearcherPanel<A extends Attributes>
 	{
 		private static final long serialVersionUID = 9022397065845972289L;
 
-		private List<CriteriaPanel<A>> criteriaPanels = new LinkedList<>();
+		private List<SearchCriteriaPanel<A>> criteriaPanels = new LinkedList<>();
 
 		public SearchCriteriaListPanel()
 		{
-			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+			setLayout(new VerticalFlowLayout(10));
 		}
 
-		public void setCriteria(List<CriteriaPanel<A>> criteriaPanels)
-		{
-			this.criteriaPanels = criteriaPanels;
-
-			update();
-		}
-
-		public void addCriteria(CriteriaPanel<A> criteriaPanel)
+		public void addCriteria(SearchCriteriaPanel<A> criteriaPanel)
 		{
 			criteriaPanels.add(criteriaPanel);
 
 			update();
 		}
 
-		public void removeCritera(CriteriaPanel<A> criteriaPanel)
+		public void removeCritera(SearchCriteriaPanel<A> criteriaPanel)
 		{
 			criteriaPanels.remove(criteriaPanel);
+
+			update();
+		}
+
+		public void clearCriteria()
+		{
+			criteriaPanels.clear();
 
 			update();
 		}
@@ -346,7 +295,7 @@ public class SearcherPanel<A extends Attributes>
 		{
 			removeAll();
 
-			for (CriteriaPanel<A> criteriaPanel : criteriaPanels)
+			for (SearchCriteriaPanel<A> criteriaPanel : criteriaPanels)
 			{
 				add(criteriaPanel);
 			}

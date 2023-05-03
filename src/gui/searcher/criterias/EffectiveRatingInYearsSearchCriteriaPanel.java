@@ -6,15 +6,15 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import evaluators.PlayerEvaluator;
-import gui.searcher.CriteriaPanel;
+import gui.searcher.SearchCriteriaPanel;
 import gui.util.IntegerUtil;
 import model.Attributes;
 import searcher.SearchCriteria;
-import searcher.criterias.RatingInYearsSearchCriteria;
+import searcher.criterias.EffectiveRatingInYearsSearchCriteria;
 import warper.PlayerWarper;
 
-public class RatingInYearsCriteriaPanel<A extends Attributes>
-	extends CriteriaPanel<A>
+public class EffectiveRatingInYearsSearchCriteriaPanel<A extends Attributes>
+	extends SearchCriteriaPanel<A>
 {
 	private static final long serialVersionUID = 4870000333100249235L;
 
@@ -28,10 +28,10 @@ public class RatingInYearsCriteriaPanel<A extends Attributes>
 
 	private final PlayerWarper<A> playerWarper;
 
-	public RatingInYearsCriteriaPanel(
+	public EffectiveRatingInYearsSearchCriteriaPanel(
 		PlayerEvaluator<A> playerEvaluator,
 		PlayerWarper<A> playerWarper,
-		Consumer<CriteriaPanel<A>> removeCallback)
+		Consumer<SearchCriteriaPanel<A>> removeCallback)
 	{
 		super(playerEvaluator, removeCallback);
 		this.playerWarper = playerWarper;
@@ -45,29 +45,24 @@ public class RatingInYearsCriteriaPanel<A extends Attributes>
 		yearsLabel = new JLabel("In years:");
 		yearsTextField = new JTextField(6);
 
-		add(minRatingLabel);
-		add(minRatingTextField);
-		add(maxRatingLabel);
-		add(maxRatingTextField);
-		add(yearsLabel);
-		add(yearsTextField);
+		centerPanel.add(minRatingLabel);
+		centerPanel.add(minRatingTextField);
+		centerPanel.add(maxRatingLabel);
+		centerPanel.add(maxRatingTextField);
+		centerPanel.add(yearsLabel);
+		centerPanel.add(yearsTextField);
 	}
 
-	public RatingInYearsCriteriaPanel(
-		PlayerEvaluator<A> playerEvaluator,
-		PlayerWarper<A> playerWarper,
-		Consumer<CriteriaPanel<A>> removeCallback,
-		RatingInYearsSearchCriteria<A> criteria)
+	@Override
+	public String getName()
 	{
-		this(playerEvaluator, playerWarper, removeCallback);
-
-		update(criteria);
+		return EffectiveRatingInYearsSearchCriteria.NAME;
 	}
 
 	@Override
 	public SearchCriteria<A> getCriteria()
 	{
-		return new RatingInYearsSearchCriteria<>(
+		return new EffectiveRatingInYearsSearchCriteria<>(
 			getMinRating(),
 			getMaxRating(),
 			getYears(),
@@ -86,8 +81,8 @@ public class RatingInYearsCriteriaPanel<A extends Attributes>
 	@Override
 	public void update(SearchCriteria<A> searchCritera)
 	{
-		RatingInYearsSearchCriteria<A> totalratingInYearsCriteria =
-			(RatingInYearsSearchCriteria<A>)searchCritera;
+		EffectiveRatingInYearsSearchCriteria<A> totalratingInYearsCriteria =
+			(EffectiveRatingInYearsSearchCriteria<A>)searchCritera;
 
 		setMinRating(totalratingInYearsCriteria.getMin());
 		setMaxRating(totalratingInYearsCriteria.getMax());

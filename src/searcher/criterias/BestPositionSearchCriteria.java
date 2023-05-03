@@ -9,21 +9,21 @@ import searcher.SearchCriteria;
 public class BestPositionSearchCriteria<A extends Attributes>
 	extends SearchCriteria<A>
 {
+	public static final String NAME = "Best Position (Training)";
+
 	private final String positionName;
 
 	public BestPositionSearchCriteria(PlayerEvaluator<A> playerEvaluator, String positionName)
 	{
 		super(playerEvaluator);
-		
+
 		this.positionName = positionName;
 	}
-
-	private static final long serialVersionUID = 4022387670747832230L;
 
 	@Override
 	public String getName()
 	{
-		return null;
+		return NAME;
 	}
 
 	@Override
