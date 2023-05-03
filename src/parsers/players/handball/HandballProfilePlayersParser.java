@@ -27,6 +27,7 @@ public class HandballProfilePlayersParser
 		{
 			HandballPlayer player = new HandballPlayer(
 				parseName(textToParse),
+				"",
 				parseAge(textToParse),
 				parseCL(textToParse),
 				parseSide(textToParse),

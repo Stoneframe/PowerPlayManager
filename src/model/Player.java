@@ -6,6 +6,7 @@ public class Player<A extends Attributes>
 	extends AbstractModelObject
 {
 	protected String name;
+	private String country;
 	protected int age;
 	protected int cl;
 	protected Side side;
@@ -17,6 +18,7 @@ public class Player<A extends Attributes>
 
 	public Player(
 		String name,
+		String country,
 		int age,
 		int cl,
 		Side side,
@@ -27,6 +29,7 @@ public class Player<A extends Attributes>
 		double training)
 	{
 		this.name = name;
+		this.setCountry(country);
 		this.age = age;
 		this.cl = cl;
 		this.side = side;
@@ -47,6 +50,17 @@ public class Player<A extends Attributes>
 	{
 		this.name = name;
 		firePropertyChanged("Name", name);
+	}
+
+	public String getCountry()
+	{
+		return country;
+	}
+
+	public void setCountry(String country)
+	{
+		this.country = country;
+		firePropertyChanged("Country", country);
 	}
 
 	public int getAge()

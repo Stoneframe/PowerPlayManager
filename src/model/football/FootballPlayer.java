@@ -8,6 +8,7 @@ public class FootballPlayer
 {
 	public FootballPlayer(
 		String name,
+		String country,
 		int age,
 		int cl,
 		Side side,
@@ -17,6 +18,6 @@ public class FootballPlayer
 		int energy,
 		double training)
 	{
-		super(name, age, cl, side, attributes, experience, chemistry, energy, training);
+		super(name, country, age, cl, side, attributes, experience, chemistry, energy, training);
 	}
 }

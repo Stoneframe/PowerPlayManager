@@ -27,6 +27,7 @@ public class IceHockeyProfilePlayersParser
 		{
 			IceHockeyPlayer player = new IceHockeyPlayer(
 				parseName(textToParse),
+				"",
 				parseAge(textToParse),
 				parseCL(textToParse),
 				parseSide(textToParse),

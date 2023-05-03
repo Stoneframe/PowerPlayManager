@@ -311,9 +311,12 @@ public abstract class RegexPlayersParser<A extends Attributes>
 	private Player<A> createPlayer(Matcher matcher)
 	{
 		A attributes = createAttributes(matcher, includeQualities);
+		
+		System.out.println(matcher.group("country"));
 
 		return new Player<A>(
 			matcher.group("name"),
+			matcher.group("country"),
 			Integer.parseInt(matcher.group("age")),
 			includeCL ? Integer.parseInt(matcher.group("cl")) : -1,
 			includeSide ? SideParser.parseSide(matcher.group("side")) : Side.UNKNOWN,

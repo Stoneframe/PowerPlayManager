@@ -27,6 +27,7 @@ public class FootballProfilePlayersParser
 		{
 			FootballPlayer player = new FootballPlayer(
 				parseName(textToParse),
+				"",
 				parseAge(textToParse),
 				parseCL(textToParse),
 				parseSide(textToParse),
