@@ -6,14 +6,16 @@ import model.Attributes;
 import model.Player;
 import searcher.SearchCriteria;
 
-public class BestPositionSearchCriteria<A extends Attributes>
+public class BestPositionTrainingSearchCriteria<A extends Attributes>
 	extends SearchCriteria<A>
 {
-	public static final String NAME = "Best Position";
+	public static final String NAME = "Best Position (Training)";
 
 	private final String positionName;
 
-	public BestPositionSearchCriteria(PlayerEvaluator<A> playerEvaluator, String positionName)
+	public BestPositionTrainingSearchCriteria(
+		PlayerEvaluator<A> playerEvaluator,
+		String positionName)
 	{
 		super(playerEvaluator);
 
@@ -29,7 +31,7 @@ public class BestPositionSearchCriteria<A extends Attributes>
 	@Override
 	public boolean check(Player<A> player)
 	{
-		PositionNameValue position = playerEvaluator.getBestPositionRating(player);
+		PositionNameValue position = playerEvaluator.getBestPositionQuality(player);
 
 		return getPositionName().equals(position.getName());
 	}

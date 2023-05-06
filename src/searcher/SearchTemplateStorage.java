@@ -72,8 +72,13 @@ public class SearchTemplateStorage<A extends Attributes>
 		return templates.stream().filter(t -> t.getName().equals(name)).findFirst().orElse(null);
 	}
 
+	public boolean contains(String name)
+	{
+		return templates.stream().anyMatch(t -> t.getName().equals(name));
+	}
+
 	@SuppressWarnings("unchecked")
-	public void load()
+	private void load()
 	{
 		try
 		{
@@ -99,7 +104,7 @@ public class SearchTemplateStorage<A extends Attributes>
 		}
 	}
 
-	public void save()
+	private void save()
 	{
 		try
 		{
