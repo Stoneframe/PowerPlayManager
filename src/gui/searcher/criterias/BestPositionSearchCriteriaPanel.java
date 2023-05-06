@@ -9,16 +9,16 @@ import gui.searcher.ComboBoxManager;
 import gui.searcher.SearchCriteriaPanel;
 import model.Attributes;
 import searcher.SearchCriteria;
-import searcher.criterias.BestPositionTrainingSearchCriteria;
+import searcher.criterias.BestPositionSearchCriteria;
 
-public class BestPositionTrainingSearchCriteriaPanel<A extends Attributes>
+public class BestPositionSearchCriteriaPanel<A extends Attributes>
 	extends SearchCriteriaPanel<A>
 {
-	private static final long serialVersionUID = -1917983273654561735L;
+	private static final long serialVersionUID = -7080025368411881611L;
 
 	private final ComboBoxManager<String> position;
 
-	public BestPositionTrainingSearchCriteriaPanel(
+	public BestPositionSearchCriteriaPanel(
 		PlayerEvaluator<A> playerEvaluator,
 		Consumer<SearchCriteriaPanel<A>> removeCallback)
 	{
@@ -35,18 +35,18 @@ public class BestPositionTrainingSearchCriteriaPanel<A extends Attributes>
 	@Override
 	public String getName()
 	{
-		return BestPositionTrainingSearchCriteria.NAME;
+		return BestPositionSearchCriteria.NAME;
 	}
 
 	@Override
 	public SearchCriteria<A> getCriteria()
 	{
-		return new BestPositionTrainingSearchCriteria<>(playerEvaluator, position.get());
+		return new BestPositionSearchCriteria<>(playerEvaluator, position.get());
 	}
 
 	@Override
 	public void update(SearchCriteria<A> searchCritera)
 	{
-		position.set(((BestPositionTrainingSearchCriteria<A>)searchCritera).getPositionName());
+		position.set(((BestPositionSearchCriteria<A>)searchCritera).getPositionName());
 	}
 }
