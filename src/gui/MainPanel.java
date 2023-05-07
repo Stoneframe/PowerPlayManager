@@ -366,15 +366,15 @@ public class MainPanel<A extends Attributes>
 								playerEvaluator,
 								playerWarper,
 								searchTemplateStorage,
-								players -> createGroup(players)));
+								(groupName, players) -> createGroup(groupName, players)));
 						searcherFrame.pack();
 						searcherFrame.setLocationRelativeTo(MainPanel.this);
 						searcherFrame.setVisible(true);
 					}
 
-					private void createGroup(List<Player<A>> players)
+					private void createGroup(String groupName, List<Player<A>> players)
 					{
-						Groups<A>.Group group = groups.add("Search", players);
+						Groups<A>.Group group = groups.add(groupName, players);
 
 						groupPanel.addGroup(group);
 					}

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -38,6 +38,7 @@ import searcher.criterias.AgeSearchCriteria;
 import searcher.criterias.BestPositionSearchCriteria;
 import searcher.criterias.BestPositionTrainingSearchCriteria;
 import searcher.criterias.ClSearchCriteria;
+import searcher.criterias.CountrySearchCriteria;
 import searcher.criterias.EffectiveRatingInYearsSearchCriteria;
 import searcher.criterias.MinimumEffectiveRatingSearchCriteria;
 import searcher.criterias.SideSearchCriteria;
@@ -69,7 +70,7 @@ public class SearcherPanel<A extends Attributes>
 		PlayerEvaluator<A> playerEvaluator,
 		PlayerWarper<A> playerWarper,
 		SearchTemplateStorage<A> templateStorage,
-		Consumer<List<Player<A>>> playersFoundCallback)
+		BiConsumer<String, List<Player<A>>> playersFoundCallback)
 	{
 		List<String> templateNames = templateStorage.getTemplates()
 			.stream()
@@ -108,40 +109,50 @@ public class SearcherPanel<A extends Attributes>
 		centerPanel = new SearchCriteriaListPanel();
 
 		searchCriteriaPanelSuppliers = new HashMap<>();
+
 		searchCriteriaPanelSuppliers.put(
 			AgeSearchCriteria.NAME,
 			() -> new AgeSearchCriteriaPanel<>(
 				playerEvaluator,
 				p -> onRemoveSearchCriteria(p)));
+
 		searchCriteriaPanelSuppliers.put(
 			ClSearchCriteria.NAME,
 			() -> new ClSearchCriteriaPanel<>(
 				playerEvaluator,
 				p -> onRemoveSearchCriteria(p)));
+
 		searchCriteriaPanelSuppliers.put(
 			SideSearchCriteria.NAME,
 			() -> new SideSearchCriteriaPanel<>(
 				playerEvaluator,
 				p -> onRemoveSearchCriteria(p)));
+
 		searchCriteriaPanelSuppliers.put(
 			EffectiveRatingInYearsSearchCriteria.NAME,
 			() -> new EffectiveRatingInYearsSearchCriteriaPanel<A>(
 				playerEvaluator,
 				playerWarper,
 				p -> onRemoveSearchCriteria(p)));
+
 		searchCriteriaPanelSuppliers.put(
 			BestPositionSearchCriteria.NAME,
 			() -> new BestPositionSearchCriteriaPanel<>(
 				playerEvaluator,
 				p -> onRemoveSearchCriteria(p)));
+
 		searchCriteriaPanelSuppliers.put(
 			BestPositionTrainingSearchCriteria.NAME,
 			() -> new BestPositionTrainingSearchCriteriaPanel<>(
 				playerEvaluator,
-				p -> onRemoveSearchCriteria(p)),
-			new CountrySearchCriteriaPanel<>(
+				p -> onRemoveSearchCriteria(p)));
+
+		searchCriteriaPanelSuppliers.put(
+			CountrySearchCriteria.NAME,
+			() -> new CountrySearchCriteriaPanel<>(
 				playerEvaluator,
 				p -> onRemoveSearchCriteria(p)));
+
 		searchCriteriaPanelSuppliers.put(
 			MinimumEffectiveRatingSearchCriteria.NAME,
 			() -> new MinimumEffectiveRatingSearchCriteriaPanel<>(
@@ -269,13 +280,19 @@ public class SearcherPanel<A extends Attributes>
 		updateButtonsEnabled();
 	}
 
-	private void onSearchPlayers(Roster<A> roster, Consumer<List<Player<A>>> playersFoundCallback)
+	private void onSearchPlayers(
+		Roster<A> roster,
+		BiConsumer<String, List<Player<A>>> playersFoundCallback)
 	{
 		List<Player<A>> players = new Searcher<A>(
 			roster,
 			centerPanel.getSearchCriterias()).search();
 
-		playersFoundCallback.accept(players);
+		String selectedTemplate = searchTemplatesComboBox.getSelection();
+
+		String groupName = "Search - " + selectedTemplate;
+
+		playersFoundCallback.accept(groupName, players);
 
 		updateButtonsEnabled();
 	}
