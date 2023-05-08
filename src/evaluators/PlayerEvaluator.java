@@ -17,26 +17,15 @@ public class PlayerEvaluator<A extends Attributes>
 	private static final double EXPERIENCE_FACTOR = 0.2;
 	private static final double CHEMISTRY_FACTOR = 0.2;
 
-	private double a, b, c;
-
 	private SportSettings settings;
 
-	private int numberOfAttributes;
 	private List<AttributeEvaluator<A>> attributeEvaluators;
 
 	public PlayerEvaluator(
-		double a,
-		double b,
-		double c,
 		SportSettings settings,
-		int numberOfAttributes,
 		List<AttributeEvaluator<A>> attributeEvaluators)
 	{
-		this.a = a;
-		this.b = b;
-		this.c = c;
 		this.settings = settings;
-		this.numberOfAttributes = numberOfAttributes;
 		this.attributeEvaluators = attributeEvaluators;
 	}
 
@@ -130,10 +119,7 @@ public class PlayerEvaluator<A extends Attributes>
 
 	public double calculateTotalRatingForAge(Player<A> player, int age)
 	{
-		double modifier = getCLModifier(player);
-		double quality = getBestPositionQuality(player).getValue();
-
-		return F(player.getAge(), age, createPlayerCurve(modifier, quality))
+		return F(player.getAge(), age, createPlayerCurve(player))
 			* DAYS_PER_SEASON
 			+ player.getAttributes().getTotalRating();
 	}
@@ -161,61 +147,23 @@ public class PlayerEvaluator<A extends Attributes>
 
 	public double calculatePlayerTraining(Player<A> player)
 	{
-		double modifier = getCLModifier(player);
-		double quality = getBestPositionQuality(player).getValue();
-
-		return createPlayerCurve(modifier, quality).apply((double)player.getAge());
+		return createPlayerCurve(player).apply(player.getAge());
 	}
 
-	private Function<Double, Double> createPlayerCurve(double modifier, double quality)
+	private Function<Integer, Double> createPlayerCurve(Player<A> player)
 	{
-		return x -> getFacilityTraining() * f(x, modifier) * quality / 100;
+		AttributeEvaluator<A> evaluator = getBestEvaluatorByRating(player.getAttributes());
+
+		TrainingCalculator<A> tc = new TrainingCalculator<>(
+			getFacilityLevel(),
+			getStaffEffectivness(),
+			player,
+			evaluator);
+
+		return x -> tc.calc(x);
 	}
 
-	private double getFacilityTraining()
-	{
-		return 1.9 * getFacilityEffectiveness() / 22.5;
-	}
-
-	private double getFacilityEffectiveness()
-	{
-		return (double)getFacilityLevel() * (1 + (double)getStaffEffectivness() / 200);
-	}
-
-	private double getCLModifier(Player<A> player)
-	{
-		return getCLModifier(player.getCL(), player.getAge());
-	}
-
-	private static double getCLModifier(int cl, int age)
-	{
-		final double upper = 1.303;
-		final double lower = 0.8067;
-
-		Function<Double, Double> calc = x -> upper + (lower - upper) * x;
-
-		switch (cl)
-		{
-			case 6:
-				return calc.apply((age - 12d) / 6d);
-			case 5:
-				return calc.apply((age - 15d) / 7d);
-			case 4:
-				return calc.apply((age - 17d) / 9d);
-			case 3:
-				return calc.apply((age - 21d) / 9d);
-			case 2:
-				return calc.apply((age - 23d) / 10d);
-			case 1:
-				return calc.apply((age - 25d) / 10d);
-			case 0:
-				return calc.apply((age - 29d) / 11d);
-			default:
-				return 1;
-		}
-	}
-
-	private double F(int a, int b, Function<Double, Double> f)
+	private double F(int a, int b, Function<Integer, Double> f)
 	{
 		boolean invert = false;
 
@@ -233,37 +181,13 @@ public class PlayerEvaluator<A extends Attributes>
 			b = t;
 		}
 
-		double sum = 0.5 * f.apply((double)a) + 0.5 * f.apply((double)b);
+		double sum = 0.5 * f.apply(a) + 0.5 * f.apply(b);
 
-		for (double x = a + 1; x < b; x++)
+		for (int x = a + 1; x < b; x++)
 		{
 			sum += f.apply(x);
 		}
 
 		return invert ? -sum : sum;
-	}
-
-	private double f(double x, double modifier)
-	{
-		int zero = (int)Math.round(5 * (Math.sqrt(23248561) - 1081) / (1104 * modifier) + 15);
-
-		if (x < zero)
-		{
-			return gtZeroCL((x - 15), modifier);
-		}
-		else
-		{
-			return eqZeroCL(x - zero);
-		}
-	}
-
-	private double gtZeroCL(double x, double modifier)
-	{
-		return a * Math.pow(x * modifier, 2) + b * Math.pow(x * modifier, 1) + c;
-	}
-
-	private double eqZeroCL(double x)
-	{
-		return Math.min((-0.06 * x + 0.06) * numberOfAttributes, 0);
 	}
 }

@@ -188,5 +188,15 @@ public class MainFrame
 				new MainFrame();
 			}
 		});
+
+		// int age = 23;
+		// int cl = 3;
+		//
+		// CareerLengthCurve clCurve = new CareerLengthCurve(age, cl);
+		//
+		// for (int i = age; i < 50; i++)
+		// {
+		// System.out.println(i + ": " + clCurve.get(i));
+		// }
 	}
 }

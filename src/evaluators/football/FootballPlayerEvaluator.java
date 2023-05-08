@@ -10,12 +10,10 @@ import settings.SportSettings;
 public class FootballPlayerEvaluator
 	extends PlayerEvaluator<FootballAttributes>
 {
-	private static final double A = -0.002208, B = -0.02162, C = 1;
-
 	public FootballPlayerEvaluator(
 		SportSettings settings,
 		List<AttributeEvaluator<FootballAttributes>> attributeEvaluators)
 	{
-		super(A, B, C, settings, 9, attributeEvaluators);
+		super(settings, attributeEvaluators);
 	}
 }
