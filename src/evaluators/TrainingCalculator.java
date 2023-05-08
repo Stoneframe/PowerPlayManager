@@ -5,19 +5,33 @@ import model.Player;
 
 public class TrainingCalculator<A extends Attributes>
 {
-	private static final double AGE_5 = -0.0000152640;
-	private static final double AGE_4 = 0.0017800558;
-	private static final double AGE_3 = -0.0809341322;
-	private static final double AGE_2 = 1.7894207375;
-	private static final double AGE_1 = -19.3947514251;
+	// private static final double AGE_5 = -0.0000152640;
+	// private static final double AGE_4 = 0.0017800558;
+	// private static final double AGE_3 = -0.0809341322;
+	// private static final double AGE_2 = 1.7894207375;
+	// private static final double AGE_1 = -19.3947514251;
+	//
+	// private static final double CL_5 = 0.0360213161;
+	// private static final double CL_4 = -0.5963990250;
+	// private static final double CL_3 = 3.5917573254;
+	// private static final double CL_2 = -9.7765269754;
+	// private static final double CL_1 = 13.4214917013;
+	//
+	// private static final double M = 79.8665242425;
 
-	private static final double CL_5 = 0.0360213161;
-	private static final double CL_4 = -0.5963990250;
-	private static final double CL_3 = 3.5917573254;
-	private static final double CL_2 = -9.7765269754;
-	private static final double CL_1 = 13.4214917013;
+	private static final double AGE_5 = -1.5864730710252552E-5;
+	private static final double AGE_4 = 0.0018457010260159285;
+	private static final double AGE_3 = -0.08375355573024544;
+	private static final double AGE_2 = 1.8491229652134236;
+	private static final double AGE_1 = -20.021937644105673;
 
-	private static final double M = 79.8665242425;
+	private static final double CL_5 = 0.03590926726882296;
+	private static final double CL_4 = -0.5941853187031092;
+	private static final double CL_3 = 3.5750319606349867;
+	private static final double CL_2 = -9.719351510312881;
+	private static final double CL_1 = 13.33888816752668;
+
+	private static final double M = 82.54330843595311;
 
 	private final int facility;
 	private final int staff;
