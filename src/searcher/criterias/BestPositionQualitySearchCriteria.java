@@ -6,14 +6,14 @@ import model.Attributes;
 import model.Player;
 import searcher.SearchCriteria;
 
-public class BestPositionTrainingSearchCriteria<A extends Attributes>
+public class BestPositionQualitySearchCriteria<A extends Attributes>
 	extends SearchCriteria<A>
 {
-	public static final String NAME = "Best Position (Training)";
+	public static final String NAME = "Best Position (Quality)";
 
 	private final String positionName;
 
-	public BestPositionTrainingSearchCriteria(
+	public BestPositionQualitySearchCriteria(
 		PlayerEvaluator<A> playerEvaluator,
 		String positionName)
 	{

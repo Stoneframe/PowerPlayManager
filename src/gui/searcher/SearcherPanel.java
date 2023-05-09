@@ -37,7 +37,7 @@ import searcher.SearchTemplateStorage;
 import searcher.Searcher;
 import searcher.criterias.AgeSearchCriteria;
 import searcher.criterias.BestPositionRatingSearchCriteria;
-import searcher.criterias.BestPositionTrainingSearchCriteria;
+import searcher.criterias.BestPositionQualitySearchCriteria;
 import searcher.criterias.ClSearchCriteria;
 import searcher.criterias.CountrySearchCriteria;
 import searcher.criterias.EffectiveRatingAtPositionInYearsSearchCriteria;
@@ -151,7 +151,7 @@ public class SearcherPanel<A extends Attributes>
 				p -> onRemoveSearchCriteria(p)));
 
 		searchCriteriaPanelSuppliers.put(
-			BestPositionTrainingSearchCriteria.NAME,
+			BestPositionQualitySearchCriteria.NAME,
 			() -> new BestPositionTrainingSearchCriteriaPanel<>(
 				playerEvaluator,
 				p -> onRemoveSearchCriteria(p)));
