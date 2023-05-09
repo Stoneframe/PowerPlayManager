@@ -10,10 +10,10 @@ import gui.searcher.NumFieldManager;
 import gui.searcher.SearchCriteriaPanel;
 import model.Attributes;
 import searcher.SearchCriteria;
-import searcher.criterias.EffectiveRatingInYearsSearchCriteria;
+import searcher.criterias.EffectiveRatingAtPositionInYearsSearchCriteria;
 import warper.PlayerWarper;
 
-public class EffectiveRatingInYearsSearchCriteriaPanel<A extends Attributes>
+public class EffectiveRatingAtPositionInYearsSearchCriteriaPanel<A extends Attributes>
 	extends SearchCriteriaPanel<A>
 {
 	private static final long serialVersionUID = 4870000333100249235L;
@@ -25,7 +25,7 @@ public class EffectiveRatingInYearsSearchCriteriaPanel<A extends Attributes>
 
 	private final PlayerWarper<A> playerWarper;
 
-	public EffectiveRatingInYearsSearchCriteriaPanel(
+	public EffectiveRatingAtPositionInYearsSearchCriteriaPanel(
 		PlayerEvaluator<A> playerEvaluator,
 		PlayerWarper<A> playerWarper,
 		Consumer<SearchCriteriaPanel<A>> removeCallback)
@@ -48,13 +48,13 @@ public class EffectiveRatingInYearsSearchCriteriaPanel<A extends Attributes>
 	@Override
 	public String getName()
 	{
-		return EffectiveRatingInYearsSearchCriteria.NAME;
+		return EffectiveRatingAtPositionInYearsSearchCriteria.NAME;
 	}
 
 	@Override
 	public SearchCriteria<A> getCriteria()
 	{
-		return new EffectiveRatingInYearsSearchCriteria<>(
+		return new EffectiveRatingAtPositionInYearsSearchCriteria<>(
 			position.get(),
 			minRating.get(),
 			maxRating.get(),
@@ -66,9 +66,9 @@ public class EffectiveRatingInYearsSearchCriteriaPanel<A extends Attributes>
 	@Override
 	public void update(SearchCriteria<A> searchCritera)
 	{
-		position.set(((EffectiveRatingInYearsSearchCriteria<A>)searchCritera).getPositionName());
-		minRating.set(((EffectiveRatingInYearsSearchCriteria<A>)searchCritera).getMin());
-		maxRating.set(((EffectiveRatingInYearsSearchCriteria<A>)searchCritera).getMax());
-		years.set(((EffectiveRatingInYearsSearchCriteria<A>)searchCritera).getYears());
+		position.set(((EffectiveRatingAtPositionInYearsSearchCriteria<A>)searchCritera).getPositionName());
+		minRating.set(((EffectiveRatingAtPositionInYearsSearchCriteria<A>)searchCritera).getMin());
+		maxRating.set(((EffectiveRatingAtPositionInYearsSearchCriteria<A>)searchCritera).getMax());
+		years.set(((EffectiveRatingAtPositionInYearsSearchCriteria<A>)searchCritera).getYears());
 	}
 }

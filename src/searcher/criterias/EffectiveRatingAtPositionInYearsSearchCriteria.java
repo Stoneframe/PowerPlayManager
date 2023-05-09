@@ -7,10 +7,10 @@ import model.Player;
 import searcher.SearchCriteria;
 import warper.PlayerWarper;
 
-public class EffectiveRatingInYearsSearchCriteria<A extends Attributes>
+public class EffectiveRatingAtPositionInYearsSearchCriteria<A extends Attributes>
 	extends SearchCriteria<A>
 {
-	public static final String NAME = "Effective Rating in Years";
+	public static final String NAME = "Effective Rating at Position in Years";
 
 	private final String positionName;
 	private final int min;
@@ -19,7 +19,7 @@ public class EffectiveRatingInYearsSearchCriteria<A extends Attributes>
 
 	private transient final PlayerWarper<A> playerWarper;
 
-	public EffectiveRatingInYearsSearchCriteria(
+	public EffectiveRatingAtPositionInYearsSearchCriteria(
 		String positionName,
 		int min,
 		int max,
