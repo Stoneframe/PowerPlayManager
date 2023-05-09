@@ -24,7 +24,7 @@ public class IceHockeyAttributes
 
 	public int getGoa()
 	{
-		return attributes.get(0).getRating();
+		return (int)attributes.get(0).getRating();
 	}
 
 	public void setGoa(int goa)
@@ -36,7 +36,7 @@ public class IceHockeyAttributes
 
 	public int getDef()
 	{
-		return attributes.get(1).getRating();
+		return (int)attributes.get(1).getRating();
 	}
 
 	public void setDef(int def)
@@ -48,7 +48,7 @@ public class IceHockeyAttributes
 
 	public int getOff()
 	{
-		return attributes.get(2).getRating();
+		return (int)attributes.get(2).getRating();
 	}
 
 	public void setOff(int off)
@@ -60,7 +60,7 @@ public class IceHockeyAttributes
 
 	public int getSho()
 	{
-		return attributes.get(3).getRating();
+		return (int)attributes.get(3).getRating();
 	}
 
 	public void setSho(int sho)
@@ -72,7 +72,7 @@ public class IceHockeyAttributes
 
 	public int getPas()
 	{
-		return attributes.get(4).getRating();
+		return (int)attributes.get(4).getRating();
 	}
 
 	public void setPas(int pas)
@@ -84,7 +84,7 @@ public class IceHockeyAttributes
 
 	public int getTec()
 	{
-		return attributes.get(5).getRating();
+		return (int)attributes.get(5).getRating();
 	}
 
 	public void setTec(int tec)
@@ -96,7 +96,7 @@ public class IceHockeyAttributes
 
 	public int getAgr()
 	{
-		return attributes.get(6).getRating();
+		return (int)attributes.get(6).getRating();
 	}
 
 	public void setAgr(int agr)

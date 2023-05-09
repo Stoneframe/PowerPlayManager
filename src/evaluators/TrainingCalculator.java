@@ -1,24 +1,11 @@
 package evaluators;
 
+import model.Attribute;
 import model.Attributes;
 import model.Player;
 
 public class TrainingCalculator<A extends Attributes>
 {
-	// private static final double AGE_5 = -0.0000152640;
-	// private static final double AGE_4 = 0.0017800558;
-	// private static final double AGE_3 = -0.0809341322;
-	// private static final double AGE_2 = 1.7894207375;
-	// private static final double AGE_1 = -19.3947514251;
-	//
-	// private static final double CL_5 = 0.0360213161;
-	// private static final double CL_4 = -0.5963990250;
-	// private static final double CL_3 = 3.5917573254;
-	// private static final double CL_2 = -9.7765269754;
-	// private static final double CL_1 = 13.4214917013;
-	//
-	// private static final double M = 79.8665242425;
-
 	private static final double AGE_5 = -1.5864730710252552E-5;
 	private static final double AGE_4 = 0.0018457010260159285;
 	private static final double AGE_3 = -0.08375355573024544;
@@ -36,10 +23,10 @@ public class TrainingCalculator<A extends Attributes>
 	private final int facility;
 	private final int staff;
 
-	private final CareerLengthCurve clc;
-
 	private final int nbrOfAttributes;
 	private final double quality;
+
+	private final CareerLengthCurve clc;
 
 	public TrainingCalculator(
 		int facility,
@@ -50,10 +37,25 @@ public class TrainingCalculator<A extends Attributes>
 		this.facility = facility;
 		this.staff = staff;
 
-		clc = new CareerLengthCurve(player.getAge(), player.getCL());
+		this.nbrOfAttributes = player.getAttributes().getNumberOfAttributes();
+		this.quality = evaluator.getQuality(player.getAttributes());
 
-		nbrOfAttributes = player.getAttributes().getNumberOfAttributes();
-		quality = evaluator.getQuality(player.getAttributes());
+		clc = new CareerLengthCurve(player.getAge(), player.getCL());
+	}
+
+	public TrainingCalculator(
+		int facility,
+		int staff,
+		Player<A> player,
+		Attribute attribute)
+	{
+		this.facility = facility;
+		this.staff = staff;
+
+		this.nbrOfAttributes = 1;
+		this.quality = attribute.getQuality();
+
+		clc = new CareerLengthCurve(player.getAge(), player.getCL());
 	}
 
 	public double calc(int age)

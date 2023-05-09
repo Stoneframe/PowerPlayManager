@@ -47,9 +47,9 @@ public class Attribute
 		firePropertyChanged("LongNme", longName);
 	}
 
-	public int getRating()
+	public double getRating()
 	{
-		return (int)rating;
+		return rating;
 	}
 
 	public void setRating(int rating)

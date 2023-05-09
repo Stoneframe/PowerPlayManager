@@ -20,7 +20,7 @@ public abstract class Attributes
 
 	public int getTotalRating()
 	{
-		return attributes.stream().mapToInt(a -> a.getRating()).sum();
+		return (int)attributes.stream().mapToDouble(a -> a.getRating()).sum();
 	}
 
 	public double getAverageQuality()

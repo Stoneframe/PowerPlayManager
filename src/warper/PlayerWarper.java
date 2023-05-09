@@ -19,35 +19,29 @@ public abstract class PlayerWarper<A extends Attributes>
 	{
 		A attributes = copyAttributes(player.getAttributes());
 
-		double previousTotalRating = player.getAttributes().getTotalRating();
-
-		for (int i = 1; i <= years; i++)
+		for (int year = 1; year <= years; year++)
 		{
-			double nextTotalRating =
-				playerEvaluator.calculateTotalRatingForAge(player, player.getAge() + i);
-
-			double improvement = (nextTotalRating - previousTotalRating);
-
-			if (Integer.signum((int)improvement) > 0)
+			for (int day = 1; day <= 112; day++)
 			{
-				for (int j = 0; j < Math.abs(improvement); j++)
-				{
-					Attribute attribute = attributeEvaluator.getWorstAttribute(attributes);
+				Attribute attribute = attributeEvaluator.getWorstAttribute(attributes);
 
-					attribute.setRating(attribute.getRating() + 1);
+				double training = playerEvaluator.calculatePlayerAttributeTrainingForYear(
+					player,
+					attribute,
+					player.getAge() + year);
+
+				if (training > 0)
+				{
+					attribute.addToRating(training);
+				}
+				else
+				{
+					for (Attribute a : attributes)
+					{
+						a.addToRating(training);
+					}
 				}
 			}
-			else
-			{
-				double decreasePerAttribute = improvement / attributes.getNumberOfAttributes();
-
-				for (Attribute attribute : attributes)
-				{
-					attribute.addToRating(decreasePerAttribute);
-				}
-			}
-
-			previousTotalRating = nextTotalRating;
 		}
 
 		return attributes;

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import comparators.QualityEvaluatorComparator;
 import comparators.RatingEvaluatorComparator;
+import model.Attribute;
 import model.Attributes;
 import model.Player;
 import settings.SportSettings;
@@ -148,6 +149,20 @@ public class PlayerEvaluator<A extends Attributes>
 	public double calculatePlayerTraining(Player<A> player)
 	{
 		return createPlayerCurve(player).apply(player.getAge());
+	}
+
+	public double calculatePlayerAttributeTrainingForYear(
+		Player<A> player,
+		Attribute attribute,
+		int age)
+	{
+		TrainingCalculator<A> tc = new TrainingCalculator<>(
+			getFacilityLevel(),
+			getStaffEffectivness(),
+			player,
+			attribute);
+
+		return tc.calc(age);
 	}
 
 	private Function<Integer, Double> createPlayerCurve(Player<A> player)

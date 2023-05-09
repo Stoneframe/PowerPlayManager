@@ -25,7 +25,7 @@ public class HandballAttributes
 
 	public int getGoa()
 	{
-		return attributes.get(0).getRating();
+		return (int)attributes.get(0).getRating();
 	}
 
 	public void setGoa(int goa)
@@ -37,7 +37,7 @@ public class HandballAttributes
 
 	public int getFip()
 	{
-		return attributes.get(1).getRating();
+		return (int)attributes.get(1).getRating();
 	}
 
 	public void setFip(int fip)
@@ -49,7 +49,7 @@ public class HandballAttributes
 
 	public int getSho()
 	{
-		return attributes.get(2).getRating();
+		return (int)attributes.get(2).getRating();
 	}
 
 	public void setSho(int sho)
@@ -61,7 +61,7 @@ public class HandballAttributes
 
 	public int getBlk()
 	{
-		return attributes.get(3).getRating();
+		return (int)attributes.get(3).getRating();
 	}
 
 	public void setBlk(int blk)
@@ -73,7 +73,7 @@ public class HandballAttributes
 
 	public int getPas()
 	{
-		return attributes.get(4).getRating();
+		return (int)attributes.get(4).getRating();
 	}
 
 	public void setPas(int pas)
@@ -85,7 +85,7 @@ public class HandballAttributes
 
 	public int getTec()
 	{
-		return attributes.get(5).getRating();
+		return (int)attributes.get(5).getRating();
 	}
 
 	public void setTec(int tec)
@@ -97,7 +97,7 @@ public class HandballAttributes
 
 	public int getSpe()
 	{
-		return attributes.get(6).getRating();
+		return (int)attributes.get(6).getRating();
 	}
 
 	public void setSpe(int spe)
@@ -109,7 +109,7 @@ public class HandballAttributes
 
 	public int getAgr()
 	{
-		return attributes.get(7).getRating();
+		return (int)attributes.get(7).getRating();
 	}
 
 	public void setAgr(int agr)
