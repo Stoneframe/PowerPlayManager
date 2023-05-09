@@ -3,7 +3,7 @@ package gui.searcher;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +36,8 @@ import searcher.SearchTemplate;
 import searcher.SearchTemplateStorage;
 import searcher.Searcher;
 import searcher.criterias.AgeSearchCriteria;
-import searcher.criterias.BestPositionRatingSearchCriteria;
 import searcher.criterias.BestPositionQualitySearchCriteria;
+import searcher.criterias.BestPositionRatingSearchCriteria;
 import searcher.criterias.ClSearchCriteria;
 import searcher.criterias.CountrySearchCriteria;
 import searcher.criterias.EffectiveRatingAtPositionInYearsSearchCriteria;
@@ -110,7 +110,7 @@ public class SearcherPanel<A extends Attributes>
 
 		centerPanel = new SearchCriteriaListPanel();
 
-		searchCriteriaPanelSuppliers = new HashMap<>();
+		searchCriteriaPanelSuppliers = new LinkedHashMap<>();
 
 		searchCriteriaPanelSuppliers.put(
 			AgeSearchCriteria.NAME,
@@ -131,17 +131,9 @@ public class SearcherPanel<A extends Attributes>
 				p -> onRemoveSearchCriteria(p)));
 
 		searchCriteriaPanelSuppliers.put(
-			EffectiveRatingAtPositionInYearsSearchCriteria.NAME,
-			() -> new EffectiveRatingAtPositionInYearsSearchCriteriaPanel<A>(
+			CountrySearchCriteria.NAME,
+			() -> new CountrySearchCriteriaPanel<>(
 				playerEvaluator,
-				playerWarper,
-				p -> onRemoveSearchCriteria(p)));
-
-		searchCriteriaPanelSuppliers.put(
-			EffectiveRatingInYearsSearchCriteria.NAME,
-			() -> new EffectiveRatingInYearsSearchCriteriaPanel<A>(
-				playerEvaluator,
-				playerWarper,
 				p -> onRemoveSearchCriteria(p)));
 
 		searchCriteriaPanelSuppliers.put(
@@ -157,9 +149,17 @@ public class SearcherPanel<A extends Attributes>
 				p -> onRemoveSearchCriteria(p)));
 
 		searchCriteriaPanelSuppliers.put(
-			CountrySearchCriteria.NAME,
-			() -> new CountrySearchCriteriaPanel<>(
+			EffectiveRatingInYearsSearchCriteria.NAME,
+			() -> new EffectiveRatingInYearsSearchCriteriaPanel<A>(
 				playerEvaluator,
+				playerWarper,
+				p -> onRemoveSearchCriteria(p)));
+
+		searchCriteriaPanelSuppliers.put(
+			EffectiveRatingAtPositionInYearsSearchCriteria.NAME,
+			() -> new EffectiveRatingAtPositionInYearsSearchCriteriaPanel<A>(
+				playerEvaluator,
+				playerWarper,
 				p -> onRemoveSearchCriteria(p)));
 
 		searchCriteriaPanelSuppliers.put(
