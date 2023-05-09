@@ -9,7 +9,7 @@ import gui.searcher.ComboBoxManager;
 import gui.searcher.SearchCriteriaPanel;
 import model.Attributes;
 import searcher.SearchCriteria;
-import searcher.criterias.BestPositionSearchCriteria;
+import searcher.criterias.BestPositionRatingSearchCriteria;
 
 public class BestPositionSearchCriteriaPanel<A extends Attributes>
 	extends SearchCriteriaPanel<A>
@@ -35,18 +35,18 @@ public class BestPositionSearchCriteriaPanel<A extends Attributes>
 	@Override
 	public String getName()
 	{
-		return BestPositionSearchCriteria.NAME;
+		return BestPositionRatingSearchCriteria.NAME;
 	}
 
 	@Override
 	public SearchCriteria<A> getCriteria()
 	{
-		return new BestPositionSearchCriteria<>(playerEvaluator, position.get());
+		return new BestPositionRatingSearchCriteria<>(playerEvaluator, position.get());
 	}
 
 	@Override
 	public void update(SearchCriteria<A> searchCritera)
 	{
-		position.set(((BestPositionSearchCriteria<A>)searchCritera).getPositionName());
+		position.set(((BestPositionRatingSearchCriteria<A>)searchCritera).getPositionName());
 	}
 }
