@@ -23,6 +23,7 @@ import gui.searcher.criterias.BestPositionTrainingSearchCriteriaPanel;
 import gui.searcher.criterias.ClSearchCriteriaPanel;
 import gui.searcher.criterias.CountrySearchCriteriaPanel;
 import gui.searcher.criterias.EffectiveRatingAtPositionInYearsSearchCriteriaPanel;
+import gui.searcher.criterias.EffectiveRatingInYearsSearchCriteriaPanel;
 import gui.searcher.criterias.MinimumEffectiveRatingSearchCriteriaPanel;
 import gui.searcher.criterias.SideSearchCriteriaPanel;
 import gui.util.PpmComboBox;
@@ -40,6 +41,7 @@ import searcher.criterias.BestPositionTrainingSearchCriteria;
 import searcher.criterias.ClSearchCriteria;
 import searcher.criterias.CountrySearchCriteria;
 import searcher.criterias.EffectiveRatingAtPositionInYearsSearchCriteria;
+import searcher.criterias.EffectiveRatingInYearsSearchCriteria;
 import searcher.criterias.MinimumEffectiveRatingSearchCriteria;
 import searcher.criterias.SideSearchCriteria;
 import warper.PlayerWarper;
@@ -131,6 +133,13 @@ public class SearcherPanel<A extends Attributes>
 		searchCriteriaPanelSuppliers.put(
 			EffectiveRatingAtPositionInYearsSearchCriteria.NAME,
 			() -> new EffectiveRatingAtPositionInYearsSearchCriteriaPanel<A>(
+				playerEvaluator,
+				playerWarper,
+				p -> onRemoveSearchCriteria(p)));
+
+		searchCriteriaPanelSuppliers.put(
+			EffectiveRatingInYearsSearchCriteria.NAME,
+			() -> new EffectiveRatingInYearsSearchCriteriaPanel<A>(
 				playerEvaluator,
 				playerWarper,
 				p -> onRemoveSearchCriteria(p)));
