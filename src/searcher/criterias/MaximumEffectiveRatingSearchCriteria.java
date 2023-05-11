@@ -7,25 +7,25 @@ import model.Player;
 import searcher.SearchCriteria;
 import warper.PlayerWarper;
 
-public class MinimumEffectiveRatingSearchCriteria<A extends Attributes>
+public class MaximumEffectiveRatingSearchCriteria<A extends Attributes>
 	extends SearchCriteria<A>
 {
-	public static final String NAME = "Minimum Effective Rating";
+	public static final String NAME = "Maximum Effective Rating";
 
 	private transient final PlayerWarper<A> playerWarper;
 
-	private final int minimumRating;
+	private final int maximumRating;
 
-	public MinimumEffectiveRatingSearchCriteria(
+	public MaximumEffectiveRatingSearchCriteria(
 		PlayerEvaluator<A> playerEvaluator,
 		PlayerWarper<A> playerWarper,
-		int minumumRating)
+		int maximumRating)
 	{
 		super(playerEvaluator);
 
 		this.playerWarper = playerWarper;
 
-		this.minimumRating = minumumRating;
+		this.maximumRating = maximumRating;
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class MinimumEffectiveRatingSearchCriteria<A extends Attributes>
 	{
 		double highestRating = getPlayersHighestEffectiveRating(player);
 
-		return highestRating >= minimumRating;
+		return highestRating <= maximumRating;
 	}
 
 	private double getPlayersHighestEffectiveRating(Player<A> player)
@@ -64,8 +64,8 @@ public class MinimumEffectiveRatingSearchCriteria<A extends Attributes>
 		return highestRating;
 	}
 
-	public int getMinimumRating()
+	public int getMaximumRating()
 	{
-		return minimumRating;
+		return maximumRating;
 	}
 }

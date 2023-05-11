@@ -24,6 +24,7 @@ import gui.searcher.criterias.ClSearchCriteriaPanel;
 import gui.searcher.criterias.CountrySearchCriteriaPanel;
 import gui.searcher.criterias.EffectiveRatingAtPositionInYearsSearchCriteriaPanel;
 import gui.searcher.criterias.EffectiveRatingInYearsSearchCriteriaPanel;
+import gui.searcher.criterias.MaximumEffectiveRatingSearchCriteriaPanel;
 import gui.searcher.criterias.MinimumEffectiveRatingSearchCriteriaPanel;
 import gui.searcher.criterias.SideSearchCriteriaPanel;
 import gui.util.PpmComboBox;
@@ -42,6 +43,7 @@ import searcher.criterias.ClSearchCriteria;
 import searcher.criterias.CountrySearchCriteria;
 import searcher.criterias.EffectiveRatingAtPositionInYearsSearchCriteria;
 import searcher.criterias.EffectiveRatingInYearsSearchCriteria;
+import searcher.criterias.MaximumEffectiveRatingSearchCriteria;
 import searcher.criterias.MinimumEffectiveRatingSearchCriteria;
 import searcher.criterias.SideSearchCriteria;
 import warper.PlayerWarper;
@@ -165,6 +167,13 @@ public class SearcherPanel<A extends Attributes>
 		searchCriteriaPanelSuppliers.put(
 			MinimumEffectiveRatingSearchCriteria.NAME,
 			() -> new MinimumEffectiveRatingSearchCriteriaPanel<>(
+				playerEvaluator,
+				playerWarper,
+				p -> onRemoveSearchCriteria(p)));
+
+		searchCriteriaPanelSuppliers.put(
+			MaximumEffectiveRatingSearchCriteria.NAME,
+			() -> new MaximumEffectiveRatingSearchCriteriaPanel<>(
 				playerEvaluator,
 				playerWarper,
 				p -> onRemoveSearchCriteria(p)));

@@ -7,19 +7,19 @@ import gui.searcher.NumFieldManager;
 import gui.searcher.SearchCriteriaPanel;
 import model.Attributes;
 import searcher.SearchCriteria;
-import searcher.criterias.MinimumEffectiveRatingSearchCriteria;
+import searcher.criterias.MaximumEffectiveRatingSearchCriteria;
 import warper.PlayerWarper;
 
-public class MinimumEffectiveRatingSearchCriteriaPanel<A extends Attributes>
+public class MaximumEffectiveRatingSearchCriteriaPanel<A extends Attributes>
 	extends SearchCriteriaPanel<A>
 {
 	private static final long serialVersionUID = -8580629570062053443L;
 
 	private final PlayerWarper<A> playerWarper;
 
-	private final NumFieldManager minRating;
+	private final NumFieldManager maxRating;
 
-	public MinimumEffectiveRatingSearchCriteriaPanel(
+	public MaximumEffectiveRatingSearchCriteriaPanel(
 		PlayerEvaluator<A> playerEvaluator,
 		PlayerWarper<A> playerWarper,
 		Consumer<SearchCriteriaPanel<A>> removeCallback)
@@ -28,27 +28,27 @@ public class MinimumEffectiveRatingSearchCriteriaPanel<A extends Attributes>
 
 		this.playerWarper = playerWarper;
 
-		minRating = addNumField("Min rating", 8, Integer.MIN_VALUE);
+		maxRating = addNumField("Max rating", 8, Integer.MAX_VALUE);
 	}
 
 	@Override
 	public String getName()
 	{
-		return MinimumEffectiveRatingSearchCriteria.NAME;
+		return MaximumEffectiveRatingSearchCriteria.NAME;
 	}
 
 	@Override
 	public SearchCriteria<A> getCriteria()
 	{
-		return new MinimumEffectiveRatingSearchCriteria<>(
+		return new MaximumEffectiveRatingSearchCriteria<>(
 			playerEvaluator,
 			playerWarper,
-			minRating.get());
+			maxRating.get());
 	}
 
 	@Override
 	public void update(SearchCriteria<A> searchCritera)
 	{
-		minRating.set(((MinimumEffectiveRatingSearchCriteria<A>)searchCritera).getMinimumRating());
+		maxRating.set(((MaximumEffectiveRatingSearchCriteria<A>)searchCritera).getMaximumRating());
 	}
 }
