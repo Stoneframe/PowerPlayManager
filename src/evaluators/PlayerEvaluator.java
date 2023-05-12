@@ -15,10 +15,7 @@ public class PlayerEvaluator<A extends Attributes>
 {
 	private static final int DAYS_PER_SEASON = 112;
 
-	private static final double EXPERIENCE_FACTOR = 0.2;
-	private static final double CHEMISTRY_FACTOR = 0.2;
-
-	private SportSettings settings;
+	private final SportSettings settings;
 
 	private List<AttributeEvaluator<A>> attributeEvaluators;
 
@@ -110,12 +107,13 @@ public class PlayerEvaluator<A extends Attributes>
 
 	public double calculateFormForRating(Player<A> player, double rating)
 	{
-		double energyBonus = player.getEnergy() / 100d;
+		double multiplier = 1;
 
-		double chemistryBonus = CHEMISTRY_FACTOR * player.getChemistry() / 100d;
-		double experienceBonus = EXPERIENCE_FACTOR * player.getExperience() / 100d;
+		multiplier *= player.getExperience() * 0.002 + 1;
+		multiplier *= player.getChemistry() * 0.002 + 1;
+		multiplier *= player.getEnergy() * 0.01;
 
-		return rating * energyBonus * (1 + chemistryBonus + experienceBonus);
+		return rating * multiplier;
 	}
 
 	public double calculateTotalRatingForAge(Player<A> player, int age)
