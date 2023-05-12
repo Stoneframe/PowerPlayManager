@@ -118,9 +118,22 @@ public class PlayerEvaluator<A extends Attributes>
 
 	public double calculateTotalRatingForAge(Player<A> player, int age)
 	{
-		return F(player.getAge(), age, createPlayerCurve(player))
-			* DAYS_PER_SEASON
-			+ player.getAttributes().getTotalRating();
+		AttributeEvaluator<A> evaluator = getBestEvaluatorByRating(player.getAttributes());
+
+		PlayerTrainingCalculator<A> tc = new PlayerTrainingCalculator<>(
+			getFacilityLevel(),
+			getStaffEffectivness(),
+			player,
+			evaluator);
+
+		double totalRating = player.getAttributes().getTotalRating();
+
+		for (int i = player.getAge(); i < age; i++)
+		{
+			totalRating += tc.calc(i) * DAYS_PER_SEASON;
+		}
+
+		return totalRating;
 	}
 
 	public double calculateHighestPossibleRating(Player<A> player)
@@ -175,33 +188,5 @@ public class PlayerEvaluator<A extends Attributes>
 			evaluator);
 
 		return x -> tc.calc(x);
-	}
-
-	private double F(int a, int b, Function<Integer, Double> f)
-	{
-		boolean invert = false;
-
-		if (a == b)
-		{
-			return 0;
-		}
-		else if (b < a)
-		{
-			invert = true;
-
-			int t = a;
-
-			a = b;
-			b = t;
-		}
-
-		double sum = 0.5 * f.apply(a) + 0.5 * f.apply(b);
-
-		for (int x = a + 1; x < b; x++)
-		{
-			sum += f.apply(x);
-		}
-
-		return invert ? -sum : sum;
 	}
 }
