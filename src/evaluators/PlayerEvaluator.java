@@ -154,11 +154,12 @@ public class PlayerEvaluator<A extends Attributes>
 		Attribute attribute,
 		int age)
 	{
-		TrainingCalculator<A> tc = new TrainingCalculator<>(
+		AttributeTrainingCalculator<A> tc = new AttributeTrainingCalculator<>(
 			getFacilityLevel(),
 			getStaffEffectivness(),
-			player,
-			attribute);
+			player.getAge(),
+			player.getCL(),
+			attribute.getQuality());
 
 		return tc.calc(age);
 	}
@@ -167,7 +168,7 @@ public class PlayerEvaluator<A extends Attributes>
 	{
 		AttributeEvaluator<A> evaluator = getBestEvaluatorByRating(player.getAttributes());
 
-		TrainingCalculator<A> tc = new TrainingCalculator<>(
+		PlayerTrainingCalculator<A> tc = new PlayerTrainingCalculator<>(
 			getFacilityLevel(),
 			getStaffEffectivness(),
 			player,

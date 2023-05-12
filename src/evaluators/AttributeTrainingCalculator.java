@@ -1,10 +1,8 @@
 package evaluators;
 
-import model.Attribute;
 import model.Attributes;
-import model.Player;
 
-public class TrainingCalculator<A extends Attributes>
+public class AttributeTrainingCalculator<A extends Attributes>
 {
 	private static final double AGE_5 = -1.5864730710252552E-5;
 	private static final double AGE_4 = 0.0018457010260159285;
@@ -23,39 +21,23 @@ public class TrainingCalculator<A extends Attributes>
 	private final int facility;
 	private final int staff;
 
-	private final int nbrOfAttributes;
 	private final double quality;
 
 	private final CareerLengthCurve clc;
 
-	public TrainingCalculator(
+	public AttributeTrainingCalculator(
 		int facility,
 		int staff,
-		Player<A> player,
-		AttributeEvaluator<A> evaluator)
+		int age,
+		int cl,
+		double quality)
 	{
 		this.facility = facility;
 		this.staff = staff;
 
-		this.nbrOfAttributes = player.getAttributes().getNumberOfAttributes();
-		this.quality = evaluator.getQuality(player.getAttributes());
+		this.quality = quality;
 
-		clc = new CareerLengthCurve(player.getAge(), player.getCL());
-	}
-
-	public TrainingCalculator(
-		int facility,
-		int staff,
-		Player<A> player,
-		Attribute attribute)
-	{
-		this.facility = facility;
-		this.staff = staff;
-
-		this.nbrOfAttributes = 1;
-		this.quality = attribute.getQuality();
-
-		clc = new CareerLengthCurve(player.getAge(), player.getCL());
+		clc = new CareerLengthCurve(age, cl);
 	}
 
 	public double calc(int age)
@@ -68,7 +50,7 @@ public class TrainingCalculator<A extends Attributes>
 		}
 		else
 		{
-			return Math.min((-0.06 * (age - clc.getEnd()) + 0.06) * nbrOfAttributes, 0);
+			return Math.min((-0.06 * (age - clc.getEnd()) + 0.06), 0);
 		}
 	}
 
