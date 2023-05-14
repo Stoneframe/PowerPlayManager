@@ -1,4 +1,4 @@
-package test.model;
+package model;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,8 +9,6 @@ import org.junit.Test;
 
 import evaluators.Weight;
 import evaluators.Weights;
-import model.Attribute;
-import model.Attributes;
 
 public class WeightsTest
 {
