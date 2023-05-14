@@ -2,6 +2,7 @@ package evaluators.icehockey;
 
 import java.util.List;
 
+import calendar.icehockey.IceHockeyCalendar;
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import model.icehockey.IceHockeyAttributes;
@@ -14,6 +15,6 @@ public class IceHockeyPlayerEvaluator
 		SportSettings settings,
 		List<AttributeEvaluator<IceHockeyAttributes>> attributeEvaluators)
 	{
-		super(settings, attributeEvaluators);
+		super(settings, new IceHockeyCalendar(), attributeEvaluators);
 	}
 }

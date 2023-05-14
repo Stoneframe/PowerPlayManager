@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 public class FootballPractiseProPlayersParser
 	extends FootballPlayersParser
 {
-	private static final int NUMBER_OF_LINES = 19;
+	private static final int NUMBER_OF_LINES = 20;
 	private static final Pattern REGEX_PATTERN = createPattern(
 		name(),
 		ignore(), // Position

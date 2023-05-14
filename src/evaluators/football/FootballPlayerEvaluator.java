@@ -2,6 +2,7 @@ package evaluators.football;
 
 import java.util.List;
 
+import calendar.football.FootballCalendar;
 import evaluators.AttributeEvaluator;
 import evaluators.PlayerEvaluator;
 import model.football.FootballAttributes;
@@ -14,6 +15,6 @@ public class FootballPlayerEvaluator
 		SportSettings settings,
 		List<AttributeEvaluator<FootballAttributes>> attributeEvaluators)
 	{
-		super(settings, attributeEvaluators);
+		super(settings, new FootballCalendar(), attributeEvaluators);
 	}
 }

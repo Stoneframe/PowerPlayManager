@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import calendar.Calendar;
 import comparators.QualityEvaluatorComparator;
 import comparators.RatingEvaluatorComparator;
 import model.Attribute;
@@ -13,18 +14,24 @@ import settings.SportSettings;
 
 public class PlayerEvaluator<A extends Attributes>
 {
-	private static final int DAYS_PER_SEASON = 112;
-
 	private final SportSettings settings;
+	private final Calendar calendar;
 
 	private List<AttributeEvaluator<A>> attributeEvaluators;
 
 	public PlayerEvaluator(
 		SportSettings settings,
+		Calendar calendar,
 		List<AttributeEvaluator<A>> attributeEvaluators)
 	{
 		this.settings = settings;
+		this.calendar = calendar;
 		this.attributeEvaluators = attributeEvaluators;
+	}
+
+	public Calendar getCalendar()
+	{
+		return calendar;
 	}
 
 	public List<AttributeEvaluator<A>> getAttributeEvaluators(boolean ignoreMacroPosition)
@@ -128,9 +135,13 @@ public class PlayerEvaluator<A extends Attributes>
 
 		double totalRating = player.getAttributes().getTotalRating();
 
-		for (int i = player.getAge(); i < age; i++)
+		for (int year = 0; year < age - player.getAge(); year++)
 		{
-			totalRating += tc.calc(i) * DAYS_PER_SEASON;
+			int season = calendar.getSeason() + year;
+
+			double training = tc.calc(player.getAge() + year);
+
+			totalRating += training * calendar.getDaysRemainingInSeasons(season);
 		}
 
 		return totalRating;

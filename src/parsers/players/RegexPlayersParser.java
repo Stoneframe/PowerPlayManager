@@ -126,7 +126,7 @@ public abstract class RegexPlayersParser<A extends Attributes>
 	{
 		return "(?<country>("
 			+ String.join("|", Countries.LIST).replace("-", "\\-")
-			+ ")+) (?<name>\\S+(((?!( Dagar| Spelare| \\d))( \\S+))+)).*";
+			+ ")+) (?<name>\\S+(((?!( Dagar| Spelare| Avstängning| \\d))( \\S+))+)).*";
 	}
 
 	protected static String age()
