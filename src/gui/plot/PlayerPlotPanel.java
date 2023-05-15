@@ -85,7 +85,7 @@ public class PlayerPlotPanel<A extends Attributes>
 	protected XYLineAndShapeRenderer getLineRenderer()
 	{
 		XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-		renderer.setToolTipGenerator(new StandardXYToolTipGenerator());
+		renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator());
 
 		Color[] groupColors = Arrays.copyOfRange(colors, 0, groups.size());
 		Color[] individualColors = Arrays.copyOfRange(colors, groups.size(), colors.length);

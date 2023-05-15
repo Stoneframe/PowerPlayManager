@@ -6,7 +6,6 @@ import comparators.QualityEvaluatorComparator;
 import comparators.RatingEvaluatorComparator;
 import model.Attribute;
 import model.Attributes;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class MacroAttributeEvaluator<A extends Attributes>
 	extends AttributeEvaluator<A>
@@ -49,12 +48,12 @@ public class MacroAttributeEvaluator<A extends Attributes>
 	@Override
 	public Attribute getWorstAttribute(A attributes)
 	{
-		throw new NotImplementedException();
+		throw new RuntimeException("Not implemented");
 	}
 
 	@Override
 	public Attribute getBestAttribute(A attributes)
 	{
-		throw new NotImplementedException();
+		throw new RuntimeException("Not implemented");
 	}
 }

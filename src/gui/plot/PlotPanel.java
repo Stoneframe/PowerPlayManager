@@ -1,6 +1,7 @@
 package gui.plot;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.JPanel;
 
@@ -50,6 +51,9 @@ public abstract class PlotPanel<A extends Attributes>
 		plot.getDomainAxis().setUpperBound(15);
 		plot.getRangeAxis().setLowerBound(0);
 		plot.setRenderer(getLineRenderer());
+		plot.setBackgroundPaint(Color.WHITE);
+		plot.setDomainGridlinePaint(Color.GRAY);
+		plot.setRangeGridlinePaint(Color.GRAY);
 
 		ChartPanel chartPanel = new ChartPanel(chart);
 

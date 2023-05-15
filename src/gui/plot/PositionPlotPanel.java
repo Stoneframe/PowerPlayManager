@@ -100,7 +100,7 @@ public class PositionPlotPanel<A extends Attributes>
 	protected XYLineAndShapeRenderer getLineRenderer()
 	{
 		XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-		renderer.setToolTipGenerator(new StandardXYToolTipGenerator());
+		renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator());
 
 		int i = 0;
 
