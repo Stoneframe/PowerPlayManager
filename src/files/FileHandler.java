@@ -1,4 +1,4 @@
-package gui.menu;
+package files;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -6,12 +6,19 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.FileTime;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import javax.swing.JOptionPane;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import gui.menu.PlayerExclusionStrategy;
+import gui.menu.SideAdapter;
 import model.Attributes;
 import model.Player;
 import model.Roster;
@@ -29,8 +36,24 @@ public abstract class FileHandler<A extends Attributes>
 			.create();
 	}
 
+	public LocalDateTime getFileModifiedDate(Path path)
+	{
+		try
+		{
+			FileTime modifiedTime = Files.getLastModifiedTime(path);
+
+			return LocalDateTime.ofInstant(modifiedTime.toInstant(), ZoneId.systemDefault());
+		}
+		catch (IOException ex)
+		{
+			return LocalDateTime.MIN;
+		}
+	}
+
 	public void savePlayersToFile(File file, Roster<A> roster)
 	{
+		file.getParentFile().mkdirs();
+
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))
 		{
 			for (Player<A> player : roster)

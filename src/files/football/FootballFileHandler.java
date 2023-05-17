@@ -1,8 +1,8 @@
-package gui.menu.football;
+package files.football;
 
 import com.google.gson.Gson;
 
-import gui.menu.FileHandler;
+import files.FileHandler;
 import model.Player;
 import model.football.FootballAttributes;
 import model.football.FootballPlayer;

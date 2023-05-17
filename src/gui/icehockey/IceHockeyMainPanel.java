@@ -3,9 +3,9 @@ package gui.icehockey;
 import java.util.List;
 
 import evaluators.PlayerEvaluator;
+import files.FileHandler;
 import formation.PaulsFormationBuilder;
 import gui.MainPanel;
-import gui.menu.FileHandler;
 import gui.menu.MenuBar;
 import model.icehockey.IceHockeyAttributes;
 import parsers.players.PlayersParser;
@@ -35,6 +35,7 @@ public class IceHockeyMainPanel
 			new SearchTemplateStorage<IceHockeyAttributes>(
 				"search-icehockey",
 				playerEvaluator,
-				new IceHockeyPlayerWarper(playerEvaluator)));
+				new IceHockeyPlayerWarper(playerEvaluator)),
+			null);
 	}
 }

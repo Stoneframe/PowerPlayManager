@@ -128,4 +128,18 @@ public class Roster<A extends Attributes>
 	{
 		return players.iterator();
 	}
+
+	@Override
+	public String toString()
+	{
+		StringBuilder builder = new StringBuilder();
+
+		for (Player<A> player : players)
+		{
+			builder.append(player);
+			builder.append(System.lineSeparator());
+		}
+
+		return builder.toString();
+	}
 }
