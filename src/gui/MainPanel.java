@@ -1,10 +1,12 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,13 +22,15 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.apache.http.auth.InvalidCredentialsException;
+
 import evaluators.PlayerEvaluator;
+import files.FileHandler;
 import formation.Formation;
 import formation.FormationBuilder;
 import formation.Position;
 import gui.formation.FormationBuilderPanel;
 import gui.formation.FormationTemplatePanelFactory;
-import gui.menu.FileHandler;
 import gui.menu.MenuBar;
 import gui.player.AttributesPanel;
 import gui.player.PlayerPanel;
@@ -37,6 +41,9 @@ import gui.player.PlayersParsedListener;
 import gui.plot.PlayerPlotPanel;
 import gui.plot.PlotPanel;
 import gui.searcher.SearcherPanel;
+import gui.util.PpmLoginDialog;
+import gui.util.PpmLoginDialog.Credientials;
+import importer.Importer;
 import model.Attributes;
 import model.Groups;
 import model.Player;
@@ -78,9 +85,10 @@ public class MainPanel<A extends Attributes>
 		PlayerWarper<A> playerWarper,
 		List<PlayersParser<A>> parsers,
 		PlayerEvaluator<A> playerEvaluator,
-		SearchTemplateStorage<A> searchTemplateStorage)
+		SearchTemplateStorage<A> searchTemplateStorage,
+		Importer<A> importer)
 	{
-		menuBar.addImportActionListener(new ActionListener()
+		menuBar.addFileImportActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -95,7 +103,7 @@ public class MainPanel<A extends Attributes>
 				}
 			}
 		});
-		menuBar.addExportActionListener(new ActionListener()
+		menuBar.addFileExportActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -107,6 +115,26 @@ public class MainPanel<A extends Attributes>
 					{
 						fileHandler.savePlayersToFile(file, roster);
 					}
+				}
+			}
+		});
+		menuBar.addPpmImportTeamActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (isShowing())
+				{
+					importPlayers(importer, Importer.TEAM, "Team");
+				}
+			}
+		});
+		menuBar.addPpmImportMarketActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (isShowing())
+				{
+					importPlayers(importer, Importer.MARKET, "Market");
 				}
 			}
 		});
@@ -420,6 +448,48 @@ public class MainPanel<A extends Attributes>
 		else
 		{
 			return null;
+		}
+	}
+
+	private void importPlayers(Importer<A> importer, int importType, String groupName)
+	{
+		Credientials credientials = PpmLoginDialog.show();
+
+		if (credientials == null)
+		{
+			return;
+		}
+
+		try
+		{
+			MainPanel.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+			List<Player<A>> players = importer.importPlayers(
+				importType,
+				credientials.getUsername(),
+				credientials.getPassword());
+
+			roster.addAll(players);
+
+			Groups<A>.Group group = groups.add(groupName, players);
+
+			groupPanel.addGroup(group);
+		}
+		catch (InvalidCredentialsException e1)
+		{
+			JOptionPane.showMessageDialog(
+				MainPanel.this,
+				"Invalid credentials",
+				"Login",
+				JOptionPane.ERROR_MESSAGE);
+		}
+		catch (IOException ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			MainPanel.this.setCursor(Cursor.getDefaultCursor());
 		}
 	}
 }

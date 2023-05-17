@@ -1,8 +1,8 @@
-package gui.menu.icehockey;
+package files.icehockey;
 
 import com.google.gson.Gson;
 
-import gui.menu.FileHandler;
+import files.FileHandler;
 import model.Player;
 import model.icehockey.IceHockeyAttributes;
 import model.icehockey.IceHockeyPlayer;

@@ -3,9 +3,9 @@ package gui.football;
 import java.util.List;
 
 import evaluators.PlayerEvaluator;
+import files.FileHandler;
 import formation.PaulsFormationBuilder;
 import gui.MainPanel;
-import gui.menu.FileHandler;
 import gui.menu.MenuBar;
 import model.football.FootballAttributes;
 import parsers.players.PlayersParser;
@@ -35,6 +35,7 @@ public class FootballMainPanel
 			new SearchTemplateStorage<FootballAttributes>(
 				"search-football",
 				playerEvaluator,
-				new FootballPlayerWarper(playerEvaluator)));
+				new FootballPlayerWarper(playerEvaluator)),
+			null);
 	}
 }

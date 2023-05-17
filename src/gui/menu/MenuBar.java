@@ -14,35 +14,56 @@ public class MenuBar
 {
 	private static final long serialVersionUID = -5511353684955783810L;
 
-	private JMenuItem menuItemImport;
-	private JMenuItem menuItemExport;
+	private final JMenuItem fileMenuImport;
+	private final JMenuItem fileMenuExport;
+
+	private final JMenuItem ppmMenuImportTeam;
+	private final JMenuItem ppmMenuImportMarket;
 
 	public MenuBar(Component parentComponent, JTabbedPane tabbedPane)
 	{
 		// 'Import' item
-		menuItemImport = new JMenuItem("Import players...", KeyEvent.VK_O);
-		menuItemImport.setMnemonic(KeyEvent.VK_I);
+		fileMenuImport = new JMenuItem("Import players...", KeyEvent.VK_O);
+		fileMenuImport.setMnemonic(KeyEvent.VK_I);
 
 		// 'Export' item
-		menuItemExport = new JMenuItem("Export players...", KeyEvent.VK_S);
-		menuItemExport.setMnemonic(KeyEvent.VK_E);
+		fileMenuExport = new JMenuItem("Export players...", KeyEvent.VK_S);
+		fileMenuExport.setMnemonic(KeyEvent.VK_E);
+
+		ppmMenuImportTeam = new JMenuItem("Import team");
+		ppmMenuImportMarket = new JMenuItem("Import market");
 
 		// Build the menu
-		JMenu menu = new JMenu("File");
-		menu.setMnemonic(KeyEvent.VK_F);
-		menu.add(menuItemImport);
-		menu.add(menuItemExport);
+		JMenu fileMenu = new JMenu("File");
+		fileMenu.setMnemonic(KeyEvent.VK_F);
+		fileMenu.add(fileMenuImport);
+		fileMenu.add(fileMenuExport);
 
-		add(menu);
+		JMenu ppmMenu = new JMenu("PPM");
+		ppmMenu.add(ppmMenuImportTeam);
+		ppmMenu.add(ppmMenuImportMarket);
+
+		add(fileMenu);
+		add(ppmMenu);
 	}
 
-	public void addImportActionListener(ActionListener listener)
+	public void addFileImportActionListener(ActionListener listener)
 	{
-		menuItemImport.addActionListener(listener);
+		fileMenuImport.addActionListener(listener);
 	}
 
-	public void addExportActionListener(ActionListener listener)
+	public void addFileExportActionListener(ActionListener listener)
 	{
-		menuItemExport.addActionListener(listener);
+		fileMenuExport.addActionListener(listener);
+	}
+
+	public void addPpmImportTeamActionListener(ActionListener listener)
+	{
+		ppmMenuImportTeam.addActionListener(listener);
+	}
+	
+	public void addPpmImportMarketActionListener(ActionListener listener)
+	{
+		ppmMenuImportMarket.addActionListener(listener);
 	}
 }

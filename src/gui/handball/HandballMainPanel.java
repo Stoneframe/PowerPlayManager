@@ -3,10 +3,11 @@ package gui.handball;
 import java.util.List;
 
 import evaluators.PlayerEvaluator;
+import files.FileHandler;
 import formation.PaulsFormationBuilder;
 import gui.MainPanel;
-import gui.menu.FileHandler;
 import gui.menu.MenuBar;
+import importer.handball.HandballImporter;
 import model.handball.HandballAttributes;
 import parsers.players.PlayersParser;
 import searcher.SearchTemplateStorage;
@@ -35,6 +36,7 @@ public class HandballMainPanel
 			new SearchTemplateStorage<HandballAttributes>(
 				"search-handball",
 				playerEvaluator,
-				new HandballPlayerWarper(playerEvaluator)));
+				new HandballPlayerWarper(playerEvaluator)),
+			new HandballImporter(fileHandler));
 	}
 }

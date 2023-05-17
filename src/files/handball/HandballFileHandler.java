@@ -1,8 +1,8 @@
-package gui.menu.handball;
+package files.handball;
 
 import com.google.gson.Gson;
 
-import gui.menu.FileHandler;
+import files.FileHandler;
 import model.Player;
 import model.handball.HandballAttributes;
 import model.handball.HandballPlayer;

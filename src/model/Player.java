@@ -6,7 +6,7 @@ public class Player<A extends Attributes>
 	extends AbstractModelObject
 {
 	protected String name;
-	private String country;
+	protected String country;
 	protected int age;
 	protected int cl;
 	protected Side side;
@@ -169,7 +169,7 @@ public class Player<A extends Attributes>
 			this.setExperience(other.getExperience());
 		}
 
-		if (other.getChemistry() != 0)
+		if (other.getChemistry() > this.getChemistry())
 		{
 			this.setChemistry(other.getChemistry());
 		}

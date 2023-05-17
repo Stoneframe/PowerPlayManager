@@ -9,15 +9,15 @@ public abstract class Side
 
 	public static Side parse(String string)
 	{
-		if (Side.LEFT.toString().equals(string))
+		if (Side.LEFT.toString().equals(string) || string.equalsIgnoreCase("L"))
 		{
 			return Side.LEFT;
 		}
-		else if (Side.RIGHT.toString().equals(string))
+		else if (Side.RIGHT.toString().equals(string) || string.equalsIgnoreCase("R"))
 		{
 			return Side.RIGHT;
 		}
-		else if (Side.UNIVERSAL.toString().equals(string))
+		else if (Side.UNIVERSAL.toString().equals(string) || string.equalsIgnoreCase("U"))
 		{
 			return Side.UNIVERSAL;
 		}
