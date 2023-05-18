@@ -1,20 +1,20 @@
-package importer.handball;
+package importer.icehockey;
 
 import org.jsoup.nodes.Element;
 
 import importer.MarketParser;
 import model.Side;
-import model.handball.HandballAttributes;
+import model.icehockey.IceHockeyAttributes;
 
-public class HandballMarketParser
-	extends HandballParser
+public class IceHockeyMarketParser
+	extends IceHockeyParser
 	implements
-		MarketParser<HandballAttributes>
+		MarketParser<IceHockeyAttributes>
 {
 	@Override
 	public String getAddress()
 	{
-		return "https://handball.powerplaymanager.com/sv/spelar-marknad.html";
+		return "https://hockey.powerplaymanager.com/sv/transfer-marknad.html";
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class HandballMarketParser
 	@Override
 	protected Side getSide(Element playerElement)
 	{
-		return Side.parse(playerElement.child(15).text());
+		return Side.parse(playerElement.child(14).text());
 	}
 
 	@Override
@@ -72,19 +72,19 @@ public class HandballMarketParser
 	}
 
 	@Override
-	protected int getFip(Element playerElement)
+	protected int getDef(Element playerElement)
 	{
 		return Integer.parseInt(playerElement.child(6).ownText());
 	}
 
 	@Override
-	protected int getSho(Element playerElement)
+	protected int getOff(Element playerElement)
 	{
 		return Integer.parseInt(playerElement.child(7).ownText());
 	}
 
 	@Override
-	protected int getBlk(Element playerElement)
+	protected int getSho(Element playerElement)
 	{
 		return Integer.parseInt(playerElement.child(8).ownText());
 	}
@@ -102,15 +102,9 @@ public class HandballMarketParser
 	}
 
 	@Override
-	protected int getSpe(Element playerElement)
-	{
-		return Integer.parseInt(playerElement.child(11).ownText());
-	}
-
-	@Override
 	protected int getAgr(Element playerElement)
 	{
-		return Integer.parseInt(playerElement.child(12).ownText());
+		return Integer.parseInt(playerElement.child(11).ownText());
 	}
 
 	@Override
@@ -120,19 +114,19 @@ public class HandballMarketParser
 	}
 
 	@Override
-	protected int getQFip(Element playerElement)
+	protected int getQDef(Element playerElement)
 	{
 		return Integer.parseInt(playerElement.child(6).child(0).text());
 	}
 
 	@Override
-	protected int getQSho(Element playerElement)
+	protected int getQOff(Element playerElement)
 	{
 		return Integer.parseInt(playerElement.child(7).child(0).text());
 	}
 
 	@Override
-	protected int getQBlk(Element playerElement)
+	protected int getQSho(Element playerElement)
 	{
 		return Integer.parseInt(playerElement.child(8).child(0).text());
 	}
@@ -150,23 +144,8 @@ public class HandballMarketParser
 	}
 
 	@Override
-	protected int getQSpe(Element playerElement)
+	protected int getQAgr(Element playerElement)
 	{
 		return Integer.parseInt(playerElement.child(11).child(0).text());
 	}
-
-	@Override
-	protected int getQAgr(Element playerElement)
-	{
-		return Integer.parseInt(playerElement.child(12).child(0).text());
-	}
-
-//	@Override
-//	public List<Player<HandballAttributes>> parse(Document document)
-//	{
-//		Element tableElement = document.getElementById("table-1");
-//		System.out.println(tableElement);
-//
-//		return new LinkedList<>();
-//	}
 }

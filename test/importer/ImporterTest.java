@@ -7,28 +7,40 @@ import org.apache.http.auth.InvalidCredentialsException;
 import org.junit.Test;
 
 import files.handball.HandballFileHandler;
+import files.icehockey.IceHockeyFileHandler;
 import importer.handball.HandballImporter;
+import importer.icehockey.IceHockeyImporter;
 import model.Player;
 import model.handball.HandballAttributes;
+import model.icehockey.IceHockeyAttributes;
 
 public class ImporterTest
 {
 	@Test
-	public void testImportTeam() throws IOException, InvalidCredentialsException
+	public void testImportHandballTeam() throws IOException, InvalidCredentialsException
 	{
-		try (Importer<HandballAttributes> importer = getHandballImporter())
+		try (Importer<HandballAttributes> importer = new HandballImporter(new HandballFileHandler()))
 		{
 			List<Player<HandballAttributes>> roster = importer.importPlayers(
-				Importer.MARKET,
+				Importer.TEAM,
 				Temp.USERNAME,
 				Temp.PASSWORD);
 
 			System.out.println(roster);
 		}
 	}
-
-	private Importer<HandballAttributes> getHandballImporter()
+	
+	@Test
+	public void testImportIceHockeyTeam() throws IOException, InvalidCredentialsException
 	{
-		return new HandballImporter(new HandballFileHandler());
+		try (Importer<IceHockeyAttributes> importer = new IceHockeyImporter(new IceHockeyFileHandler()))
+		{
+			List<Player<IceHockeyAttributes>> roster = importer.importPlayers(
+				Importer.MARKET,
+				Temp.USERNAME,
+				Temp.PASSWORD);
+
+			System.out.println(roster);
+		}
 	}
 }

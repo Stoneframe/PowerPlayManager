@@ -76,7 +76,7 @@ public abstract class Importer<A extends Attributes>
 		}
 	}
 
-	public List<Player<A>> importTeam(String username, String password)
+	private List<Player<A>> importTeam(String username, String password)
 			throws IOException, InvalidCredentialsException
 	{
 		Roster<A> roster = new Roster<>();
@@ -96,7 +96,7 @@ public abstract class Importer<A extends Attributes>
 		return roster.stream().collect(Collectors.toList());
 	}
 
-	public List<Player<A>> importMarket(String username, String password)
+	private List<Player<A>> importMarket(String username, String password)
 			throws IOException, InvalidCredentialsException
 	{
 		Roster<A> roster = new Roster<>();
@@ -175,6 +175,7 @@ public abstract class Importer<A extends Attributes>
 		{
 			Document document = Jsoup.parse(searchPage.asXml());
 
+			// Document document = Jsoup.parse(TestData.get());
 			List<Player<A>> players = marketParser.parse(document);
 
 			if (players.isEmpty())

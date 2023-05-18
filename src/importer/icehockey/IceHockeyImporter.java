@@ -9,7 +9,11 @@ public class IceHockeyImporter
 {
 	public IceHockeyImporter(FileHandler<IceHockeyAttributes> fileHandler)
 	{
-		super(fileHandler, new IceHockeyLineParser(), null, null);
+		super(
+			fileHandler,
+			new IceHockeyLineParser(),
+			new IceHockeyTrainingParser(),
+			new IceHockeyMarketParser());
 	}
 
 	@Override
