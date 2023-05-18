@@ -20,154 +20,132 @@ public class IceHockeyLineParser
 	@Override
 	protected String getName(Element playerElement)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return playerElement.child(1).text();
 	}
 
 	@Override
 	protected String getCountry(Element playerElement)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return playerElement.child(1).child(0).child(0).attr("title");
 	}
 
 	@Override
 	protected int getAge(Element playerElement)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return Integer.parseInt(playerElement.child(2).text());
 	}
 
 	@Override
 	protected int getCl(Element playerElement)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return -1;
 	}
 
 	@Override
 	protected Side getSide(Element playerElement)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return Side.parse(playerElement.child(3).text());
 	}
 
 	@Override
 	protected int getExperience(Element playerElement)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return Integer.parseInt(playerElement.child(11).text());
 	}
 
 	@Override
 	protected int getChemistry(Element playerElement)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return Integer.parseInt(playerElement.child(13).text());
 	}
 
 	@Override
 	protected int getEnergy(Element playerElement)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return Integer.parseInt(playerElement.child(12).text().split("/")[0]);
 	}
 
 	@Override
 	protected int getGoa(Element playerElement)
 	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	protected int getOff(Element playerElement)
-	{
-		// TODO Auto-generated method stub
-		return 0;
+		return Integer.parseInt(playerElement.child(4).text());
 	}
 
 	@Override
 	protected int getDef(Element playerElement)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return Integer.parseInt(playerElement.child(5).text());
+	}
+
+	@Override
+	protected int getOff(Element playerElement)
+	{
+		return Integer.parseInt(playerElement.child(6).text());
 	}
 
 	@Override
 	protected int getSho(Element playerElement)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return Integer.parseInt(playerElement.child(7).text());
 	}
 
 	@Override
 	protected int getPas(Element playerElement)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return Integer.parseInt(playerElement.child(8).text());
 	}
 
 	@Override
 	protected int getTec(Element playerElement)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return Integer.parseInt(playerElement.child(9).text());
 	}
 
 	@Override
 	protected int getAgr(Element playerElement)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return Integer.parseInt(playerElement.child(10).text());
 	}
 
 	@Override
 	protected int getQGoa(Element playerElement)
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	protected int getQOff(Element playerElement)
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	protected int getQDef(Element playerElement)
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	protected int getQSho(Element playerElement)
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	protected int getQPas(Element playerElement)
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	protected int getQTec(Element playerElement)
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	protected int getQAgr(Element playerElement)
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 }

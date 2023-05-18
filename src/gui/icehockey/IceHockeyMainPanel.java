@@ -7,6 +7,7 @@ import files.FileHandler;
 import formation.PaulsFormationBuilder;
 import gui.MainPanel;
 import gui.menu.MenuBar;
+import importer.icehockey.IceHockeyImporter;
 import model.icehockey.IceHockeyAttributes;
 import parsers.players.PlayersParser;
 import searcher.SearchTemplateStorage;
@@ -36,6 +37,6 @@ public class IceHockeyMainPanel
 				"search-icehockey",
 				playerEvaluator,
 				new IceHockeyPlayerWarper(playerEvaluator)),
-			null);
+			new IceHockeyImporter(fileHandler));
 	}
 }

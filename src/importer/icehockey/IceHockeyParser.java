@@ -52,16 +52,16 @@ public abstract class IceHockeyParser
 		IceHockeyAttributes attributes = new IceHockeyAttributes();
 
 		attributes.setGoa(getGoa(playerElement));
-		attributes.setOff(getOff(playerElement));
 		attributes.setDef(getDef(playerElement));
+		attributes.setOff(getOff(playerElement));
 		attributes.setSho(getSho(playerElement));
 		attributes.setPas(getPas(playerElement));
 		attributes.setTec(getTec(playerElement));
 		attributes.setAgr(getAgr(playerElement));
 
 		attributes.setQGoa(getQGoa(playerElement));
-		attributes.setQOff(getQOff(playerElement));
 		attributes.setQDef(getQDef(playerElement));
+		attributes.setQOff(getQOff(playerElement));
 		attributes.setQSho(getQSho(playerElement));
 		attributes.setQPas(getQPas(playerElement));
 		attributes.setQTec(getQTec(playerElement));
@@ -88,9 +88,9 @@ public abstract class IceHockeyParser
 
 	protected abstract int getGoa(Element playerElement);
 
-	protected abstract int getOff(Element playerElement);
-
 	protected abstract int getDef(Element playerElement);
+
+	protected abstract int getOff(Element playerElement);
 
 	protected abstract int getSho(Element playerElement);
 
@@ -102,9 +102,9 @@ public abstract class IceHockeyParser
 
 	protected abstract int getQGoa(Element playerElement);
 
-	protected abstract int getQOff(Element playerElement);
-
 	protected abstract int getQDef(Element playerElement);
+
+	protected abstract int getQOff(Element playerElement);
 
 	protected abstract int getQSho(Element playerElement);
 
