@@ -129,7 +129,18 @@ public abstract class Importer<A extends Attributes>
 	{
 		LocalDateTime modifiedTime = fileHandler.getFileModifiedDate(path);
 
-		return modifiedTime.isAfter(LocalDateTime.of(LocalDate.now(), LocalTime.of(6, 0)));
+		if (modifiedTime.toLocalDate().isEqual(LocalDate.now()))
+		{
+			return true;
+		}
+
+		if (modifiedTime.toLocalDate().isBefore(LocalDate.now())
+			&& LocalTime.now().isBefore(LocalTime.of(6, 0)))
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 	private void importPlayersFromCache(Roster<A> roster, Path path)
@@ -236,7 +247,8 @@ public abstract class Importer<A extends Attributes>
 
 		HtmlPage page = submitInput.click(false, false, false, false, false, true, false);
 
-		if (page.asXml().contains("Fel lösenord"))
+		if (page.asXml().contains("Fel lösenord")
+			|| page.asXml().contains("Inloggnings information saknas"))
 		{
 			throw new InvalidCredentialsException();
 		}
