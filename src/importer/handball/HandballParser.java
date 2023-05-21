@@ -32,7 +32,7 @@ public abstract class HandballParser
 			.collect(Collectors.toList());
 	}
 
-	private Player<HandballAttributes> getPlayer(Element playerElement)
+	public Player<HandballAttributes> getPlayer(Element playerElement)
 	{
 		return new HandballPlayer(
 			getName(playerElement),

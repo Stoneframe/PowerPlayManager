@@ -50,7 +50,7 @@ public class HandballMarketParser
 	@Override
 	protected int getExperience(Element playerElement)
 	{
-		return Integer.parseInt(playerElement.child(12).text());
+		return Integer.parseInt(playerElement.child(13).text());
 	}
 
 	@Override

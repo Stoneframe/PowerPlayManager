@@ -38,16 +38,21 @@ public class PlayerPlotPanel<A extends Attributes>
 	private final List<Player<A>> players;
 	private final List<Groups<A>.Group> groups;
 
+	private final int shift;
+
 	public PlayerPlotPanel(
 		PlayerEvaluator<A> playerEvaluator,
 		PlayerWarper<A> playerWarper,
 		List<Player<A>> players,
-		List<Groups<A>.Group> groups)
+		List<Groups<A>.Group> groups,
+		int shift)
 	{
 		super(playerEvaluator, playerWarper);
 
 		this.players = players;
 		this.groups = groups;
+
+		this.shift = shift;
 	}
 
 	@Override
@@ -124,7 +129,9 @@ public class PlayerPlotPanel<A extends Attributes>
 		AttributeEvaluator<A> attributeEvaluator =
 			playerEvaluator.getBestEvaluatorByRating(player.getAttributes());
 
-		for (int year = 0; year <= 15; year++)
+		series.add(0 + shift, attributeEvaluator.getRating(player.getAttributes()));
+
+		for (int year = 1 + shift; year <= 15; year++)
 		{
 			A attributes = playerWarper.warp(player, attributeEvaluator, year);
 
