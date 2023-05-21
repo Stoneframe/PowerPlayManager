@@ -150,7 +150,7 @@ public class MainPanel<A extends Attributes>
 			}
 		});
 
-		playerPanel = new PlayerPanel<A>(attributesPanel, playerEvaluator);
+		playerPanel = new PlayerPanel<A>(attributesPanel, playerEvaluator, playerWarper);
 
 		parsePanel = new ParsePanel<A>(parsers);
 		parsePanel.setPlayersParseListener(new PlayersParsedListener<A>()
@@ -363,7 +363,8 @@ public class MainPanel<A extends Attributes>
 							playerEvaluator,
 							playerWarper,
 							rosterPanel.getSelectedPlayers(),
-							groupPanel.getSelectedGroups());
+							groupPanel.getSelectedGroups(),
+							0);
 
 						plotPanel.draw();
 

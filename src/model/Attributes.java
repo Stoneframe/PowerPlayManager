@@ -68,6 +68,10 @@ public abstract class Attributes
 			builder.append(attribute);
 			builder.append(System.lineSeparator());
 		}
+		
+		builder.append("Total: ");
+		builder.append(getTotalRating());
+		builder.append(System.lineSeparator());
 
 		return builder.toString();
 	}

@@ -60,7 +60,7 @@ public class CareerLengthCurve
 	private int populate(double threshold)
 	{
 		int end = 0;
-		
+
 		for (int age = 15; age < 40; age++)
 		{
 			int cl = calcCl(threshold, age);
@@ -72,7 +72,7 @@ public class CareerLengthCurve
 				end = age;
 			}
 		}
-		
+
 		return end;
 	}
 
@@ -100,11 +100,11 @@ public class CareerLengthCurve
 		switch (cl)
 		{
 			case 6:
-				min = 12;
+				min = 11;
 				max = 18;
 				break;
 			case 5:
-				min = 14;
+				min = 13;
 				max = 22;
 				break;
 			case 4:

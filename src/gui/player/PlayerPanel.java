@@ -7,18 +7,26 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import evaluators.PlayerEvaluator;
+import gui.plot.PlayerPlotPanel;
+import gui.plot.PlotPanel;
 import gui.util.SimpleFormPanel;
 import model.Attributes;
 import model.Player;
 import util.PropertyChangedEvent;
 import util.PropertyChangedListener;
+import warper.PlayerWarper;
 
 public class PlayerPanel<A extends Attributes>
 	extends JPanel
@@ -27,27 +35,30 @@ public class PlayerPanel<A extends Attributes>
 {
 	private static final long serialVersionUID = 8319489027333955979L;
 
+	private final JTextField nameTextField;
+	private final JTextField ageTextField;
+	private final JTextField sideTextField;
+	private final JTextField trainingTextField;
+
+	private final AttributesPanel<A> attributePanel;
+
+	private final PlayerFormPanel<A> playerFormPanel;
+
+	private final PositionSuggestionPanel<A> positionSuggestionPanel;
+	private final TrainingSuggestionPanel<A> trainingSuggestionPanel;
+
+	private final TrainingPlannerPanel<A> trainingPanel;
+
+	private final JButton plotButton;
+
+	private final PlayerEvaluator<A> playerEvaluator;
+
 	private Player<A> player;
-
-	private JTextField nameTextField;
-	private JTextField ageTextField;
-	private JTextField sideTextField;
-	private JTextField trainingTextField;
-
-	private AttributesPanel<A> attributePanel;
-
-	private PlayerFormPanel<A> playerFormPanel;
-
-	private PositionSuggestionPanel<A> positionSuggestionPanel;
-	private TrainingSuggestionPanel<A> trainingSuggestionPanel;
-
-	private TrainingPlannerPanel<A> trainingPanel;
-
-	private PlayerEvaluator<A> playerEvaluator;
 
 	public PlayerPanel(
 		AttributesPanel<A> attributePanel,
-		PlayerEvaluator<A> playerEvaluator)
+		PlayerEvaluator<A> playerEvaluator,
+		PlayerWarper<A> playerWarper)
 	{
 		this.attributePanel = attributePanel;
 		this.playerEvaluator = playerEvaluator;
@@ -92,6 +103,64 @@ public class PlayerPanel<A extends Attributes>
 		positionSuggestionPanel = new PositionSuggestionPanel<>(playerEvaluator);
 		trainingSuggestionPanel = new TrainingSuggestionPanel<>(playerEvaluator);
 
+		plotButton = new JButton("Plot");
+		plotButton.setEnabled(false);
+		plotButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				SwingUtilities.invokeLater(new Runnable()
+				{
+					public void run()
+					{
+						A nextYearAttributes = playerWarper.warp(
+							player,
+							playerEvaluator.getBestEvaluatorByRating(player.getAttributes()),
+							1);
+
+						Player<A> worstCase = new Player<>(
+							"Pessimistic",
+							player.getCountry(),
+							player.getAge() + 1,
+							Math.max(0, player.getCL() - 1),
+							player.getSide(),
+							nextYearAttributes,
+							player.getExperience(),
+							player.getChemistry(),
+							player.getEnergy(),
+							0);
+
+						Player<A> bestCase = new Player<>(
+							"Optimistic",
+							player.getCountry(),
+							player.getAge() + 1,
+							player.getCL(),
+							player.getSide(),
+							nextYearAttributes,
+							player.getExperience(),
+							player.getChemistry(),
+							player.getEnergy(),
+							0);
+
+						PlotPanel<A> plotPanel = new PlayerPlotPanel<A>(
+							playerEvaluator,
+							playerWarper,
+							Arrays.asList(worstCase, bestCase),
+							new LinkedList<>(),
+							1);
+
+						plotPanel.draw();
+
+						JFrame plotFrame = new JFrame("Plot player");
+						plotFrame.setContentPane(plotPanel);
+						plotFrame.pack();
+						plotFrame.setLocationRelativeTo(PlayerPanel.this.getParent());
+						plotFrame.setVisible(true);
+					}
+				});
+			}
+		});
+
 		setBorder(BorderFactory.createTitledBorder("Player"));
 
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -120,8 +189,11 @@ public class PlayerPanel<A extends Attributes>
 		panel.add(trainingSuggestionPanel, gbc);
 
 		gbc.gridy = 5;
-		gbc.weighty = 100;
 		panel.add(trainingPanel, gbc);
+
+		gbc.gridy = 6;
+		gbc.weighty = 100;
+		panel.add(plotButton, gbc);
 
 		JScrollPane scrollPane = new JScrollPane(panel);
 
@@ -143,6 +215,7 @@ public class PlayerPanel<A extends Attributes>
 			positionSuggestionPanel.bind(null);
 			trainingSuggestionPanel.bind(null);
 			trainingPanel.bind(null);
+			plotButton.setEnabled(false);
 			this.player.removePropertyChangedListener(this);
 		}
 
@@ -155,6 +228,7 @@ public class PlayerPanel<A extends Attributes>
 			positionSuggestionPanel.bind(player.getAttributes());
 			trainingSuggestionPanel.bind(player.getAttributes());
 			trainingPanel.bind(player.getAttributes());
+			plotButton.setEnabled(true);
 			this.player.addPropertyChangedListener(this);
 		}
 
