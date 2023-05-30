@@ -23,7 +23,7 @@ public class AttributeTrainingCalculator<A extends Attributes>
 
 	private final double quality;
 
-	private final CareerLengthCurve clc;
+	private final CareerLongevityCurve clc;
 
 	public AttributeTrainingCalculator(
 		int facility,
@@ -37,7 +37,7 @@ public class AttributeTrainingCalculator<A extends Attributes>
 
 		this.quality = quality;
 
-		clc = new CareerLengthCurve(age, cl);
+		clc = new CareerLongevityCurve(age, cl);
 	}
 
 	public double calc(int age)
