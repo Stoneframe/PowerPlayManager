@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CareerLengthCurve
+public class CareerLongevityCurve
 {
 	private static final Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>()
 	{
@@ -40,7 +40,7 @@ public class CareerLengthCurve
 
 	private final int end;
 
-	public CareerLengthCurve(int age, int cl)
+	public CareerLongevityCurve(int age, int cl)
 	{
 		double threshold = getThreshold(age - 1, cl);
 
