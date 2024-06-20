@@ -129,18 +129,21 @@ public abstract class Importer<A extends Attributes>
 	{
 		LocalDateTime modifiedTime = fileHandler.getFileModifiedDate(path);
 
-		if (modifiedTime.toLocalDate().isEqual(LocalDate.now()))
-		{
-			return true;
-		}
+		LocalDateTime latestRefresh = getLatestRefresh();
 
-		if (modifiedTime.toLocalDate().isBefore(LocalDate.now())
-			&& LocalTime.now().isBefore(LocalTime.of(6, 0)))
-		{
-			return true;
-		}
+		return modifiedTime.isAfter(latestRefresh);
+	}
 
-		return false;
+	private LocalDateTime getLatestRefresh()
+	{
+		if (LocalTime.now().isAfter(LocalTime.of(6, 0)))
+		{
+			return LocalDate.now().atTime(6, 0);
+		}
+		else
+		{
+			return LocalDate.now().minusDays(1).atTime(6, 0);
+		}
 	}
 
 	private void importPlayersFromCache(Roster<A> roster, Path path)
