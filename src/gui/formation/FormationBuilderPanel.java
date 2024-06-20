@@ -225,6 +225,11 @@ public class FormationBuilderPanel<A extends Attributes>
 				}
 			}
 		});
+		
+		for (FormationTemplate<A> template : templatePanel.getDefaultTemplates())
+		{
+			templateListModel.addElement(template);
+		}
 
 		callbackCheckbox = new JCheckBox("Create groups");
 		noneRadioButton = new JRadioButton("None");

@@ -66,6 +66,11 @@ public abstract class FormationTemplatePanel<A extends Attributes>
 	public abstract FormationTemplate<A> getFormationTemplate();
 
 	public abstract void setFormationTemplate(FormationTemplate<A> template);
+	
+	public List<FormationTemplate<A>> getDefaultTemplates()
+	{
+		return List.of();
+	}
 
 	protected static AttributeEvaluator<?> getAttributeEvaluator(
 		FormationTemplate<?> template,

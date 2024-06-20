@@ -118,6 +118,12 @@ public class HandballFormationTemplatePanel
 	{
 		return new FormationTemplate<>(nameComboBox.getText(), getPositionTemplates());
 	}
+	
+	@Override
+	public List<FormationTemplate<HandballAttributes>> getDefaultTemplates()
+	{
+		return defaultTemplates;
+	}
 
 	public void setFormationTemplate(FormationTemplate<HandballAttributes> template)
 	{
