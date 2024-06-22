@@ -35,7 +35,11 @@ public abstract class Importer<A extends Attributes>
 		Closeable
 {
 	public static final int TEAM = 0;
-	public static final int MARKET = 1;
+	public static final int MARKET_ON_TRANSFER = 1;
+	public static final int MARKET_FREE_AGENT = 2;
+
+	private static final int MARKET_TYPE_ON_TRANSFER = 1;
+	private static final int MARKET_TYPE_FREE_AGENT = 3;
 
 	private final WebClient client;
 
@@ -68,8 +72,11 @@ public abstract class Importer<A extends Attributes>
 			case TEAM:
 				return importTeam(username, password);
 
-			case MARKET:
-				return importMarket(username, password);
+			case MARKET_ON_TRANSFER:
+				return importMarket(username, password, MARKET_TYPE_ON_TRANSFER);
+
+			case MARKET_FREE_AGENT:
+				return importMarket(username, password, MARKET_TYPE_FREE_AGENT);
 
 			default:
 				throw new IllegalArgumentException("Import type not supported: " + type);
@@ -96,12 +103,12 @@ public abstract class Importer<A extends Attributes>
 		return roster.stream().collect(Collectors.toList());
 	}
 
-	private List<Player<A>> importMarket(String username, String password)
+	private List<Player<A>> importMarket(String username, String password, int marketType)
 			throws IOException, InvalidCredentialsException
 	{
 		Roster<A> roster = new Roster<>();
 
-		Path path = getCachePath("Market");
+		Path path = getCachePath("Market " + marketType);
 
 		if (isCacheUpToDate(path))
 		{
@@ -109,7 +116,7 @@ public abstract class Importer<A extends Attributes>
 		}
 		else
 		{
-			importMarketFromPpm(roster, username, password);
+			importMarketFromPpm(roster, username, password, marketType);
 			exportPlayersToCache(roster, path);
 		}
 
@@ -164,7 +171,11 @@ public abstract class Importer<A extends Attributes>
 		logout();
 	}
 
-	private void importMarketFromPpm(Roster<A> roster, String username, String password)
+	private void importMarketFromPpm(
+		Roster<A> roster,
+		String username,
+		String password,
+		int marketType)
 			throws IOException, InvalidCredentialsException
 	{
 		login(username, password);
@@ -173,7 +184,7 @@ public abstract class Importer<A extends Attributes>
 
 		HtmlSelect typeSelect = page.getElementByName("market_type");
 
-		typeSelect.setSelectedIndex(1);
+		typeSelect.setSelectedIndex(marketType);
 
 		HtmlButton searchButton = page.getFirstByXPath(
 			"//*[@id=\"filter_market\"]/form/table[5]/tbody/tr/td[1]/button");
@@ -247,7 +258,7 @@ public abstract class Importer<A extends Attributes>
 
 		HtmlPage page = submitInput.click(false, false, false, false, false, true, false);
 
-		if (page.asXml().contains("Fel lösenord")
+		if (page.asXml().contains("Fel lÃ¶senord")
 			|| page.asXml().contains("Inloggnings information saknas"))
 		{
 			throw new InvalidCredentialsException();

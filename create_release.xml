@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="create_run_jar" name="Create Runnable Jar for Project PowerPlayManager">
-	<!--this file was created by Eclipse Runnable JAR Export Wizard-->
-	<!--ANT 1.7 is required                                        -->
-	<!--define folder properties-->
-	<property name="dir.buildfile" value="." />
-	<property name="dir.workspace" value="${dir.buildfile}/.." />
-	<property name="dir.jarfile" value="${dir.workspace}" />
-	<target name="create_run_jar">
-		<jar destfile="${dir.workspace}/PPM Assistant.jar" filesetmanifest="mergewithoutmain">
-			<manifest>
-				<attribute name="Main-Class" value="gui.MainFrame" />
-				<attribute name="Class-Path" value="." />
-			</manifest>
-			<fileset dir="${dir.buildfile}/bin" />
-		</jar>
-	</target>
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <!--define folder properties-->
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.workspace" value="${dir.buildfile}/.."/>
+    <property name="dir.jarfile" value="${dir.buildfile}"/>
+    <target name="create_run_jar">
+        <jar destfile="${dir.jarfile}/PPM Assistant.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="gui.MainFrame"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="${dir.jarfile}/target/classes"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/org/jfree/jcommon/1.0.24/jcommon-1.0.24.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/jfree/jfreechart/1.0.13/jfreechart-1.0.13.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/jfree/jcommon/1.0.16/jcommon-1.0.16.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/net/sourceforge/htmlunit/htmlunit/2.70.0/htmlunit-2.70.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/org/apache/httpcomponents/httpmime/4.5.14/httpmime-4.5.14.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/org/apache/httpcomponents/httpclient/4.5.14/httpclient-4.5.14.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/org/apache/httpcomponents/httpcore/4.4.16/httpcore-4.4.16.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/net/sourceforge/htmlunit/htmlunit-core-js/2.70.0/htmlunit-core-js-2.70.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/net/sourceforge/htmlunit/neko-htmlunit/2.70.0/neko-htmlunit-2.70.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/net/sourceforge/htmlunit/htmlunit-cssparser/1.14.0/htmlunit-cssparser-1.14.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/net/sourceforge/htmlunit/htmlunit-xpath/2.70.0/htmlunit-xpath-2.70.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/org/apache/commons/commons-text/1.10.0/commons-text-1.10.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/commons-io/commons-io/2.10.0/commons-io-2.10.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/commons-net/commons-net/3.9.0/commons-net-3.9.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/commons-codec/commons-codec/1.15/commons-codec-1.15.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/org/brotli/dec/0.1.2/dec-0.1.2.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/com/shapesecurity/salvation2/3.0.1/salvation2-3.0.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/org/eclipse/jetty/websocket/websocket-client/9.4.50.v20221201/websocket-client-9.4.50.v20221201.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/org/eclipse/jetty/jetty-client/9.4.50.v20221201/jetty-client-9.4.50.v20221201.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/org/eclipse/jetty/jetty-http/9.4.50.v20221201/jetty-http-9.4.50.v20221201.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/org/eclipse/jetty/jetty-util/9.4.50.v20221201/jetty-util-9.4.50.v20221201.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/org/eclipse/jetty/jetty-io/9.4.50.v20221201/jetty-io-9.4.50.v20221201.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/org/eclipse/jetty/websocket/websocket-common/9.4.50.v20221201/websocket-common-9.4.50.v20221201.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/org/eclipse/jetty/websocket/websocket-api/9.4.50.v20221201/websocket-api-9.4.50.v20221201.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/me/.m2/repository/org/jsoup/jsoup/1.16.1/jsoup-1.16.1.jar"/>
+        </jar>
+    </target>
 </project>

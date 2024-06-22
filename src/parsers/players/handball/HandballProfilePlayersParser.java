@@ -62,7 +62,7 @@ public class HandballProfilePlayersParser
 	{
 		String ageText = Arrays
 			.stream(text.split("\n"))
-			.filter(s -> s.contains("Ålder"))
+			.filter(s -> s.contains("Ã…lder"))
 			.findFirst()
 			.get();
 
@@ -102,7 +102,7 @@ public class HandballProfilePlayersParser
 	{
 		HandballAttributes attributes = new HandballAttributes();
 
-		int[] goa = parseAttribute(text, "Mål");
+		int[] goa = parseAttribute(text, "MÃ¥l");
 		attributes.setGoa(goa[0]);
 		attributes.setQGoa(goa[1]);
 
