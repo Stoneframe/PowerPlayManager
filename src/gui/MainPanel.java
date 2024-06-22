@@ -128,13 +128,23 @@ public class MainPanel<A extends Attributes>
 				}
 			}
 		});
-		menuBar.addPpmImportMarketActionListener(new ActionListener()
+		menuBar.addPpmImportMarketOnTransferActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				if (isShowing())
 				{
-					importPlayers(importer, Importer.MARKET, "Market");
+					importPlayers(importer, Importer.MARKET_ON_TRANSFER, "Market (on transfer)");
+				}
+			}
+		});
+		menuBar.addPpmImportMarketFreeAgentActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (isShowing())
+				{
+					importPlayers(importer, Importer.MARKET_FREE_AGENT, "Market (free agent)");
 				}
 			}
 		});

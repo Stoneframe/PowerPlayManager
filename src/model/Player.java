@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 import util.AbstractModelObject;
 
 public class Player<A extends Attributes>
@@ -147,7 +149,7 @@ public class Player<A extends Attributes>
 
 	public void merge(Player<A> other)
 	{
-		if (!this.equals(other)) return;
+		if (!this.name.equals(other.name)) return;
 
 		if (other.getAge() > this.getAge())
 		{
@@ -183,15 +185,42 @@ public class Player<A extends Attributes>
 	}
 
 	@Override
+	public int hashCode()
+	{
+		return Objects.hash(
+			age,
+			attributes,
+			chemistry,
+			cl,
+			country,
+			energy,
+			experience,
+			name,
+			side,
+			training);
+	}
+
+	@Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this) return true;
+		if (this == obj) return true;
 
-		if (!(obj instanceof Player<?>)) return false;
+		if (obj == null) return false;
+
+		if (getClass() != obj.getClass()) return false;
 
 		Player<?> other = (Player<?>)obj;
 
-		return this.name.equals(other.name);
+		return age == other.age
+			&& Objects.equals(attributes, other.attributes)
+			&& chemistry == other.chemistry
+			&& cl == other.cl
+			&& Objects.equals(country, other.country)
+			&& energy == other.energy
+			&& experience == other.experience
+			&& Objects.equals(name, other.name)
+			&& Objects.equals(side, other.side)
+			&& Double.doubleToLongBits(training) == Double.doubleToLongBits(other.training);
 	}
 
 	@Override

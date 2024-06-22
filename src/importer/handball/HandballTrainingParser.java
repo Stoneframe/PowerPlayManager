@@ -160,14 +160,4 @@ public class HandballTrainingParser
 	{
 		return Integer.parseInt(playerElement.child(18).child(1).text());
 	}
-
-	// @Override
-	// public List<Player<HandballAttributes>> parse(Document document)
-	// {
-	// Element tableElement = document.getElementById("table-1");
-	//
-	// System.out.println(tableElement);
-	//
-	// return new LinkedList<>();
-	// }
 }

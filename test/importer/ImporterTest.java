@@ -36,7 +36,7 @@ public class ImporterTest
 		try (Importer<IceHockeyAttributes> importer = new IceHockeyImporter(new IceHockeyFileHandler()))
 		{
 			List<Player<IceHockeyAttributes>> roster = importer.importPlayers(
-				Importer.MARKET,
+				Importer.MARKET_ON_TRANSFER,
 				Temp.USERNAME,
 				Temp.PASSWORD);
 

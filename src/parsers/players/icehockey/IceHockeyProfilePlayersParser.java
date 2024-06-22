@@ -56,7 +56,7 @@ public class IceHockeyProfilePlayersParser
 	{
 		String ageText = Arrays
 			.stream(text.split("\n"))
-			.filter(s -> s.startsWith("Ålder"))
+			.filter(s -> s.startsWith("Ã…lder"))
 			.findFirst()
 			.get();
 
@@ -95,11 +95,11 @@ public class IceHockeyProfilePlayersParser
 	{
 		IceHockeyAttributes attributes = new IceHockeyAttributes();
 
-		int[] goa = parseAttribute(text, "Mål");
+		int[] goa = parseAttribute(text, "MÃ¥l");
 		attributes.setGoa(goa[0]);
 		attributes.setQGoa(goa[1]);
 
-		int[] def = parseAttribute(text, "För");
+		int[] def = parseAttribute(text, "FÃ¶r");
 		attributes.setDef(def[0]);
 		attributes.setQDef(def[1]);
 

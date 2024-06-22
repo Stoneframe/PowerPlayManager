@@ -2,6 +2,7 @@ package model;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import util.AbstractModelObject;
@@ -59,6 +60,26 @@ public abstract class Attributes
 	}
 
 	@Override
+	public int hashCode()
+	{
+		return Objects.hash(attributes);
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) return true;
+
+		if (obj == null) return false;
+
+		if (getClass() != obj.getClass()) return false;
+
+		Attributes other = (Attributes)obj;
+
+		return Objects.equals(attributes, other.attributes);
+	}
+
+	@Override
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
@@ -69,6 +90,10 @@ public abstract class Attributes
 			builder.append(System.lineSeparator());
 		}
 		
+		builder.append("Total: ");
+		builder.append(getTotalRating());
+		builder.append(System.lineSeparator());
+
 		builder.append("Total: ");
 		builder.append(getTotalRating());
 		builder.append(System.lineSeparator());

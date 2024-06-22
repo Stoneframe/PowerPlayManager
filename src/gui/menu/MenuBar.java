@@ -18,7 +18,8 @@ public class MenuBar
 	private final JMenuItem fileMenuExport;
 
 	private final JMenuItem ppmMenuImportTeam;
-	private final JMenuItem ppmMenuImportMarket;
+	private final JMenuItem ppmMenuImportMarketOnTransfer;
+	private final JMenuItem ppmMenuImportMarketFreeAgent;
 
 	public MenuBar(Component parentComponent, JTabbedPane tabbedPane)
 	{
@@ -31,7 +32,8 @@ public class MenuBar
 		fileMenuExport.setMnemonic(KeyEvent.VK_E);
 
 		ppmMenuImportTeam = new JMenuItem("Import team");
-		ppmMenuImportMarket = new JMenuItem("Import market");
+		ppmMenuImportMarketOnTransfer = new JMenuItem("Import market (on transfer)");
+		ppmMenuImportMarketFreeAgent = new JMenuItem("Import market (free agent)");
 
 		// Build the menu
 		JMenu fileMenu = new JMenu("File");
@@ -41,7 +43,8 @@ public class MenuBar
 
 		JMenu ppmMenu = new JMenu("PPM");
 		ppmMenu.add(ppmMenuImportTeam);
-		ppmMenu.add(ppmMenuImportMarket);
+		ppmMenu.add(ppmMenuImportMarketOnTransfer);
+		ppmMenu.add(ppmMenuImportMarketFreeAgent);
 
 		add(fileMenu);
 		add(ppmMenu);
@@ -62,8 +65,14 @@ public class MenuBar
 		ppmMenuImportTeam.addActionListener(listener);
 	}
 	
-	public void addPpmImportMarketActionListener(ActionListener listener)
+	public void addPpmImportMarketOnTransferActionListener(ActionListener listener)
 	{
-		ppmMenuImportMarket.addActionListener(listener);
+		ppmMenuImportMarketOnTransfer.addActionListener(listener);
+	}
+
+	
+	public void addPpmImportMarketFreeAgentActionListener(ActionListener listener)
+	{
+		ppmMenuImportMarketFreeAgent.addActionListener(listener);
 	}
 }

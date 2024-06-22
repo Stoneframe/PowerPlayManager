@@ -62,4 +62,8 @@ local.properties
 # End of https://www.gitignore.io/api/eclipse
 /target/
 
+# JAR files
+*.jar
+
 jar-in-jar-loader.zip
+
