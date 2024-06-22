@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 import util.AbstractModelObject;
 
 public class Attribute
@@ -84,6 +86,29 @@ public class Attribute
 	public Attribute clone()
 	{
 		return new Attribute(shortName, longName, rating, quality);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(longName, quality, rating, shortName);
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) return true;
+
+		if (obj == null) return false;
+
+		if (getClass() != obj.getClass()) return false;
+
+		Attribute other = (Attribute)obj;
+
+		return Objects.equals(longName, other.longName)
+			&& quality == other.quality
+			&& Double.doubleToLongBits(rating) == Double.doubleToLongBits(other.rating)
+			&& Objects.equals(shortName, other.shortName);
 	}
 
 	@Override

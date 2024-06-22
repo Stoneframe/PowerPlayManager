@@ -7,6 +7,7 @@ import files.FileHandler;
 import formation.PaulsFormationBuilder;
 import gui.MainPanel;
 import gui.menu.MenuBar;
+import importer.football.FootballImporter;
 import model.football.FootballAttributes;
 import parsers.players.PlayersParser;
 import searcher.SearchTemplateStorage;
@@ -36,6 +37,6 @@ public class FootballMainPanel
 				"search-football",
 				playerEvaluator,
 				new FootballPlayerWarper(playerEvaluator)),
-			null);
+			new FootballImporter(fileHandler));
 	}
 }
