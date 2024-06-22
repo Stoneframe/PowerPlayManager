@@ -2,20 +2,21 @@ package importer.football;
 
 import org.jsoup.nodes.Element;
 
-import importer.LineUpParser;
+import importer.TrainingParser;
 import model.Side;
 import model.football.FootballAttributes;
 
-public class FootballLineUpParser
+public class FootballTraningParser
 	extends FootballParser
 	implements
-		LineUpParser<FootballAttributes>
+		TrainingParser<FootballAttributes>
 {
 
 	@Override
 	public String getAddress()
 	{
-		return "https://soccer.powerplaymanager.com/sv/laguppstallning.html";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -199,4 +200,5 @@ public class FootballLineUpParser
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 }
