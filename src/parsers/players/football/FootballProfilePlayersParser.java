@@ -49,7 +49,10 @@ public class FootballProfilePlayersParser
 	{
 		String[] split = text.split("\n")[0].split("  ")[1].split(" ");
 
-		return String.format("%s %s", split[split.length - 2], split[split.length - 1]);
+		return String.format(
+			"%s %s",
+			split[split.length - 2].replace(",", "").trim(),
+			split[split.length - 1].replace(",", "").trim());
 	}
 
 	private static int parseAge(String text)
