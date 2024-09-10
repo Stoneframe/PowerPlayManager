@@ -32,7 +32,7 @@ public class Roster<A extends Attributes>
 	{
 		for (Player<A> addedPlayer : players)
 		{
-			if (addedPlayer.equals(player))
+			if (addedPlayer.getName().equals(player.getName()))
 			{
 				addedPlayer.merge(player);
 
