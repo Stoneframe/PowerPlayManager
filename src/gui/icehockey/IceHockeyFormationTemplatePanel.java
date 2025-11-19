@@ -161,6 +161,19 @@ public class IceHockeyFormationTemplatePanel
 	}
 
 	@Override
+	public List<FormationTemplate<IceHockeyAttributes>> getDefaultTemplates()
+	{
+		List<PositionTemplate<IceHockeyAttributes>> positions =
+			defaultTemplates.getFirst().getPositions();
+
+		return Arrays.asList(
+			new FormationTemplate<IceHockeyAttributes>("Formation 1", positions),
+			new FormationTemplate<IceHockeyAttributes>("Formation 2", positions),
+			new FormationTemplate<IceHockeyAttributes>("Formation 3", positions),
+			new FormationTemplate<IceHockeyAttributes>("Formation 4", positions));
+	}
+
+	@Override
 	public void setFormationTemplate(FormationTemplate<IceHockeyAttributes> template)
 	{
 		if (template != null)

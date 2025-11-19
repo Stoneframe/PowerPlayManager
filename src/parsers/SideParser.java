@@ -11,11 +11,11 @@ public class SideParser
 		{
 			return Side.UNIVERSAL;
 		}
-		else if (side.equals("Vänster") || side.equals("Left") || side.equals("L"))
+		else if (side.equals("VÃ¤nster") || side.equals("Left") || side.equals("L"))
 		{
 			return Side.LEFT;
 		}
-		else if (side.equals("Höger") || side.equals("Right") || side.equals("R"))
+		else if (side.equals("HÃ¶ger") || side.equals("Right") || side.equals("R"))
 		{
 			return Side.RIGHT;
 		}

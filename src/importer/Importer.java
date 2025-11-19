@@ -4,9 +4,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -136,18 +134,7 @@ public abstract class Importer<A extends Attributes>
 	{
 		LocalDateTime modifiedTime = fileHandler.getFileModifiedDate(path);
 
-		if (modifiedTime.toLocalDate().isEqual(LocalDate.now()))
-		{
-			return true;
-		}
-
-		if (modifiedTime.toLocalDate().isBefore(LocalDate.now())
-			&& LocalTime.now().isBefore(LocalTime.of(6, 0)))
-		{
-			return true;
-		}
-
-		return false;
+		return modifiedTime.isAfter(LocalDateTime.now().minusHours(3));
 	}
 
 	private void importPlayersFromCache(Roster<A> roster, Path path)
@@ -258,7 +245,7 @@ public abstract class Importer<A extends Attributes>
 
 		HtmlPage page = submitInput.click(false, false, false, false, false, true, false);
 
-		if (page.asXml().contains("Fel lösenord")
+		if (page.asXml().contains("Fel lÃ¶senord")
 			|| page.asXml().contains("Inloggnings information saknas"))
 		{
 			throw new InvalidCredentialsException();

@@ -85,22 +85,22 @@ public class SearcherPanel<A extends Attributes>
 		searchTemplatesComboBox = new PpmComboBox<>(templateNames, -1);
 		searchTemplatesComboBox.setEditable(true);
 		searchTemplatesComboBox.setPreferredSize(new Dimension(250, 25));
-		searchTemplatesComboBox.addActionListener(l -> onTemplateSelected(templateStorage));
+		searchTemplatesComboBox.addActionListener(_ -> onTemplateSelected(templateStorage));
 
 		addButton = new JButton("Add");
-		addButton.addActionListener(l -> onAddSearchCriteria());
+		addButton.addActionListener(_ -> onAddSearchCriteria());
 
 		searchButton = new JButton("Search");
-		searchButton.addActionListener(l -> onSearchPlayers(roster, playersFoundCallback));
+		searchButton.addActionListener(_ -> onSearchPlayers(roster, playersFoundCallback));
 
 		clearButton = new JButton("Clear");
-		clearButton.addActionListener(l -> onClear());
+		clearButton.addActionListener(_ -> onClear());
 
 		saveButton = new JButton("Save");
-		saveButton.addActionListener(l -> onSaveTemplate(templateStorage));
+		saveButton.addActionListener(_ -> onSaveTemplate(templateStorage));
 
 		removeButton = new JButton("Remove");
-		removeButton.addActionListener(l -> onRemoveTemplate(templateStorage));
+		removeButton.addActionListener(_ -> onRemoveTemplate(templateStorage));
 
 		northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		northPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));

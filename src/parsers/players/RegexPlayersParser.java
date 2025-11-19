@@ -82,7 +82,7 @@ public abstract class RegexPlayersParser<A extends Attributes>
 	private Player<A> createPlayer(Matcher matcher)
 	{
 		A attributes = createAttributes(matcher, includeQualities);
-		
+
 		return new Player<A>(
 			matcher.group("name"),
 			matcher.group("country"),
@@ -108,6 +108,7 @@ public abstract class RegexPlayersParser<A extends Attributes>
 		}
 
 		return lines;
+
 	}
 
 	protected abstract A createAttributes(Matcher matcher, boolean includeQuality);
@@ -126,7 +127,7 @@ public abstract class RegexPlayersParser<A extends Attributes>
 	{
 		return "(?<country>("
 			+ String.join("|", Countries.LIST).replace("-", "\\-")
-			+ ")+) (?<name>\\S+(((?!( Dagar| Spelare| Avstängning| \\d))( \\S+))+)).*";
+			+ ")+) (?<name>\\S+(((?!( Dagar| Spelare| Avstï¿½ngning| \\d))( \\S+))+)).*";
 	}
 
 	protected static String age()

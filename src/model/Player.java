@@ -36,7 +36,7 @@ public class Player<A extends Attributes>
 		this.cl = cl;
 		this.side = side;
 		this.attributes = attributes;
-		this.attributes.addPropertyChangedListener((s, e) -> firePropertyChanged(e));
+		this.attributes.addPropertyChangedListener((_, e) -> firePropertyChanged(e));
 		this.experience = experience;
 		this.chemistry = chemistry;
 		this.energy = energy;
