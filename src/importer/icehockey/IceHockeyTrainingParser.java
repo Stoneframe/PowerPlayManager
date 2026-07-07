@@ -177,13 +177,13 @@ public class IceHockeyTrainingParser
 	}
 
 	@Override
-	protected int getQOff(Element playerElement)
+	protected int getQDef(Element playerElement)
 	{
 		return Integer.parseInt(playerElement.child(6).getElementsByClass("kva").text());
 	}
 
 	@Override
-	protected int getQDef(Element playerElement)
+	protected int getQOff(Element playerElement)
 	{
 		return Integer.parseInt(playerElement.child(7).getElementsByClass("kva").text());
 	}
@@ -211,5 +211,4 @@ public class IceHockeyTrainingParser
 	{
 		return Integer.parseInt(playerElement.child(11).getElementsByClass("kva").text());
 	}
-
 }

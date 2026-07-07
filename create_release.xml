@@ -3,22 +3,19 @@
     <!--this file was created by Eclipse Runnable JAR file Export Wizard-->
     <!--ANT 1.7 is required-->
     <!--define folder properties-->
-	<property name="version" value="1.0.0" />
     <property name="dir.buildfile" value="."/>
     <property name="dir.workspace" value="${dir.buildfile}/.."/>
-    <property name="dir.jarfile" value="${dir.workspace}"/>
+    <property name="dir.jarfile" value="${dir.buildfile}/release"/>
     <target name="create_run_jar">
-        <jar destfile="${dir.buildfile}/release/PPM Assistant-${version}.jar">
+        <jar destfile="${dir.jarfile}/PPM Assistant-1.0.2.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
                 <attribute name="Rsrc-Main-Class" value="gui.MainFrame"/>
                 <attribute name="Class-Path" value="."/>
-                <attribute name="Rsrc-Class-Path" value="./ org.junit_4.13.0.v20200204-1500.jar org.hamcrest.core_1.3.0.v20180420-1519.jar gson-2.8.6.jar jcommon-1.0.24.jar jfreechart-1.0.13.jar jcommon-1.0.16.jar htmlunit-2.70.0.jar httpmime-4.5.14.jar httpclient-4.5.14.jar httpcore-4.4.16.jar htmlunit-core-js-2.70.0.jar neko-htmlunit-2.70.0.jar htmlunit-cssparser-1.14.0.jar htmlunit-xpath-2.70.0.jar commons-lang3-3.12.0.jar commons-text-1.10.0.jar commons-io-2.10.0.jar commons-logging-1.2.jar commons-net-3.9.0.jar commons-codec-1.15.jar dec-0.1.2.jar salvation2-3.0.1.jar websocket-client-9.4.50.v20221201.jar jetty-client-9.4.50.v20221201.jar jetty-http-9.4.50.v20221201.jar jetty-util-9.4.50.v20221201.jar jetty-io-9.4.50.v20221201.jar websocket-common-9.4.50.v20221201.jar websocket-api-9.4.50.v20221201.jar jsoup-1.16.1.jar"/>
+                <attribute name="Rsrc-Class-Path" value="./ gson-2.8.6.jar jcommon-1.0.24.jar jfreechart-1.0.13.jar jcommon-1.0.16.jar htmlunit-2.70.0.jar httpmime-4.5.14.jar httpclient-4.5.14.jar httpcore-4.4.16.jar htmlunit-core-js-2.70.0.jar neko-htmlunit-2.70.0.jar htmlunit-cssparser-1.14.0.jar htmlunit-xpath-2.70.0.jar commons-lang3-3.12.0.jar commons-text-1.10.0.jar commons-io-2.10.0.jar commons-logging-1.2.jar commons-net-3.9.0.jar commons-codec-1.15.jar dec-0.1.2.jar salvation2-3.0.1.jar websocket-client-9.4.50.v20221201.jar jetty-client-9.4.50.v20221201.jar jetty-http-9.4.50.v20221201.jar jetty-util-9.4.50.v20221201.jar jetty-io-9.4.50.v20221201.jar websocket-common-9.4.50.v20221201.jar websocket-api-9.4.50.v20221201.jar jsoup-1.16.1.jar"/>
             </manifest>
             <zipfileset src="jar-in-jar-loader.zip"/>
             <fileset dir="${dir.buildfile}/target/classes"/>
-            <zipfileset dir="C:/Program Files/eclipse/plugins" includes="org.junit_4.13.0.v20200204-1500.jar"/>
-            <zipfileset dir="C:/Program Files/eclipse/plugins" includes="org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
             <zipfileset dir="C:/Users/Paul/.m2/repository/com/google/code/gson/gson/2.8.6" includes="gson-2.8.6.jar"/>
             <zipfileset dir="C:/Users/Paul/.m2/repository/org/jfree/jcommon/1.0.24" includes="jcommon-1.0.24.jar"/>
             <zipfileset dir="C:/Users/Paul/.m2/repository/jfree/jfreechart/1.0.13" includes="jfreechart-1.0.13.jar"/>
